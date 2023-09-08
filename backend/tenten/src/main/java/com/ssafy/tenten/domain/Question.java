@@ -13,7 +13,7 @@ public class Question {
     private Long qtnId;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    private User user;
+    private User userId;
 
     @Column(nullable = false)
     private String qtnContent;

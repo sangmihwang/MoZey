@@ -7,9 +7,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -17,11 +14,10 @@ public class VoteServiceImp implements VoteService{
 
     private final VoteCntRepository voteCntRepository;
 
-
     @Override
     public VoteResponse createVote(VoteDto voteDto) {
 
-        boolean exists = voteCntRepository.exists(voteDto.getUserId(), voteDto.getQtnId());
+        boolean exists = voteCntRepository.checkIfVoteExists(voteDto.getUserId(), voteDto.getQtnId());
 
         if(!exists){
             // 올려주기 ..
