@@ -7,7 +7,7 @@ spring:
       #url: jdbc:mysql://3.36.131.236:3306/tenten?serverTimezone=Asia/Seoul
     url: jdbc:mysql://localhost:3306/tenten?serverTimezone=Asia/Seoul
     username: A510
-    password: ssafy
+    password: 3jbhrVyqstWs9ud
     # JPA
     jpa:
       database: mysql
