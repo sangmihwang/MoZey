@@ -2,7 +2,6 @@ package com.ssafy.tenten.domain;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.ColumnDefault;
 import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
@@ -22,14 +21,14 @@ public class VoteHistory {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    private User user_id;
+    private User userId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "chosen")
     private User chosen;
 
     @CreatedDate
-    private LocalDateTime time;
+    private LocalDateTime voteTime;
 
 
 }
