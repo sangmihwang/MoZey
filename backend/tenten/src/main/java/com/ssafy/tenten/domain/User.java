@@ -8,49 +8,50 @@ import java.util.Date;
 
 @Entity
 @Getter @Setter
+@Table(name = "USER")
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    @Column(updatable = false)
+    @Column(name = "user_id", updatable = false)
     private Long userId;
-//
-//    @Column
-//    private String gender;
-//
-//    @Column
-//    private String image;
-//
-//    @Column
-//    private String name;
-//
-//    @Column
-//    private String term;
-//
-//    @Column
-//    private String campus;
-//
-//    @Column
-//    private String group;
-//
-//    @Column
-//    private int sub_yn;
-//
-//    @Column
-//    private Date sub_start_time;
-//
-//    @Column
-//    private int point;
-//
-//    @Column
-//    private int coin1;
-//
-//    @Column
-//    private int coin2;
-//
-//    @Column
-//    private int withdraw;
-//
-//    @Column
-//    private String is_admin;
+
+    @Column(name = "gender")
+    private String gender;
+
+    @Column(name = "image")
+    private String image;
+
+    @Column(name = "name")
+    private String name;
+
+    @Column(name = "term")
+    private String term;
+
+    @Column(name = "campus")
+    private String campus;
+
+    @Column(name = "group")
+    private String group;
+
+    @Column(name = "sub_yn")
+    private int subYn;
+
+    @Column(name = "sub_start_time")
+    private Date subStartTime;
+
+    @Column(name = "point")
+    private int point;
+
+    @Column(name = "coin1")
+    private int coin1;
+
+    @Column(name = "coin2")
+    private int coin2;
+
+    @Column(name = "withdraw")
+    private int withdraw;
+
+    @Column(name = "role")
+    private String role;
 }
