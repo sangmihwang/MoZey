@@ -49,7 +49,7 @@ public class VoteController {
     public ResponseEntity<?> postVote(@RequestBody VoteRequest voteRequest){
         mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
         VoteDto voteDto = mapper.map(voteRequest, VoteDto.class);
-//        voteService.createVote(voteDto);
+        voteService.createVote(voteDto);
 
         return ResponseEntity.ok().build();
     }

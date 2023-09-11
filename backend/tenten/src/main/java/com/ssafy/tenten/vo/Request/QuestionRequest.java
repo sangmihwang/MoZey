@@ -7,5 +7,5 @@ public class QuestionRequest {
     private String qtnContent;
     private Long userId;
     private String image;
-    private String status;
+    private Character status;
 }

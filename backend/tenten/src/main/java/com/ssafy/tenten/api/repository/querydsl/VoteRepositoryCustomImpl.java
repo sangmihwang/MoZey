@@ -2,11 +2,9 @@ package com.ssafy.tenten.api.repository.querydsl;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Repository;
 
 import static com.ssafy.tenten.domain.QVoteCount.voteCount;
 
-@Repository
 @RequiredArgsConstructor
 public class VoteRepositoryCustomImpl implements VoteRepositoryCustom {
 
@@ -18,6 +16,8 @@ public class VoteRepositoryCustomImpl implements VoteRepositoryCustom {
         Integer fetchOne = queryFactory
                 .selectOne()
                 .from(voteCount)
+                .where(voteCount.userId.userId.eq(userId),
+                        voteCount.questionId.qtnId.eq(qtnId))
                 .fetchFirst();
 
         return fetchOne != null;

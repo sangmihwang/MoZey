@@ -6,6 +6,8 @@ import com.ssafy.tenten.domain.Question;
 import com.ssafy.tenten.domain.User;
 import com.ssafy.tenten.dto.QuestionDto;
 import com.ssafy.tenten.exception.CustomException;
+import com.ssafy.tenten.exception.ErrorCode;
+import com.ssafy.tenten.vo.Request.QuestionRequest;
 import com.ssafy.tenten.vo.Response.QuestionResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,6 +17,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import static com.ssafy.tenten.exception.ErrorCode.QUESTION_NOT_FOUND;
 import static com.ssafy.tenten.exception.ErrorCode.USER_NOT_FOUND;
 
 @Service
@@ -38,8 +41,24 @@ public class QuestionServiceImpl implements QuestionService{
     }
 
     @Override
-    public List<QuestionResponse> getQuestions(Long userId) {
-        List<Question> questions = questionRepository.findByUserId(userId).orElseThrow(
+    public List<QuestionResponse> getAllQuestions() {
+        List<Question> questions = questionRepository.findAll();
+
+        List<QuestionResponse> collect = questions.stream()
+                .map(a -> QuestionResponse.builder()
+                        .qtnId(a.getQtnId())
+                        .userId(a.getUserId().getUserId())
+                        .qtnContent(a.getQtnContent())
+                        .status(a.getStatus())
+                        .build())
+                .collect(Collectors.toList());
+        return collect;
+
+    }
+
+    @Override
+    public List<QuestionResponse> getQuestions(Long id) {
+        List<Question> questions = questionRepository.findByUserId(id).orElseThrow(
                 () -> new CustomException(USER_NOT_FOUND)
         );
 
@@ -52,6 +71,25 @@ public class QuestionServiceImpl implements QuestionService{
                         .build())
                 .collect(Collectors.toList());
         return collect;
+    }
 
+    @Override
+    public QuestionResponse getQuestion(Long qtnId) {
+        Question question = questionRepository.findById(qtnId).orElseThrow(
+                () -> new CustomException(QUESTION_NOT_FOUND)
+        );
+
+        return QuestionResponse.builder()
+                .image(question.getImg())
+                .status(question.getStatus())
+                .qtnId(question.getQtnId())
+                .userId(question.getUserId().getUserId())
+                .qtnContent(question.getQtnContent())
+                .build();
+    }
+
+    @Override
+    public QuestionResponse updateQuestion(Long qtnId, QuestionRequest questionRequest) {
+        return questionRepository.updateQuestion(qtnId, questionRequest);
     }
 }
