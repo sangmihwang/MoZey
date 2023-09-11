@@ -33,9 +33,9 @@ public class VoteController {
      * 투표 질문 8개 생성해서 보내기 3.1
      */
     @GetMapping("/votes/questions/{userId}")
-    public ResponseEntity<?> getQuestion(@PathVariable("userId") String id){
+    public ResponseEntity<?> getQuestion(@PathVariable("userId") Long id){
 
-        List<Question> questions = questionRepository.findByUserId("userId");
+        List<Question> questions = questionRepository.findByUserId(id).orElseThrow();
         mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
 
 
@@ -49,7 +49,7 @@ public class VoteController {
     public ResponseEntity<?> postVote(@RequestBody VoteRequest voteRequest){
         mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
         VoteDto voteDto = mapper.map(voteRequest, VoteDto.class);
-        voteService.createVote(voteDto);
+//        voteService.createVote(voteDto);
 
         return ResponseEntity.ok().build();
     }
