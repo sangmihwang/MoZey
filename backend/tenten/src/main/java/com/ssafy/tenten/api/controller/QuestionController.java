@@ -3,14 +3,13 @@ package com.ssafy.tenten.api.controller;
 import com.ssafy.tenten.api.repository.QuestionRepository;
 import com.ssafy.tenten.api.repository.VoteCntRepository;
 import com.ssafy.tenten.api.repository.VoteHistrotyRepository;
+import com.ssafy.tenten.api.service.QuestionService;
 import com.ssafy.tenten.api.service.VoteService;
 import com.ssafy.tenten.domain.Question;
-import com.ssafy.tenten.domain.VoteHistory;
 import com.ssafy.tenten.dto.QuestionDto;
-import com.ssafy.tenten.dto.VoteDto;
+import com.ssafy.tenten.exception.SuccessResponseEntity;
 import com.ssafy.tenten.vo.Request.QuestionRequest;
-import com.ssafy.tenten.vo.Request.VoteRequest;
-import com.ssafy.tenten.vo.Response.VoteResponse;
+import com.ssafy.tenten.vo.Response.QuestionResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -29,6 +28,7 @@ public class QuestionController {
     private final VoteHistrotyRepository voteHistrotyRepository;
     private final VoteCntRepository voteCntRepository;
     private final QuestionRepository questionRepository;
+    private final QuestionService questionService;
     private final ModelMapper mapper;
 
     /**
@@ -37,23 +37,22 @@ public class QuestionController {
     @GetMapping("/questions/users/{userId}")
     public ResponseEntity<?> getAppQuestion(@PathVariable("userId") Long id){
 
-        List<Question> questions = questionRepository.findByUserId("userId");
+//        List<Question> questions = questionRepository.findByUserId(id);
         mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
 
 
         return ResponseEntity.ok().build();
     }
     /**
-     * 질문 신청 등록
+     * 질문 신청 등록 - 완료
      */
     @PostMapping("/questions")
     public ResponseEntity<?> postQuestions(@RequestBody QuestionRequest questionRequest){
         mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
         QuestionDto questionDto = mapper.map(questionRequest, QuestionDto.class);
+        questionService.postQuestions(questionDto);
 
-
-
-        return ResponseEntity.ok().build();
+        return SuccessResponseEntity.toResponseEntity("질문 신청 등록 완료",null);
     }
 
     /**
@@ -68,10 +67,13 @@ public class QuestionController {
     /**
      * 등록 질문 전체 조회
      */
-    @GetMapping("/questions/{userId}")
+    @GetMapping("/questions/{userId}/")
     public ResponseEntity<?> getQuestions(@PathVariable("userId") Long userId ){
 
-        return ResponseEntity.ok().build();
+        List<QuestionResponse> questions = questionService.getQuestions(userId);
+
+
+        return SuccessResponseEntity.toResponseEntity("등록된 질문 전체 조회 성공",questions);
     }
 
     /**
