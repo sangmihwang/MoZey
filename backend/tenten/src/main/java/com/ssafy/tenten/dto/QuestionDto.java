@@ -7,8 +7,10 @@ import java.io.Serializable;
 
 @Data
 @RequiredArgsConstructor
-public class VoteDto implements Serializable {
-    private Long qtnId;
+public class QuestionDto implements Serializable {
+    private String qtnContent;
     private Long userId;
-    private Long chosen;
+    private String image;
+    private Long qtnId;
+    private String status;
 }
