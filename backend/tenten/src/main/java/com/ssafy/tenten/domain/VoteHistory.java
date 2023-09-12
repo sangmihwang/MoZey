@@ -1,15 +1,15 @@
 package com.ssafy.tenten.domain;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Entity
 @Getter
-@Setter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class VoteHistory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,7 +28,14 @@ public class VoteHistory {
     private User chosen;
 
     @CreatedDate
-    private LocalDateTime voteTime;
+    @DateTimeFormat(pattern = "yyyyMMdd")
+    private Long voteTime;
 
+    @Builder
+    VoteHistory(Question question, User userId, User chosen){
+        this.questionId = question;
+        this.userId = userId;
+        this.chosen = chosen;
+    }
 
 }

@@ -1,19 +1,19 @@
 package com.ssafy.tenten.domain;
 
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.stereotype.Service;
+import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
 @Entity
 @Getter
+@DynamicInsert
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Table(name = "VOTE_COUNT")
 public class VoteCount {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,6 +30,11 @@ public class VoteCount {
 
     @ColumnDefault("0")
     private Long voteCnt;
+    @Builder
+    VoteCount(Question question, User userId){
+        this.questionId = question;
+        this.userId = userId;
+    }
 
     public void updateVoteCount(){
         this.voteCnt++;

@@ -6,7 +6,6 @@ import com.ssafy.tenten.domain.Question;
 import com.ssafy.tenten.domain.User;
 import com.ssafy.tenten.dto.QuestionDto;
 import com.ssafy.tenten.exception.CustomException;
-import com.ssafy.tenten.exception.ErrorCode;
 import com.ssafy.tenten.vo.Request.QuestionRequest;
 import com.ssafy.tenten.vo.Response.QuestionResponse;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +13,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static com.ssafy.tenten.exception.ErrorCode.QUESTION_NOT_FOUND;
@@ -89,6 +87,7 @@ public class QuestionServiceImpl implements QuestionService{
     }
 
     @Override
+    @Transactional
     public QuestionResponse updateQuestion(Long qtnId, QuestionRequest questionRequest) {
         return questionRepository.updateQuestion(qtnId, questionRequest);
     }

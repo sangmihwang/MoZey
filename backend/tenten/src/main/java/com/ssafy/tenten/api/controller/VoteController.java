@@ -7,6 +7,7 @@ import com.ssafy.tenten.api.service.VoteService;
 import com.ssafy.tenten.domain.Question;
 import com.ssafy.tenten.domain.VoteHistory;
 import com.ssafy.tenten.dto.VoteDto;
+import com.ssafy.tenten.exception.SuccessResponseEntity;
 import com.ssafy.tenten.vo.Request.VoteRequest;
 import com.ssafy.tenten.vo.Response.VoteResponse;
 import lombok.RequiredArgsConstructor;
@@ -30,20 +31,17 @@ public class VoteController {
     private final ModelMapper mapper;
 
     /**
-     * 투표 질문 8개 생성해서 보내기 3.1
+     * 투표 질문 8개 생성해서 보내기 3.1 - 완료
      */
-    @GetMapping("/votes/questions/{userId}")
-    public ResponseEntity<?> getQuestion(@PathVariable("userId") Long id){
+    @GetMapping("/votes/questions")
+    public ResponseEntity<?> getQuestions(){
+        List<VoteResponse> voteResponses = voteService.suffleQuestion();
 
-        List<Question> questions = questionRepository.findByUserId(id).orElseThrow();
-        mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
-
-
-        return ResponseEntity.ok().build();
+        return SuccessResponseEntity.toResponseEntity("투표 질문 생성 완료",voteResponses);
     }
     /**
      * 투표 결과 등록 3.2
-     * 선택 받은 사람의 받은 횟수 늘리기
+     * 선택 받은 사람의 받은 횟수 늘리기 + 투표 내역 생성 하기
      */
     @PostMapping("/votes")
     public ResponseEntity<?> postVote(@RequestBody VoteRequest voteRequest){

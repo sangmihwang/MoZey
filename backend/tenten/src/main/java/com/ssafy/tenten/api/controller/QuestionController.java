@@ -93,7 +93,7 @@ public class QuestionController {
     }
 
     /**
-     * 등록 질문 수정
+     * 등록 질문 수정 - 완료
      * 관리자
      * 1. p->N 삭제, 2. P->Y 등록, 3. P-> 전체 수정
      */
