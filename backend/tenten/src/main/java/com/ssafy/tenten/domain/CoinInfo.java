@@ -23,4 +23,5 @@ public class CoinInfo {
     private Float coinPrice;
 
     private LocalDateTime date;
+
 }
