@@ -4,20 +4,24 @@ import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.FirebaseMessagingException;
 import com.google.firebase.messaging.Message;
 import com.google.firebase.messaging.Notification;
+import com.ssafy.tenten.api.repository.UserRepository;
+import com.ssafy.tenten.domain.User;
 import com.ssafy.tenten.dto.FCMNotificationRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
 public class FCMNotificationService {
 
     private final FirebaseMessaging firebaseMessaging;
-    private final UsersRepository usersRepository;
+    private final UserRepository userRepository;
 
     public String sendNotificationByToken(FCMNotificationRequestDto requestDto) {
 
-        Optional<Users> user = usersRepository.findById(requestDto.getTargetUserId());
+        Optional<User> user = userRepository.findById(requestDto.getTargetUserId());
 
         if (user.isPresent()) {
             if (user.get().getFirebaseToken() != null) {
