@@ -1,6 +1,7 @@
 package com.ssafy.tenten.domain;
 
 import lombok.*;
+import org.hibernate.annotations.DynamicInsert;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -9,6 +10,7 @@ import java.time.LocalDate;
 
 @Entity
 @Getter
+@DynamicInsert
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class VoteHistory {
     @Id
@@ -27,8 +29,6 @@ public class VoteHistory {
     @JoinColumn(name = "chosen")
     private User chosen;
 
-    @CreatedDate
-    @DateTimeFormat(pattern = "yyyyMMdd")
     private Long voteTime;
 
     @Builder
@@ -36,6 +36,7 @@ public class VoteHistory {
         this.questionId = question;
         this.userId = userId;
         this.chosen = chosen;
+        this.voteTime = System.currentTimeMillis()/1000L;
     }
 
 }

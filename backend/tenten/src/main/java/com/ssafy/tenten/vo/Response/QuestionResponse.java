@@ -17,4 +17,5 @@ public class QuestionResponse {
     private String image;
     private Long qtnId;
     private Long userId;
+
 }

@@ -11,5 +11,8 @@ public class VoteResponse {
     private final String image;
     private final Long qtnId;
     private final Long userId;
+    private final Long chosen;
+    private final Long time;
+    private final String name;
 
 }

@@ -28,12 +28,12 @@ public class VoteCount {
     @JoinColumn(name = "user_id")
     private User userId;
 
-    @ColumnDefault("0")
     private Long voteCnt;
     @Builder
     VoteCount(Question question, User userId){
         this.questionId = question;
         this.userId = userId;
+        this.voteCnt = 1L;
     }
 
     public void updateVoteCount(){

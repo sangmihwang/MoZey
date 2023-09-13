@@ -47,9 +47,8 @@ public class VoteController {
     public ResponseEntity<?> postVote(@RequestBody VoteRequest voteRequest){
         mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
         VoteDto voteDto = mapper.map(voteRequest, VoteDto.class);
-        voteService.createVote(voteDto);
 
-        return ResponseEntity.ok().build();
+        return SuccessResponseEntity.toResponseEntity("투표 결과 등록 완료", voteService.createVote(voteDto));
     }
 
     /**
@@ -58,8 +57,6 @@ public class VoteController {
      */
     @GetMapping("/votes/candidates/{userId}")
     public ResponseEntity<?> getCandidates(){
-
-
 
         return ResponseEntity.ok().build();
     }
