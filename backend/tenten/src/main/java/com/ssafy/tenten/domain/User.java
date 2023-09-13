@@ -3,8 +3,10 @@ package com.ssafy.tenten.domain;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.*;
-import java.util.Date;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 @Entity
 @Getter @Setter
@@ -14,6 +16,10 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 //    @Column(updatable = false)
     private Long userId;
+
+    public String getFirebaseToken() {
+        return "asd";
+    }
 //
 //    @Column
 //    private String gender;
