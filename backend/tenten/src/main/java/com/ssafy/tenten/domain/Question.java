@@ -30,10 +30,11 @@ public class Question {
     private String img;
 
     @Builder
-    Question(QuestionDto questionDto,User userId){
+    Question(QuestionDto questionDto, User userId){
         this.userId = userId;
         this.qtnContent = questionDto.getQtnContent();
         this.img = questionDto.getImage();
     }
+
 
 }
