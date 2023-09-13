@@ -1,5 +1,6 @@
 package com.ssafy.tenten.domain;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,13 +9,17 @@ import java.util.Date;
 
 @Entity
 @Getter @Setter
-@Table(name = "USER")
+@Table(name = "MEMBER")
+@Builder
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id", updatable = false)
     private Long userId;
+
+    @Column(name = "email")
+    private String email;
 
     @Column(name = "gender")
     private String gender;
@@ -54,4 +59,7 @@ public class User {
 
     @Column(name = "role")
     private String role;
+
+    private String provider;
+    private String providerId;
 }
