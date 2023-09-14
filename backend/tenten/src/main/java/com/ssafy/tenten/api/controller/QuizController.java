@@ -8,10 +8,11 @@ import com.ssafy.tenten.vo.Response.QuizResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -25,13 +26,15 @@ public class QuizController {
     private final QuizService quizService;
     private final ModelMapper mapper;
 
-
-    public ResponseEntity<List<QuizResponse>> getQuizzesByDate() {
-        List<QuizDto> quizDtos = quizService.getQuizzesByDate(LocalDateTime.now());
-        List<QuizResponse> quizResponses = quizDtos.stream()
-                .map(quizDto -> mapper.map(quizDto, QuizResponse.class))
-                .collect(Collectors.toList());
-        return ResponseEntity.ok(quizResponses);
+    @GetMapping("/quiz")
+    public ResponseEntity<?> getQuizzesByDate(@RequestParam("date") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date) {
+        List<QuizDto> quizDtos = quizService.getQuizzesByDate(date.atStartOfDay());
+        return ResponseEntity.ok(quizDtos);
+    }
+    @PostMapping("/quiz")
+    public ResponseEntity<?> postQuiz(@RequestBody QuizDto quizDto){
+        quizService.createQuiz(quizDto);
+        return SuccessResponseEntity.toResponseEntity("퀴즈 등록 완료",null);
     }
 
 }
