@@ -51,7 +51,9 @@ public class VoteServiceImp implements VoteService{
                 .userId(userId)
                 .chosen(chosenId)
                 .build();
+        System.out.println("=================================");
         voteHistrotyRepository.save(voteHistory);
+        System.out.println("=================================");
 
         VoteCount voteCount = null;
         if(!exists){
@@ -60,13 +62,13 @@ public class VoteServiceImp implements VoteService{
                     .question(questionId)
                     .userId(chosenId)
                     .build();
+            voteCntRepository.save(voteCount);
         }else{
-            voteCount = voteCntRepository.findByQuestionId_QtnIdAndUserId_UserId(voteDto.getQtnId(),voteDto.getChosen());
+            voteCount = voteCntRepository.findByQutAndCho(voteDto.getQtnId(),voteDto.getChosen());
             voteCount.updateVoteCount();
         }
 
-
-        voteCntRepository.save(voteCount);
+        System.out.println(voteCount.getQuestionId().getQtnContent());
         return   VoteResponse.builder()
                 .time(voteHistory.getVoteTime())
                 .image(voteHistory.getQuestionId().getImg())
