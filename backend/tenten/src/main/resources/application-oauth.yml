@@ -1,0 +1,25 @@
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          kakao:
+            client-id: fcb05990a84d7cbf01eef4a5d55f8439
+            redirect-uri: http://www.jeongchaegi.com:8081/login/oauth2/code/kakao
+            client-authentication-method: POST
+            client-secret: YKLc4lQmIWKZSzhPcbVeUJckYogzlb0y
+            authorization-grant-type: authorization_code
+            #            response-type: code
+
+            scope:
+              - profile_nickname
+              - account_email
+              - profile_image
+            client_name: kakao
+
+        provider:
+          kakao:
+            authorization-uri: https://kauth.kakao.com/oauth/authorize
+            token-uri: https://kauth.kakao.com/oauth/token
+            user-info-uri: https://kapi.kakao.com/v2/user/me
+            user-name-attribute: id
