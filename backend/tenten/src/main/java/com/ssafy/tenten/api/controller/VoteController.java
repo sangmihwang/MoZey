@@ -40,7 +40,7 @@ public class VoteController {
         return SuccessResponseEntity.toResponseEntity("투표 질문 생성 완료",voteResponses);
     }
     /**
-     * 투표 결과 등록 3.2
+     * 투표 결과 등록 3.2 - 완료
      * 선택 받은 사람의 받은 횟수 늘리기 + 투표 내역 생성 하기
      */
     @PostMapping("/votes")
