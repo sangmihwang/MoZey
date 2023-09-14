@@ -3,6 +3,7 @@ package com.ssafy.tenten.api.service;
 import com.ssafy.tenten.dto.QuestionDto;
 import com.ssafy.tenten.vo.Request.QuestionRequest;
 import com.ssafy.tenten.vo.Response.QuestionResponse;
+import org.springframework.cache.annotation.Cacheable;
 
 import java.util.List;
 

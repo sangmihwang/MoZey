@@ -9,6 +9,7 @@ import com.ssafy.tenten.exception.CustomException;
 import com.ssafy.tenten.vo.Request.QuestionRequest;
 import com.ssafy.tenten.vo.Response.QuestionResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -55,6 +56,7 @@ public class QuestionServiceImpl implements QuestionService{
     }
 
     @Override
+    @Cacheable(value = "quesitons", key = "question"+"#id")
     public List<QuestionResponse> getQuestions(Long id) {
         List<Question> questions = questionRepository.findByUserId(id).orElseThrow(
                 () -> new CustomException(USER_NOT_FOUND)
