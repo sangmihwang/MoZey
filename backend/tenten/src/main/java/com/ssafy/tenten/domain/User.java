@@ -1,8 +1,6 @@
 package com.ssafy.tenten.domain;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -10,7 +8,9 @@ import java.util.Date;
 @Entity
 @Getter @Setter
 @Table(name = "MEMBER")
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Builder
+@AllArgsConstructor
 public class User {
 
     @Id
