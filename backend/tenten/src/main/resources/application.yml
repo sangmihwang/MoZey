@@ -2,12 +2,15 @@ server:
   port: 8080
 
 spring:
+  redis:
+    host: 172.26.3.193
+    port: 6379
   profiles:
     include: oauth
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     # url: jdbc:mysql://j9a510.p.ssafy.io:3306/test?serverTimezone=Asia/Seoul
-    url: jdbc:mysql://localhost:3306/root?serverTimezone=Asia/Seoul
+    url: jdbc:mysql://localhost:3306/tenten?serverTimezone=Asia/Seoul
     username: A510
     password: 3jbhrVyqstWs9ud
     # JPA

@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,6 +38,7 @@ public class QuestionController {
      * 질문 신청 내역 조회 - 완료
      * 사용자
      */
+
     @GetMapping("/questions/users/{userId}/")
     public ResponseEntity<?> getAppQuestion(@PathVariable("userId") Long id){
 

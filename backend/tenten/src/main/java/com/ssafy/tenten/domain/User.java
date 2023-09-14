@@ -24,10 +24,10 @@ public class User {
     @Column(name = "gender")
     private String gender;
 
-    @Column(name = "img")
+    @Column(name = "image")
     private String image;
 
-    @Column(name = "username")
+    @Column(name = "name")
     private String name;
 
     @Column(name = "term")
@@ -36,7 +36,7 @@ public class User {
     @Column(name = "campus")
     private String campus;
 
-    @Column(name = "unit")
+    @Column(name = "group")
     private String group;
 
     @Column(name = "sub_yn")
