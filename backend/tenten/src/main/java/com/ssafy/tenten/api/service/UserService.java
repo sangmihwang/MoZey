@@ -1,6 +1,8 @@
 package com.ssafy.tenten.api.service;
 
 import com.ssafy.tenten.domain.User;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
