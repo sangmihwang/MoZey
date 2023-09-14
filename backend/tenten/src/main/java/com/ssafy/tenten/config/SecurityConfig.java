@@ -18,6 +18,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
+    private final UserService userService;
+
     @Autowired
     private PrincipalOauth2UserService principalOauth2UserService;
 
@@ -31,6 +33,7 @@ public class SecurityConfig {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS) // jwt 사용하는 경우 씀
                 .and()
                 .authorizeRequests()
+//                .anyRequest().permitAll()
                 .antMatchers("/api/user/join/**", "/api/user/login").permitAll()
                 .antMatchers("/api/**").authenticated()
                 .and()
@@ -39,9 +42,12 @@ public class SecurityConfig {
                 .oauth2Login()
                 .loginPage("/login")
                 .userInfoEndpoint()
-                .userService(principalOauth2UserService);
-//                .addFilterBefore(new JwtFilter(userService, secretKey), UsernamePasswordAuthenticationFilter.class)
+                .userService(principalOauth2UserService)
+//                .addFilterBefore(new JwtFilter(userService), UsernamePasswordAuthenticationFilter.class)
                 ;
+
+        httpSecurity.addFilterBefore(new JwtFilter(userService), UsernamePasswordAuthenticationFilter.class);
+//        httpSecurity.addFilter(new JwtFilter(userService));
         return httpSecurity.build();
     }
 }

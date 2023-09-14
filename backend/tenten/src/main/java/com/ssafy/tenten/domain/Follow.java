@@ -10,8 +10,11 @@ import javax.persistence.*;
 public class Follow {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "follow_id", updatable = false)
+    private Long followId;
+
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "receiver_id", updatable = false)
+    @JoinColumn(name = "sender_id", updatable = false)
     private User senderId;
 
     @ManyToOne(fetch = FetchType.LAZY)
