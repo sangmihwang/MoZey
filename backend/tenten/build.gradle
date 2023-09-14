@@ -31,8 +31,10 @@ repositories {
 }
 
 dependencies {
-
+	//	파이어베이스
 	implementation 'com.google.firebase:firebase-admin:9.2.0'
+	// okhttp의존성 추가
+	implementation 'com.squareup.okhttp3:okhttp:4.10.0'
 	implementation 'org.springframework.boot:spring-boot-starter-validation' // 유효성 검사
 
 	// jwt
