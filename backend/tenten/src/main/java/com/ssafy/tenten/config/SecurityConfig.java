@@ -35,7 +35,7 @@ public class SecurityConfig {
                 .authorizeRequests()
 //                .anyRequest().permitAll()
                 .antMatchers("/api/user/join/**", "/api/user/login").permitAll()
-                .antMatchers("/api/**").authenticated()
+                .antMatchers("/api/**").permitAll()
                 .and()
 
                 // oauth 인증 후 리디렉션할 URI 지정

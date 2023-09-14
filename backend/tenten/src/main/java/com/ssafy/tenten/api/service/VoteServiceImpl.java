@@ -13,19 +13,17 @@ import com.ssafy.tenten.exception.CustomException;
 import com.ssafy.tenten.exception.ErrorCode;
 import com.ssafy.tenten.vo.Response.VoteResponse;
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
-public class VoteServiceImp implements VoteService{
+public class VoteServiceImpl implements VoteService{
 
     private final VoteCntRepository voteCntRepository;
     private final QuestionRepository questionRepository;
@@ -51,9 +49,7 @@ public class VoteServiceImp implements VoteService{
                 .userId(userId)
                 .chosen(chosenId)
                 .build();
-        System.out.println("=================================");
         voteHistrotyRepository.save(voteHistory);
-        System.out.println("=================================");
 
         VoteCount voteCount = null;
         if(!exists){
@@ -72,6 +68,9 @@ public class VoteServiceImp implements VoteService{
         return   VoteResponse.builder()
                 .time(voteHistory.getVoteTime())
                 .image(voteHistory.getQuestionId().getImg())
+                .name(voteCount.getUserId().getName())
+                .qtnId(voteDto.getQtnId())
+                .qtnContent(questionId.getQtnContent())
                 .build();
     }
 
