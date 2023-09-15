@@ -10,6 +10,9 @@ import com.ssafy.tenten.vo.Request.QuestionRequest;
 import com.ssafy.tenten.vo.Response.QuestionResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.redis.core.ListOperations;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,6 +28,7 @@ import static com.ssafy.tenten.exception.ErrorCode.USER_NOT_FOUND;
 public class QuestionServiceImpl implements QuestionService{
     private final QuestionRepository questionRepository;
     private final UserRepository userRepository;
+    private final RedisTemplate<String, String> redisTemplate;
     @Override
     @Transactional
     public void postQuestions(QuestionDto questionDto) {
@@ -56,8 +60,10 @@ public class QuestionServiceImpl implements QuestionService{
     }
 
     @Override
-    @Cacheable(value = "quesitons", key = "question"+"#id")
+//    @Cacheable(value = "quesitons", key = "'question'+#id",cacheManager = "testCacheManager")
     public List<QuestionResponse> getQuestions(Long id) {
+        ValueOperations<String, String> stringListValueOperations = redisTemplate.opsForValue();
+
         List<Question> questions = questionRepository.findByUserId(id).orElseThrow(
                 () -> new CustomException(USER_NOT_FOUND)
         );
@@ -70,11 +76,17 @@ public class QuestionServiceImpl implements QuestionService{
                         .status(a.getStatus())
                         .build())
                 .collect(Collectors.toList());
+        stringListValueOperations.set("question","sdfsd");
         return collect;
     }
 
     @Override
     public QuestionResponse getQuestion(Long qtnId) {
+        ValueOperations<String, String> stringListValueOperations = redisTemplate.opsForValue();
+        if(stringListValueOperations.get("question")!=null){
+            System.out.println("sfsdffsd");
+            return null;
+        }
         Question question = questionRepository.findById(qtnId).orElseThrow(
                 () -> new CustomException(QUESTION_NOT_FOUND)
         );
