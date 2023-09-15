@@ -2,7 +2,7 @@ package com.ssafy.tenten.api.repository;
 
 import com.ssafy.tenten.api.repository.querydsl.VoteRepositoryCustom;
 import com.ssafy.tenten.domain.VoteCount;
-import io.lettuce.core.dynamic.annotation.Param;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
