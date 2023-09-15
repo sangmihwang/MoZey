@@ -1,12 +1,13 @@
 package com.ssafy.tenten.domain;
 
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
-import java.util.Date;
 
 @Entity
-@Getter @Setter
+@Getter
+@Setter
 @Table(name = "MEMBER")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Builder
@@ -21,43 +22,44 @@ public class User {
     @Column(name = "email")
     private String email;
 
-    @Column(name = "gender")
+    @Column(nullable = false, columnDefinition = "CHAR(1)")
     private String gender;
 
-    @Column(name = "image")
+    @Column(name = "img")
     private String image;
 
-    @Column(name = "name")
+    @Column(name = "username")
     private String name;
 
-    @Column(name = "term")
+    @Column(columnDefinition = "CHAR(2)")
     private String term;
 
-    @Column(name = "campus")
+    @Column(columnDefinition = "CHAR(10)")
     private String campus;
 
-    @Column(name = "group")
+    @Column(name = "unit", columnDefinition = "CHAR(10)")
     private String group;
 
-    @Column(name = "sub_yn")
-    private int subYn;
+    @ColumnDefault("false")
+    @Column(columnDefinition = "TINYINT(1)")
+    private boolean subYn;
 
-    @Column(name = "sub_start_time")
-    private Date subStartTime;
+    @Column(nullable = false)
+    private Long subStartTime;
 
-    @Column(name = "point")
-    private int point;
+    @Column(nullable = false, columnDefinition = "BIGINT default '0'")
+    private Long point;
 
-    @Column(name = "coin1")
-    private int coin1;
+    @Column(nullable = false, columnDefinition = "BIGINT default '0'")
+    private Long coin1;
 
-    @Column(name = "coin2")
-    private int coin2;
+    @Column(nullable = false, columnDefinition = "BIGINT default '0'")
+    private Long coin2;
 
     @Column(name = "withdraw")
     private int withdraw;
 
-    @Column(name = "role")
+    @Column(nullable = false, columnDefinition = "char(10)")
     private String role;
 
     private String provider;
