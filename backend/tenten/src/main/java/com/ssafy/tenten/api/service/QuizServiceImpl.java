@@ -23,10 +23,10 @@ public class QuizServiceImpl implements QuizService {
     private final QuizRepository quizRepository;
 
     @Override
-    public List<QuizDto> getQuizzesByDate(LocalDateTime date) {
+    public List<QuizResponse> getQuizzesByDate(LocalDateTime date) {
         List<Quiz> quizzes = quizRepository.findAllByDate(date.toLocalDate());
         return quizzes.stream()
-                .map(quiz -> QuizDto.builder()
+                .map(quiz -> QuizResponse.builder()
                         .quizId(quiz.getQuizId())
                         .newsId(quiz.getNewsId()) // 이 부분 나중에 수정해야함
                         .question(quiz.getQuestion())

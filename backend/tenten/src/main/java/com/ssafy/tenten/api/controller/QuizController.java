@@ -28,7 +28,7 @@ public class QuizController {
 
     @GetMapping("/quiz")
     public ResponseEntity<?> getQuizzesByDate(@RequestParam("date") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date) {
-        List<QuizDto> quizDtos = quizService.getQuizzesByDate(date.atStartOfDay());
+        List<QuizResponse> quizDtos = quizService.getQuizzesByDate(date.atStartOfDay());
         return ResponseEntity.ok(quizDtos);
     }
     @PostMapping("/quiz")

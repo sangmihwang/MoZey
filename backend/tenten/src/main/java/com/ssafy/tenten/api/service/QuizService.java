@@ -6,7 +6,7 @@ import com.ssafy.tenten.vo.Response.QuizResponse;
 import java.time.LocalDateTime;
 import java.util.List;
 public interface QuizService {
-    List<QuizDto> getQuizzesByDate(LocalDateTime date);
+    List<QuizResponse> getQuizzesByDate(LocalDateTime date);
     void createQuiz(QuizDto quizDto);
 //    List<QuizDto> getAllQuizzes();
 }
