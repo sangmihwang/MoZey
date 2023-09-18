@@ -1,13 +1,7 @@
 package com.ssafy.tenten.api.service;
 
-import com.ssafy.tenten.api.repository.QuestionRepository;
-import com.ssafy.tenten.api.repository.UserRepository;
-import com.ssafy.tenten.api.repository.VoteCntRepository;
-import com.ssafy.tenten.api.repository.VoteHistrotyRepository;
-import com.ssafy.tenten.domain.Question;
-import com.ssafy.tenten.domain.User;
-import com.ssafy.tenten.domain.VoteCount;
-import com.ssafy.tenten.domain.VoteHistory;
+import com.ssafy.tenten.api.repository.*;
+import com.ssafy.tenten.domain.*;
 import com.ssafy.tenten.dto.VoteDto;
 import com.ssafy.tenten.exception.CustomException;
 import com.ssafy.tenten.exception.ErrorCode;
@@ -18,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -29,6 +24,7 @@ public class VoteServiceImpl implements VoteService{
     private final QuestionRepository questionRepository;
     private final VoteHistrotyRepository voteHistrotyRepository;
     private final UserRepository userRepository;
+    private final FollowRepository followRepository;
 //    private final ModelMapper mapper;
     @Override
     @Transactional
@@ -76,8 +72,8 @@ public class VoteServiceImpl implements VoteService{
 
     @Override
     public List<VoteResponse> suffleQuestion() {
-        List<Question> question = questionRepository.findByStatus('Y');
 
+        List<Question> question = questionRepository.findByStatus('Y');
         Collections.shuffle(question);
 
         List<Question> collect = question.stream()
@@ -93,5 +89,15 @@ public class VoteServiceImpl implements VoteService{
                         .qtnContent(a.getQtnContent())
                         .build())
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<VoteResponse> getVoteCandidates(Long userId) {
+        Optional<User> id = userRepository.findById(userId);
+        List<Follow> byReceiverId = followRepository.findByReceiverId(id.get());
+        for(Follow f : byReceiverId){
+            System.out.println(f.getSenderId().getUserId());
+        }
+        return null;
     }
 }

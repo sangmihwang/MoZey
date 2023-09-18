@@ -56,8 +56,8 @@ public class VoteController {
      * 윤상님 유저 만들어지면 만들기.
      */
     @GetMapping("/votes/candidates/{userId}")
-    public ResponseEntity<?> getCandidates(){
-
+    public ResponseEntity<?> getCandidates(@PathVariable("userId") Long userId){
+        voteService.getVoteCandidates(userId);
         return ResponseEntity.ok().build();
     }
 
