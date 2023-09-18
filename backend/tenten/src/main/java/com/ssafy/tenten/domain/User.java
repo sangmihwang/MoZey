@@ -16,18 +16,23 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id", updatable = false)
+    // 오류 없을 경우 주석 코드 삭제 예정
+//    @Column(name = "user_id", updatable = false)
+    @Column(updatable = false)
     private Long userId;
 
-    @Column(name = "email")
+    @Column
     private String email;
 
-    @Column(nullable = false, columnDefinition = "CHAR(1)")
-    private String gender;
+//    @Column(nullable = false, columnDefinition = "CHAR(1)")
+    @Column(nullable = false)
+    private char gender;
 
+    // SQL 예약어로 인한 컬럼명 변경
     @Column(name = "img")
     private String image;
 
+    // SQL 예약어로 인한 컬럼명 변경
     @Column(name = "username")
     private String name;
 
@@ -37,12 +42,13 @@ public class User {
     @Column(columnDefinition = "CHAR(10)")
     private String campus;
 
+    // SQL 예약어로 인한 컬럼명 변경
     @Column(name = "unit", columnDefinition = "CHAR(10)")
     private String group;
 
     @ColumnDefault("false")
     @Column(columnDefinition = "TINYINT(1)")
-    private boolean subYn;
+    private int subYn;
 
     @Column(nullable = false)
     private Long subStartTime;
@@ -56,7 +62,8 @@ public class User {
     @Column(nullable = false, columnDefinition = "BIGINT default '0'")
     private Long coin2;
 
-    @Column(name = "withdraw")
+//    @Column(name = "withdraw")
+    @Column
     private int withdraw;
 
     @Column(nullable = false, columnDefinition = "char(10)")
@@ -64,4 +71,11 @@ public class User {
 
     private String provider;
     private String providerId;
+
+    public void subscribe() {
+        this.subYn = 1;
+    }
+    public void unsubscribe() {
+        this.subYn = 0;
+    }
 }
