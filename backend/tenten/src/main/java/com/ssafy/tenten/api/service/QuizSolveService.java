@@ -10,6 +10,6 @@ import java.util.Optional;
 
 public interface QuizSolveService {
 //    QuizSolveDto getQuiz(Long quizSolveId);
-    Optional<QuizSolveResponse> getSolveRecordByUser(LocalDateTime date, Long userId);
+    Optional<QuizSolveResponse> getSolveRecordByUserAndDate(LocalDateTime date, Long userId);
     void createQuizSolve(QuizSolveDto quizSolveDto);
 }
