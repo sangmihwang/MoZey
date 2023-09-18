@@ -25,7 +25,7 @@ import static com.ssafy.tenten.exception.ErrorCode.QUESTION_NOT_FOUND;
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
-@Slf4j
+@Slf4j 
 public class QuestionController {
     private final VoteService voteService;
     private final VoteHistrotyRepository voteHistrotyRepository;

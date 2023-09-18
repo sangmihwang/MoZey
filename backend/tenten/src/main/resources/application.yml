@@ -3,7 +3,7 @@ server:
 
 spring:
   redis:
-    host: 172.26.3.193
+    host: j9a510.p.ssafy.io
     port: 6379
   profiles:
     include: oauth
