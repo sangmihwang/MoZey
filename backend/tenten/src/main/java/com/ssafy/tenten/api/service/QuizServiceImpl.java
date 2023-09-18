@@ -1,20 +1,16 @@
 package com.ssafy.tenten.api.service;
 
 import com.ssafy.tenten.api.repository.QuizRepository;
-import com.ssafy.tenten.dto.QuizDto;
 import com.ssafy.tenten.domain.Quiz;
-import com.ssafy.tenten.vo.Request.QuizRequest;
+import com.ssafy.tenten.dto.QuizDto;
 import com.ssafy.tenten.vo.Response.QuizResponse;
-import com.ssafy.tenten.exception.CustomException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
-import static com.ssafy.tenten.exception.ErrorCode.USER_NOT_FOUND;
 
 @Service
 @Transactional(readOnly = true)
@@ -53,7 +49,7 @@ public class QuizServiceImpl implements QuizService {
 //    public List<QuizResponse> getQuizByNewsId(Long newsId){
 //        List<Quiz> quizzes = quizRepository.findByNewsId(newsId);
 
-//        return quizzes.stream()
+    //        return quizzes.stream()
 //                .map(quiz -> QuizDto.builder()
 //                        .quizId(quiz.getQuizId())
 //                        .newsId(quiz.)
@@ -70,7 +66,7 @@ public class QuizServiceImpl implements QuizService {
 //      News news = newsRepository.findById()
         Quiz quiz = Quiz.builder()
                 .quizDto(quizDto)
-//                .newsId(newsId)
+//        .newsId(newsId)
                 .build();
         quizRepository.save(quiz);
 
