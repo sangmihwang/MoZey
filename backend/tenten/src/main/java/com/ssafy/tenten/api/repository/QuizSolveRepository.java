@@ -7,5 +7,5 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 
 public interface QuizSolveRepository extends JpaRepository<QuizSolve, Long> {
-    Optional<QuizSolve> findByUserIdAndDate(LocalDateTime date, Long userId);
+    Optional<QuizSolve> findByUserIdAndQuizId(Long userId, Long quizId);
 }

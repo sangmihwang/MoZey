@@ -23,11 +23,11 @@ public class QuizSolveController {
     private final ModelMapper mapper;
 
     @GetMapping("/quiz/success")
-    public ResponseEntity<?> getSolveRecordByUserAndDate(
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)LocalDateTime date,
-            @RequestParam Long userId) {
+    public ResponseEntity<?> getSolveRecordByUserAndQuiz(
+            @RequestParam Long userId,
+            @RequestParam Long quizId) {
 
-        Optional<QuizSolveResponse> quizSolveResponse = quizSolveService.getSolveRecordByUserAndDate(date, userId);
+        Optional<QuizSolveResponse> quizSolveResponse = quizSolveService.getSolveRecordByUserAndQuiz(userId, quizId);
         return ResponseEntity.ok(quizSolveResponse);
     }
 

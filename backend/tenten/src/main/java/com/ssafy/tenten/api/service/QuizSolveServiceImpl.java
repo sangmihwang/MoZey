@@ -26,8 +26,8 @@ public class QuizSolveServiceImpl implements QuizSolveService {
     private final UserRepository userRepository;
 
     @Override
-    public Optional<QuizSolveResponse> getSolveRecordByUserAndDate(LocalDateTime date, Long userId) {
-        Optional<QuizSolve> quizSolve = quizSolveRepository.findByUserIdAndDate(date, userId);
+    public Optional<QuizSolveResponse> getSolveRecordByUserAndQuiz(Long userId, Long quizId) {
+        Optional<QuizSolve> quizSolve = quizSolveRepository.findByUserIdAndQuizId(quizId, userId);
         if (quizSolve.isPresent()) {
             QuizSolve record = quizSolve.get();
             Quiz quiz = record.getQuizId();
