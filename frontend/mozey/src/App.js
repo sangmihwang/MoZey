@@ -1,12 +1,8 @@
-import { useEffect } from "react";
-import { fireStore } from "./firebase";
-
+import { useEffect, useState } from "react";
+import "./App.css";
+import {} from "./config/firebase";
 function App() {
-  useEffect(() => {
-    console.log(fireStore);
-  });
-
-  return <div className="App">{fireStore._databaseId.projectId}</div>;
+  return <div className="App">asd</div>;
 }
 
 export default App;
