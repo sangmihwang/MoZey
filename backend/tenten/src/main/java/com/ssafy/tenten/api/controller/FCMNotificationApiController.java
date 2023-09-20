@@ -9,11 +9,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+
+// 컨트롤러는 연결시켜주는거, /aaa 로 가줘
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/v1/notification")
 public class FCMNotificationApiController {
-
     private final FCMNotificationService fcmNotificationService;
 
     @PostMapping()
@@ -21,3 +22,4 @@ public class FCMNotificationApiController {
         return fcmNotificationService.sendNotificationByToken(requestDto);
     }
 }
+
