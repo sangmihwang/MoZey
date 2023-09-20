@@ -80,7 +80,7 @@ public class User {
 
     private String provider;
     private String providerId;
-
+    private String kakaoToken;
 
     private String firebaseToken;
 
