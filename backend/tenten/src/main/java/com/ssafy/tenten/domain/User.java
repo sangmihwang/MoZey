@@ -4,6 +4,7 @@ import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
+import java.time.Instant;
 
 @Entity
 @Getter
@@ -53,6 +54,13 @@ public class User {
     @Column(nullable = false)
     private Long subStartTime;
 
+    @PrePersist
+    public void prePersist() {
+        if (subStartTime == null) {
+            subStartTime = Instant.now().getEpochSecond();
+        }
+    }
+
     @Column(nullable = false, columnDefinition = "BIGINT default '0'")
     private Long point;
 
@@ -62,11 +70,12 @@ public class User {
     @Column(nullable = false, columnDefinition = "BIGINT default '0'")
     private Long coin2;
 
-//    @Column(name = "withdraw")
     @Column
+    @ColumnDefault("1")
     private int withdraw;
 
     @Column(nullable = false, columnDefinition = "char(10)")
+    @ColumnDefault("USER")
     private String role;
 
     private String provider;

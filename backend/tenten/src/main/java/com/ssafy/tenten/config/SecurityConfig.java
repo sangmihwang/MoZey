@@ -33,9 +33,9 @@ public class SecurityConfig {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS) // jwt 사용하는 경우 씀
                 .and()
                 .authorizeRequests()
-//                .anyRequest().permitAll()
-                .antMatchers("/api/user/join/**", "/api/user/login").permitAll()
-                .antMatchers("/api/**").permitAll()
+                .anyRequest().permitAll()
+//                .antMatchers("/api/user/join/**", "/api/user/login").permitAll()
+//                .antMatchers("/api/**").permitAll()
                 .and()
 
                 // oauth 인증 후 리디렉션할 URI 지정
