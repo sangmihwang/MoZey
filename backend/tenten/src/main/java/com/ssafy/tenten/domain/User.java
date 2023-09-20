@@ -15,8 +15,6 @@ import java.time.Instant;
 @AllArgsConstructor
 public class User {
 
-    User person = new User("gsdfgsdf","asdasasdsa");
-    person.setId("gsdfgsdf")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     // 오류 없을 경우 주석 코드 삭제 예정
@@ -82,25 +80,16 @@ public class User {
 
     private String provider;
     private String providerId;
-    private String kakaoToken;
 
     private String firebaseToken;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-    private String firebaseToken;
-
-=======
-=======
->>>>>>> 086f5a2be2c6730e7f724ace96797ccc523e83f7
     public void subscribe() {
         this.subYn = 1;
     }
     public void unsubscribe() {
         this.subYn = 0;
     }
-<<<<<<< HEAD
->>>>>>> da8f9aa9add76949ab9f9068004b340be7a6ac5e
-=======
->>>>>>> 086f5a2be2c6730e7f724ace96797ccc523e83f7
+
+    public void setKakaoToken(String tokenValue) {
+    }
 }
