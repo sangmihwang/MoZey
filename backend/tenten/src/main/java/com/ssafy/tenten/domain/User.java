@@ -81,6 +81,9 @@ public class User {
     private String provider;
     private String providerId;
 
+
+    private String firebaseToken;
+
     public void subscribe() {
         this.subYn = 1;
     }
