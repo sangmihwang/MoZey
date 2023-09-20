@@ -4,7 +4,6 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
@@ -14,7 +13,8 @@ import javax.persistence.*;
 @DynamicInsert
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "VOTE_COUNT")
-public class VoteCount {
+public class
+VoteCount {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "vote_cnt_id")
