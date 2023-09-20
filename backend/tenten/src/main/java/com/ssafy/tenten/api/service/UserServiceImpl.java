@@ -53,14 +53,10 @@ public class UserServiceImpl implements UserService{
     // 추천 친구 조회
     @Override
     public List<RecommendUserResponse> recommendFriends(Long userId) {
-        System.out.println(userId);
         User user = userRepository.findByUserId(userId);
-        System.out.println("Asdfasdf");
-        System.out.println(user.toString());
         String campus = user.getCampus();
         String group = user.getGroup();
         String term = user.getTerm();
-        System.out.println(campus+ " "+ group+ " " +term);
         List<User> list = userRepository.findAllByCampusAndTermAndGroupAndUserIdNot(campus, term, group, userId);
         System.out.println(list);
         List<RecommendUserResponse> userResponses = (List<RecommendUserResponse>) list.stream()

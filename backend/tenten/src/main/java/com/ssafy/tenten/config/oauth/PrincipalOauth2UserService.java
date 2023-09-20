@@ -12,6 +12,7 @@ import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -28,7 +29,7 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
         // userRequest 정보 -> loadUser 함수 호출 -> 구글로부터 회원 프로필 받아준다
         System.out.println("getAttributes : " + super.loadUser(userRequest).getAttributes());
 
-        OAuth2User oAuth2User = super.loadUser(userRequest);
+        OAuth2User oAuth2User = super.loadUser(userRequest); // 소셜 로그인의 회원 프로필 조회
 
         return processOAuth2User(userRequest, oAuth2User);
     }
@@ -47,11 +48,13 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
                 userRepository.findByProviderAndProviderId(oAuth2UserInfo.getProvider(), oAuth2UserInfo.getProviderId());
 
         User user;
+
+        // 유저가 이미 가입되있으면
         if (userOptional.isPresent()) {
             user = userOptional.get();
             // user가 존재하면 update 해주기
-            user.setEmail(oAuth2UserInfo.getEmail());
-            userRepository.save(user);
+//            user.setEmail(oAuth2UserInfo.getEmail());
+//            userRepository.save(user);
         } else {
             // user의 패스워드가 null이기 때문에 OAuth 유저는 일반적인 로그인을 할 수 없음.
             user = User.builder()
@@ -60,10 +63,11 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
                     .role("USER")
                     .provider(oAuth2UserInfo.getProvider())
                     .providerId(oAuth2UserInfo.getProviderId())
+                    .image((String) ((Map) oAuth2User.getAttributes().get("properties")).get("thumbnail_image"))
                     .build();
-            userRepository.save(user);
         }
-
+        user.setKakaoToken(userRequest.getAccessToken().getTokenValue());
+        userRepository.save(user);
         return new PrincipalDetails(user, oAuth2User.getAttributes());
     }
 
