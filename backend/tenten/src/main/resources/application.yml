@@ -9,7 +9,7 @@ spring:
     include: oauth
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    # url: jdbc:mysql://j9a510.p.ssafy.io:3306/test?serverTimezone=Asia/Seoul
+    #url: jdbc:mysql://j9a510.p.ssafy.io:3306/test?serverTimezone=Asia/Seoul
     url: jdbc:mysql://localhost:3306/tenten?serverTimezone=Asia/Seoul
     username: A510
     password: 3jbhrVyqstWs9ud
