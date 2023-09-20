@@ -23,4 +23,9 @@ public class Follow {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "receiver_id", updatable = false)
     private User receiverId;
+
+    public Follow(User from, User to) {
+        this.senderId = from;
+        this.receiverId = to;
+    }
 }
