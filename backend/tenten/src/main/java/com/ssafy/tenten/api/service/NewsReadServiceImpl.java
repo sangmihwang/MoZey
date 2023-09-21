@@ -21,26 +21,14 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class NewsReadServiceImpl implements NewsReadService {
-
-    @Override
-    public NewsReadDto getNews(Long newsReadId) {
-        return null;
-    }
-
-    @Override
-    public Optional<NewsReadResponse> getReadRecordByUserAndNews(Long userId, Long newsId) {
-        return Optional.empty();
-    }
-
-    @Override
-    public void createNewsRead(NewsReadDto newsReadDto) {
-
-    }
-}
-
     private final NewsReadRepository newsReadRepository;
     private final NewsRepository newsRepository;
     private final UserRepository userRepository;
+    @Override
+    public NewsReadResponse getNews(Long newsId) {
+        return newsRepository.findByNewsId(newsId);
+//                .orElseThrow(() -> new CustomException(ErrorCode.NEWS_NOT_FOUND));
+    }
 
     @Override
     public Optional<NewsReadResponse> getReadRecordByUserAndNews(Long userId, Long newsId) {
@@ -73,6 +61,9 @@ public class NewsReadServiceImpl implements NewsReadService {
         newsRead.setNewsId(news);
 
         newsReadRepository.save(newsRead);
-
     }
+}
+
+
+
 

@@ -7,7 +7,7 @@ import com.ssafy.tenten.vo.Response.NewsReadResponse;
 import java.util.Optional;
 
 public interface NewsReadService {
-    NewsReadDto getNews(Long newsReadId);
+    Optional<NewsReadResponse> getNews(Long newsReadId);
     Optional<NewsReadResponse> getReadRecordByUserAndNews(Long userId, Long newsId);
     void createNewsRead(NewsReadDto newsReadDto);
 }
