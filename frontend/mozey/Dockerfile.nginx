@@ -1,0 +1,14 @@
+# 사용할 기본 이미지를 지정 -> Nginx 이미지
+FROM nginx
+
+# Nginx 설정 파일을 복사
+COPY nginx.conf /etc/nginx/nginx.conf
+
+# React 애플리케이션 빌드 결과물을 Nginx의 정적 파일 디렉토리로 복사
+COPY build/ /usr/share/nginx/html
+
+# Nginx 컨테이너가 80번 포트를 사용하도록 설정
+EXPOSE 80
+
+# 컨테이너가 실행될 때 Nginx를 시작
+CMD ["nginx", "-g", "daemon off;"]

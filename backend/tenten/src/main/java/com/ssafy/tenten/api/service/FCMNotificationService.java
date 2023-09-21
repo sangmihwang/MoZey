@@ -18,7 +18,6 @@ public class FCMNotificationService {
 
     public String sendNotificationByToken(FCMNotificationRequestDto requestDto) throws FirebaseMessagingException {
 
-//        Optional<User> user = usersRepository.findById(requestDto.getTargetUserId());
 
         Notification notification = Notification.builder()
                 .setTitle("임병국")
@@ -27,7 +26,7 @@ public class FCMNotificationService {
                 .build();
 
         firebaseMessaging.send(Message.builder()
-                        .setToken("ezFz9PqdOzqEeD8Id-MklV:APA91bGSDfro_OpJQOFzIaYVG3Q5uNVfDvsqzJEHL3pTaNCrwWhWF-fikzSruG19GfivzfHYQqwYNUZy1dLNzd8vYUHmWbjOJ2QlFyYCS9XwP9vHTlTauhSMfizJ8075z8a_bN0YZerU")
+                        .setToken("cM_PuBkS20UfFPuzLibvD9:APA91bHjxTaqZZYNwMuOZ4IreuCunniRbjje7E2CQJ4wZ5UGFevOsAQdy91s_j7LMQzKMxlmRVZ9ElqWMysdCzPKeFQj657Psdaa39fJ94ldU_HqPEKWhWY3kul3Y1Ef3k2zHV3xdFID")
                         .setNotification(notification)
                         .build());
 
