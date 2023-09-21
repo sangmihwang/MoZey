@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Builder;
 import lombok.Getter;
 
+import java.time.LocalDateTime;
+
 
 @Getter
 @Builder
@@ -13,5 +15,5 @@ public class NewsResponse {
     private final String title;
     private final String content;
     private final String company;
-    private final String date;
+    private final LocalDateTime date;
 }

@@ -33,7 +33,7 @@ public class NewsController {
     }
     @PostMapping("/news")
     public ResponseEntity<?> postNews(@RequestBody NewsDto newsDto){
-        newsService.createNews(newsDto);
+        newsService.postNews(newsDto);
         return SuccessResponseEntity.toResponseEntity("뉴스 등록 완료",null);
     }
 

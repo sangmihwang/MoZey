@@ -31,9 +31,9 @@ public class NewsReadController {
         return ResponseEntity.ok(newsReadResponse);
     }
 
-    public ResponseEntity<?> createNewsRead(
+    public ResponseEntity<?> postNewsRead(
             @RequestBody NewsReadDto newsReadDto) {
-        newsReadService.createNewsRead(newsReadDto);
+        newsReadService.postNewsRead(newsReadDto);
         return SuccessResponseEntity.toResponseEntity("뉴스 읽기 등록 완료", null);
     }
 

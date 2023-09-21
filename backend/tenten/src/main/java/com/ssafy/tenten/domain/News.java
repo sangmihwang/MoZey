@@ -5,6 +5,8 @@ import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
+
 @Entity
 @Getter
 @DynamicInsert
@@ -25,7 +27,7 @@ public class News {
     private String company;
 
     @Column
-    private String date;
+    private LocalDateTime date;
 
     @Builder
     News(NewsDto newsDto){

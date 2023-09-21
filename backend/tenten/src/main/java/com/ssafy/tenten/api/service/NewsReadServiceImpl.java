@@ -24,11 +24,6 @@ public class NewsReadServiceImpl implements NewsReadService {
     private final NewsReadRepository newsReadRepository;
     private final NewsRepository newsRepository;
     private final UserRepository userRepository;
-    @Override
-    public NewsReadResponse getNews(Long newsId) {
-        return newsRepository.findByNewsId(newsId);
-//                .orElseThrow(() -> new CustomException(ErrorCode.NEWS_NOT_FOUND));
-    }
 
     @Override
     public Optional<NewsReadResponse> getReadRecordByUserAndNews(Long userId, Long newsId) {
@@ -50,7 +45,7 @@ public class NewsReadServiceImpl implements NewsReadService {
     }
 
     @Override
-    public void createNewsRead(NewsReadDto newsReadDto) {
+    public void postNewsRead(NewsReadDto newsReadDto) {
         User user = userRepository.findById(newsReadDto.getUserId())
                 .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
         News news = newsRepository.findById(newsReadDto.getNewsId())
