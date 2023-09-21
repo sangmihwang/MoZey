@@ -14,7 +14,7 @@ const MainContentWrapper = styled("div")({
 });
 
 const TopSection = styled("div")({
-  backgroundColor: "#EBE09B",
+  backgroundColor: "#FFF4DA",
   flexGrow: 1,
   display: "flex",
   flexDirection: "column",
@@ -24,11 +24,12 @@ const TopSection = styled("div")({
 
 const LogoArea = styled("div")({
   height: "150px",
-  marginTop: "100px",
+  margin: "50px",
+  padding: "40px",
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
-  backgroundColor: "#EBE09B",
+  backgroundColor: "#FFF4DA",
   marginBottom: "20px",
 });
 
@@ -50,6 +51,8 @@ function MainContent() {
             alt="Logo"
             style={{ width: "350px", height: "auto" }}
           />
+        </LogoArea>
+        <LogoArea>
           <img
             src={thinker}
             alt="Thinker"
