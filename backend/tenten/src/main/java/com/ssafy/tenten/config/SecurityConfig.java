@@ -45,7 +45,7 @@ public class SecurityConfig {
 
                 // oauth 인증 후 리디렉션할 URI 지정
                 .oauth2Login()
-                .loginPage("/login")
+//                .loginPage("/login")
                 .userInfoEndpoint()
                 .userService(principalOauth2UserService)
 //                .addFilterBefore(new JwtFilter(userService), UsernamePasswordAuthenticationFilter.class)
