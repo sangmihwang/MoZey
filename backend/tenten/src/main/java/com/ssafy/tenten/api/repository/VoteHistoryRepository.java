@@ -5,6 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface VoteHistrotyRepository extends JpaRepository<VoteHistory,Long> {
+public interface VoteHistoryRepository extends JpaRepository<VoteHistory,Long> {
     List<VoteHistory> findByUserId(String userId);
 }
