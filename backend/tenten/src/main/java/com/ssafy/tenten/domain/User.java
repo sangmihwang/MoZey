@@ -80,7 +80,6 @@ public class User {
 
     private String provider;
     private String providerId;
-    private String kakaoToken;
 
     private String firebaseToken;
 
@@ -89,5 +88,8 @@ public class User {
     }
     public void unsubscribe() {
         this.subYn = 0;
+    }
+
+    public void setKakaoToken(String tokenValue) {
     }
 }
