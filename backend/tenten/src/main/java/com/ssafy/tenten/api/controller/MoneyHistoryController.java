@@ -3,6 +3,7 @@ package com.ssafy.tenten.api.controller;
 import com.ssafy.tenten.api.service.MoneyHistoryService;
 import com.ssafy.tenten.dto.MoneyHistoryDto;
 import com.ssafy.tenten.exception.SuccessResponseEntity;
+import com.ssafy.tenten.vo.Request.MoneyHistoryRequest;
 import com.ssafy.tenten.vo.Response.MoneyHistoryResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -29,22 +30,22 @@ public class MoneyHistoryController {
     /*
     * 코인 히스토리 등록
     */
-    @PostMapping("/coins/exchange/{userId}/{fromCoinName}/{toCoinName}/{minusCoinAmount}/{plusCoinAmount}")
-    public ResponseEntity<?> postHistory(@PathVariable("userId") Long userId, @PathVariable("fromCoinName") String fromCoinName, @PathVariable("toCoinName") String toCoinName, @PathVariable("minusCoinAmount") Long minusCoinAmount, @PathVariable("plusCoinAmount") Long plusCoinAmount){
+    @PostMapping("/coins/exchange/{userId}")
+    public ResponseEntity<?> postHistory(@PathVariable("userId") Long userId, @RequestBody MoneyHistoryRequest moneyHistoryRequest){
         MoneyHistoryDto moneyHistoryDto1 = new MoneyHistoryDto();
         moneyHistoryDto1.setUserId(userId);
-        moneyHistoryDto1.setCoinName(fromCoinName);
+        moneyHistoryDto1.setCoinName(moneyHistoryRequest.getFromCoinName());
         moneyHistoryDto1.setCoinChangeDate(System.currentTimeMillis()/1000L);
-        moneyHistoryDto1.setCoinChangeAmount(minusCoinAmount);
+        moneyHistoryDto1.setCoinChangeAmount(moneyHistoryRequest.getMinusCoinAmount());
         moneyHistoryDto1.setTransactionType("Redeem");
         moneyHistoryService.createMoneyHistory(moneyHistoryDto1);
 
-        if(!toCoinName.equals("None")){
+        if(!moneyHistoryRequest.getToCoinName().equals("None")){
             MoneyHistoryDto moneyHistoryDto2 = new MoneyHistoryDto();
             moneyHistoryDto2.setUserId(userId);
-            moneyHistoryDto2.setCoinName(toCoinName);
+            moneyHistoryDto2.setCoinName(moneyHistoryRequest.getToCoinName());
             moneyHistoryDto2.setCoinChangeDate(System.currentTimeMillis()/1000L);
-            moneyHistoryDto2.setCoinChangeAmount(minusCoinAmount);
+            moneyHistoryDto2.setCoinChangeAmount(moneyHistoryRequest.getPlusCoinAmount());
             moneyHistoryDto2.setTransactionType("Earn");
             moneyHistoryService.createMoneyHistory(moneyHistoryDto2);
         }
