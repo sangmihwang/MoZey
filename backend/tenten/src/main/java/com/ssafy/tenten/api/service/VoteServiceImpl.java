@@ -93,8 +93,7 @@ public class VoteServiceImpl implements VoteService{
 
     @Override
     public List<VoteResponse> getVoteCandidates(Long userId) {
-        Optional<User> id = userRepository.findById(userId);
-        List<Follow> byReceiverId = followRepository.findByReceiverId(id.get());
+        List<Follow> byReceiverId = followRepository.findBySenderId_UserId(userId);
         for(Follow f : byReceiverId){
             System.out.println(f.getSenderId().getUserId());
         }
