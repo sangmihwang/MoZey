@@ -3,7 +3,7 @@ package com.ssafy.tenten.api.service;
 import com.ssafy.tenten.api.repository.QuestionRepository;
 import com.ssafy.tenten.api.repository.UserRepository;
 import com.ssafy.tenten.api.repository.VoteCntRepository;
-import com.ssafy.tenten.api.repository.VoteHistrotyRepository;
+import com.ssafy.tenten.api.repository.VoteHistoryRepository;
 import com.ssafy.tenten.domain.Question;
 import com.ssafy.tenten.domain.User;
 import com.ssafy.tenten.domain.VoteCount;
@@ -27,7 +27,7 @@ public class VoteServiceImpl implements VoteService{
 
     private final VoteCntRepository voteCntRepository;
     private final QuestionRepository questionRepository;
-    private final VoteHistrotyRepository voteHistrotyRepository;
+    private final VoteHistoryRepository voteHistoryRepository;
     private final UserRepository userRepository;
 //    private final ModelMapper mapper;
     @Override
@@ -49,7 +49,7 @@ public class VoteServiceImpl implements VoteService{
                 .userId(userId)
                 .chosen(chosenId)
                 .build();
-        voteHistrotyRepository.save(voteHistory);
+        voteHistoryRepository.save(voteHistory);
 
         VoteCount voteCount = null;
         if(!exists){
