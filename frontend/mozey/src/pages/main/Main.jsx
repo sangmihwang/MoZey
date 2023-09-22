@@ -1,27 +1,22 @@
-import { useEffect, useState } from "react";
-// import {} from "./config/firebase";
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
+import * as components from "components";
 
 const Main = () => {
   return (
-    <S.Wrap>
-      <S.Logo>
-        <img src={require("images/mozey.png").default} alt={"로고"} />
-      </S.Logo>
-      <S.Logo>
-        <img src={require("images/thinker.png").default} alt={"thinker"} />
-      </S.Logo>
-    </S.Wrap>
+    <div>
+      <S.Wrap>
+        <components.Main></components.Main>
+      </S.Wrap>
+    </div>
   );
 };
 
 const S = {
   Wrap: styled.div`
     width: 100%;
-    background: ${({ theme }) => theme.color.background};
+    height: 100%;
   `,
-  Logo: styled.div``,
 };
 
 export default Main;

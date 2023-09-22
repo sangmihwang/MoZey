@@ -1,4 +1,4 @@
-import { createGlobalStyle } from 'styled-components'
+import { createGlobalStyle } from "styled-components";
 
 const GlobalStyles = createGlobalStyle`
 
@@ -934,6 +934,6 @@ const GlobalStyles = createGlobalStyle`
             height: 1em;
             vertical-align: -0.125em;
         }
-`
+`;
 
-export default GlobalStyles
+export default GlobalStyles;
