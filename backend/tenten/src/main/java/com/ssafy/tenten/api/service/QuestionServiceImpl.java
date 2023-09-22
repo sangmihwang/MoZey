@@ -1,5 +1,6 @@
 package com.ssafy.tenten.api.service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ssafy.tenten.api.repository.QuestionRepository;
 import com.ssafy.tenten.api.repository.UserRepository;
 import com.ssafy.tenten.domain.Question;
@@ -16,11 +17,13 @@ import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.File;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import static com.ssafy.tenten.exception.ErrorCode.QUESTION_NOT_FOUND;
 import static com.ssafy.tenten.exception.ErrorCode.USER_NOT_FOUND;
+import static nonapi.io.github.classgraph.json.JSONSerializer.serializeObject;
 
 @Service
 @Transactional(readOnly = true)
@@ -28,7 +31,7 @@ import static com.ssafy.tenten.exception.ErrorCode.USER_NOT_FOUND;
 public class QuestionServiceImpl implements QuestionService{
     private final QuestionRepository questionRepository;
     private final UserRepository userRepository;
-    private final RedisTemplate<String, String> redisTemplate;
+    private final RedisTemplate<String, Object> redisTemplate;
     @Override
     @Transactional
     public void postQuestions(QuestionDto questionDto) {
@@ -60,9 +63,11 @@ public class QuestionServiceImpl implements QuestionService{
     }
 
     @Override
-//    @Cacheable(value = "quesitons", key = "'question'+#id",cacheManager = "testCacheManager")
+    @Cacheable(value = "quesitons", key = "#id",cacheManager = "testCacheManager")
     public List<QuestionResponse> getQuestions(Long id) {
-        ValueOperations<String, String> stringListValueOperations = redisTemplate.opsForValue();
+        ObjectMapper objectMapper = new ObjectMapper();
+        ValueOperations<String, Object> stringListValueOperations = redisTemplate.opsForValue();
+        ListOperations<String, Object> stringObjectListOperations = redisTemplate.opsForList();
 
         List<Question> questions = questionRepository.findByUserId(id).orElseThrow(
                 () -> new CustomException(USER_NOT_FOUND)
@@ -76,15 +81,17 @@ public class QuestionServiceImpl implements QuestionService{
                         .status(a.getStatus())
                         .build())
                 .collect(Collectors.toList());
-        stringListValueOperations.set("question","sdfsd");
+
+        stringListValueOperations.set("question",collect);
+
         return collect;
     }
 
     @Override
     public QuestionResponse getQuestion(Long qtnId) {
-        ValueOperations<String, String> stringListValueOperations = redisTemplate.opsForValue();
+        ValueOperations<String, Object> stringListValueOperations = redisTemplate.opsForValue();
         if(stringListValueOperations.get("question")!=null){
-            System.out.println("sfsdffsd");
+            System.out.println(stringListValueOperations.get("question"));
             return null;
         }
         Question question = questionRepository.findById(qtnId).orElseThrow(
