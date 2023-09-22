@@ -1,29 +1,25 @@
 package com.ssafy.tenten.api.service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ssafy.tenten.api.repository.QuestionRepository;
 import com.ssafy.tenten.api.repository.UserRepository;
 import com.ssafy.tenten.domain.Question;
 import com.ssafy.tenten.domain.User;
 import com.ssafy.tenten.dto.QuestionDto;
 import com.ssafy.tenten.exception.CustomException;
-import com.ssafy.tenten.vo.Request.QuestionRequest;
 import com.ssafy.tenten.vo.Response.QuestionResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.cache.annotation.Cacheable;
-import org.springframework.data.redis.core.ListOperations;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.File;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import static com.ssafy.tenten.exception.ErrorCode.QUESTION_NOT_FOUND;
 import static com.ssafy.tenten.exception.ErrorCode.USER_NOT_FOUND;
-import static nonapi.io.github.classgraph.json.JSONSerializer.serializeObject;
 
 @Service
 @Transactional(readOnly = true)
@@ -63,16 +59,14 @@ public class QuestionServiceImpl implements QuestionService{
     }
 
     @Override
-    @Cacheable(value = "quesitons", key = "#id",cacheManager = "testCacheManager")
-    public List<QuestionResponse> getQuestions(Long id) {
-        ObjectMapper objectMapper = new ObjectMapper();
-        ValueOperations<String, Object> stringListValueOperations = redisTemplate.opsForValue();
-        ListOperations<String, Object> stringObjectListOperations = redisTemplate.opsForList();
+//    @Cacheable(value = "quesitons", key = "#id",cacheManager = "testCacheManager")
+    public Slice<QuestionResponse> getQuestions(Long id,Character status ,Pageable pageable) {
 
-        List<Question> questions = questionRepository.findByUserId(id).orElseThrow(
-                () -> new CustomException(USER_NOT_FOUND)
-        );
+        Slice<QuestionResponse> questions = questionRepository.getPageQuestions(id,status,pageable)
+                .orElseThrow(() ->new CustomException(USER_NOT_FOUND));
 
+        questions.hasNext();
+/**
         List<QuestionResponse> collect = questions.stream()
                 .map(a -> QuestionResponse.builder()
                         .qtnId(a.getQtnId())
@@ -81,10 +75,8 @@ public class QuestionServiceImpl implements QuestionService{
                         .status(a.getStatus())
                         .build())
                 .collect(Collectors.toList());
-
-        stringListValueOperations.set("question",collect);
-
-        return collect;
+**/
+        return questions;
     }
 
     @Override
@@ -109,7 +101,7 @@ public class QuestionServiceImpl implements QuestionService{
 
     @Override
     @Transactional
-    public QuestionResponse updateQuestion(Long qtnId, QuestionRequest questionRequest) {
-        return questionRepository.updateQuestion(qtnId, questionRequest);
+    public QuestionResponse updateQuestion(Long qtnId, QuestionDto questionDto) {
+        return questionRepository.updateQuestion(qtnId, questionDto);
     }
 }

@@ -4,6 +4,8 @@ import com.ssafy.tenten.dto.QuestionDto;
 import com.ssafy.tenten.vo.Request.QuestionRequest;
 import com.ssafy.tenten.vo.Response.QuestionResponse;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 
 import java.util.List;
 
@@ -12,9 +14,9 @@ public interface QuestionService {
 
     List<QuestionResponse> getAllQuestions();
 
-    List<QuestionResponse> getQuestions(Long id);
+    Slice<QuestionResponse> getQuestions(Long id,Character status ,Pageable pageable);
 
     QuestionResponse getQuestion(Long qtnId);
 
-    QuestionResponse updateQuestion(Long qtnId, QuestionRequest questionRequest);
+    QuestionResponse updateQuestion(Long qtnId, QuestionDto questionDto);
 }

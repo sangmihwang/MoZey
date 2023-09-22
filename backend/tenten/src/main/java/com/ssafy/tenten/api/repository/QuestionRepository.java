@@ -11,8 +11,8 @@ import java.util.List;
 import java.util.Optional;
 
 public interface QuestionRepository extends JpaRepository<Question,Long>, QuestionRepositoryCustom {
-    @Query(value = "select q from Question q where q.userId.userId=:userId")
-    Optional<List<Question>> findByUserId(@Param("userId") Long userId);
+//    @Query(value = "select q from Question q where q.userId.userId=:userId")
+//    Optional<List<Question>> findByUserId(@Param("userId") Long userId);
 
     List<Question> findByStatus(char y);
 }

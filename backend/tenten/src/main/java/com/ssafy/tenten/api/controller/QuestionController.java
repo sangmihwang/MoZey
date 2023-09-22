@@ -16,7 +16,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
-import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,17 +39,19 @@ public class QuestionController {
     private final ModelMapper mapper;
 
     /**
-     * 질문 신청 내역 조회 - 완료
+     * 질문 신청 내역 조회 - 완료 pageable 적용 ..
      * 사용자
      */
 
     @ApiOperation(value = "개인 질문 신청 내역 조회")
-    @GetMapping("/questions/users/{userId}/")
-    public ResponseEntity<SuccessResponseEntity> getAppQuestion(@PathVariable("userId") Long id){
+    @GetMapping(value = {"/questions/users/{userId}/{status}/","/questions/users/{userId}/"})
+    public ResponseEntity<SuccessResponseEntity> getAppQuestion(@PathVariable("userId") Long id,
+                                                                @PathVariable(name = "status",required = false) Character status,
+                                                                @RequestParam(defaultValue = "0") int pageIdx){
 
-        List<QuestionResponse> questions = questionService.getQuestions(id);
+        PageRequest pageRequest = PageRequest.of(pageIdx, 20 ,Sort.by("qtnId"));
 
-        return SuccessResponseEntity.toResponseEntity("질문 신청 내역 조회 - 사용자",questions);
+        return SuccessResponseEntity.toResponseEntity("질문 신청 내역 조회 - 사용자",questionService.getQuestions(id,status,pageRequest));
     }
     /**
      * 질문 신청 등록 - 완료
@@ -108,7 +111,7 @@ public class QuestionController {
     public ResponseEntity<?> updateQuestion(@PathVariable("qtnId") Long qtnId,@RequestBody QuestionRequest questionRequest){
         mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
         QuestionDto questionDto = mapper.map(questionRequest, QuestionDto.class);
-        QuestionResponse questionResponse = questionService.updateQuestion(qtnId, questionRequest);
+        QuestionResponse questionResponse = questionService.updateQuestion(qtnId, questionDto);
         return SuccessResponseEntity.toResponseEntity("등록 수정 완료",questionResponse);
     }
 

@@ -12,5 +12,5 @@ public class QuestionDto implements Serializable {
     private Long userId;
     private String image;
     private Long qtnId;
-    private String status;
+    private Character status;
 }
