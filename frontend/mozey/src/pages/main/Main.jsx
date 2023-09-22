@@ -6,12 +6,12 @@ import styled from "styled-components";
 const Main = () => {
   return (
     <S.Wrap>
-      <LogoArea>
+      <S.Logo>
         <img src={require("images/mozey.png").default} alt={"로고"} />
-      </LogoArea>
-      <LogoArea>
+      </S.Logo>
+      <S.Logo>
         <img src={require("images/thinker.png").default} alt={"thinker"} />
-      </LogoArea>
+      </S.Logo>
     </S.Wrap>
   );
 };
@@ -21,6 +21,7 @@ const S = {
     width: 100%;
     background: ${({ theme }) => theme.color.background};
   `,
+  Logo: styled.div``,
 };
 
 export default Main;
