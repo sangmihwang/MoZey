@@ -23,6 +23,7 @@ const Main = () => {
 const S = {
   Wrap: styled.div`
     width: 100%;
+    height: 100%;
     background: ${({ theme }) => theme.color.background};
     text-align: center;
   `,
@@ -30,7 +31,7 @@ const S = {
     display: inline-block;
     > div {
       display: block;
-      margin: 0 auto; /* 가로 가운데 정렬 */
+      margin: 30px auto;
     }
   `,
 };
