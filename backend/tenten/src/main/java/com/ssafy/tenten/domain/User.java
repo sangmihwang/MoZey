@@ -81,7 +81,10 @@ public class User {
     private String provider;
     private String providerId;
     private String kakaoToken;
-
+    private String refreshToken; // 리프레시 토큰
+//    public void updateRefreshToken(String updateRefreshToken) {
+//        this.refreshToken = updateRefreshToken;
+//    }
     private String firebaseToken;
 
     public void subscribe() {
@@ -89,5 +92,15 @@ public class User {
     }
     public void unsubscribe() {
         this.subYn = 0;
+    }
+
+    @Builder
+    public User(String email, String gender, String image, String name, String term, String campus, String group) {
+        this.email = email;
+        this.image = image;
+        this.name = name;
+        this.term = term;
+        this.campus = campus;
+        this.group = group;
     }
 }

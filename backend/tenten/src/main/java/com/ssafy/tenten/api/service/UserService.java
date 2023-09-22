@@ -1,6 +1,8 @@
 package com.ssafy.tenten.api.service;
 
 import com.ssafy.tenten.domain.User;
+import com.ssafy.tenten.vo.Request.UserJoinRequest;
+import com.ssafy.tenten.vo.Request.UserUpdateRequest;
 import com.ssafy.tenten.vo.Response.RecommendUserResponse;
 import com.ssafy.tenten.vo.Response.UserResponse;
 import org.springframework.stereotype.Component;
@@ -9,14 +11,13 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 public interface UserService {
-    // 1.1 회원가입
-    void join(User user);
+    // 1.1 회원가입 및 로그인?
+    void join(UserJoinRequest dto);
 
     // 회원 유무
-    void validateDuplicateUser(User user);
+//    void validateDuplicateUser(User user);
 
-    // 로그인
-    //String login(loginUserRequest dto);
+    User update(Long userId, UserUpdateRequest userUpdateRequest);
 
     // 1.1.1 회원 탈퇴 (아예 삭제하는 것이 아니라 withdraw를 바꿀 것)
     void delete(Long id);
