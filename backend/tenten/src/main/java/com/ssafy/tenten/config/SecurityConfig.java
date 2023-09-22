@@ -4,10 +4,13 @@ import com.ssafy.tenten.api.service.UserService;
 import com.ssafy.tenten.config.jwt.JwtFilter;
 import com.ssafy.tenten.config.oauth.PrincipalOauth2UserService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -17,6 +20,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
+@EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
+@Slf4j
 public class SecurityConfig {
     private final UserService userService;
 
@@ -33,14 +38,14 @@ public class SecurityConfig {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS) // jwt 사용하는 경우 씀
                 .and()
                 .authorizeRequests()
-//                .anyRequest().permitAll()
-                .antMatchers("/api/user/join/**", "/api/user/login").permitAll()
-                .antMatchers("/api/**").permitAll()
+                .anyRequest().permitAll()
+//                .antMatchers("/api/user/join/**", "/api/user/login").permitAll()
+//                .antMatchers("/api/**").permitAll()
                 .and()
 
                 // oauth 인증 후 리디렉션할 URI 지정
                 .oauth2Login()
-                .loginPage("/login")
+//                .loginPage("/login")
                 .userInfoEndpoint()
                 .userService(principalOauth2UserService)
 //                .addFilterBefore(new JwtFilter(userService), UsernamePasswordAuthenticationFilter.class)

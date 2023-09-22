@@ -2,7 +2,7 @@ package com.ssafy.tenten.api.controller;
 
 import com.ssafy.tenten.api.repository.QuestionRepository;
 import com.ssafy.tenten.api.repository.VoteCntRepository;
-import com.ssafy.tenten.api.repository.VoteHistrotyRepository;
+import com.ssafy.tenten.api.repository.VoteHistoryRepository;
 import com.ssafy.tenten.api.service.QuestionService;
 import com.ssafy.tenten.api.service.VoteService;
 import com.ssafy.tenten.dto.QuestionDto;
@@ -31,7 +31,7 @@ import static com.ssafy.tenten.exception.ErrorCode.QUESTION_NOT_FOUND;
 @Slf4j 
 public class QuestionController {
     private final VoteService voteService;
-    private final VoteHistrotyRepository voteHistrotyRepository;
+    private final VoteHistoryRepository voteHistoryRepository;
     private final VoteCntRepository voteCntRepository;
     private final QuestionRepository questionRepository;
     private final QuestionService questionService;

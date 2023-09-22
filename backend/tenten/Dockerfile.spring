@@ -1,0 +1,14 @@
+# Use an official OpenJDK runtime as a parent image
+FROM openjdk:11
+
+# Set the working directory inside the container
+WORKDIR /app
+
+# Copy the JAR file into the image
+COPY ./build/libs/*SNAPSHOT.jar my-spring-boot-app.jar
+
+# Set the command to run your Spring Boot application
+ENTRYPOINT ["java", "-jar", "my-spring-boot-app.jar"]
+
+# Expose port 8080
+EXPOSE 8080

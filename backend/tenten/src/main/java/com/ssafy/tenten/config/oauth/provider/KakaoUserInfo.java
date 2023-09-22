@@ -10,9 +10,29 @@ public class KakaoUserInfo implements OAuth2UserInfo{
         this.attributes = attributes;
     }
 
+//    @Override
+//    public String getProviderId() {
+//        return (String) attributes.get("sub");
+//    }
+//
+//    @Override
+//    public String getProvider() {
+//        return "kakao";
+//    }
+//
+//    @Override
+//    public String getEmail() {
+//        return (String) attributes.get("email");
+//    }
+//
+//    @Override
+//    public String getName() {
+//        return (String) attributes.get("name");
+//    }
     @Override
     public String getProviderId() {
-        return (String) attributes.get("sub");
+        // Long 타입이기 때문에 toString으로 변환
+        return attributes.get("id").toString();
     }
 
     @Override
@@ -22,11 +42,18 @@ public class KakaoUserInfo implements OAuth2UserInfo{
 
     @Override
     public String getEmail() {
-        return (String) attributes.get("email");
+        // kakao_account라는 Map에서 추출
+        return (String) ((Map) attributes.get("kakao_account")).get("email");
     }
 
     @Override
     public String getName() {
-        return (String) attributes.get("name");
+        // kakao_account라는 Map에서 추출
+        return (String) ((Map) attributes.get("properties")).get("nickname");
+    }
+
+    @Override
+    public String getImage() {
+        return (String) ((Map) attributes.get("properties")).get("nickname");
     }
 }

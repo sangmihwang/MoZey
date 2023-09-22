@@ -1,5 +1,13 @@
 package com.ssafy.tenten.api.service;
 
+import com.ssafy.tenten.api.repository.QuestionRepository;
+import com.ssafy.tenten.api.repository.UserRepository;
+import com.ssafy.tenten.api.repository.VoteCntRepository;
+import com.ssafy.tenten.api.repository.VoteHistoryRepository;
+import com.ssafy.tenten.domain.Question;
+import com.ssafy.tenten.domain.User;
+import com.ssafy.tenten.domain.VoteCount;
+import com.ssafy.tenten.domain.VoteHistory;
 import com.ssafy.tenten.api.repository.*;
 import com.ssafy.tenten.domain.*;
 import com.ssafy.tenten.dto.VoteDto;
@@ -48,7 +56,7 @@ public class VoteServiceImpl implements VoteService{
                 .userId(userId)
                 .chosen(chosenId)
                 .build();
-        voteHistrotyRepository.save(voteHistory);
+        voteHistoryRepository.save(voteHistory);
 
         VoteCount voteCount = null;
         if(!exists){
@@ -75,8 +83,8 @@ public class VoteServiceImpl implements VoteService{
 
     @Override
     public List<VoteResponse> suffleQuestion() {
-
         List<Question> question = questionRepository.findByStatus('Y');
+
         Collections.shuffle(question);
 
         List<Question> collect = question.stream()
@@ -92,27 +100,5 @@ public class VoteServiceImpl implements VoteService{
                         .qtnContent(a.getQtnContent())
                         .build())
                 .collect(Collectors.toList());
-    }
-
-    @Override
-    public List<VoteResponse> getVoteCandidates(Long userId) {
-        List<Follow> Follows = followRepository.findBySenderId_UserId(userId).orElseThrow(
-                () ->new CustomException(USER_NOT_FOUND)
-        );
-        if(Follows.size()<4){
-            throw new CustomException(USER_NOT_ENOUGH);
-        }
-        Collections.shuffle(Follows);
-
-        List<VoteResponse> collect = Follows.stream()
-                .map((follow -> {
-                    return VoteResponse.builder()
-                            .userId(follow.getReceiverId().getUserId())
-                            .name(follow.getReceiverId().getName())
-                            .build();
-                }
-                )).limit(4)
-                .collect(Collectors.toList());
-        return collect;
     }
 }
