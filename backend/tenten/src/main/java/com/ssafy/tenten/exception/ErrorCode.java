@@ -19,9 +19,9 @@ public enum ErrorCode {
 
     QUESTION_NOT_FOUND(HttpStatus.NOT_FOUND, "해당하는 정보의 질문을 찾을 수 없습니다." ),
 
-    QUESTION_NOT_ENOUGH (HttpStatus.NOT_FOUND, "해당하는 정보의 질문 개수가 8개 이상이 안됩니다." ),
-
-    NEWS_NOT_FOUND(HttpStatus.NOT_FOUND, "해당하는 정보의 뉴스를 찾을 수 없습니다." );
+    NEWS_NOT_FOUND(HttpStatus.NOT_FOUND, "해당하는 정보의 뉴스를 찾을 수 없습니다." ),
+    QUESTION_NOT_ENOUGH (HttpStatus.NOT_FOUND, "해당하는 정보의 질문 개수가 8개 이상이 안됩니다."),
+    USER_NOT_ENOUGH(HttpStatus.NOT_FOUND,"친구가 부족합니다");
 
 
     private final HttpStatus httpStatus;
