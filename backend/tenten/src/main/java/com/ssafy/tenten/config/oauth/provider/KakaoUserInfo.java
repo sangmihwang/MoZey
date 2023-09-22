@@ -29,11 +29,11 @@ public class KakaoUserInfo implements OAuth2UserInfo{
 //    public String getName() {
 //        return (String) attributes.get("name");
 //    }
-@Override
-public String getProviderId() {
-    // Long 타입이기 때문에 toString으로 변환
-    return attributes.get("id").toString();
-}
+    @Override
+    public String getProviderId() {
+        // Long 타입이기 때문에 toString으로 변환
+        return attributes.get("id").toString();
+    }
 
     @Override
     public String getProvider() {
@@ -49,6 +49,11 @@ public String getProviderId() {
     @Override
     public String getName() {
         // kakao_account라는 Map에서 추출
+        return (String) ((Map) attributes.get("properties")).get("nickname");
+    }
+
+    @Override
+    public String getImage() {
         return (String) ((Map) attributes.get("properties")).get("nickname");
     }
 }

@@ -2,7 +2,7 @@ package com.ssafy.tenten.api.controller;
 
 import com.ssafy.tenten.api.repository.QuestionRepository;
 import com.ssafy.tenten.api.repository.VoteCntRepository;
-import com.ssafy.tenten.api.repository.VoteHistrotyRepository;
+import com.ssafy.tenten.api.repository.VoteHistoryRepository;
 import com.ssafy.tenten.api.service.QuestionService;
 import com.ssafy.tenten.api.service.VoteService;
 import com.ssafy.tenten.dto.QuestionDto;
@@ -10,6 +10,8 @@ import com.ssafy.tenten.exception.ErrorResponseEntity;
 import com.ssafy.tenten.exception.SuccessResponseEntity;
 import com.ssafy.tenten.vo.Request.QuestionRequest;
 import com.ssafy.tenten.vo.Response.QuestionResponse;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -23,12 +25,13 @@ import java.util.List;
 import static com.ssafy.tenten.exception.ErrorCode.QUESTION_NOT_FOUND;
 
 @RestController
+@Api(tags = "Question")
 @RequestMapping("/api")
 @RequiredArgsConstructor
 @Slf4j 
 public class QuestionController {
     private final VoteService voteService;
-    private final VoteHistrotyRepository voteHistrotyRepository;
+    private final VoteHistoryRepository voteHistoryRepository;
     private final VoteCntRepository voteCntRepository;
     private final QuestionRepository questionRepository;
     private final QuestionService questionService;
@@ -39,8 +42,9 @@ public class QuestionController {
      * 사용자
      */
 
+    @ApiOperation(value = "개인 질문 신청 내역 조회")
     @GetMapping("/questions/users/{userId}/")
-    public ResponseEntity<?> getAppQuestion(@PathVariable("userId") Long id){
+    public ResponseEntity<SuccessResponseEntity> getAppQuestion(@PathVariable("userId") Long id){
 
         List<QuestionResponse> questions = questionService.getQuestions(id);
 
@@ -49,6 +53,7 @@ public class QuestionController {
     /**
      * 질문 신청 등록 - 완료
      */
+    @ApiOperation(value = "질문 신청 등록")
     @PostMapping("/questions")
     public ResponseEntity<?> postQuestions(@RequestBody QuestionRequest questionRequest){
         mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);

@@ -3,11 +3,13 @@ package com.ssafy.tenten.api.service;
 import com.ssafy.tenten.api.repository.QuestionRepository;
 import com.ssafy.tenten.api.repository.UserRepository;
 import com.ssafy.tenten.api.repository.VoteCntRepository;
-import com.ssafy.tenten.api.repository.VoteHistrotyRepository;
+import com.ssafy.tenten.api.repository.VoteHistoryRepository;
 import com.ssafy.tenten.domain.Question;
 import com.ssafy.tenten.domain.User;
 import com.ssafy.tenten.domain.VoteCount;
 import com.ssafy.tenten.domain.VoteHistory;
+import com.ssafy.tenten.api.repository.*;
+import com.ssafy.tenten.domain.*;
 import com.ssafy.tenten.dto.VoteDto;
 import com.ssafy.tenten.exception.CustomException;
 import com.ssafy.tenten.exception.ErrorCode;
@@ -18,7 +20,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
+
+import static com.ssafy.tenten.exception.ErrorCode.USER_NOT_ENOUGH;
+import static com.ssafy.tenten.exception.ErrorCode.USER_NOT_FOUND;
 
 @Service
 @RequiredArgsConstructor
@@ -27,8 +33,9 @@ public class VoteServiceImpl implements VoteService{
 
     private final VoteCntRepository voteCntRepository;
     private final QuestionRepository questionRepository;
-    private final VoteHistrotyRepository voteHistrotyRepository;
+    private final VoteHistoryRepository voteHistrotyRepository;
     private final UserRepository userRepository;
+    private final FollowRepository followRepository;
 //    private final ModelMapper mapper;
     @Override
     @Transactional
@@ -36,13 +43,13 @@ public class VoteServiceImpl implements VoteService{
 
         boolean exists = voteCntRepository.checkIfVoteExists(voteDto.getChosen(), voteDto.getQtnId());
         User userId = userRepository.findById(voteDto.getUserId()).orElseThrow(
-                () -> new CustomException(ErrorCode.USER_NOT_FOUND)
+                () -> new CustomException(USER_NOT_FOUND)
         );
         Question questionId = questionRepository.findById(voteDto.getQtnId()).orElseThrow(
                 ()-> new CustomException(ErrorCode.QUESTION_NOT_FOUND)
         );
         User chosenId = userRepository.findById(voteDto.getChosen()).orElseThrow(
-                () -> new CustomException(ErrorCode.USER_NOT_FOUND)
+                () -> new CustomException(USER_NOT_FOUND)
         );
         VoteHistory voteHistory = VoteHistory.builder()
                 .question(questionId)
@@ -93,5 +100,23 @@ public class VoteServiceImpl implements VoteService{
                         .qtnContent(a.getQtnContent())
                         .build())
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<VoteResponse> getVoteCandidates(Long userId) {
+        List<Follow> follows = followRepository.findBySenderId_UserId(userId).orElseThrow(
+                () -> new CustomException(USER_NOT_ENOUGH)
+        );
+        if(follows.size()<4) throw new CustomException(USER_NOT_ENOUGH);
+
+        List<VoteResponse> collect = follows.stream()
+                .map(follow -> {
+                    return VoteResponse.builder()
+                            .userId(follow.getReceiverId().getUserId())
+                            .name(follow.getReceiverId().getName())
+                            .build();
+                }).limit(4)
+                .collect(Collectors.toList());
+        return collect;
     }
 }
