@@ -53,14 +53,15 @@ public class UserController {
 //    @GetMapping("/info")
     public ResponseEntity<?> getUserInfo(@AuthenticationPrincipal PrincipalDetails principalDetails) {
         Long userId = principalDetails.getId();
-        User user = userRepository.findByUserId(userId);
+        User user = userRepository.findById(userId).get();
+
         return new ResponseEntity<>(new UserResponse(user), HttpStatus.OK);
     }
 
-    @PutMapping("/edit/{userId}")
-    public ResponseEntity<?> updateUser(@PathVariable("userId") Long userId, @RequestBody UserUpdateRequest userUpdateRequest) {
+//    @PutMapping("/edit/{userId}")
+//    public ResponseEntity<?> updateUser(@PathVariable("userId") Long userId, @RequestBody UserUpdateRequest userUpdateRequest) {
 //        userService.update
-    }
+//    }
 
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
