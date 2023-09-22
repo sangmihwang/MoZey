@@ -1,8 +1,15 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
+import * as components from "components";
 
 const Main = () => {
-  return <div></div>;
+  return (
+    <div>
+      <S.Wrap>
+        <components.Main></components.Main>
+      </S.Wrap>
+    </div>
+  );
 };
 
 const S = {

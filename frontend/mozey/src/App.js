@@ -1,20 +1,23 @@
-// import { useEffect, useState } from "react";
-// import {} from "./config/firebase";
-import React from 'react'
-import './App.css'
-import Header from './components/Header'
-import Main from './components/Main';
-import Footer from './components/Footer'
+import React from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { ThemeProvider } from "styled-components";
 
-function App() {
+import * as style from "styles";
+import * as utils from "utils";
+import * as pages from "pages";
+import * as components from "components";
+
+const App = () => {
   return (
-    <div className="App">
-      {/* <Header />  */}
-      <Main/>
-      {/* <Footer/> */}
-      {/* 나머지 컴포넌트가 여기 위치할 것입니다. */}
-    </div>
+    <ThemeProvider theme={style.Theme}>
+      <style.GlobalStyles />
+      <Router>
+        <Routes>
+          <Route path={utils.URL.HOME.MAIN} element={<pages.Main />} />
+        </Routes>
+      </Router>
+    </ThemeProvider>
   );
-}
+};
 
 export default App;
