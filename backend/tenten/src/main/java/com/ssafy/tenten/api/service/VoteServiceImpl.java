@@ -33,7 +33,7 @@ public class VoteServiceImpl implements VoteService{
 
     private final VoteCntRepository voteCntRepository;
     private final QuestionRepository questionRepository;
-    private final VoteHistrotyRepository voteHistrotyRepository;
+    private final VoteHistoryRepository voteHistrotyRepository;
     private final UserRepository userRepository;
     private final FollowRepository followRepository;
 //    private final ModelMapper mapper;
@@ -56,7 +56,7 @@ public class VoteServiceImpl implements VoteService{
                 .userId(userId)
                 .chosen(chosenId)
                 .build();
-        voteHistoryRepository.save(voteHistory);
+        voteHistrotyRepository.save(voteHistory);
 
         VoteCount voteCount = null;
         if(!exists){
@@ -100,5 +100,23 @@ public class VoteServiceImpl implements VoteService{
                         .qtnContent(a.getQtnContent())
                         .build())
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<VoteResponse> getVoteCandidates(Long userId) {
+        List<Follow> follows = followRepository.findBySenderId_UserId(userId).orElseThrow(
+                () -> new CustomException(USER_NOT_ENOUGH)
+        );
+        if(follows.size()<4) throw new CustomException(USER_NOT_ENOUGH);
+
+        List<VoteResponse> collect = follows.stream()
+                .map(follow -> {
+                    return VoteResponse.builder()
+                            .userId(follow.getReceiverId().getUserId())
+                            .name(follow.getReceiverId().getName())
+                            .build();
+                }).limit(4)
+                .collect(Collectors.toList());
+        return collect;
     }
 }
