@@ -34,17 +34,20 @@ public class VoteController {
      * 투표 질문 8개 생성해서 보내기 3.1 - 완료
      */
     @GetMapping("/votes/questions")
-    public ResponseEntity<?> getQuestions(){
+    public ResponseEntity<?> getQuestions() {
         List<VoteResponse> voteResponses = voteService.suffleQuestion();
 
-        return SuccessResponseEntity.toResponseEntity("투표 질문 생성 완료",voteResponses);
+
+
+        return SuccessResponseEntity.toResponseEntity("투표 질문 생성 완료", voteResponses);
     }
+
     /**
      * 투표 결과 등록 3.2 - 완료
      * 선택 받은 사람의 받은 횟수 늘리기 + 투표 내역 생성 하기
      */
     @PostMapping("/votes")
-    public ResponseEntity<?> postVote(@RequestBody VoteRequest voteRequest){
+    public ResponseEntity<?> postVote(@RequestBody VoteRequest voteRequest) {
         mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
         VoteDto voteDto = mapper.map(voteRequest, VoteDto.class);
 
@@ -56,9 +59,8 @@ public class VoteController {
      * 윤상님 유저 만들어지면 만들기.
      */
     @GetMapping("/votes/candidates/{userId}")
-    public ResponseEntity<?> getCandidates(@PathVariable("userId") Long userId){
-        voteService.getVoteCandidates(userId);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<?> getCandidates(@PathVariable("userId") Long userId) {
+        return SuccessResponseEntity.toResponseEntity("MOZEY 투표 후보 불러오기 완료", voteService.getVoteCandidates(userId));
     }
 
 

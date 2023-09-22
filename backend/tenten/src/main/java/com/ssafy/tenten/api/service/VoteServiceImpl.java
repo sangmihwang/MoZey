@@ -15,6 +15,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import static com.ssafy.tenten.exception.ErrorCode.USER_NOT_ENOUGH;
+import static com.ssafy.tenten.exception.ErrorCode.USER_NOT_FOUND;
+
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -32,13 +35,13 @@ public class VoteServiceImpl implements VoteService{
 
         boolean exists = voteCntRepository.checkIfVoteExists(voteDto.getChosen(), voteDto.getQtnId());
         User userId = userRepository.findById(voteDto.getUserId()).orElseThrow(
-                () -> new CustomException(ErrorCode.USER_NOT_FOUND)
+                () -> new CustomException(USER_NOT_FOUND)
         );
         Question questionId = questionRepository.findById(voteDto.getQtnId()).orElseThrow(
                 ()-> new CustomException(ErrorCode.QUESTION_NOT_FOUND)
         );
         User chosenId = userRepository.findById(voteDto.getChosen()).orElseThrow(
-                () -> new CustomException(ErrorCode.USER_NOT_FOUND)
+                () -> new CustomException(USER_NOT_FOUND)
         );
         VoteHistory voteHistory = VoteHistory.builder()
                 .question(questionId)
@@ -93,10 +96,23 @@ public class VoteServiceImpl implements VoteService{
 
     @Override
     public List<VoteResponse> getVoteCandidates(Long userId) {
-        List<Follow> byReceiverId = followRepository.findBySenderId_UserId(userId);
-        for(Follow f : byReceiverId){
-            System.out.println(f.getSenderId().getUserId());
+        List<Follow> Follows = followRepository.findBySenderId_UserId(userId).orElseThrow(
+                () ->new CustomException(USER_NOT_FOUND)
+        );
+        if(Follows.size()<4){
+            throw new CustomException(USER_NOT_ENOUGH);
         }
-        return null;
+        Collections.shuffle(Follows);
+
+        List<VoteResponse> collect = Follows.stream()
+                .map((follow -> {
+                    return VoteResponse.builder()
+                            .userId(follow.getReceiverId().getUserId())
+                            .name(follow.getReceiverId().getName())
+                            .build();
+                }
+                )).limit(4)
+                .collect(Collectors.toList());
+        return collect;
     }
 }
