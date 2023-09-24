@@ -23,12 +23,15 @@ public class UserResponse {
     private final String campus;
     private final String group;
 
-    public UserResponse(User user) {
-        gender = user.getGender();
-        image = user.getImage();
-        name = user.getName();
-        term = user.getTerm();
-        campus = user.getCampus();
-        group = user.getGroup();
+    public static UserResponse createUserResponse(User user) {
+        return UserResponse.builder()
+                .gender(user.getGender())
+                .image(user.getImage())
+                .name(user.getImage())
+                .term(user.getTerm())
+                .campus(user.getCampus())
+                .group(user.getGroup())
+                .build();
+
     }
 }
