@@ -46,29 +46,28 @@ public class QuestionRepositoryCustomImpl implements QuestionRepositoryCustom {
                 .where(question.qtnId.eq(qtnId))
                 .fetchOne();
         if (question1 == null) throw new CustomException(QUESTION_NOT_FOUND);
-        QuestionResponse build = QuestionResponse.builder()
+
+        return QuestionResponse.builder()
                 .image(question1.getImg())
-//                .userId(question1.getUserId().getUserId())
+                .userId(question1.getUserId().getUserId())
                 .qtnContent(question1.getQtnContent())
                 .status(question1.getStatus())
-//                .qtnId(question1.getQtnId())
+                .qtnId(question1.getQtnId())
                 .build();
-        return build;
     }
 
     @Override
     public Optional<Slice<QuestionResponse>> getPageQuestions(Long userId, Character status, Pageable pageable) {
-        log.info("asldkfjlaskdf {},{}",userId,status);
+
         List<Question> fetch = jpaQueryFactory
                 .selectFrom(question)
                 .where(qtnStatusEq(status),
-                        qtnUserEq(userId))
+                        qtnUserEq(userId)
+                , question.status.ne('N'))
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize() + 1)
                 .fetch();
-        System.out.println(pageable.getOffset());
-        System.out.println(pageable.getPageSize());
-        System.out.println(fetch.size());
+
         List<QuestionResponse> collect = fetch.stream()
                 .map(f -> QuestionResponse.builder()
                         .qtnContent(f.getQtnContent())

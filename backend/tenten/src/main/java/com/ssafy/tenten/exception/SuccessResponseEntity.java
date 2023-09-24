@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 public class SuccessResponseEntity<E> {
     private String message;
     private E data;
+    private Boolean hasNext;
 
     public static ResponseEntity<SuccessResponseEntity> toResponseEntity(String massage, Object data) {
         return ResponseEntity
@@ -17,6 +18,16 @@ public class SuccessResponseEntity<E> {
                 .body(SuccessResponseEntity.builder()
                         .message(massage)
                         .data(data)
+                        .build()
+                );
+    }
+    public static ResponseEntity<SuccessResponseEntity> toResponseEntityPage(String massage, Object data,boolean hasNext) {
+        return ResponseEntity
+                .status(200)
+                .body(SuccessResponseEntity.builder()
+                        .message(massage)
+                        .data(data)
+                        .hasNext(hasNext)
                         .build()
                 );
     }

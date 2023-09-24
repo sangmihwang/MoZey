@@ -30,6 +30,8 @@ public class Question {
 
     private String img;
 
+
+
     @Builder
     Question(QuestionDto questionDto, User userId){
         this.userId = userId;

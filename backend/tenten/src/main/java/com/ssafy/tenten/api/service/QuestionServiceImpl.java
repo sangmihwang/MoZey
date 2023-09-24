@@ -8,6 +8,8 @@ import com.ssafy.tenten.dto.QuestionDto;
 import com.ssafy.tenten.exception.CustomException;
 import com.ssafy.tenten.vo.Response.QuestionResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -43,17 +45,16 @@ public class QuestionServiceImpl implements QuestionService{
     }
 
     @Override
-    public List<QuestionResponse> getAllQuestions() {
-        List<Question> questions = questionRepository.findAll();
+    public Page<QuestionResponse> getAllQuestions( PageRequest pageRequest ) {
+        Page<Question> questions = questionRepository.findAll(pageRequest);
 
-        List<QuestionResponse> collect = questions.stream()
+        Page<QuestionResponse> collect = questions
                 .map(a -> QuestionResponse.builder()
                         .qtnId(a.getQtnId())
                         .userId(a.getUserId().getUserId())
                         .qtnContent(a.getQtnContent())
                         .status(a.getStatus())
-                        .build())
-                .collect(Collectors.toList());
+                        .build());
         return collect;
 
     }
@@ -81,11 +82,7 @@ public class QuestionServiceImpl implements QuestionService{
 
     @Override
     public QuestionResponse getQuestion(Long qtnId) {
-        ValueOperations<String, Object> stringListValueOperations = redisTemplate.opsForValue();
-        if(stringListValueOperations.get("question")!=null){
-            System.out.println(stringListValueOperations.get("question"));
-            return null;
-        }
+
         Question question = questionRepository.findById(qtnId).orElseThrow(
                 () -> new CustomException(QUESTION_NOT_FOUND)
         );
@@ -103,5 +100,22 @@ public class QuestionServiceImpl implements QuestionService{
     @Transactional
     public QuestionResponse updateQuestion(Long qtnId, QuestionDto questionDto) {
         return questionRepository.updateQuestion(qtnId, questionDto);
+    }
+
+    @Override
+    public Page<QuestionResponse> getQuestionPage(Character status, PageRequest pageRequest) {
+        Page<Question> pageByStatus = questionRepository.findPageByStatus(status, pageRequest);
+
+        Page<QuestionResponse> questionResponsePage = pageByStatus.map(question ->
+                QuestionResponse.builder()
+                        .qtnId(question.getQtnId())
+                        .userId(question.getUserId().getUserId())
+                        .status(status)
+                        .qtnContent(question.getQtnContent())
+                        .build()
+        );
+
+
+        return questionResponsePage;
     }
 }

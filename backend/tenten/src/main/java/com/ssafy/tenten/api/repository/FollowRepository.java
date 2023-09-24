@@ -2,14 +2,10 @@ package com.ssafy.tenten.api.repository;
 
 import com.ssafy.tenten.domain.Follow;
 import io.lettuce.core.dynamic.annotation.Param;
-import com.ssafy.tenten.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
-
-import java.util.List;
-import java.util.Optional;
 
 public interface FollowRepository extends JpaRepository<Follow, Long>{
     @Query(value = "select f from Follow f join fetch f.senderId fs join fetch f.receiverId fr where fs.userId = :senderId")
@@ -20,5 +16,5 @@ public interface FollowRepository extends JpaRepository<Follow, Long>{
     void deleteBySenderIdAndReceiverId(Long senderId, Long receiveId);
 
 
-    Optional<List<Follow>> findBySenderId_UserId(Long userId);
+    List<Follow> findBySenderId_UserId(Long userId);
 }
