@@ -1,6 +1,5 @@
 package com.ssafy.tenten.domain;
 
-import com.ssafy.tenten.dto.QuizDto;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 

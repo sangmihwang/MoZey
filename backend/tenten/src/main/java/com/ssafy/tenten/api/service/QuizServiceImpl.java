@@ -14,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -30,7 +29,7 @@ public class QuizServiceImpl implements QuizService {
         return quizzes.stream()
                 .map(quiz -> QuizResponse.builder()
                         .quizId(quiz.getQuizId())
-                        .newsId(quiz.getNewsId().getNewsId()) // 이 부분 나중에 수정해야함
+                        .newsId(quiz.getNewsId().getNewsId())
                         .question(quiz.getQuestion())
                         .answer(quiz.getAnswer())
                         .date(quiz.getDate())
