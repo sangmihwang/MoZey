@@ -55,7 +55,7 @@ public class UserController {
         Long userId = principalDetails.getId();
         User user = userRepository.findById(userId).get();
 
-        return new ResponseEntity<>(new UserResponse(user), HttpStatus.OK);
+        return new ResponseEntity<>(UserResponse.createUserResponse(user), HttpStatus.OK);
     }
 
 //    @PutMapping("/edit/{userId}")
