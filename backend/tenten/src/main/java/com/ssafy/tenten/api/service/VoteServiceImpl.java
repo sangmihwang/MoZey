@@ -71,7 +71,6 @@ public class VoteServiceImpl implements VoteService{
             voteCount.updateVoteCount();
         }
 
-        System.out.println(voteCount.getQuestionId().getQtnContent());
         return   VoteResponse.builder()
                 .time(voteHistory.getVoteTime())
                 .image(voteHistory.getQuestionId().getImg())
@@ -104,9 +103,8 @@ public class VoteServiceImpl implements VoteService{
 
     @Override
     public List<VoteResponse> getVoteCandidates(Long userId) {
-        List<Follow> follows = followRepository.findBySenderId_UserId(userId).orElseThrow(
-                () -> new CustomException(USER_NOT_ENOUGH)
-        );
+        List<Follow> follows = followRepository.findBySenderId_UserId(userId);
+        if(follows.size()==0) throw  new CustomException(USER_NOT_FOUND);
         if(follows.size()<4) throw new CustomException(USER_NOT_ENOUGH);
 
         List<VoteResponse> collect = follows.stream()
