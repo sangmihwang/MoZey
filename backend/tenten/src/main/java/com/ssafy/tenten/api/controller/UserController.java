@@ -4,13 +4,23 @@ import com.ssafy.tenten.api.repository.FollowRepository;
 import com.ssafy.tenten.api.repository.UserRepository;
 import com.ssafy.tenten.api.service.FollowService;
 import com.ssafy.tenten.api.service.UserService;
+import com.ssafy.tenten.config.auth.PrincipalDetails;
+import com.ssafy.tenten.domain.User;
 import com.ssafy.tenten.exception.SuccessResponseEntity;
+import com.ssafy.tenten.vo.Request.UserJoinRequest;
+import com.ssafy.tenten.vo.Request.UserUpdateRequest;
 import com.ssafy.tenten.vo.Response.RecommendUserResponse;
+import com.ssafy.tenten.vo.Response.UserResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.coyote.Response;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -24,17 +34,45 @@ public class UserController {
     private final FollowRepository followRepository;
 
     // 1.1 회원가입
-//    @PostMapping
+    @PostMapping
+    public ResponseEntity<?> join(@Valid @RequestBody UserJoinRequest userJoinRequest, @AuthenticationPrincipal PrincipalDetails principalDetails) {
+        userService.join(userJoinRequest);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 
     // 1.1.1 회원탈퇴
 //    @DeleteMapping
 
     // 1.2 로그아웃
-//    @GetMapping("/logout")
+    @GetMapping("/logout")
+    public ResponseEntity<?> logout() {
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 
     // 1.3 사용자 정보 조회
 //    @GetMapping("/info")
+    public ResponseEntity<?> getUserInfo(@AuthenticationPrincipal PrincipalDetails principalDetails) {
+        Long userId = principalDetails.getId();
+        User user = userRepository.findById(userId).get();
 
+        return new ResponseEntity<>(new UserResponse(user), HttpStatus.OK);
+    }
+
+//    @PutMapping("/edit/{userId}")
+//    public ResponseEntity<?> updateUser(@PathVariable("userId") Long userId, @RequestBody UserUpdateRequest userUpdateRequest) {
+//        userService.update
+//    }
+
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//    @PutMapping("/{memberId}/edit")
+//    public ResponseEntity<?> updateMember(@PathVariable("memberId") Long id,
+//                                          @RequestBody MemberForm memberForm) {
+//        memberService.updateMember(id, memberForm);
+//        return new ResponseEntity<>(HttpStatus.OK);
+//    }
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // 1.7 추천 친구 조회
     @GetMapping("/friends/recommend/{userId}")
     public ResponseEntity<?> getRecommendFriends(@PathVariable("userId") Long userId) {

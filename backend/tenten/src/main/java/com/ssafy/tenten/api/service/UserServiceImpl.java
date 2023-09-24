@@ -2,6 +2,8 @@ package com.ssafy.tenten.api.service;
 
 import com.ssafy.tenten.api.repository.UserRepository;
 import com.ssafy.tenten.domain.User;
+import com.ssafy.tenten.vo.Request.UserJoinRequest;
+import com.ssafy.tenten.vo.Request.UserUpdateRequest;
 import com.ssafy.tenten.vo.Response.RecommendUserResponse;
 import com.ssafy.tenten.vo.Response.UserResponse;
 import lombok.RequiredArgsConstructor;
@@ -18,15 +20,34 @@ import java.util.stream.Collectors;
 public class UserServiceImpl implements UserService{
     private final UserRepository userRepository;
 
+    @Transactional
     @Override
-    public void join(User user) {
-
+    public void join(UserJoinRequest dto) {
+        userRepository.save(User.builder()
+                        .email(dto.getEmail())
+                        .gender(dto.getGender())
+                        .image(dto.getImage())
+                        .name(dto.getName())
+                        .term(dto.getTerm())
+                        .campus(dto.getCampus())
+                        .group(dto.getGroup())
+                .build());
     }
 
+    @Transactional
     @Override
-    public void validateDuplicateUser(User user) {
+    public User update(Long userId, UserUpdateRequest userUpdateRequest) {
+        User user = userRepository.findById(userId).get();
 
+        return null;
     }
+
+//    @Override
+//    public void validateDuplicateUser(User user) {
+//
+//    }
+
+
 
     // 회원 탈퇴 (withdraw를 N으로 바꾸자!)
     @Override
@@ -53,7 +74,7 @@ public class UserServiceImpl implements UserService{
     // 추천 친구 조회
     @Override
     public List<RecommendUserResponse> recommendFriends(Long userId) {
-        User user = userRepository.findByUserId(userId);
+        User user = userRepository.findById(userId).get();
         String campus = user.getCampus();
         String group = user.getGroup();
         String term = user.getTerm();
@@ -72,13 +93,13 @@ public class UserServiceImpl implements UserService{
     @Transactional
     @Override
     public void subscribe(Long userId) {
-        User user = userRepository.findByUserId(userId);
+        User user = userRepository.findById(userId).get();
         user.subscribe();
     }
     // 구독 여부
     @Override
     public Long checkSub(Long userId) {
-        User user = userRepository.findByUserId(userId);
+        User user = userRepository.findById(userId).get();
         Long startTime = user.getSubStartTime();
         return startTime;
     }
@@ -87,7 +108,7 @@ public class UserServiceImpl implements UserService{
     @Transactional
     @Override
     public void unsubscribe(Long userId) {
-        User user = userRepository.findByUserId(userId);
+        User user = userRepository.findById(userId).get();
         user.unsubscribe();
     }
 }
