@@ -115,7 +115,6 @@ public class QuestionServiceImpl implements QuestionService{
                         .build()
         );
 
-
         return questionResponsePage;
     }
 }
