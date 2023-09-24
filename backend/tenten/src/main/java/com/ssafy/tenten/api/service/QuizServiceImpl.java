@@ -1,8 +1,12 @@
 package com.ssafy.tenten.api.service;
 
+import com.ssafy.tenten.api.repository.NewsRepository;
 import com.ssafy.tenten.api.repository.QuizRepository;
+import com.ssafy.tenten.domain.News;
 import com.ssafy.tenten.domain.Quiz;
 import com.ssafy.tenten.dto.QuizDto;
+import com.ssafy.tenten.exception.CustomException;
+import com.ssafy.tenten.exception.ErrorCode;
 import com.ssafy.tenten.vo.Response.QuizResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -10,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -17,6 +22,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class QuizServiceImpl implements QuizService {
     private final QuizRepository quizRepository;
+    private final NewsRepository newsRepository;
 
     @Override
     public List<QuizResponse> getQuizzesByDate(LocalDateTime date) {
@@ -24,7 +30,7 @@ public class QuizServiceImpl implements QuizService {
         return quizzes.stream()
                 .map(quiz -> QuizResponse.builder()
                         .quizId(quiz.getQuizId())
-                        .newsId(quiz.getNewsId()) // 이 부분 나중에 수정해야함
+                        .newsId(quiz.getNewsId().getNewsId()) // 이 부분 나중에 수정해야함
                         .question(quiz.getQuestion())
                         .answer(quiz.getAnswer())
                         .date(quiz.getDate())
@@ -63,10 +69,14 @@ public class QuizServiceImpl implements QuizService {
     @Override
     @Transactional
     public void createQuiz(QuizDto quizDto) {
-//      News news = newsRepository.findById()
+        News news = newsRepository.findById(quizDto.getNewsId()).orElseThrow(
+                () -> new CustomException(ErrorCode.NEWS_NOT_FOUND)
+        );
+
         Quiz quiz = Quiz.builder()
-                .quizDto(quizDto)
-//        .newsId(newsId)
+                .question(quizDto.getQuestion())
+                .newsId(news)
+                .answer(quizDto.getAnswer())
                 .build();
         quizRepository.save(quiz);
 

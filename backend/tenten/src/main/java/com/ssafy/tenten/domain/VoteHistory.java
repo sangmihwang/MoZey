@@ -12,6 +12,7 @@ import java.time.LocalDate;
 @Getter
 @DynamicInsert
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Table(name = "VOTE_HISTORY")
 public class VoteHistory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

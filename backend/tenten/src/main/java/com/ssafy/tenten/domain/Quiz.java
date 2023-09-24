@@ -11,17 +11,17 @@ import java.time.LocalDateTime;
 @Getter
 @DynamicInsert
 @Table(name = "QUIZ")
+@Builder
+@AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Quiz {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long quizId;
 
-    //    @ManyToOne
-//    @JoinColumn(name = "news_id")
-//    private News newsId;
-    @Column
-    private Long newsId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "news_id")
+    private News newsId;
 
     @Column
     private String question;
@@ -31,14 +31,5 @@ public class Quiz {
 
     @Column
     private LocalDateTime date;
-
-    @Builder
-    Quiz(QuizDto quizDto){
-        this.newsId = quizDto.getNewsId();
-        this.question = quizDto.getQuestion();
-        this.answer = quizDto.getAnswer();
-        this.date = quizDto.getDate();
-    }
-
 
 }
