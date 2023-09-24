@@ -1,10 +1,7 @@
 package com.ssafy.tenten.api.controller;
 
 import com.ssafy.tenten.api.repository.QuestionRepository;
-import com.ssafy.tenten.api.repository.VoteCntRepository;
-import com.ssafy.tenten.api.repository.VoteHistoryRepository;
 import com.ssafy.tenten.api.service.QuestionService;
-import com.ssafy.tenten.api.service.VoteService;
 import com.ssafy.tenten.dto.QuestionDto;
 import com.ssafy.tenten.exception.ErrorResponseEntity;
 import com.ssafy.tenten.exception.SuccessResponseEntity;
@@ -23,8 +20,6 @@ import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 import static com.ssafy.tenten.exception.ErrorCode.QUESTION_NOT_FOUND;
 

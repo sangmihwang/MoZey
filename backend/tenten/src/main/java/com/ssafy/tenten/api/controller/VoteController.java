@@ -1,11 +1,6 @@
 package com.ssafy.tenten.api.controller;
 
-import com.ssafy.tenten.api.repository.QuestionRepository;
-import com.ssafy.tenten.api.repository.VoteCntRepository;
-import com.ssafy.tenten.api.repository.VoteHistoryRepository;
 import com.ssafy.tenten.api.service.VoteService;
-import com.ssafy.tenten.domain.Question;
-import com.ssafy.tenten.domain.VoteHistory;
 import com.ssafy.tenten.dto.VoteDto;
 import com.ssafy.tenten.exception.SuccessResponseEntity;
 import com.ssafy.tenten.vo.Request.VoteRequest;
@@ -25,9 +20,6 @@ import java.util.List;
 @Slf4j
 public class VoteController {
     private final VoteService voteService;
-    private final VoteHistoryRepository voteHistoryRepository;
-    private final VoteCntRepository voteCntRepository;
-    private final QuestionRepository questionRepository;
     private final ModelMapper mapper;
 
     /**
