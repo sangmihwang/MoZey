@@ -14,3 +14,4 @@ UserDto {
     private String campus;
     private String group;
 }
+
