@@ -16,7 +16,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CoinInfoController {
     private final CoinInfoService coinInfoService;
-
     /*
     * 코인 정보 삽입
     */
