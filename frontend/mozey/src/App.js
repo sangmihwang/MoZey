@@ -18,6 +18,7 @@ const App = () => {
           {/* <Route path={utils.URL.VOTE.MAIN} element={<pages.Vote />} /> */}
           {/* <Route path={utils.URL.EXCHANGES.MAIN} element={<pages.Exchanges />} /> */}
           <Route path={utils.URL.NEWS.MAIN} element={<pages.News />} />
+          <Route path={utils.URL.MYPAGE.MAIN} element={<pages.Mypage />} />
         </Routes>
         <components.BottomNav/>
       </Router>

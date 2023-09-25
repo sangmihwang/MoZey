@@ -13,5 +13,8 @@ export const URL = {
   },
   NEWS: {
     MAIN: "/news",
-  }
+  },
+  MYPAGE: {
+    MAIN: "/mypage",
+  },
 };
