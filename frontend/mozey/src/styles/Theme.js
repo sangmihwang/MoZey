@@ -15,6 +15,7 @@ const common = {
 
 const color = {
   background: "#FFF4DA",
+  background2: "#EBE09B",
   white: "#FFF",
   black: "#000",
   darkgray: "#6D675B",
@@ -23,6 +24,7 @@ const color = {
   blue: "#4368FF",
   yellow: "#FFD94A",
   red: "#FF4C38",
+
   mainFilter:
     "invert(34%) sepia(44%) saturate(5088%) hue-rotate(211deg) brightness(99%) contrast(90%)",
   warningFilter:
