@@ -9,4 +9,6 @@ public interface VoteService {
     VoteResponse createVote(VoteDto voteDto);
 
     List<VoteResponse> suffleQuestion();
+
+    List<VoteResponse> getVoteCandidates(Long userId);
 }
