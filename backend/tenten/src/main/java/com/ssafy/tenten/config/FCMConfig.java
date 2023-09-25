@@ -23,7 +23,7 @@
 //        FirebaseApp firebaseApp = null;
 //        List<FirebaseApp> firebaseAppList = FirebaseApp.getApps();
 //
-//        if (firebaseAppList != null && !firebaseAppLit.isEmpty()) {
+//        if (firebaseAppList != null && !firebaseAppList.isEmpty()) {
 //            for (FirebaseApp app : firebaseAppList) {
 //                if (app.getName().equals(FirebaseApp.DEFAULT_APP_NAME)) {
 //                    firebaseApp = app;
