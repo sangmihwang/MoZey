@@ -14,7 +14,12 @@ const App = () => {
       <Router>
         <Routes>
           <Route path={utils.URL.HOME.MAIN} element={<pages.Main />} />
+          {/* <Route path={utils.URL.MESSAGE_BOX.MAIN} element={<pages.MessageBox />} /> */}
+          {/* <Route path={utils.URL.VOTE.MAIN} element={<pages.Vote />} /> */}
+          {/* <Route path={utils.URL.EXCHANGES.MAIN} element={<pages.Exchanges />} /> */}
+          <Route path={utils.URL.NEWS.MAIN} element={<pages.News />} />
         </Routes>
+        <components.BottomNav/>
       </Router>
     </ThemeProvider>
   );

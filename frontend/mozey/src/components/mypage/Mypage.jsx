@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import React from "react";
 import styled from "styled-components";
 
-const Mypage = () => {
+const Main = () => {
     return (
         <S.Wrap>
             <S.ProfileImage>
