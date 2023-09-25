@@ -20,15 +20,14 @@ import java.util.Map;
 public class ImageController {
 
     private final ImageService imageService;
-    @Value("${test}")
-    private String test;
+
     @Operation(
             summary = "이미지 가져오기",
             description = "이미지 네임을 통해 경로에 있는 이미지 파일을 불러옵니다."
     )
     @GetMapping("/{imageName}")
     public ResponseEntity<Resource> getImage(@PathVariable String imageName, @RequestParam("option") String option) {
-        System.out.println(test);
+
         Map<String, Object> returnMap = imageService.getImage(imageName, option);
         return new ResponseEntity<>((Resource) returnMap.get("resource"), (HttpHeaders)returnMap.get("header"), HttpStatus.OK);
     }
