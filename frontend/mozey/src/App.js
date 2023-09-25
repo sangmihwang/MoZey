@@ -1,7 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
-
 import * as style from "styles";
 import * as utils from "utils";
 import * as pages from "pages";
@@ -14,6 +13,7 @@ const App = () => {
       <Router>
         <Routes>
           <Route path={utils.URL.HOME.MAIN} element={<pages.Main />} />
+          <Route path="/api/coin/" element={<pages.Exchange />} />
         </Routes>
       </Router>
     </ThemeProvider>
