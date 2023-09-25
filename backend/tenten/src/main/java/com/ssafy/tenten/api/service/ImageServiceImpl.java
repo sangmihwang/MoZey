@@ -15,6 +15,7 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -47,11 +48,14 @@ public class ImageServiceImpl implements ImageService {
 
         // 파일 이름을 유니크한 값으로 생성(UUID)
         String newFileName = UUID.randomUUID() + "_" + image.getOriginalFilename();
-        BufferedImage bi=ImageIO.read(image.getInputStream());
-        bi=resizeImage(bi,450,450);
-        ImageIO.write(bi,"jpg",new File(uploadPath,newFileName));
-//        image.transferTo(new File(uploadPath, newFileName));
+        try(InputStream inputStream = image.getInputStream()){
+            BufferedImage bi=ImageIO.read(inputStream);
+            bi=resizeImage(bi,450,450);
+            ImageIO.write(bi,"jpg",new File(uploadPath,newFileName));
+        }
 
+
+//        image.transferTo(new File(uploadPath, newFileName));
         log.info("[이미지 업로드] 이미지 업로드 => imageName : {}", newFileName);
         log.info("[이미징 업로드] 이미지 업로드 완료");
 
@@ -64,11 +68,13 @@ public class ImageServiceImpl implements ImageService {
 
         String uploadPath = selectPath(option);
         String imagePath = uploadPath + File.separator + imageName;
+
+        log.info("[이미지 경로] 이미지 위치 {}",imagePath);
         Resource resource = new FileSystemResource(imagePath);
 
         if(!resource.exists()){
             log.error("[이미지 가져오기] 이미지 찾기 실패");
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "이미지를 찾지 못했습니다.");
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "이미지를 찾지 못했습니다.");
         }
 
         log.info("[이미지 가져오기] 이미지 찾기 성공");
@@ -95,14 +101,6 @@ public class ImageServiceImpl implements ImageService {
         String path = System.getProperty("user.dir");
         if (option.contains("vote")) {
             return path+VOTE_IMAGE_PATH;
-        } else if (option.contains("member")) {
-            return MEMBER_IMAGE_PATH;
-        } else if (option.contains("shelter")) {
-            return SHELTER_IMAGE_PATH;
-        } else if (option.contains("regist")) {
-            return REGIST_IMAGE_PATH;
-        } else if (option.contains("dog")) {
-            return DOG_IMAGE_PATH;
         }
         log.error("[이미지 Path 선택] 유효하지 않은 옵션. option : {}", option);
         throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "유효하지 않은 option입니다.");
