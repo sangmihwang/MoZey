@@ -1,36 +1,37 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { FaRegMessage, FaMoneyBillTransfer, FaRegNewspaper, FaPaperPlane, FaRegUser } from "react-icons/fa6";
 import * as utils from "utils";
 
 const BottomNav = () => {
-  const [activeNav, setActiveNav] = useState(1);
+  const [activeNav, setActiveNav] = useState(5);
 
   return (
     <S.Wrapper>
       <S.StyledLink to={utils.URL.MESSAGE.MAIN} onClick={() => setActiveNav(1)}>
         <S.Circle className={activeNav === 1 ? "active" : ""}>
-          <img src="images/Messagebox.svg" alt="Messagebox" />
+          <FaRegMessage size={30.55} color='#FFF4DA'/>
         </S.Circle>
       </S.StyledLink>
       <S.StyledLink to={utils.URL.VOTE.MAIN} onClick={() => setActiveNav(2)}>
         <S.Circle className={activeNav === 2 ? "active" : ""}>
-          <img src="images/Vote.svg" alt="Vote" />
+          <FaPaperPlane size={30.55} color='#FFF4DA' />
         </S.Circle>
       </S.StyledLink>
       <S.StyledLink to={utils.URL.EXCHANGE.MAIN} onClick={() => setActiveNav(3)}>
         <S.Circle className={activeNav === 3 ? "active" : ""}>
-          <img src="images/Exchanges.svg" alt="Exchange" />
+          <FaMoneyBillTransfer size={30.55} color='#FFF4DA'/>
         </S.Circle>
       </S.StyledLink>
       <S.StyledLink to={utils.URL.NEWS.MAIN} onClick={() => setActiveNav(4)}>
         <S.Circle className={activeNav === 4 ? "active" : ""}>
-          <img src="images/NewsQuiz.svg" alt="NewsQuiz" />
+          <FaRegNewspaper size={30.55} color='#FFF4DA'/>
         </S.Circle>
       </S.StyledLink>
-      <S.StyledLink to={utils.URL.HOME.MAIN} onClick={() => setActiveNav(5)}>
+      <S.StyledLink to={utils.URL.MYPAGE.MAIN} onClick={() => setActiveNav(5)}>
         <S.Circle className={activeNav === 5 ? "active" : ""}>
-          <img src="images/Mypage.svg" alt="Mypage" />
+          <FaRegUser size={30.55} color='#FFF4DA' />
         </S.Circle>
       </S.StyledLink>
     </S.Wrapper>
@@ -43,18 +44,19 @@ const S = {
     bottom: 0;
     left: 0;
     right: 0;
-    height: 45px;
+    z-index: 1000; 
+    height: 73px;
     overflow: hidden;
     display: flex;
     justify-content: space-between;
-    background-color: #ffffff;
+    background-color: #FFF4DA;
   `,
   StyledLink: styled(Link)`
     text-align: center;
     flex: 1;
     width: 20%;
-    height: 45px;
-    line-height: 45px;
+    height: 73px;
+    line-height: 73px;
     display: flex;
     align-items: center; 
     justify-content: center;
@@ -64,8 +66,8 @@ const S = {
     }
   `,
   Circle: styled.div`
-    width: 35px;
-    height: 35px;
+    width: 53.67px;
+    height: 48px;
     border-radius: 50%;
     display: flex;
     align-items: center;

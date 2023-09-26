@@ -5,9 +5,20 @@ import Chart from "react-apexcharts";
 import * as S from "components/exchange/Exchange.Style";
 import useStore from "store";
 
+// firebase
+import { auth, messaging } from "config/firebase";
+// css
+import "semantic-ui-css/semantic.min.css";
+
+import MenuItem from "@mui/material/MenuItem";
+import Select from "@mui/material/Select";
+import TextField from "@mui/material/TextField";
+import { FaCoins, FaCommentDollar } from "react-icons/fa";
+import { AiOutlineArrowRight } from "react-icons/ai";
 // https://apexcharts.com/docs/react-charts/
 
 function Exchange() {
+  // console.log(messaging);
   // useEffect(() => {
   //   const [series, setSeries] = useState("asd");
   //   const priceData = async () => {
@@ -16,7 +27,6 @@ function Exchange() {
   //   };
   //   priceData();
   // }, []);
-
   const [options] = useState({
     colors: ["#0fbcf9"],
     chart: {
@@ -263,6 +273,9 @@ function Exchange() {
   const [toCoin, setToCoin] = useState("");
   const [selectFromOption, setSelectFromOption] = useState("Point");
   const [selectToOption, setSelectToOption] = useState("KOSPI 50");
+  const [error, setError] = useState(false);
+  // 테스트
+  const myCoin = 1000;
 
   const calculateExchange = (value, selectFromOption, selectToOption) => {
     const todayKospi = series1[0].data[series1[0].data.length - 1].y;
@@ -293,7 +306,12 @@ function Exchange() {
     setToCoin(result);
   };
   const handleFromCoinChange = (e) => {
-    setFromCoin(e);
+    if (e > myCoin) {
+      setError(true);
+    } else {
+      setError(false);
+      setFromCoin(e);
+    }
   };
   const handleSelectFromOpitonChange = (e) => {
     setSelectFromOption(e);
@@ -310,22 +328,25 @@ function Exchange() {
     calculateExchange(fromCoin, selectFromOption, selectToOption);
   }, [fromCoin, selectFromOption, selectToOption]);
 
+  // 코인 테스트
+
   return (
     <div>
       <S.Wrap>
         <S.Chart1>
-          <div>오늘의 KOSPI 50 시세</div>
-          <select
+          {/* <a class="ui red ribbon label">오늘의 KOSPI 50 시세</a> */}
+          <div class="ui black ribbon label">KOSPI 50 차트</div>
+          <Select
             name="period"
             className="select"
             value={selectedPeriod1}
             onChange={(e) => setSelectedPeriod1(e.target.value)}
           >
-            <option value="default">조회 기간 변경 🍊</option>
-            <option value="7days">7일</option>
-            <option value="30days">30일</option>
-            <option value="total">전체</option>
-          </select>
+            <MenuItem value="default">조회 기간 변경 🍊</MenuItem>
+            <MenuItem value="7days">7일</MenuItem>
+            <MenuItem value="30days">30일</MenuItem>
+            <MenuItem value="total">전체</MenuItem>
+          </Select>
         </S.Chart1>
         <br />
         <S.Centered>
@@ -337,18 +358,18 @@ function Exchange() {
           />
         </S.Centered>
         <S.Chart1>
-          <div>오늘의 S&P 500 시세</div>
-          <select
+          <a class="ui red ribbon label">S&P 500 차트</a>
+          <Select
             name="period"
             className="select"
             value={selectedPeriod2}
             onChange={(e) => setSelectedPeriod2(e.target.value)}
           >
-            <option value="default">조회 기간 변경 🍊</option>
-            <option value="7days">7일</option>
-            <option value="30days">30일</option>
-            <option value="total">전체</option>
-          </select>
+            <MenuItem value="default">조회 기간 변경 🍊</MenuItem>
+            <MenuItem value="7days">7일</MenuItem>
+            <MenuItem value="30days">30일</MenuItem>
+            <MenuItem value="total">전체</MenuItem>
+          </Select>
         </S.Chart1>
         <br />
         <S.Centered>
@@ -362,46 +383,65 @@ function Exchange() {
         <S.ExContainer>
           <S.CoinCentered>
             <div>
-              <S.Logo src={process.env.PUBLIC_URL + "/images/Play.png"} />
+              <FaCommentDollar size="50px" padding="200px" />
               <br />
-              <select
+              <Select
                 name="fromOption"
                 className="select"
                 value={selectFromOption}
                 onChange={(e) => handleSelectFromOpitonChange(e.target.value)}
               >
-                <option value="Point">Point</option>
-                <option value="KOSPI 50">KOSPI 50</option>
-                <option value="S&P 500">S&P 500</option>
-              </select>
+                <MenuItem value="Point">Point</MenuItem>
+                <MenuItem value="KOSPI 50">KOSPI 50</MenuItem>
+                <MenuItem value="S&P 500">S&P 500</MenuItem>
+              </Select>
               <br />
 
-              <input
+              <TextField
                 type="number"
                 value={fromCoin}
                 onChange={(e) => handleFromCoinChange(e.target.value)}
+                error={error} // Add the error prop to display error styling
+                label={error ? "보유 금액을 초과했습니다." : ""}
               />
             </div>
             <div>
-              <S.Logo src={process.env.PUBLIC_URL + "/images/Play.png"} />
+              <AiOutlineArrowRight size="50px" />
             </div>
             <div>
-              <S.Logo src={process.env.PUBLIC_URL + "/images/Play.png"} />
+              <FaCoins size="50px" />
               <br />
-              <select
+              <Select
                 name="toOption"
                 className="select"
                 value={selectToOption}
                 onChange={(e) => handleSelectToOpitonChange(e.target.value)}
               >
-                <option value="KOSPI 50">KOSPI 50</option>
-                <option value="S&P 500">S&P 500</option>
-              </select>
+                <MenuItem value="KOSPI 50">KOSPI 50</MenuItem>
+                <MenuItem value="S&P 500">S&P 500</MenuItem>
+              </Select>
               <br />
-              <input type="number" value={toCoin} readOnly />
+              <TextField
+                type="number"
+                value={toCoin}
+                InputProps={{
+                  readOnly: true,
+                }}
+              />
             </div>
           </S.CoinCentered>
-          <S.YellowButton onClick={handleExchangeClick()}>환전</S.YellowButton>
+          <S.YellowButton
+            onClick={() =>
+              coinPriceAPI.exchangeCoin(
+                selectFromOption,
+                selectToOption,
+                fromCoin,
+                toCoin
+              )
+            }
+          >
+            환전
+          </S.YellowButton>
         </S.ExContainer>
         <br />
         <br />

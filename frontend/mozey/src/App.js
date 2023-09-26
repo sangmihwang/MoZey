@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import { ThemeProvider } from "styled-components";
+import styled, { ThemeProvider } from "styled-components";
 import * as style from "styles";
 import * as utils from "utils";
 import * as pages from "pages";
@@ -12,13 +12,18 @@ const App = () => {
       <style.GlobalStyles />
       <Router>
         <components.TobTab></components.TobTab>
-        <Routes>
-          <Route path={utils.URL.HOME.MAIN} element={<pages.Main />} />
-          <Route path={utils.URL.EXCHANGE.MAIN} element={<pages.Exchange />} />
-          <Route path={utils.URL.MESSAGE.MAIN} element={<pages.Message />} />
-          <Route path={utils.URL.VOTE.MAIN} element={<pages.Vote />} />
-          <Route path={utils.URL.NEWS.MAIN} element={<pages.News />} />
-        </Routes>
+        <S.ContentContainer>
+          <Routes>
+            <Route path={utils.URL.HOME.MAIN} element={<pages.Main />} />
+            <Route path={utils.URL.EXCHANGE.MAIN} element={<pages.Exchange />} />
+            <Route path={utils.URL.MESSAGE.MAIN} element={<pages.Message />} />
+            <Route path={utils.URL.VOTE.MAIN} element={<pages.Vote />} />
+            <Route path={utils.URL.NEWS.MAIN} element={<pages.News />} />
+            <Route path={utils.URL.MYPAGE.MAIN} element={<pages.Mypage />} />
+          </Routes>
+
+        </S.ContentContainer>
+        
         <components.BottomNav />
       </Router>
     </ThemeProvider>
@@ -26,3 +31,9 @@ const App = () => {
 };
 
 export default App;
+
+const S = {
+  ContentContainer: styled.div`
+    padding-bottom: 72px;
+  `
+}
