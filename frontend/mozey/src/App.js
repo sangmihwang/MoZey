@@ -11,13 +11,13 @@ const App = () => {
     <ThemeProvider theme={style.Theme}>
       <style.GlobalStyles />
       <Router>
+        <components.TobTab></components.TobTab>
         <Routes>
           <Route path={utils.URL.HOME.MAIN} element={<pages.Main />} />
           <Route path={utils.URL.EXCHANGES.MAIN} element={<pages.Exchange />} />
           {/* <Route path={utils.URL.MESSAGE_BOX.MAIN} element={<pages.MessageBox />} /> */}
           <Route path={utils.URL.MESSAGE.MAIN} element={<pages.Message />} />
-          {/* <Route path={utils.URL.VOTE.MAIN} element={<pages.Vote />} /> */}
-          {/* <Route path={utils.URL.EXCHANGES.MAIN} element={<pages.Exchanges />} /> */}
+          <Route path={utils.URL.VOTE.MAIN} element={<pages.Vote />} />
           <Route path={utils.URL.NEWS.MAIN} element={<pages.News />} />
         </Routes>
         <components.BottomNav />
