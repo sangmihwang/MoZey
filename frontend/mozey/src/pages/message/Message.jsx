@@ -6,7 +6,6 @@ const Message = () => {
   return (
     <div>
       <S.Wrap>
-        <components.TobTab></components.TobTab>
         <components.MessageList></components.MessageList>
       </S.Wrap>
     </div>

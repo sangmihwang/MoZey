@@ -18,7 +18,7 @@ const BottomNav = () => {
           <img src="images/Vote.svg" alt="Vote" />
         </S.Circle>
       </S.StyledLink>
-      <S.StyledLink to={utils.URL.EXCHANGES.MAIN} onClick={() => setActiveNav(3)}>
+      <S.StyledLink to={utils.URL.EXCHANGE.MAIN} onClick={() => setActiveNav(3)}>
         <S.Circle className={activeNav === 3 ? "active" : ""}>
           <img src="images/Exchanges.svg" alt="Exchange" />
         </S.Circle>
