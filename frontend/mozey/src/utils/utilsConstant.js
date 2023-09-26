@@ -8,8 +8,8 @@ export const URL = {
   VOTE: {
     MAIN: "/vote",
   },
-  EXCHANGES: {
-    MAIN: "/exchanges",
+  EXCHANGE: {
+    MAIN: "/exchange",
   },
   NEWS: {
     MAIN: "/news",
