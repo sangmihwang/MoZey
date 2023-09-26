@@ -119,7 +119,7 @@ function Exchange() {
     {
       coinName: 1,
       coinPrice: 540,
-      date: 20230924,
+      date: 20230926,
     },
     {
       coinName: 2,
@@ -168,8 +168,8 @@ function Exchange() {
     },
     {
       coinName: 2,
-      coinPrice: 550,
-      date: 20230925,
+      coinPrice: 1050,
+      date: 20230926,
     },
   ]);
 
@@ -258,12 +258,58 @@ function Exchange() {
   }, [selectedPeriod2, series2]);
 
   //  코인 교환 파트
+
   const [fromCoin, setFromCoin] = useState("");
   const [toCoin, setToCoin] = useState("");
-  const calculateExchange = () => {
-    const todayKospi = series1.filter((item) => item.data[0]["y"]);
-    const todaySandP = series2.filter((item) => item.data[0]["y"]);
+  const [selectFromOption, setSelectFromOption] = useState("Point");
+  const [selectToOption, setSelectToOption] = useState("KOSPI 50");
+
+  const calculateExchange = (value, selectFromOption, selectToOption) => {
+    const todayKospi = series1[0].data[series1[0].data.length - 1].y;
+    const todaySandP = series2[0].data[series2[0].data.length - 1].y;
+
+    let exchangeRate = 1;
+    const KToS = todayKospi / todaySandP;
+    const PToS = todaySandP;
+    const PToK = todayKospi;
+    const SToK = todaySandP / todayKospi;
+    console.log(selectFromOption, selectToOption, "프롬, 투 ");
+    if (selectFromOption === "Point") {
+      if (selectToOption === "KOSPI 50") {
+        exchangeRate = PToK;
+      } else if (selectToOption === "S&P 500") {
+        exchangeRate = PToS;
+      }
+    } else if (selectFromOption === "KOSPI 50") {
+      if (selectToOption === "S&P 500") {
+        exchangeRate = KToS;
+      }
+    } else if (selectFromOption === "S&P 500") {
+      if (selectToOption === "KOSPI 50") {
+        exchangeRate = SToK;
+      }
+    }
+    const result = Math.round(value * exchangeRate);
+    setToCoin(result);
   };
+  const handleFromCoinChange = (e) => {
+    setFromCoin(e);
+  };
+  const handleSelectFromOpitonChange = (e) => {
+    setSelectFromOption(e);
+  };
+  const handleSelectToOpitonChange = (e) => {
+    setSelectToOption(e);
+  };
+
+  const handleExchangeClick = (e) => {
+    console.log(e);
+  };
+
+  useEffect(() => {
+    calculateExchange(fromCoin, selectFromOption, selectToOption);
+  }, [fromCoin, selectFromOption, selectToOption]);
+
   return (
     <div>
       <S.Wrap>
@@ -313,32 +359,52 @@ function Exchange() {
             width="600"
           />
         </S.Centered>
-        <S.CoinCentered>
-          <div>
-            <select>
-              <option value="Point">Point</option>
-              <option value="KOSPI">KOSPI 50</option>
-              <option value="S&P">S&P 500</option>
-            </select>
-            <br />
+        <S.ExContainer>
+          <S.CoinCentered>
+            <div>
+              <S.Logo src={process.env.PUBLIC_URL + "/images/Play.png"} />
+              <br />
+              <select
+                name="fromOption"
+                className="select"
+                value={selectFromOption}
+                onChange={(e) => handleSelectFromOpitonChange(e.target.value)}
+              >
+                <option value="Point">Point</option>
+                <option value="KOSPI 50">KOSPI 50</option>
+                <option value="S&P 500">S&P 500</option>
+              </select>
+              <br />
 
-            <input
-              type="number"
-              value={fromCoin}
-              onChange={(e) => setFromCoin(e.target.value)}
-            />
-          </div>
-          <div>to</div>
-          <div>
-            <select>
-              <option value="KOSPI">KOSPI 50</option>
-              <option value="S&P">S&P 500</option>
-            </select>
-            <br />
-            <input type="number" value={toCoin} readOnly />
-          </div>
-        </S.CoinCentered>
-        <S.ExchangeBtn>Exchange</S.ExchangeBtn>
+              <input
+                type="number"
+                value={fromCoin}
+                onChange={(e) => handleFromCoinChange(e.target.value)}
+              />
+            </div>
+            <div>
+              <S.Logo src={process.env.PUBLIC_URL + "/images/Play.png"} />
+            </div>
+            <div>
+              <S.Logo src={process.env.PUBLIC_URL + "/images/Play.png"} />
+              <br />
+              <select
+                name="toOption"
+                className="select"
+                value={selectToOption}
+                onChange={(e) => handleSelectToOpitonChange(e.target.value)}
+              >
+                <option value="KOSPI 50">KOSPI 50</option>
+                <option value="S&P 500">S&P 500</option>
+              </select>
+              <br />
+              <input type="number" value={toCoin} readOnly />
+            </div>
+          </S.CoinCentered>
+          <S.YellowButton onClick={handleExchangeClick()}>환전</S.YellowButton>
+        </S.ExContainer>
+        <br />
+        <br />
       </S.Wrap>
     </div>
   );

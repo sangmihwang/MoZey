@@ -29,15 +29,32 @@ export const Centered = styled.div`
 `;
 
 export const CoinCentered = styled.form`
+  margin-top: 80px;
   display: flex;
-  /* margin: 0 auto; */
-  /* flex-direction: ; */
   justify-content: center;
   align-items: center;
   text-align: center;
 `;
 
-export const ExchangeBtn = styled.button`
+export const ExchangeBtn = styled.button``;
+
+export const ExContainer = styled.div`
+  height: 300px;
+  margin: 0% auto;
+  padding: 15px;
+  width: 600px;
+  background-color: white;
+`;
+
+export const Logo = styled.img`
+  height: 15px;
+`;
+
+export const YellowButton = styled.button`
+  background-color: #ffd94a;
+  padding: 10px 30px;
   margin: auto;
   display: block;
+  border-radius: 10px;
+  margin-top: 20px;
 `;
