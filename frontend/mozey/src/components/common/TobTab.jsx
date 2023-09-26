@@ -9,59 +9,72 @@ const TobTab = () => {
   const [title, setTitle] = useState("");
   const [subtitle, setSubtitle] = useState("");
   const [showsub, setShowsub] = useState(true);
+  const [showTobTab, setShowTobTab] = useState(true);
 
   useEffect(() => {
-    switch(location.pathname) {
+    switch (location.pathname) {
       case utils.URL.HOME.MAIN:
-        setTitle("마이페이지");
-        setSubtitle("mypage mypage mypage mypage mypage mypage mypage mypage mypage");
         setShowsub(false);
+        setShowTobTab(false);
+        break;
+      case utils.URL.MYPAGE.MAIN:
+        setTitle("마이페이지");
+        setSubtitle("mypage mypage mypage mypage mypage mypage mypage mypage mypage mypage mypage mypage mypage mypage mypage mypage mypage  mypage mypage mypage mypage mypage mypage mypage mypage");
+        setShowsub(false);
+        setShowTobTab(true);
         break;
       case utils.URL.EXCHANGE.MAIN:
         setTitle("환전소");
-        setSubtitle("coinonSale coinonSale coinonSale coinonSale coinonSale");
+        setSubtitle("coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale");
         setShowsub(true);
+        setShowTobTab(true);
         break;
       case utils.URL.MESSAGE.MAIN:
         setTitle("메시지함");
-        setSubtitle("whatYougot  whatYougot  whatYougot  whatYougot  whatYougot  whatYougot");
+        setSubtitle("whatYougot  whatYougot  whatYougot  whatYougot  whatYougot  whatYougot  whatYougot  whatYougot  whatYougot  whatYougot  whatYougot  whatYougot  whatYougot  whatYougot  whatYougot  whatYougot  whatYougot  whatYougot  whatYougot  whatYougot  whatYougot");
         setShowsub(true);
+        setShowTobTab(true);
         break;
       case utils.URL.VOTE.MAIN:
         setTitle("투표");
-        setSubtitle("voteforHim voteforHer voteforHim voteforHer voteforHim voteforHer");
+        setSubtitle("voteforHim voteforHer voteforHim voteforHer voteforHim voteforHer voteforHim voteforHer voteforHim voteforHer voteforHim voteforHer voteforHim voteforHer voteforHim voteforHer voteforHim voteforHer voteforHim voteforHer voteforHim voteforHer");
         setShowsub(true);
+        setShowTobTab(true);
         break;
       case utils.URL.NEWS.MAIN:
         setTitle("뉴스");
-        setSubtitle("EconomicNewsToday EconomicNewsToday EconomicNewsToday");
+        setSubtitle("EconomicNewsToday EconomicNewsToday EconomicNewsToday EconomicNewsToday EconomicNewsToday EconomicNewsToday EconomicNewsToday EconomicNewsToday EconomicNewsToday EconomicNewsToday EconomicNewsToday EconomicNewsToday EconomicNewsToday");
         setShowsub(true);
+        setShowTobTab(true);
         break;
       default:
-        setTitle("");
-        setSubtitle("");
+        setShowsub(false);
+        setShowTobTab(false);
+        break;
     }
   }, [location.pathname]);
 
   return (
-    <S.Wrap>
-      <S.TopSection>
-        <S.Title>{title}</S.Title>
-        {showsub && (
-          <S.CoinAmount>
-            <S.StyledBsCoin />
-            100
-            <S.StyledBsCoin />
-            100
-            <S.StyledBsCoin />
-            100
-          </S.CoinAmount>
-        )}
-      </S.TopSection>
-      <S.Subtitle>
-        {subtitle}
-      </S.Subtitle>
-    </S.Wrap>
+    showTobTab ? (
+      <S.Wrap>
+        <S.TopSection>
+          <S.Title>{title}</S.Title>
+          {showsub && (
+            <S.CoinAmount>
+              <S.StyledBsCoin />
+              100
+              <S.StyledBsCoin />
+              100
+              <S.StyledBsCoin />
+              100
+            </S.CoinAmount>
+          )}
+        </S.TopSection>
+        <S.Subtitle>
+          {subtitle}
+        </S.Subtitle>
+      </S.Wrap>
+    ) : null
   );
 };
 
@@ -96,6 +109,8 @@ const S = {
     font-size: ${({ theme }) => theme.fontsize.content};
     word-spacing: 10px;
     font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
   `,
 };
 
