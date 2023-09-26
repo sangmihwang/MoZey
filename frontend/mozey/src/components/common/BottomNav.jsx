@@ -7,15 +7,9 @@ const BottomNav = () => {
   const [activeNav, setActiveNav] = useState(1);
 
   return (
-<<<<<<< HEAD
     <S.Wrapper>
-      <S.StyledLink to={utils.URL.MESSAGE_BOX.MAIN} onClick={() => setActiveNav(1)}>
+      <S.StyledLink to={utils.URL.MESSAGE.MAIN} onClick={() => setActiveNav(1)}>
         <S.Circle className={activeNav === 1 ? "active" : ""}>
-=======
-    <S.NavWrapper>
-      <S.NavItem>
-        <Link to={utils.URL.MESSAGE.MAIN}>
->>>>>>> e2c237026536d04f77247e3211f8c40d2cb288f4
           <img src="images/Messagebox.svg" alt="Messagebox" />
         </S.Circle>
       </S.StyledLink>
@@ -44,7 +38,6 @@ const BottomNav = () => {
 };
 
 const S = {
-<<<<<<< HEAD
   Wrapper: styled.nav`
     position: fixed;
     bottom: 0;
@@ -57,20 +50,11 @@ const S = {
     background-color: #ffffff;
   `,
   StyledLink: styled(Link)`
-=======
-  NavWrapper: styled.nav`
-    overflow: hidden;
-    display: flex;
-    justify-content: space-between;
-  `,
-  NavItem: styled.div`
->>>>>>> e2c237026536d04f77247e3211f8c40d2cb288f4
     text-align: center;
     flex: 1;
     width: 20%;
     height: 45px;
     line-height: 45px;
-<<<<<<< HEAD
     display: flex;
     align-items: center; 
     justify-content: center;
@@ -92,9 +76,6 @@ const S = {
       background-color: #3B82F6;
     }
   `
-=======
-  `,
->>>>>>> e2c237026536d04f77247e3211f8c40d2cb288f4
 };
 
 export default BottomNav;
