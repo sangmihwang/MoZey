@@ -5,6 +5,9 @@ import Chart from "react-apexcharts";
 import * as S from "components/exchange/Exchange.Style";
 import useStore from "store";
 
+// firebase
+import { auth, messaging } from "config/firebase";
+
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import TextField from "@mui/material/TextField";
@@ -13,6 +16,7 @@ import { AiOutlineArrowRight } from "react-icons/ai";
 // https://apexcharts.com/docs/react-charts/
 
 function Exchange() {
+  // console.log(messaging);
   // useEffect(() => {
   //   const [series, setSeries] = useState("asd");
   //   const priceData = async () => {
@@ -21,7 +25,6 @@ function Exchange() {
   //   };
   //   priceData();
   // }, []);
-
   const [options] = useState({
     colors: ["#0fbcf9"],
     chart: {
