@@ -69,6 +69,7 @@ const S = {
   Wrap: styled.div`
     display: flex;
     flex-direction: column;
+    background-color: ${({ theme }) => theme.color.background};
   `,
   TopSection: styled.div`
     display: flex;
