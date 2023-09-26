@@ -29,7 +29,7 @@ export const Centered = styled.div`
 `;
 
 export const CoinCentered = styled.form`
-  margin-top: 80px;
+  margin-top: 30px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -41,6 +41,7 @@ export const ExchangeBtn = styled.button``;
 export const ExContainer = styled.div`
   height: 300px;
   margin: 0% auto;
+  margin-top: 30px;
   padding: 15px;
   width: 600px;
   background-color: white;

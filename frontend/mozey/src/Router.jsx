@@ -7,7 +7,7 @@ function Router() {
     <BrowserRouter>
       <Routes>
         <Route path={utils.URL.HOME.MAIN} element={<pages.Main />} />
-        <Route path="/api/coin" element={<Exchange />} />
+        <Route path={utils.URL.EXCHANGES.MAIN} element={<pages.Exchange />} />
       </Routes>
     </BrowserRouter>
   );
