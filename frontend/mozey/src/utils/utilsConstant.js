@@ -9,7 +9,7 @@ export const URL = {
     MAIN: "/vote",
   },
   EXCHANGES: {
-    MAIN: "/exchanges",
+    MAIN: "/exchange",
   },
   NEWS: {
     MAIN: "/news",
