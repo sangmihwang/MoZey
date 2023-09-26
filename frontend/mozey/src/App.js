@@ -19,6 +19,7 @@ const App = () => {
             <Route path={utils.URL.MESSAGE.MAIN} element={<pages.Message />} />
             <Route path={utils.URL.VOTE.MAIN} element={<pages.Vote />} />
             <Route path={utils.URL.NEWS.MAIN} element={<pages.News />} />
+            <Route path={utils.URL.MYPAGE.MAIN} element={<pages.Mypage />} />
           </Routes>
 
         </S.ContentContainer>
