@@ -14,4 +14,7 @@ public interface FollowRepository extends JpaRepository<Follow, Long>{
     List<Follow> findAllByReceiverName(@Param("name") String name, @Param("senderId") Long senderId);
     boolean existsBySenderIdAndReceiverId(Long senderId, Long receiveId);
     void deleteBySenderIdAndReceiverId(Long senderId, Long receiveId);
+
+
+    List<Follow> findBySenderId_UserId(Long userId);
 }

@@ -9,28 +9,41 @@ const Main = () => {
   return (
     <S.Wrap>
       <S.Logo>
-        <div>
-          <img src={mozeyLogo} alt={"로고"} />
-        </div>
-        <div>
-          <img src={thinkerLogo} alt={"thinker"} />
-        </div>
+        <img src={mozeyLogo} alt={"로고"} />
       </S.Logo>
+      <S.ThinkerImage>
+        <img src={thinkerLogo} alt={"thinker"} />
+      </S.ThinkerImage>
     </S.Wrap>
   );
 };
 
 const S = {
   Wrap: styled.div`
+    display: flex;
+    flex-direction: column;
     width: 100%;
-    background: ${({ theme }) => theme.color.background};
+    height: 100%;
+    background: linear-gradient(
+      ${({ theme }) => theme.color.background2} 28%,
+      ${({ theme }) => theme.color.background} 28%
+    );
+
     text-align: center;
+    padding-top: 100px;
+    align-items: center;
   `,
   Logo: styled.div`
-    display: inline-block;
-    > div {
-      display: block;
-      margin: 0 auto; /* 가로 가운데 정렬 */
+    height: 160px;
+    margin: 30px auto;
+  `,
+  ThinkerImage: styled.div`
+    align-self: center;
+    width: 300px;
+    margin: 30px auto;
+    img {
+      width: 100%;
+      height: auto;
     }
   `,
 };

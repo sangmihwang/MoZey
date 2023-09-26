@@ -1,0 +1,14 @@
+package com.ssafy.tenten.api.repository;
+
+import com.ssafy.tenten.domain.MoneyHistory;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+
+import java.util.List;
+
+public interface MoneyHistoryRepository extends JpaRepository<MoneyHistory, Long> {
+    @Query("SELECT m FROM MoneyHistory m WHERE m.userId = :userId")
+    List<MoneyHistory> findByUserId(Long userId);
+
+    MoneyHistory save(MoneyHistory moneyHistories);
+}

@@ -6,11 +6,12 @@ import com.ssafy.tenten.domain.Question;
 import com.ssafy.tenten.domain.User;
 import com.ssafy.tenten.dto.QuestionDto;
 import com.ssafy.tenten.exception.CustomException;
-import com.ssafy.tenten.vo.Request.QuestionRequest;
 import com.ssafy.tenten.vo.Response.QuestionResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.cache.annotation.Cacheable;
-import org.springframework.data.redis.core.ListOperations;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
@@ -28,7 +29,7 @@ import static com.ssafy.tenten.exception.ErrorCode.USER_NOT_FOUND;
 public class QuestionServiceImpl implements QuestionService{
     private final QuestionRepository questionRepository;
     private final UserRepository userRepository;
-    private final RedisTemplate<String, String> redisTemplate;
+    private final RedisTemplate<String, Object> redisTemplate;
     @Override
     @Transactional
     public void postQuestions(QuestionDto questionDto) {
@@ -44,30 +45,29 @@ public class QuestionServiceImpl implements QuestionService{
     }
 
     @Override
-    public List<QuestionResponse> getAllQuestions() {
-        List<Question> questions = questionRepository.findAll();
+    public Page<QuestionResponse> getAllQuestions( PageRequest pageRequest ) {
+        Page<Question> questions = questionRepository.findAll(pageRequest);
 
-        List<QuestionResponse> collect = questions.stream()
+        Page<QuestionResponse> collect = questions
                 .map(a -> QuestionResponse.builder()
                         .qtnId(a.getQtnId())
                         .userId(a.getUserId().getUserId())
                         .qtnContent(a.getQtnContent())
                         .status(a.getStatus())
-                        .build())
-                .collect(Collectors.toList());
+                        .build());
         return collect;
 
     }
 
     @Override
-//    @Cacheable(value = "quesitons", key = "'question'+#id",cacheManager = "testCacheManager")
-    public List<QuestionResponse> getQuestions(Long id) {
-        ValueOperations<String, String> stringListValueOperations = redisTemplate.opsForValue();
+//    @Cacheable(value = "quesitons", key = "#id",cacheManager = "testCacheManager")
+    public Slice<QuestionResponse> getQuestions(Long id,Character status ,Pageable pageable) {
 
-        List<Question> questions = questionRepository.findByUserId(id).orElseThrow(
-                () -> new CustomException(USER_NOT_FOUND)
-        );
+        Slice<QuestionResponse> questions = questionRepository.getPageQuestions(id,status,pageable)
+                .orElseThrow(() ->new CustomException(USER_NOT_FOUND));
 
+        questions.hasNext();
+/**
         List<QuestionResponse> collect = questions.stream()
                 .map(a -> QuestionResponse.builder()
                         .qtnId(a.getQtnId())
@@ -76,17 +76,13 @@ public class QuestionServiceImpl implements QuestionService{
                         .status(a.getStatus())
                         .build())
                 .collect(Collectors.toList());
-        stringListValueOperations.set("question","sdfsd");
-        return collect;
+**/
+        return questions;
     }
 
     @Override
     public QuestionResponse getQuestion(Long qtnId) {
-        ValueOperations<String, String> stringListValueOperations = redisTemplate.opsForValue();
-        if(stringListValueOperations.get("question")!=null){
-            System.out.println("sfsdffsd");
-            return null;
-        }
+
         Question question = questionRepository.findById(qtnId).orElseThrow(
                 () -> new CustomException(QUESTION_NOT_FOUND)
         );
@@ -102,7 +98,23 @@ public class QuestionServiceImpl implements QuestionService{
 
     @Override
     @Transactional
-    public QuestionResponse updateQuestion(Long qtnId, QuestionRequest questionRequest) {
-        return questionRepository.updateQuestion(qtnId, questionRequest);
+    public QuestionResponse updateQuestion(Long qtnId, QuestionDto questionDto) {
+        return questionRepository.updateQuestion(qtnId, questionDto);
+    }
+
+    @Override
+    public Page<QuestionResponse> getQuestionPage(Character status, PageRequest pageRequest) {
+        Page<Question> pageByStatus = questionRepository.findPageByStatus(status, pageRequest);
+
+        Page<QuestionResponse> questionResponsePage = pageByStatus.map(question ->
+                QuestionResponse.builder()
+                        .qtnId(question.getQtnId())
+                        .userId(question.getUserId().getUserId())
+                        .status(status)
+                        .qtnContent(question.getQtnContent())
+                        .build()
+        );
+
+        return questionResponsePage;
     }
 }
