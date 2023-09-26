@@ -1,7 +1,5 @@
 import { initializeApp } from "firebase/app";
 import { getAuth, GoogleAuthProvider } from "firebase/auth";
-import { getFirestore } from "firebase/firestore";
-import { getStorage } from "firebase/storage";
 import { getMessaging, getToken } from "firebase/messaging";
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -17,36 +15,30 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-console.log(app);
 export const messaging = getMessaging(app);
-console.log(messaging);
 function requestPermission() {
-  console.log("Requesting permission...");
   Notification.requestPermission().then((permission) => {
     if (permission === "granted") {
-      console.log("Notification permission granted.");
+      console.log("알림 설정 완료");
     }
   });
 }
 requestPermission();
 
 const token = getToken(messaging, {
-  vapidKey:
-    "BAs-v9khkmkHZt3MBRqnWsmJpWvn7i9boikq8m-D54_q_n-27fw3mYJZEvGbAPUTVkcRE-Lsm4T6GWnVXxgqAvo",
+  vapidKey: process.env.REACT_APP_VAPID_KEY,
 })
   .then((currentToken) => {
     if (currentToken) {
       console.log(currentToken);
     } else {
       // Show permission request UI
-      console.log(
-        "No registration token available. Request permission to generate one."
-      );
+      console.log("토큰 없습니다");
       // ...
     }
   })
   .catch((err) => {
-    console.log("An error occurred while retrieving token. ", err);
+    console.log("에러", err);
     // ...
   });
 // export const token = await getToken(messaging, {
