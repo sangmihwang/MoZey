@@ -2,8 +2,8 @@ export const URL = {
   HOME: {
     MAIN: "/",
   },
-  MESSAGE_BOX: {
-    MAIN: "/messagebox",
+  MESSAGE: {
+    MAIN: "/message",
   },
   VOTE: {
     MAIN: "/vote",
@@ -13,5 +13,5 @@ export const URL = {
   },
   NEWS: {
     MAIN: "/news",
-  }
+  },
 };
