@@ -7,6 +7,8 @@ import useStore from "store";
 
 // firebase
 import { auth, messaging } from "config/firebase";
+// css
+import "semantic-ui-css/semantic.min.css";
 
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
@@ -332,7 +334,8 @@ function Exchange() {
     <div>
       <S.Wrap>
         <S.Chart1>
-          <div>오늘의 KOSPI 50 시세</div>
+          {/* <a class="ui red ribbon label">오늘의 KOSPI 50 시세</a> */}
+          <div class="ui black ribbon label">KOSPI 50 차트</div>
           <Select
             name="period"
             className="select"
@@ -355,7 +358,7 @@ function Exchange() {
           />
         </S.Centered>
         <S.Chart1>
-          <div>오늘의 S&P 500 시세</div>
+          <a class="ui red ribbon label">S&P 500 차트</a>
           <Select
             name="period"
             className="select"
