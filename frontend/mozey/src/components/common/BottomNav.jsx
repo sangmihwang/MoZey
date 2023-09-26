@@ -29,7 +29,7 @@ const BottomNav = () => {
           <FaRegNewspaper size={30.55} color='#FFF4DA'/>
         </S.Circle>
       </S.StyledLink>
-      <S.StyledLink to={utils.URL.HOME.MAIN} onClick={() => setActiveNav(5)}>
+      <S.StyledLink to={utils.URL.MYPAGE.MAIN} onClick={() => setActiveNav(5)}>
         <S.Circle className={activeNav === 5 ? "active" : ""}>
           <FaRegUser size={30.55} color='#FFF4DA' />
         </S.Circle>
