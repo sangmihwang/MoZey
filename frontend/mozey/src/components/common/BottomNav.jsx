@@ -7,7 +7,7 @@ const BottomNav = () => {
   return (
     <S.NavWrapper>
       <S.NavItem>
-        <Link to={utils.URL.MESSAGE_BOX.MAIN}>
+        <Link to={utils.URL.MESSAGE.MAIN}>
           <img src="images/Messagebox.svg" alt="Messagebox" />
         </Link>
       </S.NavItem>
@@ -36,18 +36,18 @@ const BottomNav = () => {
 };
 
 const S = {
-    NavWrapper: styled.nav`
-      overflow: hidden;
-      display: flex;
-      justify-content: space-between;
-    `,
-    NavItem: styled.div`
-      text-align: center;
-      flex: 1;
-      width: 20%;
-      height: 45px;
-      line-height: 45px;
-    `
-  };
+  NavWrapper: styled.nav`
+    overflow: hidden;
+    display: flex;
+    justify-content: space-between;
+  `,
+  NavItem: styled.div`
+    text-align: center;
+    flex: 1;
+    width: 20%;
+    height: 45px;
+    line-height: 45px;
+  `,
+};
 
 export default BottomNav;
