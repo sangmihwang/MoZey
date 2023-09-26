@@ -1,4 +1,5 @@
 export { default as Main } from "./main/Main";
+export { default as Exchange } from "./exchange/Exchange";
 export { default as BottomNav } from "./common/BottomNav";
 export { default as MessageList } from "./message/MessageList";
 // export { default as Vote } from './vote';
