@@ -36,12 +36,12 @@ const font = {
 };
 
 const fontsize = {
-  content: "14px",
   logo: "27px",
   title1: "24px",
   title2: "18px",
   title3: "16px",
-  sub1: "14px",
+  content: "14px",
+  subcontent: "12px",
 };
 
 const lineheight = {
