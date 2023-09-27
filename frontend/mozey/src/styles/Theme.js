@@ -36,12 +36,12 @@ const font = {
 };
 
 const fontsize = {
-  content: "14px",
   logo: "27px",
   title1: "24px",
   title2: "18px",
   title3: "16px",
-  sub1: "14px",
+  content: "14px",
+  subcontent: "12px",
 };
 
 const lineheight = {
@@ -53,8 +53,8 @@ const lineheight = {
 };
 
 const shadow = {
-  card: `0px 3px 3px 0px rgba(0, 0, 0, 0.03);`,
-  // card: `0px 4px 4px 0px rgba(0, 0, 0, 0.05);`,
+  // card: `0px 3px 3px 0px rgba(0, 0, 0, 0.03);`,
+  card: `0px 6px 6px 0px rgba(0, 0, 0, 0.07);`,
 };
 
 const Theme = {
