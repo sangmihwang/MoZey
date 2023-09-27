@@ -1,11 +1,49 @@
-import React from 'react'
+import React from "react";
+import styled from "styled-components";
 
-const QuizButton = () => {
+const QuizButton = ({ onClick }) => {
   return (
-    <div>
-      QuizButton
-    </div>
-  )
-}
+    <S.ButtonWrap>
+      <S.QuizButton onClick={onClick}>오늘의 퀴즈 풀기</S.QuizButton>
+    </S.ButtonWrap>
+  );
+};
 
-export default QuizButton
+const S = {
+  ButtonWrap: styled.div`
+    margin-top: 0px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 3%;
+    background: ${({ theme }) => theme.color.background};
+    padding: 20px 0;
+  `,
+  QuizButton: styled.button`
+    background-color: ${({ theme }) => theme.color.yellow};
+    color: #000;
+    width: 95%;
+    border-radius: 10px;
+    padding: 10px 10px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    outline: none;  // 기본 focus 스타일 제거
+
+    &:hover {
+      background-color: ${({ theme }) => theme.color.darkgray};
+    }
+
+    &:active {
+      background-color: ${({ theme }) => theme.color.darkgray};
+    }
+
+    &:focus {
+      background-color: ${({ theme }) => theme.color.yellow};  // focus 상태에서 원래의 yellow로 유지
+    }
+  `,
+};
+
+export default QuizButton;

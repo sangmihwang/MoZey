@@ -49,7 +49,7 @@ const S = {
     overflow: hidden;
     display: flex;
     justify-content: space-between;
-    background-color: #FFF4DA;
+    background-color: ${({ theme }) => theme.color.background}
   `,
   StyledLink: styled(Link)`
     text-align: center;
@@ -72,7 +72,7 @@ const S = {
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #FF4C38;
+    background-color: ${({ theme }) => theme.color.red};
     transition: background-color 0.3s;
     &.active {
       background-color: #3B82F6;
