@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import React from "react";
 import coinPriceAPI from "api/coinPriceAPI";
 import Chart from "react-apexcharts";
-import * as S from "components/exchange/Exchange.Style";
 import useStore from "store";
+import styled from "styled-components";
 
 // firebase
 import { auth, messaging } from "config/firebase";
@@ -17,7 +17,7 @@ import { FaCoins, FaCommentDollar } from "react-icons/fa";
 import { AiOutlineArrowRight } from "react-icons/ai";
 // https://apexcharts.com/docs/react-charts/
 
-function Exchange() {
+const Exchange = () => {
   // console.log(messaging);
   // useEffect(() => {
   //   const [series, setSeries] = useState("asd");
@@ -30,9 +30,19 @@ function Exchange() {
   const [options] = useState({
     colors: ["#0fbcf9"],
     chart: {
-      height: 500,
+      width: "80%",
+      height: "30%",
+      type: "line",
     },
-    xaxis: {},
+
+    dataLabels: {
+      enabled: false,
+    },
+    stroke: {
+      width: 1,
+      colors: ["#fff"],
+    },
+
     theme: {
       mode: "dark",
       palette: "palette1",
@@ -333,6 +343,7 @@ function Exchange() {
   return (
     <div>
       <S.Wrap>
+        <br />
         <S.Chart1>
           {/* <a class="ui red ribbon label">오늘의 KOSPI 50 시세</a> */}
           <div class="ui black ribbon label">KOSPI 50 차트</div>
@@ -350,12 +361,7 @@ function Exchange() {
         </S.Chart1>
         <br />
         <S.Centered>
-          <Chart
-            options={options}
-            series={filteredSeries1}
-            type="line"
-            width="600"
-          />
+          <Chart options={options} series={filteredSeries1} />
         </S.Centered>
         <S.Chart1>
           <a class="ui red ribbon label">S&P 500 차트</a>
@@ -373,17 +379,12 @@ function Exchange() {
         </S.Chart1>
         <br />
         <S.Centered>
-          <Chart
-            options={options}
-            series={filteredSeries2}
-            type="line"
-            width="600"
-          />
+          <Chart options={options} series={filteredSeries2} />
         </S.Centered>
         <S.ExContainer>
           <S.CoinCentered>
             <div>
-              <FaCommentDollar size="50px" padding="200px" />
+              <FaCommentDollar size="30%" padding="10%" />
               <br />
               <Select
                 name="fromOption"
@@ -406,10 +407,10 @@ function Exchange() {
               />
             </div>
             <div>
-              <AiOutlineArrowRight size="50px" />
+              <AiOutlineArrowRight size="30%" padding="10%" />
             </div>
             <div>
-              <FaCoins size="50px" />
+              <FaCoins size="30%" padding="10%" />
               <br />
               <Select
                 name="toOption"
@@ -448,6 +449,68 @@ function Exchange() {
       </S.Wrap>
     </div>
   );
-}
+};
+
+const S = {
+  Bottom: styled.div`
+    bottom: 0%;
+    height: 15%;
+    width: 100%;
+    position: absolute;
+    text-align: center;
+  `,
+
+  Wrap: styled.div`
+    width: 100%;
+    background: ${({ theme }) => theme.color.background};
+    flex-direction: column;
+    align-items: center;
+  `,
+
+  Chart1: styled.div`
+    margin: 0% auto;
+    width: 90%; // 차트크기와 동일하게
+    display: flex;
+    justify-content: space-between;
+  `,
+
+  Centered: styled.div`
+    max-width: 1500px;
+    margin: 35px auto;
+    padding: 20px;
+    opacity: 0.9;
+  `,
+
+  CoinCentered: styled.form`
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+  `,
+
+  ExContainer: styled.div`
+    height: 300px;
+    margin: 0% auto;
+    margin-top: 30px;
+    padding: 15px;
+    width: 90%;
+    background-color: white;
+  `,
+
+  Logo: styled.img`
+    height: 15px;
+  `,
+
+  YellowButton: styled.button`
+    background-color: #ffd94a;
+    padding: 10px 30px;
+    margin: auto;
+    display: block;
+    border-radius: 10px;
+    margin-top: 20px;
+  `,
+};
 
 export default Exchange;
