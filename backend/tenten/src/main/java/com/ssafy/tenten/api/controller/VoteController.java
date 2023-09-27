@@ -48,12 +48,17 @@ public class VoteController {
 
     /**
      * 투표 후보 4명 무작위 생성 하기 3.3
-     * 윤상님 유저 만들어지면 만들기.
      */
     @GetMapping("/votes/candidates/{userId}")
     public ResponseEntity<?> getCandidates(@PathVariable("userId") Long userId) {
         return SuccessResponseEntity.toResponseEntity("MOZEY 투표 후보 불러오기 완료", voteService.getVoteCandidates(userId));
     }
 
-
+    /**
+     * 투표 top3 질문 얻기
+     */
+    @GetMapping("/votes/top/{userId}")
+    public ResponseEntity<?> getTop3(@PathVariable("userId") Long userId) {
+        return SuccessResponseEntity.toResponseEntity("TOP3 불러오기 완료", voteService.getTop3(userId));
+    }
 }

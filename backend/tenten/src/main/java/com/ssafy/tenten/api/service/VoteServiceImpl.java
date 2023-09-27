@@ -15,12 +15,12 @@ import com.ssafy.tenten.exception.CustomException;
 import com.ssafy.tenten.exception.ErrorCode;
 import com.ssafy.tenten.vo.Response.VoteResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static com.ssafy.tenten.exception.ErrorCode.USER_NOT_ENOUGH;
@@ -29,14 +29,14 @@ import static com.ssafy.tenten.exception.ErrorCode.USER_NOT_FOUND;
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
-public class VoteServiceImpl implements VoteService{
+public class VoteServiceImpl implements VoteService {
 
     private final VoteCntRepository voteCntRepository;
     private final QuestionRepository questionRepository;
     private final VoteHistoryRepository voteHistrotyRepository;
     private final UserRepository userRepository;
     private final FollowRepository followRepository;
-//    private final ModelMapper mapper;
+
     @Override
     @Transactional
     public VoteResponse createVote(VoteDto voteDto) {
@@ -46,7 +46,7 @@ public class VoteServiceImpl implements VoteService{
                 () -> new CustomException(USER_NOT_FOUND)
         );
         Question questionId = questionRepository.findById(voteDto.getQtnId()).orElseThrow(
-                ()-> new CustomException(ErrorCode.QUESTION_NOT_FOUND)
+                () -> new CustomException(ErrorCode.QUESTION_NOT_FOUND)
         );
         User chosenId = userRepository.findById(voteDto.getChosen()).orElseThrow(
                 () -> new CustomException(USER_NOT_FOUND)
@@ -59,19 +59,19 @@ public class VoteServiceImpl implements VoteService{
         voteHistrotyRepository.save(voteHistory);
 
         VoteCount voteCount = null;
-        if(!exists){
+        if (!exists) {
             // 생성하기
-           voteCount = VoteCount.builder()
+            voteCount = VoteCount.builder()
                     .question(questionId)
                     .userId(chosenId)
                     .build();
             voteCntRepository.save(voteCount);
-        }else{
-            voteCount = voteCntRepository.findByQutAndCho(voteDto.getQtnId(),voteDto.getChosen());
+        } else {
+            voteCount = voteCntRepository.findByQutAndCho(voteDto.getQtnId(), voteDto.getChosen());
             voteCount.updateVoteCount();
         }
 
-        return   VoteResponse.builder()
+        return VoteResponse.builder()
                 .time(voteHistory.getVoteTime())
                 .image(voteHistory.getQuestionId().getImg())
                 .name(voteCount.getUserId().getName())
@@ -89,7 +89,7 @@ public class VoteServiceImpl implements VoteService{
         List<Question> collect = question.stream()
                 .limit(Math.min(question.size(), 8))
                 .collect(Collectors.toList());
-        if(collect.size()!=8) throw new CustomException(ErrorCode.QUESTION_NOT_ENOUGH);
+        if (collect.size() != 8) throw new CustomException(ErrorCode.QUESTION_NOT_ENOUGH);
 
 
         return collect.stream()
@@ -104,17 +104,26 @@ public class VoteServiceImpl implements VoteService{
     @Override
     public List<VoteResponse> getVoteCandidates(Long userId) {
         List<Follow> follows = followRepository.findBySenderId_UserId(userId);
-        if(follows.size()==0) throw  new CustomException(USER_NOT_FOUND);
-        if(follows.size()<4) throw new CustomException(USER_NOT_ENOUGH);
+        if (follows.size() == 0) throw new CustomException(USER_NOT_FOUND);
+        if (follows.size() < 4) throw new CustomException(USER_NOT_ENOUGH);
 
-        List<VoteResponse> collect = follows.stream()
+        return follows.stream()
                 .map(follow -> {
                     return VoteResponse.builder()
                             .userId(follow.getReceiverId().getUserId())
                             .name(follow.getReceiverId().getName())
                             .build();
-                }).limit(4)
+                })
+                .limit(4)
                 .collect(Collectors.toList());
-        return collect;
+    }
+
+    @Override
+    public List<VoteResponse> getTop3(Long userId) {
+        List<VoteCount> voteCnt = voteCntRepository.findTop3ByUserId_UserId(userId, Sort.by("voteCnt").descending());
+
+        return voteCnt.stream()
+                .map(voteCount -> VoteResponse.getTop3(voteCount))
+                .collect(Collectors.toList());
     }
 }
