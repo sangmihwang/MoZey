@@ -11,4 +11,6 @@ public interface VoteService {
     List<VoteResponse> suffleQuestion();
 
     List<VoteResponse> getVoteCandidates(Long userId);
+
+    List<VoteResponse> getTop3(Long userId);
 }

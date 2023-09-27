@@ -1,6 +1,7 @@
 package com.ssafy.tenten.vo.Response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.ssafy.tenten.domain.VoteCount;
 import lombok.*;
 
 @Getter
@@ -14,5 +15,10 @@ public class VoteResponse {
     private final Long chosen;
     private final Long time;
     private final String name;
-
+    public static VoteResponse getTop3(VoteCount voteCount){
+        return VoteResponse.builder()
+                .qtnContent(voteCount.getQuestionId().getQtnContent())
+                .image(voteCount.getQuestionId().getImg())
+                .build();
+    }
 }
