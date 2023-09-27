@@ -39,6 +39,7 @@ const S = {
     img {
       width: 32px;
       height: 34px;
+      box-shadow: ${({ theme }) => theme.shadow.card};
     }
   `,
   ProfileInfo: styled.div`
