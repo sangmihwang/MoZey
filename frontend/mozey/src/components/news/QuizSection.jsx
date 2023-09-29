@@ -43,17 +43,22 @@ const S = {
     padding: 3% 3%;  // 내부 상하, 좌우 여백
     box-shadow: 0 4px 4px rgb(0, 0, 0, 0.25);
     overflow-y: auto;
+    min-height: 547px;
   `,
   QuizItem: styled.li`
     display: flex;
     flex-direction: column;
+    align-items: center;
+    justify-content: center;
   `,
   QuizImage: styled.img`
-    width: 100%;
-    height: auto;
+    width: 74px;
+    height: 84px;
     margin-bottom: 10px;
     border-radius: 8px;
-  `,
+    object-fit: cover;
+`,
+
   QuizTitle: styled.h3`
     font-size: 20px;
     font-weight: bold;
