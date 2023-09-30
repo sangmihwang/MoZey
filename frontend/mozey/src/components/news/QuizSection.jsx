@@ -3,10 +3,15 @@ import styled from "styled-components";
 import quizimg from "../../assets/images/icon-question-default.png"
 
 const QuizSection = () => {
-  const quizTitle = '오늘의 퀴즈 제목';
-  const quizContent = `
-    여기에 오늘의 퀴즈에 대한 설명이나 내용을 추가합니다.
-  `;
+  const quizTitle = '오늘 의 퀴즈 제목';
+  const quizChoices = [
+    '선택지 1',
+    '선택지 2',
+    '선택지 3',
+    '선택지 4',
+    '선택지 5',
+  ];
+  const quizType = 'MULTIPLE_CHOICE'; // or 'OX'
 
   return (
     <S.Wrap>
@@ -15,7 +20,18 @@ const QuizSection = () => {
           <S.QuizItem>
             <S.QuizImage src={quizimg} alt="Quiz Thumbnail" />
             <S.QuizTitle>{quizTitle}</S.QuizTitle>
-            <S.QuizContent>{quizContent}</S.QuizContent>
+            <S.ChoicesContainer>
+              {quizType === 'MULTIPLE_CHOICE' ? (
+                quizChoices.map((choice, index) => (
+                  <S.QuizChoice key={index}>{choice}</S.QuizChoice>
+                ))
+              ) : (
+                <>
+                  <S.QuizChoice>O</S.QuizChoice>
+                  <S.QuizChoice>X</S.QuizChoice>
+                </>
+              )}
+            </S.ChoicesContainer>
           </S.QuizItem>
         </ul>
       </S.Container>
@@ -43,7 +59,7 @@ const S = {
     padding: 3% 3%;  // 내부 상하, 좌우 여백
     box-shadow: 0 4px 4px rgb(0, 0, 0, 0.25);
     overflow-y: auto;
-    min-height: 547px;
+    min-height: 575px;
   `,
   QuizItem: styled.li`
     display: flex;
@@ -63,14 +79,27 @@ const S = {
     font-size: 20px;
     font-weight: bold;
     color: #040404;
-    margin-bottom: 10px;
+    margin-bottom: 30px;
     line-height: ${({ theme }) => theme.lineheight.title1};
   `,
-  QuizContent: styled.p`
-    color: ${({ theme }) => theme.color.darkgray};
-    font-size: 14px;
-    margin-top: 5px;
-    line-height: ${({ theme }) => theme.lineheight.content};
+  ChoicesContainer: styled.div`
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;  // 각 선택지 사이의 간격
+  `,
+  QuizChoice: styled.button`
+    background-color: #FFFFFF;
+    border: 1px solid #E0E0E0;
+    color: #333;
+    font-size: 18px;
+    padding: 10px 20px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+
+    &:hover {
+      background-color: #E0E0E0;
+    }
   `,
 };
 
