@@ -19,10 +19,10 @@ const Question = () => {
 const S = {
   Wrap: styled.div`
     background-color: ${({ theme }) => theme.color.white};
-    width: 300px;
+    width: 340px;
     height: 280px;
     padding: 10px 0;
-    margin: 12px;
+    margin: 30px 12px 12px;
     border-radius: 10px;
     box-shadow: ${({ theme }) => theme.shadow.card};
   `,
@@ -39,8 +39,8 @@ const S = {
     margin: 8px auto;
     font-size: ${({ theme }) => theme.fontsize.title2};
     line-height: ${({ theme }) => theme.lineheight.title1};
-    font-weight: 1000;
-    padding: 20px;
+    font-weight: 700;
+    padding: 20px 30px;
     text-align: center;
   `,
 };
