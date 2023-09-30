@@ -39,7 +39,7 @@ const S = {
     img {
       width: 32px;
       height: 34px;
-      box-shadow: ${({ theme }) => theme.shadow.card};
+      /* box-shadow: ${({ theme }) => theme.shadow.card}; */
     }
   `,
   ProfileInfo: styled.div`
@@ -55,7 +55,7 @@ const S = {
     padding: 4px 20px;
     font-size: ${({ theme }) => theme.fontsize.content};
     font-weight: 500;
-    line-height: ${({ theme }) => theme.lineheight.title3};
+    line-height: ${({ theme }) => theme.lineheight.title2};
   `,
 };
 

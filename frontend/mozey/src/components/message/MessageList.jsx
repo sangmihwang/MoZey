@@ -32,7 +32,7 @@ const S = {
   MessageBox: styled.div`
     background-color: ${({ theme }) => theme.color.white};
     width: 100%;
-    height: 112px;
+    height: 114px;
     margin: 8px auto 18px;
     border-radius: 10px;
     box-shadow: ${({ theme }) => theme.shadow.card};
