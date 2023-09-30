@@ -37,17 +37,11 @@ conn = mysql.connector.connect(
 cursor = conn.cursor()
 
 # 데이터 저장 쿼리
-query = "INSERT INTO news (title, company, image_url, content) VALUES (%s, %s, %s, %s)"
+query = "INSERT INTO news (title, company, image_url, content, date) VALUES (%s, %s, %s, %s, CURDATE())"
 cursor.execute(query, (title, company, image_url, content))
 
 conn.commit()
 cursor.close()
 conn.close()
-
-# # 결과
-# print("제목: ", title)
-# print("언론사: ", company)
-# print("기사 이미지:", image_url)
-# print("기사내용: ", content)
 
 print('완료')
