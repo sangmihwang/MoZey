@@ -23,7 +23,7 @@ const S = {
     display: flex;
     flex-direction: column;
     width: 100%;
-    height: 100%;
+    min-height: 100vh;
     background: linear-gradient(
       ${({ theme }) => theme.color.background2} 28%,
       ${({ theme }) => theme.color.background} 28%
