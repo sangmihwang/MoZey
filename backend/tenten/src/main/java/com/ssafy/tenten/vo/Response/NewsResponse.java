@@ -16,4 +16,5 @@ public class NewsResponse {
     private final String content;
     private final String company;
     private final LocalDate date;
+    private final String imageUrl;
 }

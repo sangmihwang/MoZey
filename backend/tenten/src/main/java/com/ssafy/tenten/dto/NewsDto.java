@@ -14,4 +14,5 @@ public class NewsDto implements Serializable {
     private String content;
     private String company;
     private LocalDate date;
+    private String imageUrl;
 }
