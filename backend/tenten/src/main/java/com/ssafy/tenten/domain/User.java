@@ -1,5 +1,6 @@
 package com.ssafy.tenten.domain;
 
+import com.ssafy.tenten.vo.Request.UserJoinRequest;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
@@ -14,26 +15,20 @@ import java.time.Instant;
 @Builder
 @AllArgsConstructor
 public class User {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    // 오류 없을 경우 주석 코드 삭제 예정
-//    @Column(name = "user_id", updatable = false)
     @Column(updatable = false)
     private Long userId;
 
     @Column
     private String email;
 
-//    @Column(nullable = false, columnDefinition = "CHAR(1)")
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "CHAR(1)")
     private char gender;
 
-    // SQL 예약어로 인한 컬럼명 변경
     @Column(name = "img")
     private String image;
 
-    // SQL 예약어로 인한 컬럼명 변경
     @Column(name = "username")
     private String name;
 
@@ -43,7 +38,6 @@ public class User {
     @Column(columnDefinition = "CHAR(10)")
     private String campus;
 
-    // SQL 예약어로 인한 컬럼명 변경
     @Column(name = "unit", columnDefinition = "CHAR(10)")
     private String group;
 
@@ -52,26 +46,27 @@ public class User {
     private int subYn;
 
     @Column(nullable = false)
-    private Long subStartTime;
+    private Instant subStartTime;
 
     @PrePersist
     public void prePersist() {
-        if (subStartTime == null) {
-            subStartTime = Instant.now().getEpochSecond();
-        }
+        if (subStartTime == null) subStartTime = Instant.now();
+        if (point == null) point = 0L;
+        if (coin1 == null) coin1 = 0L;
+        if (coin2 == null) coin2 = 0L;
+        if (withdraw == 0) withdraw = 1;
     }
 
-    @Column(nullable = false, columnDefinition = "BIGINT default '0'")
+    @Column(nullable = false)
     private Long point;
 
-    @Column(nullable = false, columnDefinition = "BIGINT default '0'")
+    @Column(nullable = false)
     private Long coin1;
 
-    @Column(nullable = false, columnDefinition = "BIGINT default '0'")
+    @Column(nullable = false)
     private Long coin2;
 
-    @Column
-    @ColumnDefault("1")
+    @Column(nullable = false)
     private int withdraw;
 
     @Column(nullable = false, columnDefinition = "char(10)")
@@ -82,9 +77,6 @@ public class User {
     private String providerId;
     private String kakaoToken;
     private String refreshToken; // 리프레시 토큰
-//    public void updateRefreshToken(String updateRefreshToken) {
-//        this.refreshToken = updateRefreshToken;
-//    }
     private String firebaseToken;
 
     public void subscribe() {
@@ -95,12 +87,22 @@ public class User {
     }
 
     @Builder
-    public User(String email, String gender, String image, String name, String term, String campus, String group) {
+    public User(String email, String name, String term, String campus, String group) {
         this.email = email;
-        this.image = image;
         this.name = name;
         this.term = term;
         this.campus = campus;
         this.group = group;
+    }
+
+    public void join(UserJoinRequest dto) {
+        this.name = dto.getName();
+        this.group = dto.getGroup();
+        this.term = dto.getTerm();
+        this.campus = dto.getCampus();
+    }
+
+    public void updateRefreshToken(String refreshToken) {
+        this.refreshToken = refreshToken;
     }
 }
