@@ -33,13 +33,12 @@ spring:
         format_sql: true
         default_batch_fetch_size: 100 #성능 최적화
 
-
 jwt:
   secretKey: Z29nby10bS1zZXJ2ZXItZGxyamVvYW9yb3JodG9kZ290c3Atam9vbmdhbmduaW0teWVvbHNpbWhpaGFsZ2VveW8K
+  access:
+    expiration: 36000000 # 1시간(60분) (1000L(ms -> s) * 60L(s -> m) * 60L(m -> h))
+    header: Authorization
 
-#oauth:
-#  kakao:
-#    client-id: c5946728a9bb2c5f333e060a4c8a97d3
-#    url:
-#      auth: https://kauth.kakao.com
-#      api: https://kapi.kakao.com
+  refresh:
+    expiration: 1209600000 #  (1000L(ms -> s) * 60L(s -> m) * 60L(m -> h) * 24L(h -> 하루) * 14(2주))
+    header: Authorization_refresh
