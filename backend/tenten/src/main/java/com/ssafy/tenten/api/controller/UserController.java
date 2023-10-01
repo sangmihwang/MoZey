@@ -27,6 +27,7 @@ import java.util.List;
 @RequestMapping("/api/users")
 @RequiredArgsConstructor
 @Slf4j
+@CrossOrigin("*")
 public class UserController {
     private final UserService userService;
     private final FollowService followService;
@@ -58,21 +59,13 @@ public class UserController {
         return new ResponseEntity<>(UserResponse.createUserResponse(user), HttpStatus.OK);
     }
 
-//    @PutMapping("/edit/{userId}")
-//    public ResponseEntity<?> updateUser(@PathVariable("userId") Long userId, @RequestBody UserUpdateRequest userUpdateRequest) {
-//        userService.update
-//    }
-
-
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 //    @PutMapping("/{memberId}/edit")
 //    public ResponseEntity<?> updateMember(@PathVariable("memberId") Long id,
 //                                          @RequestBody MemberForm memberForm) {
 //        memberService.updateMember(id, memberForm);
 //        return new ResponseEntity<>(HttpStatus.OK);
 //    }
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     // 1.7 추천 친구 조회
     @GetMapping("/friends/recommend/{userId}")
     public ResponseEntity<?> getRecommendFriends(@PathVariable("userId") Long userId) {

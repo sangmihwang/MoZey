@@ -23,15 +23,8 @@ public class UserServiceImpl implements UserService{
     @Transactional
     @Override
     public void join(UserJoinRequest dto) {
-        userRepository.save(User.builder()
-                        .email(dto.getEmail())
-                        .gender(dto.getGender())
-                        .image(dto.getImage())
-                        .name(dto.getName())
-                        .term(dto.getTerm())
-                        .campus(dto.getCampus())
-                        .group(dto.getGroup())
-                .build());
+        User user = userRepository.findByEmail(dto.getEmail()).get();
+        user.join(dto);
     }
 
     @Transactional
@@ -100,7 +93,7 @@ public class UserServiceImpl implements UserService{
     @Override
     public Long checkSub(Long userId) {
         User user = userRepository.findById(userId).get();
-        Long startTime = user.getSubStartTime();
+        Long startTime = user.getSubStartTime().getEpochSecond();
         return startTime;
     }
 
