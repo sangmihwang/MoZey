@@ -17,4 +17,9 @@ export const URL = {
   MYPAGE: {
     MAIN: "/mypage",
   },
+  AUTH: {
+    MAIN: "/oauth2",
+    JOIN: "/join",
+    SUCCESS: "/success",
+  },
 };
