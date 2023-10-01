@@ -29,6 +29,10 @@ public class News {
     @Column
     private LocalDate date;
 
+    @Column
+    private String imageUrl;
+
+
     @Builder
     News(NewsDto newsDto){
         this.newsId = newsDto.getNewsId();
@@ -36,5 +40,7 @@ public class News {
         this.content = newsDto.getContent();
         this.company = newsDto.getCompany();
         this.date = newsDto.getDate();
+        this.imageUrl = newsDto.getImageUrl();
+
     }
 }
