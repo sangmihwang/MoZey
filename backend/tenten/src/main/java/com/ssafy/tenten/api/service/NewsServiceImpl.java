@@ -31,9 +31,11 @@ public class NewsServiceImpl implements NewsService {
                         .content(news.getContent())
                         .company(news.getCompany())
                         .date(news.getDate())
+                        .imageUrl(news.getImageUrl())  // imageUrl 필드 추가
                         .build())
                 .collect(Collectors.toList());
     }
+
 
     // 오늘의 경제 뉴스 등록
     @Override
@@ -49,15 +51,15 @@ public class NewsServiceImpl implements NewsService {
     @Override
     public List<NewsResponse> getAllNews() {
         List<News> newss = newsRepository.findAll();
-        List<NewsResponse> collect = newss.stream()
+        return newss.stream()
                 .map(a -> NewsResponse.builder()
                         .newsId(a.getNewsId())
                         .title(a.getTitle())
                         .content(a.getContent())
                         .company(a.getCompany())
                         .date(a.getDate())
+                        .imageUrl(a.getImageUrl())
                         .build())
                 .collect(Collectors.toList());
-        return collect;
     }
 }
