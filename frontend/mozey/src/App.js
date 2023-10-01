@@ -14,6 +14,9 @@ const App = () => {
         <components.TobTab></components.TobTab>
         <S.ContentContainer>
           <Routes>
+            <Route path={utils.URL.AUTH.JOIN} element={<pages.Join />} />
+            <Route path={utils.URL.AUTH.SUCCESS} element={<pages.Success />} />
+            <Route path={utils.URL.AUTH.MAIN} element={<pages.Auth />} />
             <Route path={utils.URL.HOME.MAIN} element={<pages.Main />} />
             <Route path={utils.URL.EXCHANGE.MAIN} element={<pages.Exchange />} />
             <Route path={utils.URL.MESSAGE.MAIN} element={<pages.Message />} />

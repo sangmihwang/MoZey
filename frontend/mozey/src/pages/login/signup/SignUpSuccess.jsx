@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 
 export default function Success() {
-  // const userData = useSelector((state) => state.user);
   const navigate = useNavigate();
 
   return (
