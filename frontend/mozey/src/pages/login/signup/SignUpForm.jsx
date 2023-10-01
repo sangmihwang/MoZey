@@ -9,7 +9,7 @@ export default function UserInfo() {
   const [group, setGroup] = useState(""); // 특화 상태 추가
 
   function submitUserInfo() {
-    axios.post("http://localhost:8000/api/users", {
+    axios.post("https://j9a510.p.ssafy.io/api/users", {
       name: name,
       campus: campus,
       group: group,
