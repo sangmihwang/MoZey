@@ -21,6 +21,11 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import java.util.List;
 
 @Configuration
 @EnableWebSecurity
@@ -50,7 +55,7 @@ public class SecurityConfig {
 
                 // oauth 인증 후 리디렉션할 URI 지정
                 .oauth2Login()
-                .defaultSuccessUrl("/login-success")
+//                .defaultSuccessUrl("/login-success")
                 .userInfoEndpoint().userService(principalOauth2UserService)
                 .and()
                 .successHandler(loginSuccessHandler())
@@ -75,5 +80,21 @@ public class SecurityConfig {
     @Bean
     public LoginFailureHandler loginFailureHandler() {
         return new LoginFailureHandler();
+    }
+
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration config = new CorsConfiguration();
+
+        config.setAllowCredentials(true);
+        config.setAllowedOrigins(List.of("http://localhost:3000", "http://localhost:8000", "https://accounts.kakao.com/login",
+                "http://j9a510.p.ssafy.io:3000", "http://j9a510.p.ssafy.io:8000", "http://j9a510.p.ssafy.io"));
+        config.setAllowedMethods(List.of("GET", "POST", "PUT", "OPTIONS"));
+        config.setAllowedHeaders(List.of("*"));
+        config.setExposedHeaders(List.of("*"));
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", config);
+        return source;
     }
 }
