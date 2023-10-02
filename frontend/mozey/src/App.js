@@ -40,6 +40,7 @@ export default App;
 
 const S = {
   ContentContainer: styled.div`
-    padding-bottom: 72px;
+    min-height: calc(100vh - 108px - 73px); // 100vh에서 TopTab(108px)와 BottomNav(73px)의 높이를 뺀 길이
+    padding-bottom: 73px;
   `
 }

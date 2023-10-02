@@ -1,10 +1,13 @@
 import React from "react";
 import styled from "styled-components";
 
-const QuizButton = ({ onClick }) => {
+const QuizButton = ({ onClick, showPage }) => {
+  
+  const buttonText = showPage ? '오늘의 퀴즈 풀기' : '오늘의 뉴스 보기';
+
   return (
     <S.ButtonWrap>
-      <S.QuizButton onClick={onClick}>오늘의 퀴즈 풀기</S.QuizButton>
+      <S.QuizButton onClick={onClick}>{buttonText}</S.QuizButton>
     </S.ButtonWrap>
   );
 };
