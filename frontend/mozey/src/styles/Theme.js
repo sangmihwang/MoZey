@@ -47,7 +47,7 @@ const fontsize = {
 const lineheight = {
   content: "24px",
   title1: "24px",
-  title2: "18px",
+  title2: "20px",
   title3: "16px",
   sub1: "14px",
 };

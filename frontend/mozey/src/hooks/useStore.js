@@ -6,3 +6,9 @@ import { create } from "zustand";
 //     textChannels: [],
 //     setTextChannels: data => set(state => ({ textChannels: data })),
 // }))
+
+export const candiChangeState = create((set) => ({
+  isCandiChangeOpen: false,
+  toggleCandiChangeOpen: () =>
+    set((state) => ({ isCandiChangeOpen: !state.isCandiChangeOpen })),
+}));
