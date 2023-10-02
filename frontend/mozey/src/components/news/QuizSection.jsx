@@ -3,7 +3,7 @@ import styled from "styled-components";
 import quizimg from "../../assets/images/icon-question-default.png";
 
 const QuizSection = () => {
-  const quizTitle = "오늘의 퀴즈 제목";
+  const quizTitle = '오늘의 퀴즈 제목';
   const quizChoices = [
     "선택지 1",
     "선택지 2",
@@ -46,7 +46,9 @@ const S = {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 0 3%; // 내부 좌우 여백
+    justify-content: center;
+    height: calc(100vh - 108px - 73px);
+    padding: 0 3%;  
     background: ${({ theme }) => theme.color.background};
   `,
   Container: styled.div`
@@ -56,10 +58,10 @@ const S = {
     margin-top: 10px;
     display: flex;
     flex-direction: column;
-    padding: 3% 3%; // 내부 상하, 좌우 여백
+    padding: 3% 3%;
     box-shadow: 0 4px 4px rgb(0, 0, 0, 0.25);
     overflow-y: auto;
-    min-height: 575px;
+    flex: 1; // 남아있는 공간 다 차지
   `,
   QuizItem: styled.li`
     display: flex;
@@ -74,7 +76,6 @@ const S = {
     border-radius: 8px;
     object-fit: cover;
   `,
-
   QuizTitle: styled.h3`
     font-size: 20px;
     font-weight: bold;

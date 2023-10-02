@@ -10,7 +10,9 @@ const Main = () => {
     <S.Wrap>
       <S.Logo>
         {/* <a href='http://localhost:8000/oauth2/authorization/kakao'><img src={mozeyLogo} alt={"로고"} /></a> */}
-        <a href='https://j9a510.p.ssafy.io/oauth2/authorization/kakao'><img src={mozeyLogo} alt={"로고"} /></a>
+        {/* <a href='https://j9a510.p.ssafy.io/oauth2/authorization/kakao'><img src={mozeyLogo} alt={"로고"} /></a> */}
+        {/* <a href='https://j9a510.p.ssafy.io/api/oauth2/authorization/kakao'><img src={mozeyLogo} alt={"로고"} /></a> */}
+        <a href='http://j9a510.p.ssafy.io:8000/oauth2/authorization/kakao'><img src={mozeyLogo} alt={"로고"} /></a>
       </S.Logo>
       <S.ThinkerImage>
         <img src={thinkerLogo} alt={"thinker"} />

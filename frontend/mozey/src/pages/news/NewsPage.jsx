@@ -11,7 +11,7 @@ const NewsPage = () => {
     return (
         <div className="news-page">
             {showPage ? <components.NewsSection /> : <components.QuizSection />}
-            <components.QuizButton onClick={toggleSection} />
+            <components.QuizButton onClick={toggleSection} showPage={showPage} />
         </div>
     );
 }
