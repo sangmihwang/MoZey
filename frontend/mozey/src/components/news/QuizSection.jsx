@@ -5,13 +5,13 @@ import quizimg from "../../assets/images/icon-question-default.png";
 const QuizSection = () => {
   const quizTitle = '오늘의 퀴즈 제목';
   const quizChoices = [
-    '선택지 1',
-    '선택지 2',
-    '선택지 3',
-    '선택지 4',
-    '선택지 5',
+    "선택지 1",
+    "선택지 2",
+    "선택지 3",
+    "선택지 4",
+    "선택지 5",
   ];
-  const quizType = 'MULTIPLE_CHOICE'; // or 'OX'
+  const quizType = "MULTIPLE_CHOICE"; // or 'OX'
 
   return (
     <S.Wrap>
@@ -21,7 +21,7 @@ const QuizSection = () => {
             <S.QuizImage src={quizimg} alt="Quiz Thumbnail" />
             <S.QuizTitle>{quizTitle}</S.QuizTitle>
             <S.ChoicesContainer>
-              {quizType === 'MULTIPLE_CHOICE' ? (
+              {quizType === "MULTIPLE_CHOICE" ? (
                 quizChoices.map((choice, index) => (
                   <S.QuizChoice key={index}>{choice}</S.QuizChoice>
                 ))
@@ -87,11 +87,11 @@ const S = {
     width: 100%;
     display: flex;
     flex-direction: column;
-    gap: 15px;  // 각 선택지 사이의 간격
+    gap: 15px; // 각 선택지 사이의 간격
   `,
   QuizChoice: styled.button`
-    background-color: #FFFFFF;
-    border: 1px solid #E0E0E0;
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
     color: #333;
     font-size: 18px;
     padding: 10px 20px;
@@ -99,7 +99,7 @@ const S = {
     transition: background-color 0.3s;
 
     &:hover {
-      background-color: #E0E0E0;
+      background-color: #e0e0e0;
     }
   `,
 };
