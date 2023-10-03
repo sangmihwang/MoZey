@@ -7,7 +7,7 @@ const AuthProcess = () => {
 
   useEffect(() => {
     const token = searchParams.get('token');
-    const email = searchParams.get('email');
+    const email = searchParams.get('email').split("?token=")[0];
     localStorage.setItem("accessToken", token);
     localStorage.setItem("email", email);
     navigate('/join');
