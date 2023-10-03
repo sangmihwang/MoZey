@@ -17,7 +17,7 @@ export default function UserInfo() {
       group: group,
       term: 9,
       email: localStorage.getItem("email"),
-    }).then(() => {
+    }).then((res) => {
       localStorage.removeItem("accessToken");
       localStorage.removeItem("email");
       setUserInfo(res.data);
