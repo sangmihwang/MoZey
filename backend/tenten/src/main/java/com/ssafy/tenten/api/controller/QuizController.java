@@ -1,7 +1,6 @@
 package com.ssafy.tenten.api.controller;
 
 import com.ssafy.tenten.api.service.QuizService;
-import com.ssafy.tenten.domain.Quiz;
 import com.ssafy.tenten.dto.QuizDto;
 import com.ssafy.tenten.exception.SuccessResponseEntity;
 import com.ssafy.tenten.vo.Response.QuizResponse;
@@ -13,9 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
 
 
 @RestController
@@ -28,6 +25,7 @@ public class QuizController {
 
     @GetMapping("/quiz")
     public ResponseEntity<?> getQuizzesByDate(@RequestParam("date") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date) {
+
         List<QuizResponse> quizDtos = quizService.getQuizzesByDate(date.atStartOfDay());
         return ResponseEntity.ok(quizDtos);
     }
