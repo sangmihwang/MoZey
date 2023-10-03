@@ -2,11 +2,19 @@ import { useEffect, useState } from "react";
 // import {} from "./config/firebase";
 import React from "react";
 import styled from "styled-components";
+import { userInfoStore } from 'store/userInfoStore';
+import { useNavigate } from 'react-router-dom';
 
 const Main = () => {
+  const navigate = useNavigate();
+  const deleteUserInfo = userInfoStore(state => state.deleteUserInfo);
+
   return (
     <S.Wrap>
-      <button>로그아웃</button>
+      <button onClick={() => {
+        deleteUserInfo();
+        navigate('/');
+      }}>로그아웃</button>
     </S.Wrap>
   );
 };
