@@ -15,6 +15,11 @@ for news in news_items:
 
     if date_span and "시간 전" in date_span.get_text():
         title = news.find('a', class_='title')['title']
+
+        # If the title is empty, skip the current loop iteration
+        if not title.strip():
+            continue
+
         company = news.find('span', class_='articleDetails').get_text().split(' ')[1].split('\xa0')[0]
         top_news_id = news.get('data-id')
         top_news_url = f"https://kr.investing.com/news/stock-market-news/article-{top_news_id}"
@@ -48,3 +53,4 @@ for news in news_items:
 
         print('완료')
         break
+
