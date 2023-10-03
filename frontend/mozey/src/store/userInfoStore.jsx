@@ -4,7 +4,7 @@ import { persist } from 'zustand/middleware';
 // User state information
 export const userInfoStore = create(persist(
   set => ({
-    User: {
+    User: [{
       id: 0, // user_id
       username: "", // 이름
       email: "", // 이메일
@@ -17,7 +17,7 @@ export const userInfoStore = create(persist(
       coin1: 0, // 코인1
       coin2: 0, // 코인2
       sub_yn: 0, // 구독 정보
-    },
+    }],
     isLoggedIn: false,
     setUserInfo: (user) => set((state) => ({
       ...state,
@@ -37,7 +37,7 @@ export const userInfoStore = create(persist(
       },
       isLoggedIn: true
     })),
-    deleteUserInfo: () => set((state) => { 
+    deleteUserInfo: () => set((state) => {
       localStorage.clear();
       sessionStorage.clear();
       return {
