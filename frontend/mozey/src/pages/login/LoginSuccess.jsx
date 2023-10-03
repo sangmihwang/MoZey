@@ -12,7 +12,7 @@ const LoginSuccess = () => {
     // const email = searchParams.get('email');
     const email = searchParams.get('email').split("?email=")[0];
     console.log(email);
-    axios.get(`https://j9a510.p.ssafy.io/api/users/${email}`)
+    axios.get(`https://j9a510.p.ssafy.io/api/users/info/${email}`)
     .then((res) => {
       console.log(res.data);
       setUserInfo(res.data);
