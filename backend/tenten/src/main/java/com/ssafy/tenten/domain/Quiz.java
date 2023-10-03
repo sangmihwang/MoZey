@@ -1,10 +1,11 @@
 package com.ssafy.tenten.domain;
 
+import com.ssafy.tenten.domain.embedded.MultipleChoice;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Entity
 @Getter
@@ -29,6 +30,9 @@ public class Quiz {
     private String answer;
 
     @Column
-    private LocalDateTime date;
+    private LocalDate date;
+
+    @Embedded
+    private MultipleChoice multipleChoice;
 
 }

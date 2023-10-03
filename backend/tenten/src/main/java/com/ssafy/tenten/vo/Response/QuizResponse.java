@@ -1,10 +1,11 @@
 package com.ssafy.tenten.vo.Response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.ssafy.tenten.domain.embedded.MultipleChoice;
 import lombok.Builder;
 import lombok.Getter;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Getter
 @Builder
@@ -14,6 +15,7 @@ public class QuizResponse {
     private final Long newsId;
     private final String question;
     private final String answer;
-    private final LocalDateTime date;
+    private final LocalDate date;
+    private final MultipleChoice multipleChoice;
 
 }
