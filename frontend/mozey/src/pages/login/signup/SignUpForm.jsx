@@ -8,7 +8,7 @@ export default function UserInfo() {
   const [name, setName] = useState("");
   const [campus, setCampus] = useState("");
   const [group, setGroup] = useState("");
-  const setUserInfo = userInfoStore(state => state.setUserInfo)
+  const setUserInfo = userInfoStore((state) => state.setUserInfo);
 
   function submitUserInfo() {
     axios.post("https://j9a510.p.ssafy.io/api/users", {
