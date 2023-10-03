@@ -9,7 +9,8 @@ const LoginSuccess = () => {
   const setUserInfo = userInfoStore((state) => state.setUserInfo)
 
   useEffect(() => {
-    const email = searchParams.get('email');
+    // const email = searchParams.get('email');
+    const email = searchParams.get('email').split("?email=")[0];
     console.log(email);
     axios.get(`https://j9a510.p.ssafy.io/api/users/${email}`)
     .then((res) => {
