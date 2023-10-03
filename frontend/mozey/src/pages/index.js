@@ -9,3 +9,4 @@ export { default as Mypage } from "./mypage/Mypage";
 export { default as Auth } from "./login/AuthProcess";
 export { default as Join } from "./login/signup/SignUpForm"
 export { default as Success} from "./login/signup/SignUpSuccess"
+export { default as Login } from "./login/LoginSuccess"
