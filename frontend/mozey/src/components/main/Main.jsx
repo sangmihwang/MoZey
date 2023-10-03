@@ -9,7 +9,10 @@ const Main = () => {
   return (
     <S.Wrap>
       <S.Logo>
-        <img src={mozeyLogo} alt={"로고"} />
+        {/* <a href='http://localhost:8000/oauth2/authorization/kakao'><img src={mozeyLogo} alt={"로고"} /></a> */}
+        {/* <a href='https://j9a510.p.ssafy.io/oauth2/authorization/kakao'><img src={mozeyLogo} alt={"로고"} /></a> */}
+        {/* <a href='https://j9a510.p.ssafy.io/api/oauth2/authorization/kakao'><img src={mozeyLogo} alt={"로고"} /></a> */}
+        <a href='http://j9a510.p.ssafy.io:8000/oauth2/authorization/kakao'><img src={mozeyLogo} alt={"로고"} /></a>
       </S.Logo>
       <S.ThinkerImage>
         <img src={thinkerLogo} alt={"thinker"} />
@@ -23,7 +26,7 @@ const S = {
     display: flex;
     flex-direction: column;
     width: 100%;
-    height: 100%;
+    min-height: 100vh;
     background: linear-gradient(
       ${({ theme }) => theme.color.background2} 28%,
       ${({ theme }) => theme.color.background} 28%

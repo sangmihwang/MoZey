@@ -1,11 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import * as components from "components";
 
 const NewsPage = () => {
+    const [showPage, setShowPage] = useState(true);
+
+    const toggleSection = () => {
+        setShowPage(prevShowPage => !prevShowPage);
+    };
+
     return (
         <div className="news-page">
-            <components.NewsSection />
-            <components.QuizButton />
+            {showPage ? <components.NewsSection /> : <components.QuizSection />}
+            <components.QuizButton onClick={toggleSection} showPage={showPage} />
         </div>
     );
 }

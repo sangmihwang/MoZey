@@ -4,6 +4,7 @@ import coinPriceAPI from "api/coinPriceAPI";
 import Chart from "react-apexcharts";
 import useStore from "store";
 import styled from "styled-components";
+import axios from 'axios';
 
 // firebase
 import { auth, messaging } from "config/firebase";
@@ -18,15 +19,7 @@ import { AiOutlineArrowRight } from "react-icons/ai";
 // https://apexcharts.com/docs/react-charts/
 
 const Exchange = () => {
-  // console.log(messaging);
-  // useEffect(() => {
-  //   const [series, setSeries] = useState("asd");
-  //   const priceData = async () => {
-  //     const { priceData } = await coinPriceAPI.getCoinPrice();
-  //     setSeries(transformData(priceData));
-  //   };
-  //   priceData();
-  // }, []);
+
   const [options] = useState({
     colors: ["#0fbcf9"],
     chart: {
@@ -74,7 +67,7 @@ const Exchange = () => {
     const transformedData = {};
     rawData.forEach((item) => {
       const { coinName, coinPrice, date } = item;
-      const seriesName = coinName === 1 ? "KOSPI 50" : "S&P 500";
+      const seriesName = coinName === "Coin1" ? "KOSPI 50" : "S&P 500";
       if (!transformedData[coinName]) {
         transformedData[coinName] = {
           name: seriesName,
@@ -90,109 +83,68 @@ const Exchange = () => {
   };
 
   // 더미데이터
-  const series = transformData([
+  const dummy = transformData([
     {
-      coinName: 1,
+      coinName: "Coin1",
       coinPrice: 500,
       date: 20230906,
     },
     {
-      coinName: 1,
+      coinName: "Coin1",
       coinPrice: 550,
       date: 20230916,
     },
     {
-      coinName: 1,
+      coinName: "Coin1",
       coinPrice: 510,
       date: 20230917,
     },
     {
-      coinName: 1,
+      coinName: "Coin1",
       coinPrice: 490,
       date: 20230918,
     },
     {
-      coinName: 1,
+      coinName:"Coin1",
       coinPrice: 505,
-      date: 20230919,
+      date: 20230929,
     },
+    
     {
-      coinName: 1,
-      coinPrice: 495,
-      date: 20230920,
-    },
-    {
-      coinName: 1,
-      coinPrice: 515,
-      date: 20230921,
-    },
-    {
-      coinName: 1,
-      coinPrice: 525,
-      date: 20230922,
-    },
-    {
-      coinName: 1,
-      coinPrice: 485,
-      date: 20230923,
-    },
-    {
-      coinName: 1,
-      coinPrice: 540,
-      date: 20230926,
-    },
-    {
-      coinName: 2,
+      coinName: "Coin2",
       coinPrice: 600,
       date: 20230916,
     },
     {
-      coinName: 2,
+      coinName: "Coin2",
       coinPrice: 620,
       date: 20230917,
     },
     {
-      coinName: 2,
+      coinName: "Coin2",
       coinPrice: 580,
       date: 20230918,
     },
     {
-      coinName: 2,
+      coinName: "Coin2",
       coinPrice: 590,
-      date: 20230919,
-    },
-    {
-      coinName: 2,
-      coinPrice: 610,
-      date: 20230920,
-    },
-    {
-      coinName: 2,
-      coinPrice: 570,
-      date: 20230921,
-    },
-    {
-      coinName: 2,
-      coinPrice: 560,
-      date: 20230922,
-    },
-    {
-      coinName: 2,
-      coinPrice: 530,
-      date: 20230923,
-    },
-    {
-      coinName: 2,
-      coinPrice: 520,
-      date: 20230924,
-    },
-    {
-      coinName: 2,
-      coinPrice: 1050,
-      date: 20230926,
+      date: 20230929,
     },
   ]);
 
+  const [series, setSeries] = useState(dummy);
+  useEffect(() => {
+    const fetchData = async () => {
+    try {
+          const priceData = await axios.get(`https://j9a510.p.ssafy.io/api/coins/price`);
+          const transformedData = transformData(priceData.data.data);
+          setSeries(transformedData);
+    } catch (error) {
+      console.log(error);
+    }
+      };
+      fetchData();
+    },[]);
   // 날짜를 원하는 형식으로 변환 (YYYYMMDD을 YYYY-MM-DD로 변환)
   const formatDate = (date) => {
     const date2 = date.toString();
@@ -217,10 +169,10 @@ const Exchange = () => {
 
   // 코스피 차트 구현
   useEffect(() => {
-    if (selectedPeriod1 === "default") {
-      setFilteredSeries1(series1.filter((item) => item.name === "KOSPI 50"));
+    if (selectedPeriod1 === "total") {
+      setFilteredSeries1(series.filter((item) => item.name === "KOSPI 50"));
     } else if (selectedPeriod1 === "7days") {
-      const filteredData1 = series1.map((item) => {
+      const filteredData1 = filteredSeries1.map((item) => {
         const filteredData1 = item.data.filter((dataItem) => {
           const sevenDaysAgo = new Date();
           sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
@@ -232,26 +184,26 @@ const Exchange = () => {
       });
       setFilteredSeries1(filteredData1);
     } else if (selectedPeriod1 === "30days") {
-      const filteredData1 = series1.map((item) => {
+      const filteredData1 = filteredSeries1.map((item) => {
         const filteredData1 = item.data.filter((dataItem) => {
-          const sevenDaysAgo = new Date();
-          sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 30);
+          const monthAgo = new Date();
+          monthAgo.setDate(monthAgo.getDate() - 30);
           return (
-            formatDate(dataItem.x) >= sevenDaysAgo && item.name === "KOSPI 50"
+            formatDate(dataItem.x) >= monthAgo && item.name === "KOSPI 50"
           );
         });
         return { ...item, data: filteredData1 };
       });
       setFilteredSeries1(filteredData1);
     }
-  }, [selectedPeriod1, series1]);
+  }, [selectedPeriod1]);
 
   // S&P 차트 구현
   useEffect(() => {
-    if (selectedPeriod2 === "default") {
-      setFilteredSeries2(series2.filter((item) => item.name === "S&P 500"));
+    if (selectedPeriod2 === "total") {
+      setFilteredSeries2(series.filter((item) => item.name === "S&P 500"));
     } else if (selectedPeriod2 === "7days") {
-      const filteredData = series2.map((item) => {
+      const filteredData = filteredSeries2.map((item) => {
         const filteredData = item.data.filter((dataItem) => {
           const sevenDaysAgo = new Date();
           sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
@@ -263,19 +215,19 @@ const Exchange = () => {
       });
       setFilteredSeries2(filteredData);
     } else if (selectedPeriod2 === "30days") {
-      const filteredData = series2.map((item) => {
+      const filteredData = filteredSeries2.map((item) => {
         const filteredData = item.data.filter((dataItem) => {
-          const sevenDaysAgo = new Date();
-          sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 30);
+          const monthAgo = new Date();
+          monthAgo.setDate(monthAgo.getDate() - 30);
           return (
-            formatDate(dataItem.x) >= sevenDaysAgo && item.name === "S&P 500"
+            formatDate(dataItem.x) >= monthAgo && item.name === "S&P 500"
           );
         });
         return { ...item, data: filteredData };
       });
       setFilteredSeries2(filteredData);
     }
-  }, [selectedPeriod2, series2]);
+  }, [selectedPeriod2]);
 
   //  코인 교환 파트
 
@@ -296,7 +248,6 @@ const Exchange = () => {
     const PToS = todaySandP;
     const PToK = todayKospi;
     const SToK = todaySandP / todayKospi;
-    console.log(selectFromOption, selectToOption, "프롬, 투 ");
     if (selectFromOption === "Point") {
       if (selectToOption === "KOSPI 50") {
         exchangeRate = PToK;
