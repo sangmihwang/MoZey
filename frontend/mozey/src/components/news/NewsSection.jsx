@@ -51,7 +51,7 @@ const NewsSection = () => {
   }, []);
 
   return (
-    <S.Wrap>
+    <S.Wrap $isExpanded={showMore}>
       <S.Container $isExpanded={showMore}>
         <ul>
           {newsData.map(news => (
@@ -78,7 +78,7 @@ const S = {
     flex-direction: column;
     align-items: center;
     padding: 0 3%;  // 내부 좌우 여백
-    height: calc(100vh - 108px - 73px);
+    height: ${({ $isExpanded }) => ($isExpanded ? "auto" : "calc(100vh - 108px - 73px)")};
     background: ${({ theme }) => theme.color.background}
   `,
   Container: styled.div`
@@ -91,7 +91,7 @@ const S = {
     padding: 3% 3%;  // 내부 상하, 좌우 여백
     box-shadow: 0 4px 4px rgb(0, 0, 0, 0.25);
     overflow-y: auto;
-    max-height: ${({ $isExpanded }) => ($isExpanded ? "auto" : "547px")};
+    max-height: ${({ $isExpanded }) => ($isExpanded ? "100%" : "547px")};
     min-height: 547px;
   `,
   NewsItem: styled.li`
