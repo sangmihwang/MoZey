@@ -25,7 +25,9 @@ public class QuizServiceImpl implements QuizService {
 
     @Override
     public List<QuizResponse> getQuizzesByDate(LocalDateTime date) {
+        System.out.println(date.toLocalDate());
         List<Quiz> quizzes = quizRepository.findAllByDate(date.toLocalDate());
+        System.out.println(quizzes.size());
         return quizzes.stream()
                 .map(quiz -> QuizResponse.builder()
                         .quizId(quiz.getQuizId())
@@ -33,6 +35,7 @@ public class QuizServiceImpl implements QuizService {
                         .question(quiz.getQuestion())
                         .answer(quiz.getAnswer())
                         .date(quiz.getDate())
+                        .multipleChoice(quiz.getMultipleChoice())
                         .build())
                 .collect(Collectors.toList());
     }
