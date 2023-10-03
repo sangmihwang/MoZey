@@ -46,7 +46,7 @@ public class LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
                     userRepository.saveAndFlush(u);
                 });
 
-        response.sendRedirect("https://j9a510.p.ssafy.io");
+        response.sendRedirect("http://j9a510.p.ssafy.io/login?email=" + email);
     }
 
     private String extractEmail(Authentication authentication) {
