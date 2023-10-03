@@ -21,5 +21,6 @@ export const URL = {
     MAIN: "/oauth2",
     JOIN: "/join",
     SUCCESS: "/success",
+    LOGIN: "/login",
   },
 };
