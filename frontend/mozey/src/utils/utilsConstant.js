@@ -25,5 +25,6 @@ export const URL = {
     JOIN: "/join",
     SUCCESS: "/success",
     LOGIN: "/login",
+    KAKAO: "/kakao",
   },
 };

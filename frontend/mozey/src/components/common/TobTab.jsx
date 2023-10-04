@@ -64,6 +64,14 @@ const TobTab = () => {
         setShowsub(true);
         setShowTobTab(true);
         break;
+      case utils.URL.AUTH.JOIN:
+        setTitle("회원가입");
+        setSubtitle(
+          "SignUp SignUp SignUp SignUp SignUp SignUp SignUp SignUp SignUp SignUp SignUp SignUp SignUp SignUp SignUp SignUp SignUp SignUp SignUp SignUp SignUp SignUp SignUp SignUp SignUp SignUp SignUp SignUp SignUp SignUp SignUp SignUp SignUp SignUp SignUp SignUp SignUp SignUp SignUp"
+        );
+        setShowsub(false);
+        setShowTobTab(true);
+        break;
       default:
         setShowsub(false);
         setShowTobTab(false);
