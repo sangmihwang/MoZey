@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
+import { userInfoStore } from 'store/userInfoStore';
 
 export default function UserInfo() {
   const navigate = useNavigate();
-  const [name, setName] = useState(""); // 이름 상태 추가
-  const [campus, setCampus] = useState(""); // 캠퍼스 상태 
-  const [group, setGroup] = useState(""); // 특화 상태 추가
+  const [name, setName] = useState("");
+  const [campus, setCampus] = useState("");
+  const [group, setGroup] = useState("");
+  const setUserInfo = userInfoStore((state) => state.setUserInfo);
 
   function submitUserInfo() {
     axios.post("https://j9a510.p.ssafy.io/api/users", {
@@ -15,9 +17,10 @@ export default function UserInfo() {
       group: group,
       term: 9,
       email: localStorage.getItem("email"),
-    }).then(() => {
+    }).then((res) => {
       localStorage.removeItem("accessToken");
       localStorage.removeItem("email");
+      setUserInfo(res.data);
       navigate('/success');
     }).catch((err) => {
       console.log(err);

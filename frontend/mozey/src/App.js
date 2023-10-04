@@ -17,6 +17,8 @@ const App = () => {
             <Route path={utils.URL.AUTH.JOIN} element={<pages.Join />} />
             <Route path={utils.URL.AUTH.SUCCESS} element={<pages.Success />} />
             <Route path={utils.URL.AUTH.MAIN} element={<pages.Auth />} />
+            <Route path={utils.URL.AUTH.LOGIN} element={<pages.Login />} />
+
             <Route path={utils.URL.HOME.MAIN} element={<pages.Main />} />
             <Route
               path={utils.URL.EXCHANGE.MAIN}
@@ -26,9 +28,6 @@ const App = () => {
             <Route path={utils.URL.VOTE.MAIN} element={<pages.Vote />} />
             <Route path={utils.URL.NEWS.MAIN} element={<pages.News />} />
             <Route path={utils.URL.MYPAGE.MAIN} element={<pages.Mypage />} />
-            <Route path={utils.URL.AUTH.JOIN} element={<pages.Join />} />
-            <Route path={utils.URL.AUTH.SUCCESS} element={<pages.Success />} />
-            <Route path={utils.URL.AUTH.MAIN} element={<pages.Auth />} />
           </Routes>
         </S.ContentContainer>
 

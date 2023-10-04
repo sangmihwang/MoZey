@@ -19,31 +19,41 @@ const TobTab = () => {
         break;
       case utils.URL.MYPAGE.MAIN:
         setTitle("마이페이지");
-        setSubtitle("mypage mypage mypage mypage mypage mypage mypage mypage mypage mypage mypage mypage mypage mypage mypage mypage mypage  mypage mypage mypage mypage mypage mypage mypage mypage mypage mypage mypage mypage mypage mypage mypage mypage mypage mypage mypage mypage mypage mypage mypage mypage mypage  mypage mypage mypage mypage mypage mypage mypage mypage mypage mypage mypage mypage mypage mypage mypage mypage mypage mypage mypage mypage mypage mypage mypage mypage mypage  mypage mypage mypage mypage mypage mypage mypage mypage");
+        setSubtitle(
+          "mypage mypage mypage mypage mypage mypage mypage mypage mypage mypage mypage mypage mypage mypage mypage mypage mypage  mypage mypage mypage mypage mypage mypage mypage mypage mypage mypage mypage mypage mypage mypage mypage mypage mypage mypage mypage mypage mypage mypage mypage mypage mypage  mypage mypage mypage mypage mypage mypage mypage mypage mypage mypage mypage mypage mypage mypage mypage mypage mypage mypage mypage mypage mypage mypage mypage mypage mypage  mypage mypage mypage mypage mypage mypage mypage mypage"
+        );
         setShowsub(false);
         setShowTobTab(true);
         break;
       case utils.URL.EXCHANGE.MAIN:
         setTitle("환전소");
-        setSubtitle("coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale");
+        setSubtitle(
+          "coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale coinonSale"
+        );
         setShowsub(true);
         setShowTobTab(true);
         break;
       case utils.URL.MESSAGE.MAIN:
         setTitle("메시지함");
-        setSubtitle("whatYougot  whatYougot  whatYougot  whatYougot  whatYougot  whatYougot  whatYougot  whatYougot  whatYougot  whatYougot  whatYougot  whatYougot  whatYougot  whatYougot  whatYougot  whatYougot  whatYougot  whatYougot  whatYougot  whatYougot  whatYougot whatYougot  whatYougot  whatYougot  whatYougot  whatYougot  whatYougot  whatYougot  whatYougot  whatYougot  whatYougot  whatYougot  whatYougot  whatYougot  whatYougot  whatYougot  whatYougot  whatYougot  whatYougot  whatYougot  whatYougot  whatYougot whatYougot  whatYougot  whatYougot  whatYougot  whatYougot  whatYougot  whatYougot  whatYougot  whatYougot  whatYougot  whatYougot  whatYougot  whatYougot  whatYougot  whatYougot  whatYougot  whatYougot  whatYougot  whatYougot  whatYougot  whatYougot");
+        setSubtitle(
+          "whatYougot  whatYougot  whatYougot  whatYougot  whatYougot  whatYougot  whatYougot  whatYougot  whatYougot  whatYougot  whatYougot  whatYougot  whatYougot  whatYougot  whatYougot  whatYougot  whatYougot  whatYougot  whatYougot  whatYougot  whatYougot whatYougot  whatYougot  whatYougot  whatYougot  whatYougot  whatYougot  whatYougot  whatYougot  whatYougot  whatYougot  whatYougot  whatYougot  whatYougot  whatYougot  whatYougot  whatYougot  whatYougot  whatYougot  whatYougot  whatYougot  whatYougot whatYougot  whatYougot  whatYougot  whatYougot  whatYougot  whatYougot  whatYougot  whatYougot  whatYougot  whatYougot  whatYougot  whatYougot  whatYougot  whatYougot  whatYougot  whatYougot  whatYougot  whatYougot  whatYougot  whatYougot  whatYougot"
+        );
         setShowsub(true);
         setShowTobTab(true);
         break;
       case utils.URL.VOTE.MAIN:
         setTitle("투표");
-        setSubtitle("voteforHim voteforHer voteforHim voteforHer voteforHim voteforHer voteforHim voteforHer voteforHim voteforHer voteforHim voteforHer voteforHim voteforHer voteforHim voteforHer voteforHim voteforHer voteforHim voteforHer voteforHim voteforHer voteforHim voteforHer voteforHim voteforHer voteforHim voteforHer voteforHim voteforHer voteforHim voteforHer voteforHim voteforHer voteforHim voteforHer voteforHim voteforHer voteforHim voteforHer voteforHim voteforHer voteforHim voteforHer voteforHim voteforHer voteforHim voteforHer voteforHim voteforHer voteforHim voteforHer voteforHim voteforHer voteforHim voteforHer voteforHim voteforHer voteforHim voteforHer voteforHim voteforHer voteforHim voteforHer voteforHim voteforHer");
+        setSubtitle(
+          "voteforHim voteforHer voteforHim voteforHer voteforHim voteforHer voteforHim voteforHer voteforHim voteforHer voteforHim voteforHer voteforHim voteforHer voteforHim voteforHer voteforHim voteforHer voteforHim voteforHer voteforHim voteforHer voteforHim voteforHer voteforHim voteforHer voteforHim voteforHer voteforHim voteforHer voteforHim voteforHer voteforHim voteforHer voteforHim voteforHer voteforHim voteforHer voteforHim voteforHer voteforHim voteforHer voteforHim voteforHer voteforHim voteforHer voteforHim voteforHer voteforHim voteforHer voteforHim voteforHer voteforHim voteforHer voteforHim voteforHer voteforHim voteforHer voteforHim voteforHer voteforHim voteforHer voteforHim voteforHer voteforHim voteforHer"
+        );
         setShowsub(true);
         setShowTobTab(true);
         break;
       case utils.URL.NEWS.MAIN:
         setTitle("뉴스");
-        setSubtitle("EconomicNewsToday EconomicNewsToday EconomicNewsToday EconomicNewsToday EconomicNewsToday EconomicNewsToday EconomicNewsToday EconomicNewsToday EconomicNewsToday EconomicNewsToday EconomicNewsToday EconomicNewsToday EconomicNewsToday EconomicNewsToday EconomicNewsToday EconomicNewsToday EconomicNewsToday EconomicNewsToday EconomicNewsToday EconomicNewsToday EconomicNewsToday EconomicNewsToday EconomicNewsToday EconomicNewsToday EconomicNewsToday EconomicNewsToday EconomicNewsToday EconomicNewsToday EconomicNewsToday EconomicNewsToday EconomicNewsToday EconomicNewsToday EconomicNewsToday EconomicNewsToday EconomicNewsToday EconomicNewsToday EconomicNewsToday EconomicNewsToday EconomicNewsToday");
+        setSubtitle(
+          "economicNewsToday economicNewsToday economicNewsToday economicNewsToday economicNewsToday economicNewsToday economicNewsToday economicNewsToday economicNewsToday economicNewsToday economicNewsToday economicNewsToday economicNewsToday economicNewsToday economicNewsToday economicNewsToday economicNewsToday economicNewsToday EconomicNewsToday EconomicNewsToday EconomicNewsToday EconomicNewsToday EconomicNewsToday EconomicNewsToday EconomicNewsToday EconomicNewsToday EconomicNewsToday EconomicNewsToday EconomicNewsToday EconomicNewsToday EconomicNewsToday EconomicNewsToday EconomicNewsToday EconomicNewsToday EconomicNewsToday EconomicNewsToday EconomicNewsToday EconomicNewsToday EconomicNewsToday"
+        );
         setShowsub(true);
         setShowTobTab(true);
         break;
@@ -54,32 +64,28 @@ const TobTab = () => {
     }
   }, [location.pathname]);
 
-  return (
-    showTobTab ? (
-      <S.Wrap>
-        <S.TopSection>
-          <S.Title>{title}</S.Title>
-          {showsub && (
-            <S.CoinAmount>
-              <S.StyledBsCoin />
-              100
-              <S.StyledBsCoin />
-              100
-              <S.StyledBsCoin />
-              100
-            </S.CoinAmount>
-          )}
-        </S.TopSection>
-        <S.FlowText>
+  return showTobTab ? (
+    <S.Wrap>
+      <S.TopSection>
+        <S.Title>{title}</S.Title>
+        {showsub && (
+          <S.CoinAmount>
+            <S.StyledBsCoin />
+            100
+            <S.StyledBsCoin />
+            100
+            <S.StyledBsCoin />
+            100
+          </S.CoinAmount>
+        )}
+      </S.TopSection>
+      <S.FlowText>
         <S.Subtitle>
-          <div className="flow-wrap">
-          {subtitle}
-          </div>
+          <div className="flow-wrap">{subtitle}</div>
         </S.Subtitle>
-        </S.FlowText>
-      </S.Wrap>
-    ) : null
-  );
+      </S.FlowText>
+    </S.Wrap>
+  ) : null;
 };
 
 const S = {
@@ -99,6 +105,8 @@ const S = {
     font-weight: 1000;
   `,
   CoinAmount: styled.div`
+    display: flex;
+    align-items: center;
     margin-top: 38px;
     margin-right: 30px;
     padding: 4px;
@@ -118,28 +126,26 @@ const S = {
     overflow: hidden;
   `,
 
-  FlowText:styled.div`
-
-  .flow-text:hover .flow-wrap {
-  animation-play-state: paused;
-  cursor: pointer;
-  }
-  .flow-wrap {
-  animation: textLoop 15s linear infinite;
-  }  
-  @keyframes textLoop {
-  0% {    
-    -webkit-transform: translate3d(0, 0, 0);
-    transform: translate3d(0, 0, 0);
-  }
-  // 왼쪽으로 가야 빈공간이안생김.. ! 
-  100% {
-    -webkit-transform: translate3d(-100%, 0, 0);
-    transform: translate3d(-100%, 0, 0);
-  }
-  }
-`,
-
+  FlowText: styled.div`
+    .flow-text:hover .flow-wrap {
+      animation-play-state: paused;
+      cursor: pointer;
+    }
+    .flow-wrap {
+      animation: textLoop 15s linear infinite;
+    }
+    @keyframes textLoop {
+      0% {
+        -webkit-transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0);
+      }
+      // 왼쪽으로 가야 빈공간이안생김.. !
+      100% {
+        -webkit-transform: translate3d(-100%, 0, 0);
+        transform: translate3d(-100%, 0, 0);
+      }
+    }
+  `,
 };
 
 export default TobTab;
