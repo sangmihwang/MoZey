@@ -8,10 +8,10 @@ import ProfileImage from "assets/images/icon-profileImg-default.svg";
 import pointImage from "assets/images/icon-point.png";
 import coin1Image from "assets/images/icon-coin1.png";
 import coin2Image from "assets/images/icon-coin2.png";
-
+import FirebaseComponent from "../../config/firebase";
 const Main = () => {
   const userInfo = useStore((state) => state.User);
-
+  FirebaseComponent();
   return (
     <S.Wrap>
       <S.ProfileImage>
