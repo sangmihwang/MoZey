@@ -108,12 +108,13 @@ const S = {
     display: flex;
     align-items: center;
     margin-top: 38px;
-    margin-right: 30px;
+    margin-right: 20px;
     padding: 4px;
   `,
   StyledBsCoin: styled(BsCoin)`
     font-size: ${({ theme }) => theme.fontsize.title3};
     margin-left: 8px;
+    margin-right: 4px;
   `,
   Subtitle: styled.div`
     margin-top: 10px;
