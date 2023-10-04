@@ -16,7 +16,8 @@ const LoginSuccess = () => {
     .then((res) => {
       console.log(res.data);
       setUserInfo(res.data);
-      navigate('/');
+      alert('Mozey에 오신 것을 환영합니다!');
+      navigate('/mypage');
     }).catch((err) => {
       console.log(err);
     })

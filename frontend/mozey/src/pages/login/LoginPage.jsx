@@ -41,7 +41,7 @@ const S = {
   ThinkerImage: styled.div`
     align-self: center;
     width: 300px;
-    margin: 30px auto;
+    margin: 7em auto;
     img {
       width: 100%;
       height: auto;
