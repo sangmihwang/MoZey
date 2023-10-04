@@ -12,44 +12,46 @@ const QuizSection = () => {
 
   useEffect(() => {
     const fetchData = async () => {
+      const currentDate = new Date();
+      let dateToFetch;
+
+      if (currentDate.getUTCHours() >= 11) {
+        dateToFetch = currentDate.toISOString().split('T')[0];
+      } else {
+        currentDate.setDate(currentDate.getUTCDate() - 1);
+        dateToFetch = currentDate.toISOString().split('T')[0];
+      }
+
       const savedQuizzes = localStorage.getItem('quizzes');
+      const savedQuizDate = localStorage.getItem('quizDate');
       const savedQuizIndex = localStorage.getItem('currentQuizIndex');
 
-      if (savedQuizzes && savedQuizIndex) {
+      if (savedQuizzes && savedQuizIndex && savedQuizDate === dateToFetch) {
+        // 저장된 퀴즈의 날짜와 현재 날짜가 같으면 그대로 유지
         setQuizzes(JSON.parse(savedQuizzes));
         setCurrentQuizIndex(parseInt(savedQuizIndex, 10));
       } else {
         try {
-          const currentDate = new Date();
-          let dateToFetch;
-  
-          if (currentDate.getUTCHours() >= 12) {
-            dateToFetch = currentDate.toISOString().split('T')[0];
-          } else {
-            currentDate.setDate(currentDate.getUTCDate() - 1);
-            dateToFetch = currentDate.toISOString().split('T')[0];
-          }
-          console.log(dateToFetch)
-  
           const response = await axios.get(`https://j9a510.p.ssafy.io/api/quiz?date=${dateToFetch}`);
           
-          // Randomly select 5 quizzes
           const shuffledQuizzes = response.data.sort(() => 0.5 - Math.random());
           const selectedQuizzes = shuffledQuizzes.slice(0, 5);
           
           setQuizzes(selectedQuizzes);
-          console.log(selectedQuizzes)
+          setCurrentQuizIndex(0);  // 새로운 퀴즈를 가져올 때는 인덱스를 0으로 초기화
+          
           localStorage.setItem('quizzes', JSON.stringify(selectedQuizzes));
+          localStorage.setItem('quizDate', dateToFetch);  // 퀴즈의 날짜도 로컬 스토리지에 저장
           localStorage.setItem('currentQuizIndex', '0');
-
         } catch (error) {
-          console.error("퀴즈데이터 안불러와짐", error);
+          console.error("퀴즈 데이터를 불러올 수 없습니다.", error);
         }
       }
     };
 
     fetchData();
   }, []);
+
 
   const checkAnswer = (answer) => {
     setShowModal(true);
