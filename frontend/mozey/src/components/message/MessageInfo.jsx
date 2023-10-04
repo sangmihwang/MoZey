@@ -67,9 +67,12 @@ const MessageInfo = ({ dataforMessageInfo, selectedInfo }) => {
           {dataforMessageInfo.qtnContent} 에 {userData?.username}님을 선택한 사람은
         </S.Question>
         {isSub === 1 && selectedInfo.type === "class" && (
-          <S.ClassInfo>
-            반 정보: {secretUserData.data?.value}
-          </S.ClassInfo>
+          <S.ClassContainer>
+            <S.ClassLabel>특화 반 정보:</S.ClassLabel>
+            <S.ClassBox>
+              {secretUserData.data?.value}
+            </S.ClassBox>
+          </S.ClassContainer>
         )}
         <S.FriendName>
           <S.NameBox>
@@ -137,6 +140,25 @@ const S = {
     text-align: center;
     border-radius: 10px;
     box-shadow: ${({ theme }) => theme.shadow.card};
+  `,
+  ClassBox: styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: ${({ theme }) => theme.color.yellow};
+    padding: 8px;
+    margin-left: 8px;  // 여기에 마진 추가하여 라벨과 간격 주기
+    width: 40px;
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: ${({ theme }) => theme.shadow.card};
+  `,
+  ClassLabel: styled.span`
+    font-weight: 600;
+  `,
+  ClassContainer: styled.div`
+    display: flex;
+    align-items: center;
   `,
 };
 
