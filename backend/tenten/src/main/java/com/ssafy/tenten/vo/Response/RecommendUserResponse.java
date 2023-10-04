@@ -8,10 +8,11 @@ import lombok.Getter;
 @Builder
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class RecommendUserResponse {
-//    private final char gender;
+    private final char gender;
+    private final Long userId;
     private final String image;
     private final String name;
-//    private final String term;
-//    private final String campus;
-//    private final String group;
+    private final String term;
+    private final String campus;
+    private final String group;
 }

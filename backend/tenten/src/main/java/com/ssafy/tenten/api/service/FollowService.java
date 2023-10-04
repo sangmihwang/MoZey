@@ -1,6 +1,7 @@
 package com.ssafy.tenten.api.service;
 
 import com.ssafy.tenten.domain.User;
+import com.ssafy.tenten.vo.Response.RecommendUserResponse;
 import com.ssafy.tenten.vo.Response.UserResponse;
 
 import java.util.List;
@@ -8,10 +9,10 @@ import java.util.List;
 public interface FollowService {
     // 1.4 친구 조건부 조회
 //    List<UserResponse> searchFriendsByName(int page, String name, Long fromUserId);
-    List<UserResponse> searchFriendsByName(String name, Long fromUserId);
+    List<RecommendUserResponse> searchFriendsByName(String name, Long fromUserId);
 
     // 1.5 친구 전체 목록 조회
-    List<UserResponse> searchAllFriends(Long fromUserId);
+    List<RecommendUserResponse> searchAllFriends(Long fromUserId);
 
     // 1.6.1 친구 추가
     boolean addFriend(Long fromUserId, Long toUserId);

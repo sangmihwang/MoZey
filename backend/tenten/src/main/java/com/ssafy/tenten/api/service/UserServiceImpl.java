@@ -6,11 +6,13 @@ import com.ssafy.tenten.vo.Request.UserJoinRequest;
 import com.ssafy.tenten.vo.Request.UserUpdateRequest;
 import com.ssafy.tenten.vo.Response.RecommendUserResponse;
 import com.ssafy.tenten.vo.Response.UserHintResponse;
+import com.ssafy.tenten.vo.Response.UserHintSelectedDataResponse;
 import com.ssafy.tenten.vo.Response.UserResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -118,5 +120,51 @@ public class UserServiceImpl implements UserService{
         User user = userRepository.findById(userId).get();
         UserHintResponse userHintResponse = UserHintResponse.createUserHintByLocationResponse(user, location);
         return userHintResponse;
+    }
+
+    @Override
+    public UserHintSelectedDataResponse extractBySelectedData(Long userId, String data) {
+        User user = userRepository.findById(userId).get();
+        String value = "";
+        if (data.equals("class")) value = user.getGroup();
+        // 다른 거 추가하면 else if 넣기
+        UserHintSelectedDataResponse userHintSelectedDataResponse = UserHintSelectedDataResponse.createHintResponse(data, value);
+        return userHintSelectedDataResponse;
+    }
+
+    @Override
+    public List<UserResponse> searchAllUsers() {
+        List<User> users = userRepository.findAll();
+        List<UserResponse> userResponses = users.stream()
+                .map(a -> UserResponse.builder()
+                        .userId(a.getUserId())
+                        .name(a.getName())
+                        .email(a.getEmail())
+                        .gender(a.getGender())
+                        .image(a.getImage())
+                        .term(a.getTerm())
+                        .campus(a.getCampus())
+                        .group(a.getGroup())
+                        .build())
+                .collect(Collectors.toList());
+        return userResponses;
+    }
+
+    @Override
+    public List<UserResponse> searchAllUsersByName(String name) {
+        List<User> users = userRepository.findAllByName(name);
+        List<UserResponse> userResponses = users.stream()
+                .map(a -> UserResponse.builder()
+                        .userId(a.getUserId())
+                        .name(a.getName())
+                        .email(a.getEmail())
+                        .gender(a.getGender())
+                        .image(a.getImage())
+                        .term(a.getTerm())
+                        .campus(a.getCampus())
+                        .group(a.getGroup())
+                        .build())
+                .collect(Collectors.toList());
+        return userResponses;
     }
 }

@@ -4,6 +4,7 @@ import com.ssafy.tenten.api.repository.FollowRepository;
 import com.ssafy.tenten.api.repository.UserRepository;
 import com.ssafy.tenten.domain.Follow;
 import com.ssafy.tenten.domain.User;
+import com.ssafy.tenten.vo.Response.RecommendUserResponse;
 import com.ssafy.tenten.vo.Response.UserResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -22,14 +23,15 @@ public class FollowServiceImpl implements FollowService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<UserResponse> searchFriendsByName(String name, Long fromUserId) {
+    public List<RecommendUserResponse> searchFriendsByName(String name, Long fromUserId) {
         List<Follow> friends = followRepository.findAllByReceiverName(name, fromUserId);
         List<User> user = new ArrayList<>();
         for (Follow friend : friends) {
             user.add(friend.getReceiverId());
         }
-        List<UserResponse> collect = user.stream()
-                .map(a -> UserResponse.builder()
+        List<RecommendUserResponse> collect = user.stream()
+                .map(a -> RecommendUserResponse.builder()
+                        .userId(a.getUserId())
                         .gender(a.getGender())
                         .image(a.getImage())
                         .name(a.getName())
@@ -43,14 +45,15 @@ public class FollowServiceImpl implements FollowService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<UserResponse> searchAllFriends(Long fromUserId) {
+    public List<RecommendUserResponse> searchAllFriends(Long fromUserId) {
         List<Follow> friends = followRepository.findAllBySenderId(fromUserId);
         List<User> user = new ArrayList<>();
         for (Follow friend : friends) {
             user.add(friend.getReceiverId());
         }
-        List<UserResponse> collect = user.stream()
-                .map(a -> UserResponse.builder()
+        List<RecommendUserResponse> collect = user.stream()
+                .map(a -> RecommendUserResponse.builder()
+                        .userId(a.getUserId())
                         .gender(a.getGender())
                         .image(a.getImage())
                         .name(a.getName())

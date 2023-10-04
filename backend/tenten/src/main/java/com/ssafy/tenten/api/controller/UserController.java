@@ -11,6 +11,7 @@ import com.ssafy.tenten.vo.Request.UserJoinRequest;
 import com.ssafy.tenten.vo.Request.UserUpdateRequest;
 import com.ssafy.tenten.vo.Response.RecommendUserResponse;
 import com.ssafy.tenten.vo.Response.UserHintResponse;
+import com.ssafy.tenten.vo.Response.UserHintSelectedDataResponse;
 import com.ssafy.tenten.vo.Response.UserResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.Value;
@@ -97,13 +98,32 @@ public class UserController {
     @GetMapping("/extract/{userId}")
     public ResponseEntity<?> extract(@PathVariable("userId") Long userId) {
         UserHintResponse userHintResponse = userService.extract(userId);
-        return new ResponseEntity<>(userHintResponse, HttpStatus.OK);
+        return SuccessResponseEntity.toResponseEntity("정보 열람 조회 완료", userHintResponse);
     }
 
     // 초성 index로 추출
     @GetMapping("/extract/{userId}/location/{location}")
     public ResponseEntity<?> extractByLocation(@PathVariable("userId") Long userId, @PathVariable("location") int location) {
         UserHintResponse userHintResponse = userService.extract(userId, location);
-        return new ResponseEntity<>(userHintResponse, HttpStatus.OK);
+        return SuccessResponseEntity.toResponseEntity("정보 열람 조회 완료", userHintResponse);
+    }
+
+    // 원하는 데이터 추출
+    @GetMapping("/extract/{userId}/select/{data}")
+    public ResponseEntity<?> extractBySelectedData(@PathVariable("userId") Long userId, @PathVariable("data") String data) {
+        UserHintSelectedDataResponse userHintSelectedDataResponse = userService.extractBySelectedData(userId, data);
+        return SuccessResponseEntity.toResponseEntity("정보 열람 조회 완료", userHintSelectedDataResponse);
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<?> getAllUsers() {
+        List<UserResponse> users = userService.searchAllUsers();
+        return SuccessResponseEntity.toResponseEntity("전체 사용자 조회 완료", users);
+    }
+
+    @GetMapping("/all/name/{name}")
+    public ResponseEntity<?> getAllUsersByName(@PathVariable("name") String name) {
+        List<UserResponse> users = userService.searchAllUsersByName(name);
+        return SuccessResponseEntity.toResponseEntity("조건부 사용자 조회 완료", users);
     }
 }
