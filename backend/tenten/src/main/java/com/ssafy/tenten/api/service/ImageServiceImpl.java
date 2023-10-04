@@ -29,14 +29,9 @@ public class ImageServiceImpl implements ImageService {
 
     private final String VOTE_IMAGE_PATH = "/vote";
     private final String MEMBER_IMAGE_PATH = "/member";
-    private final String SHELTER_IMAGE_PATH = "/shelter";
-    private final String REGIST_IMAGE_PATH = "/regist";
-    private final String DOG_IMAGE_PATH = "/dog";
 
     @Override
     public String uploadImage(MultipartFile image, String option) throws IOException {
-
-        log.info("[이미징 업로드] 이미지 업로드 요청. image : {}", image);
 
         String uploadPath = selectPath(option);
 
@@ -47,16 +42,19 @@ public class ImageServiceImpl implements ImageService {
             uploadDir.mkdirs();
 
         // 파일 이름을 유니크한 값으로 생성(UUID)
-        String newFileName = UUID.randomUUID() + "_" + image.getOriginalFilename();
+        String newFileName =image.getOriginalFilename();
+
+        System.out.println(image.getOriginalFilename());
+        String[] split = image.getOriginalFilename().split("\\.");
+
         try(InputStream inputStream = image.getInputStream()){
             BufferedImage bi=ImageIO.read(inputStream);
             bi=resizeImage(bi,450,450);
-            ImageIO.write(bi,"jpg",new File(uploadPath,newFileName));
+            ImageIO.write(bi,split[1],new File(uploadPath,newFileName));
+        }catch (Exception e){
+            System.out.println(e.getMessage());
         }
 
-
-//        image.transferTo(new File(uploadPath, newFileName));
-        log.info("[이미지 업로드] 이미지 업로드 => imageName : {}", newFileName);
         log.info("[이미징 업로드] 이미지 업로드 완료");
 
         return newFileName;
@@ -64,12 +62,9 @@ public class ImageServiceImpl implements ImageService {
 
     @Override
     public Map<String, Object> getImage(String imageName, String option){
-        log.info("[이미지 가져오기] 이미지 가져오기 요청");
-
         String uploadPath = selectPath(option);
         String imagePath = uploadPath + File.separator + imageName;
 
-        log.info("[이미지 경로] 이미지 위치 {}",imagePath);
         Resource resource = new FileSystemResource(imagePath);
 
         if(!resource.exists()){
@@ -97,7 +92,7 @@ public class ImageServiceImpl implements ImageService {
     }
 
     private String selectPath(String option) {
-        log.info("[이미지 Path 선택] 이미지 path 선택. option : {}", option);
+
         String path = System.getProperty("user.dir");
         if (option.contains("vote")) {
             return path+VOTE_IMAGE_PATH;
