@@ -25,6 +25,13 @@ public class UserServiceImpl implements UserService{
 
     @Transactional
     @Override
+    public void updateFirebase(String firebaseToken, Long userId) {
+        User user = userRepository.findById(userId).get();
+        user.updateFirebaseToken(firebaseToken);
+    }
+
+    @Transactional
+    @Override
     public void join(UserJoinRequest dto) {
         User user = userRepository.findByEmail(dto.getEmail()).get();
         user.join(dto);

@@ -13,6 +13,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 public interface UserService {
+    void updateFirebase(String firebaseToken, Long userId);
+
     // 1.1 회원가입 및 로그인?
     void join(UserJoinRequest dto);
 
