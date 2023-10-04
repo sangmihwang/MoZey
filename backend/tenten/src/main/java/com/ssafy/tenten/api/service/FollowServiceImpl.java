@@ -71,14 +71,13 @@ public class FollowServiceImpl implements FollowService {
     public boolean addFriend(Long fromUserId, Long toUserId) {
         // 나
         User from = userRepository.findById(fromUserId).get();
-
         // 친구
         User to = userRepository.findById(toUserId).get();
-
         // 추가된 친구면 false 리턴
-        if (followRepository.existsBySenderIdAndReceiverId(fromUserId, toUserId)) {
-            return false;
-        }
+
+//        if (followRepository.existsBySenderIdAndReceiverId(fromUserId, toUserId)) {
+//            return false;
+//        }
 
         Follow follow = new Follow(from, to);
 
