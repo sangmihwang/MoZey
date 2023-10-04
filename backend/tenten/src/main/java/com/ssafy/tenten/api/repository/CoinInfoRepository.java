@@ -10,8 +10,6 @@ import java.util.List;
 public interface CoinInfoRepository extends JpaRepository<CoinInfo, Long> {
     CoinInfo save(CoinInfo coinInfo);
 
-    // Optional<CoinInfo> findTopByOOrderByDateDesc();
-
     List<CoinInfo> findAll();
 
     @Query("SELECT c FROM CoinInfo c WHERE c.coinName = :coinName")
