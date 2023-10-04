@@ -1,6 +1,7 @@
 package com.ssafy.tenten.api.controller;
 
 import com.ssafy.tenten.api.service.MoneyHistoryService;
+import com.ssafy.tenten.domain.User;
 import com.ssafy.tenten.dto.MoneyHistoryDto;
 import com.ssafy.tenten.exception.SuccessResponseEntity;
 import com.ssafy.tenten.vo.Request.MoneyHistoryRequest;

@@ -1,5 +1,6 @@
 package com.ssafy.tenten.api.service;
 
+import com.ssafy.tenten.domain.User;
 import com.ssafy.tenten.dto.MoneyHistoryDto;
 import com.ssafy.tenten.vo.Response.MoneyHistoryResponse;
 
