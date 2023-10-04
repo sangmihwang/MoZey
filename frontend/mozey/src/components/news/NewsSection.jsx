@@ -30,12 +30,12 @@ const NewsSection = () => {
         const currentDate = new Date();
         let dateToFetch;
   
-        if (currentDate.getHours() >= 12) {
+        if (currentDate.getUTCHours() >= 12) {
           // 12:00 이후라면 오늘 날짜로 조회
           dateToFetch = currentDate.toISOString().split('T')[0];
         } else {
           // 12:00 이전이라면 어제 날짜로 조회
-          currentDate.setDate(currentDate.getDate() - 1);
+          currentDate.setDate(currentDate.getUTCDate() - 1);
           dateToFetch = currentDate.toISOString().split('T')[0];
         }
   
