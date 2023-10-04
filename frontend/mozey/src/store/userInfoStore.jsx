@@ -81,3 +81,5 @@ export const userInfoStore = create(persist(
     })
   }
 ));
+
+export default userInfoStore;
