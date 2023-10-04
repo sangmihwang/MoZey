@@ -42,7 +42,6 @@ const Candidates = ({ questionsData }) => {
   useEffect(() => {
     fetchData();
   }, []); // 빈 의존성 배열을 전달하여 이 훅이 한 번만 실행되게
-
   const ChooseCandidate = async (chosen, qtnId, userId) => {
     try {
       const time = new Date().toISOString(); // 현재 시간을 ISO 문자열로 변환합니다.
@@ -58,8 +57,19 @@ const Candidates = ({ questionsData }) => {
       setfbToken(response.data.data.fbToken);
       console.log(response.data);
       console.log(fbToken);
+
+      const encodedToken = fbToken;
+      const decodedToken = decodeURIComponent(encodedToken);
+      const postData2 = {
+        targetUserId: decodedToken,
+        title: qtnId,
+        body: "누군가가 당신에게 투표했습니다.",
+        // img: 넣을예정..
+      };
+      const response2 = await voteAPI.sendNotification(postData2);
+      console.log("Notification Data:", response2);
     } catch (error) {
-      console.error("에러:", chosen, error);
+      console.log("에러", error);
     }
   };
 
