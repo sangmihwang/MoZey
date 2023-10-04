@@ -12,6 +12,9 @@ const MessageList = () => {
   const [dataforMessageInfo, setDataForMessageInfo] = useState(null);
   const [isSubscribed, setIsSubscribed] = useState(null);
 
+  const [showMessageInfo, setShowMessageInfo] = useState(false);
+  const [selectedInfo, setSelectedInfo] = useState({ type: null, value: null });
+
   useEffect(() => {
     const userData = getUserFromLocalStorage();
 
@@ -38,6 +41,21 @@ const MessageList = () => {
 
     const userState = JSON.parse(userInfo);
     return userState.state?.User || {};
+  };
+
+  const handleSelectInfo = (type, value) => {
+    console.log(type, value);
+    toggleMsgFindoutOpen();
+    setSelectedInfo({ type, value });
+    // MessageInfo 모달 열기
+    setShowMessageInfo(true);
+    
+  };
+  const onDataRequest = () => {
+    toggleMsgFindoutOpen();
+    setSelectedInfo({ type: 'location', value: null });
+     // MessageInfo 모달 열기
+    setShowMessageInfo(true);
   };
 
   return (
@@ -70,15 +88,28 @@ const MessageList = () => {
         >
           {isSubscribed === "sub" ? (
             <components.MessageFindoutSub
-              dataforMessageInfo={dataforMessageInfo}
+              dataforMessageInfo={dataforMessageInfo} // 데이터 전달해주는 부분
+              onSelectInfo={handleSelectInfo} // 구독자 고른 데이터 받아오기
             />
           ) : (
             <components.MessageFindoutNoSub
               dataforMessageInfo={dataforMessageInfo}
+              onDataRequest={onDataRequest} // 비구독자 정보 열람 여부 데이터 받아오기
             />
           )}
 
           {/* <components.MessageInfo dataforMessageInfo={dataforMessageInfo} /> */}
+        </S.ModalOverlay>
+      )}
+
+      {showMessageInfo && (
+        <S.ModalOverlay
+          onClick={(e) => {
+            e.stopPropagation();
+            setShowMessageInfo(false);
+          }}
+        >
+          <components.MessageInfo dataforMessageInfo={dataforMessageInfo} selectedInfo={selectedInfo} />
         </S.ModalOverlay>
       )}
     </S.Wrap>
