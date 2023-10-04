@@ -10,6 +10,7 @@ import com.ssafy.tenten.exception.SuccessResponseEntity;
 import com.ssafy.tenten.vo.Request.UserJoinRequest;
 import com.ssafy.tenten.vo.Request.UserUpdateRequest;
 import com.ssafy.tenten.vo.Response.RecommendUserResponse;
+import com.ssafy.tenten.vo.Response.UserHintResponse;
 import com.ssafy.tenten.vo.Response.UserResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.Value;
@@ -30,9 +31,7 @@ import java.util.List;
 @CrossOrigin("*")
 public class UserController {
     private final UserService userService;
-    private final FollowService followService;
     private final UserRepository userRepository;
-    private final FollowRepository followRepository;
 
     // 1.1 회원가입
     @PostMapping
@@ -92,5 +91,19 @@ public class UserController {
     public ResponseEntity<?> unsubscribe(@PathVariable("userId") Long userId) {
         userService.unsubscribe(userId);
         return ResponseEntity.ok("구독 취소 완료");
+    }
+
+    // 초성 추출
+    @GetMapping("/extract/{userId}")
+    public ResponseEntity<?> extract(@PathVariable("userId") Long userId) {
+        UserHintResponse userHintResponse = userService.extract(userId);
+        return new ResponseEntity<>(userHintResponse, HttpStatus.OK);
+    }
+
+    // 초성 index로 추출
+    @GetMapping("/extract/{userId}/location/{location}")
+    public ResponseEntity<?> extractByLocation(@PathVariable("userId") Long userId, @PathVariable("location") int location) {
+        UserHintResponse userHintResponse = userService.extract(userId, location);
+        return new ResponseEntity<>(userHintResponse, HttpStatus.OK);
     }
 }
