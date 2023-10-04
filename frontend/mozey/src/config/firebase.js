@@ -23,20 +23,7 @@ function FirebaseComponent() {
   const userInfo = useStore((state) => state.User);
   const [userId, setUserID] = useState(null);
   const messaging = getMessaging(app);
-  function requestPermission() {
-    Notification.requestPermission().then((permission) => {
-      if (permission === "granted") {
-        console.log("알림 설정 완료!!!!!!!");
-        console.log("추가추가");
-        console.log(userInfo.data.userId, "asdasd");
-        const [userId, setUserID] = useState(null);
-        console.log(userInfo.data.userId);
-        setUserID(userInfo.data.userId);
-        console.log(userId);
-        console.log("추가추가");
-      }
-    });
-  }
+
   useEffect(() => {
     async function requestAndSetToken() {
       const permission = await Notification.requestPermission();
