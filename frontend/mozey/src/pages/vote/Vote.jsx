@@ -5,6 +5,7 @@ import * as components from "components";
 
 const Vote = () => {
   const [questionsData, setQuestionsData] = useState([]);
+  const [selectedQuestionId, setSelectedQuestionId] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -23,10 +24,16 @@ const Vote = () => {
   return (
     <S.Wrap>
       <S.QuestionBox>
-        <components.Question questionsData={questionsData} />
+        <components.Question
+          questionsData={questionsData}
+          oneSelectedQuestionId={setSelectedQuestionId}
+        />
       </S.QuestionBox>
       <S.CandidatesBox>
-        <components.Candidates questionsData={questionsData} />
+        <components.Candidates
+          questionsData={questionsData}
+          selectedQuestionId={selectedQuestionId}
+        />
       </S.CandidatesBox>
     </S.Wrap>
   );
