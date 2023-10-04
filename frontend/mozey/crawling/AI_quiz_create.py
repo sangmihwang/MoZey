@@ -15,10 +15,10 @@ cursor = conn.cursor()
 # 오늘 날짜 quiz 조회
 quiz_query = "SELECT * FROM quiz WHERE date = %s"
 cursor.execute(quiz_query, (current_date,))
-quiz_data = cursor.fetchone()
+quiz_data = cursor.fetchall()
 
-# 오늘 날짜에 해당하는 quiz가 없을때만 만들기
-if not quiz_data:
+# 오늘 날짜에 해당하는 quiz가 5개 이하일 때만 만들기
+if len(quiz_data) <= 5:
     news_query = "SELECT news_id, content FROM news WHERE date = %s LIMIT 1"
     cursor.execute(news_query, (current_date,))
     news_data = cursor.fetchone()
@@ -49,11 +49,13 @@ if not quiz_data:
         # 응답을 데이터베이스에 저장
         if response.status_code == 200:
             print("Quiz for today has been created successfully.")
-            quiz_data = response.json()["data"]
+            quiz_data_response = response.json()["data"]
             inserted_count = 0
 
-            for q in quiz_data:
+            for q in quiz_data_response:
                 try:
+                    if not q['answer']:  # answer가 비어있는 경우 건너뜀
+                        continue
                     insert_query = """
                     INSERT INTO quiz (question, answer, date, news_id, option1, option2, option3, option4, option5)
                     VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
@@ -83,7 +85,7 @@ if not quiz_data:
     else:
         print("No news data for today.")
 else:
-    print("Quiz for today already exists.")
+    print("Quiz count for today exceeds 5.")
 
 cursor.close()
 conn.close()

@@ -1,5 +1,6 @@
 export { default as Main } from "./main/Main";
 export { default as Exchange } from "./exchange/Exchange";
+export { default as ExchangeCoin } from "./exchange/ExchangeCoin";
 export { default as BottomNav } from "./common/BottomNav";
 export { default as MessageList } from "./message/MessageList";
 export { default as MessageContent } from "./message/MessageContent";
