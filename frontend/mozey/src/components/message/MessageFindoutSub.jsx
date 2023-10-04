@@ -4,25 +4,40 @@ import * as components from "components";
 import { MdAccountCircle } from "react-icons/md";
 import { BsCoin } from "react-icons/bs";
 
-const MessageFindoutSub = () => {
+const MessageFindoutSub = ({dataforMessageInfo, onSelectInfo}) => {
+
+  const getUserFromLocalStorage = () => {
+    const userInfo = localStorage.getItem('userInfo');
+    if (!userInfo) return null;
+  
+    const userState = JSON.parse(userInfo);
+    return userState.state?.User || {};
+  };
+  
+  const userData = getUserFromLocalStorage();
+
+  const InfoSelect = (type, value = null) => {
+    onSelectInfo(type, value);
+    console.log(type, value)
+  }
+
   return (
     <S.Wrap onClick={(e) => e.stopPropagation()}>
       <S.FindoutBox>
         <S.StyledMdAccountCircle />
         <S.Question>
-          싸피 최고의 상견례 프리패스 상으로 조윤상님을 선택한 사람의 정보를
-          확인하시겠습니까?
+          {dataforMessageInfo.qtnContent}에 {userData.username}님을 선택한 사람의 정보를 확인하시겠습니까?
         </S.Question>
         <S.FriendInfo>
           <S.FriendInfoTop>
-            <S.Campus>
+            {/* <S.Campus>
               캠퍼스
               <S.CampusCheck>
                 <S.StyledBsCoin />
                 10
               </S.CampusCheck>
-            </S.Campus>
-            <S.Class>
+            </S.Campus> */}
+            <S.Class onClick={() => InfoSelect("class")}>
               반
               <S.ClassCheck>
                 <S.StyledBsCoin />
@@ -33,15 +48,15 @@ const MessageFindoutSub = () => {
           <S.FriendInfoBottom>
             <S.Name>
               이름
-              <S.NameCheck>
+              <S.NameCheck onClick={() => InfoSelect("location", 1)}>
                 <S.StyledBsCoin />
                 10
               </S.NameCheck>
-              <S.NameCheck>
+              <S.NameCheck onClick={() => InfoSelect("location", 2)}>
                 <S.StyledBsCoin />
                 10
               </S.NameCheck>
-              <S.NameCheck>
+              <S.NameCheck onClick={() => InfoSelect("location", 3)}>
                 <S.StyledBsCoin />
                 10
               </S.NameCheck>
@@ -121,6 +136,7 @@ const S = {
   `,
   Class: styled.div`
     display: flex;
+    margin-left: 10px; // 마진추가했음
     flex-direction: row;
     align-items: center;
     font-weight: 600;

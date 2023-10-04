@@ -4,16 +4,26 @@ import * as components from "components";
 import { MdAccountCircle } from "react-icons/md";
 import { BsCoin } from "react-icons/bs";
 
-const MessageFindoutNoSub = () => {
+const MessageFindoutNoSub = ({ dataforMessageInfo, onDataRequest }) => {
+  
+  const getUserFromLocalStorage = () => {
+    const userInfo = localStorage.getItem('userInfo');
+    if (!userInfo) return null;
+  
+    const userState = JSON.parse(userInfo);
+    return userState.state?.User || {};
+  };
+
+  const userData = getUserFromLocalStorage();
+
   return (
     <S.Wrap onClick={(e) => e.stopPropagation()}>
       <S.FindoutBox>
         <S.StyledMdAccountCircle />
         <S.Question>
-          싸피 최고의 상견례 프리패스 상으로 조윤상님을 선택한 사람의 정보를
-          확인하시겠습니까?
+          {dataforMessageInfo.qtnContent}에 {userData.username}님을 선택한 사람의 정보를 확인하시겠습니까?
         </S.Question>
-        <S.FriendName>
+        <S.FriendName onClick={onDataRequest}>
           <S.StyledBsCoin />
           10 확인
         </S.FriendName>
@@ -21,6 +31,7 @@ const MessageFindoutNoSub = () => {
     </S.Wrap>
   );
 };
+
 
 const S = {
   Wrap: styled.div`
