@@ -6,6 +6,7 @@ export { default as Vote } from './vote/Vote';
 export { default as News } from "./news/NewsPage";
 // export { default as Quiz } from './quiz/';
 export { default as Mypage } from "./mypage/Mypage";
+export { default as Request } from "./request/Request";
 export { default as Auth } from "./login/AuthProcess";
 export { default as Join } from "./login/signup/SignUpForm"
 export { default as Success} from "./login/signup/SignUpSuccess"
