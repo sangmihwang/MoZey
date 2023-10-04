@@ -6,6 +6,8 @@ import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -86,6 +88,13 @@ public class User {
         this.subYn = 0;
     }
 
+    @OneToMany(mappedBy = "senderId", cascade = CascadeType.ALL)
+    private final List<Follow> senderList = new ArrayList<>();
+
+
+    @OneToMany(mappedBy = "receiverId", cascade = CascadeType.ALL)
+    private final List<Follow> receiverList = new ArrayList<>();
+
     @Builder
     public User(String email, String name, String term, String campus, String group) {
         this.email = email;
@@ -100,6 +109,10 @@ public class User {
         this.group = dto.getGroup();
         this.term = dto.getTerm();
         this.campus = dto.getCampus();
+    }
+
+    public void updateFirebaseToken(String token) {
+        this.firebaseToken = token;
     }
 
     public void updateRefreshToken(String refreshToken) {

@@ -34,6 +34,13 @@ public class UserController {
     private final UserService userService;
     private final UserRepository userRepository;
 
+    @PostMapping("/firebase/{userId}")
+    public ResponseEntity<?> updateFirebase(@RequestBody String firebaseToken, @PathVariable("userId") Long userId) {
+        String str = firebaseToken.split("firebaseToken=")[1];
+        userService.updateFirebase(str, userId);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
     // 1.1 회원가입
     @PostMapping
     public ResponseEntity<?> join(@Valid @RequestBody UserJoinRequest userJoinRequest, @AuthenticationPrincipal PrincipalDetails principalDetails) {

@@ -8,8 +8,8 @@ import javax.persistence.*;
 @Getter
 @Table(name = "FOLLOW")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Builder
-@AllArgsConstructor
+//@Builder
+//@AllArgsConstructor
 public class Follow {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
