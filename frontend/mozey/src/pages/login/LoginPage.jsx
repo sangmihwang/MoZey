@@ -3,22 +3,17 @@ import { useEffect, useState } from "react";
 import React from "react";
 import styled from "styled-components";
 import mozeyLogo from "assets/images/mozey.png";
-import thinkerLogo from "assets/images/thinker.png";
-import { useNavigate } from 'react-router-dom';
+import kakaoLogin from "assets/images/kakao_login.png";
 
-const Main = () => {
-  const navigate = useNavigate();
-  const moveToLogin = () => {
-    navigate('/kakao');
-  }
-
+const LoginPage = () => {
   return (
-    <S.Wrap onClick={moveToLogin}>
+    // <S.Wrap onClick={}>
+    <S.Wrap>
       <S.Logo>
         <img src={mozeyLogo} alt={"로고"} />
       </S.Logo>
       <S.ThinkerImage>
-        <img src={thinkerLogo} alt={"thinker"} />
+        <a href='http://j9a510.p.ssafy.io:8000/oauth2/authorization/kakao'><img src={kakaoLogin} alt={"카카오로그인"} /></a>
       </S.ThinkerImage>
     </S.Wrap>
   );
@@ -54,4 +49,4 @@ const S = {
   `,
 };
 
-export default Main;
+export default LoginPage;

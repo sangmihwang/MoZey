@@ -18,6 +18,7 @@ const App = () => {
             <Route path={utils.URL.AUTH.SUCCESS} element={<pages.Success />} />
             <Route path={utils.URL.AUTH.MAIN} element={<pages.Auth />} />
             <Route path={utils.URL.AUTH.LOGIN} element={<pages.Login />} />
+            <Route path={utils.URL.AUTH.KAKAO} element={<pages.Kakao />} />
 
             <Route path={utils.URL.HOME.MAIN} element={<pages.Main />} />
             <Route

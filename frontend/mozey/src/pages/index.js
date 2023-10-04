@@ -10,3 +10,4 @@ export { default as Auth } from "./login/AuthProcess";
 export { default as Join } from "./login/signup/SignUpForm"
 export { default as Success} from "./login/signup/SignUpSuccess"
 export { default as Login } from "./login/LoginSuccess"
+export { default as Kakao } from "./login/LoginPage"
