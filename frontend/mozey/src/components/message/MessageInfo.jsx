@@ -5,7 +5,7 @@ import { MdAccountCircle } from "react-icons/md";
 import { BsCoin } from "react-icons/bs";
 import axios from 'axios';
 
-const MessageInfo = ({ dataforMessageInfo }) => {
+const MessageInfo = ({ dataforMessageInfo, selectedInfo }) => {
   console.log("dataforMessageInfo:", dataforMessageInfo);
   const [secretUserData, setSecretUserData] = useState([]);
   const getUserFromLocalStorage = () => {
@@ -13,31 +13,50 @@ const MessageInfo = ({ dataforMessageInfo }) => {
     if (!userInfo) return null;
   
     const user = JSON.parse(userInfo);
-    return user.User;
+    return user.state?.User || {};
   };
   
 
   const userData = getUserFromLocalStorage();
-
+  const isSub = userData.sub_yn
 
   useEffect(() => {
-    // const isSub = getSubFromLocalStorage();
-    const isSub = 0;
-
+    console.log("구독여부?", isSub)
+    
     // 비 구독자인 경우
     if (isSub === 0 && dataforMessageInfo.userId) {
       axios.get(`https://j9a510.p.ssafy.io/api/users/extract/${dataforMessageInfo.userId}`)
         .then(response => {
           setSecretUserData(response.data);
-          console.log(response.data)
+          console.log('비구독자 데이터조회결과',response.data)
         })
         .catch(error => {
           console.log("비 구독자 데이터조회 에러", error);
         })
+    } else if (isSub === 1 && dataforMessageInfo.userId) {
+      if (selectedInfo.type === "class") {
+        axios.get(`https://j9a510.p.ssafy.io/api/users/extract/${dataforMessageInfo.userId}/select/${selectedInfo.type}`)
+          .then(response => {
+            setSecretUserData(response.data);
+          })
+          .catch(error => {
+            console.log("구독자 반 데이터조회 에러", error);
+          });
+      } else if (selectedInfo.type === "location" && selectedInfo.value) {
+        console.log(selectedInfo.value)
+        axios.get(`https://j9a510.p.ssafy.io/api/users/extract/${dataforMessageInfo.userId}/location/${selectedInfo.value}`)
+          .then(response => {
+            console.log("구독자 이름조회", response.data)
+            setSecretUserData(response.data);
+          })
+          .catch(error => {
+            console.log("구독자 위치 데이터조회 에러", error);
+          });
+      }
+
     }
 
-  }, [dataforMessageInfo]);
-
+  }, [dataforMessageInfo, isSub, selectedInfo]);
 
   
   return (
@@ -47,10 +66,21 @@ const MessageInfo = ({ dataforMessageInfo }) => {
         <S.Question>
           {dataforMessageInfo.qtnContent} 에 {userData?.username}님을 선택한 사람은
         </S.Question>
+        {isSub === 1 && selectedInfo.type === "class" && (
+          <S.ClassInfo>
+            반 정보: {secretUserData.data?.value}
+          </S.ClassInfo>
+        )}
         <S.FriendName>
-        <S.NameBox>{secretUserData.data?.location === 1 ? secretUserData.data?.consonant : 'X'}</S.NameBox>
-        <S.NameBox>{secretUserData.data?.location === 2 ? secretUserData.data?.consonant : 'X'}</S.NameBox>
-        <S.NameBox>{secretUserData.data?.location === 3 ? secretUserData.data?.consonant : 'X'}</S.NameBox>
+          <S.NameBox>
+            {selectedInfo.type === "location" && secretUserData.data?.location === 1 ? secretUserData.data?.consonant : 'X'}
+          </S.NameBox>
+          <S.NameBox>
+            {selectedInfo.type === "location" && secretUserData.data?.location === 2 ? secretUserData.data?.consonant : 'X'}
+          </S.NameBox>
+          <S.NameBox>
+            {selectedInfo.type === "location" && secretUserData.data?.location === 3 ? secretUserData.data?.consonant : 'X'}
+          </S.NameBox>
         </S.FriendName>
       </S.FindoutBox>
     </S.Wrap>
