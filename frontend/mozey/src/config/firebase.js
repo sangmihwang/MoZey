@@ -41,7 +41,7 @@ function FirebaseComponent() {
             const formData = new URLSearchParams();
             formData.append("firebaseToken", currentToken);
             const response = await axios.post(
-              `https://j9a510.p.ssafy.io:/api/users/firebase/${userId}`,
+              `https://j9a510.p.ssafy.io:/api/users/firebase/${userInfo.id}`,
               formData,
               {
                 headers: {
