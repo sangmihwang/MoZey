@@ -21,6 +21,7 @@ function FirebaseComponent() {
 
   const app = initializeApp(firebaseConfig);
   const userInfo = useStore((state) => state.User);
+
   const [userId, setUserID] = useState(null);
   const messaging = getMessaging(app);
 
@@ -35,6 +36,9 @@ function FirebaseComponent() {
           });
 
           if (currentToken) {
+            console.log(userInfo);
+            console.log(userInfo.id);
+            setUserID(userInfo);
             const formData = new URLSearchParams();
             formData.append("firebaseToken", currentToken);
 
@@ -47,7 +51,8 @@ function FirebaseComponent() {
                 },
               }
             );
-
+            console.log(userInfo);
+            console.log(userInfo.id);
             console.log(currentToken);
           } else {
             console.log("토큰 없습니다");
