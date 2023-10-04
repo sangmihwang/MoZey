@@ -5,12 +5,16 @@ import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import com.ssafy.tenten.api.service.CoinInfoService;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import java.io.IOException;
@@ -20,6 +24,8 @@ import java.util.List;
 @EnableScheduling
 @SpringBootApplication
 public class TentenApplication {
+	@Autowired
+	private CoinInfoService coinInfoService;
 
 	public static void main(String[] args) {
 		SpringApplication.run(TentenApplication.class, args);
@@ -60,4 +66,14 @@ public class TentenApplication {
 
 		return FirebaseMessaging.getInstance(firebaseApp);
 	}
+	@Transactional
+	@Scheduled(cron = "0 14 22 * * *")
+	public void saveTodayCoinInfo() throws Exception {
+		try{
+			coinInfoService.createCoinInfo();
+		}catch (Exception e) {
+			throw new IllegalArgumentException(e);
+		}
+	}
+
 }
