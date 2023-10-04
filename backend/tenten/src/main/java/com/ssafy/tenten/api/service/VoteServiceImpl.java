@@ -1,18 +1,11 @@
 package com.ssafy.tenten.api.service;
 
-import com.ssafy.tenten.api.repository.QuestionRepository;
-import com.ssafy.tenten.api.repository.UserRepository;
-import com.ssafy.tenten.api.repository.VoteCntRepository;
-import com.ssafy.tenten.api.repository.VoteHistoryRepository;
-import com.ssafy.tenten.domain.Question;
-import com.ssafy.tenten.domain.User;
-import com.ssafy.tenten.domain.VoteCount;
-import com.ssafy.tenten.domain.VoteHistory;
 import com.ssafy.tenten.api.repository.*;
 import com.ssafy.tenten.domain.*;
 import com.ssafy.tenten.dto.VoteDto;
 import com.ssafy.tenten.exception.CustomException;
 import com.ssafy.tenten.exception.ErrorCode;
+import com.ssafy.tenten.vo.Response.MessageResponse;
 import com.ssafy.tenten.vo.Response.VoteResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
@@ -22,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static com.ssafy.tenten.exception.ErrorCode.USER_NOT_ENOUGH;
 import static com.ssafy.tenten.exception.ErrorCode.USER_NOT_FOUND;
@@ -125,5 +119,24 @@ public class VoteServiceImpl implements VoteService {
         return voteCnt.stream()
                 .map(voteCount -> VoteResponse.getTop3(voteCount))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<MessageResponse> getMessage(Long userId) {
+        List<VoteHistory> messages = voteHistrotyRepository.getMessage(userId);
+
+        List<MessageResponse> collect = messages.stream()
+                .map(message -> {
+                    User user = message.getUserId();
+                    return MessageResponse.builder()
+                            .term(user.getTerm())
+                            .gender(user.getGender())
+                            .campus(user.getCampus())
+                            .qtnContent(message.getQuestionId().getQtnContent())
+                            .time(message.getVoteTime())
+                            .build();
+                }).collect(Collectors.toList());
+
+        return collect;
     }
 }

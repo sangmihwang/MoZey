@@ -14,6 +14,5 @@ public interface VoteCntRepository extends JpaRepository<VoteCount,Long>, VoteRe
     @Query(value = "select vc from VoteCount vc where vc.questionId.qtnId=:qtnId and vc.userId.userId=:chosen")
     VoteCount findByQutAndCho(Long qtnId, Long chosen);
 
-
     List<VoteCount> findTop3ByUserId_UserId(Long userId, Sort voteCnt);
 }
