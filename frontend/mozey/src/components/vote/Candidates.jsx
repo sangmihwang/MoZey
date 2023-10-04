@@ -47,11 +47,12 @@ const Candidates = ({ questionsData }) => {
     try {
       const time = new Date().toISOString(); // 현재 시간을 ISO 문자열로 변환합니다.
       console.log(time);
+      console.log(chosen, qtnId, userId);
       const postData = {
         qtnId,
         userId,
         chosen,
-        time,
+        // time,
       };
       const response = await voteAPI.postVoteNotification(postData);
       setfbToken(response.data.data.fbToken);
