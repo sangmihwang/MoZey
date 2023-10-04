@@ -1,65 +1,74 @@
 import { useEffect, useState } from "react";
+import useStore from "../../store/userInfoStore";
 // import {} from "./config/firebase";
 import React from "react";
 import styled from "styled-components";
+import axios from 'axios';
 import ProfileImage from "assets/images/icon-profileImg-default.svg"
 
 const Main = () => {
+	const userInfo = useStore((state) => state.User);
+	const [friends, setFriends] = useState([]);
+
+	useEffect(() => {
+		const userFriends = async () => {
+			try {
+				const id = userInfo.id;
+				// 친구의 캠퍼스, 기수, 반 조회에 포함되는지 확인 필요
+				axios.get("https://j9a510.p.ssafy.io/api/users/friends/${id}")
+					.then((data) => {
+						if (data.data.message === "친구 전체 목록 조회 성공") {
+							setFriends(data.data.data);
+						}
+					})
+			} catch (e) {
+				console.log(e);
+			}
+		}
+		userFriends();
+	}, []);
+
+	const deleteFriend = (id) => {
+		try {
+			const senderId = userInfo.id;
+			axios.delete("https://j9a510.p.ssafy.io/api/users/friends/${senderId}/${id}")
+			.then((data) => {
+				if(data.data.message === "친구 삭제 완료"){
+					alert("삭제가 완료되었습니다");
+					window.location.href = "/mypage";
+				}
+			})
+		} catch (e) {
+			console.log(e);
+		}
+	};
+
 	return (
 		<S.Wrap>
 			<S.Title>
 				<h2>내 친구들</h2>
 			</S.Title>
 			<S.Container>
+				{friends.length === 0 && (
+					<h4>추가된 친구가 없습니다. 추천 친구 목록에서 추가해보세요!</h4>
+				)}
 				<ul>
-					<S.Friend>
+					{friends.map(friend => (
+						<S.Friend>
 						<S.FriendProfileBox>
-							<img src={ProfileImage} alt="profile" />
+							{friend.image === null
+							? (<img src={ProfileImage} alt="profile" />)
+							: (<img src={friend.image} alt="profile" />)
+							}
 						</S.FriendProfileBox>
 						<S.FriendInfo>
-							<h2>김민태</h2>
-							<h4>서울캠퍼스 | 9기 | 4반</h4>
+							<h2>{friend.name}</h2>
 						</S.FriendInfo>
 						<S.FriendDelete>
-							<button>삭제</button>
+							<button onClick={deleteFriend(friend.userId)}>삭제</button>
 						</S.FriendDelete>
 					</S.Friend>
-					<S.Friend>
-						<S.FriendProfileBox>
-							<img src={ProfileImage} alt="profile" />
-						</S.FriendProfileBox>
-						<S.FriendInfo>
-							<h2>홍길동</h2>
-							<h4>부울경캠퍼스 | 9기 | 2반</h4>
-						</S.FriendInfo>
-						<S.FriendDelete>
-							<button>삭제</button>
-						</S.FriendDelete>
-					</S.Friend>
-					<S.Friend>
-						<S.FriendProfileBox>
-							<img src={ProfileImage} alt="profile" />
-						</S.FriendProfileBox>
-						<S.FriendInfo>
-							<h2>이민웅</h2>
-							<h4>서울캠퍼스 | 9기 | 5반</h4>
-						</S.FriendInfo>
-						<S.FriendDelete>
-							<button>삭제</button>
-						</S.FriendDelete>
-					</S.Friend>
-					<S.Friend>
-						<S.FriendProfileBox>
-							<img src={ProfileImage} alt="profile" />
-						</S.FriendProfileBox>
-						<S.FriendInfo>
-							<h2>황상미</h2>
-							<h4>서울캠퍼스 | 9기 | 5반</h4>
-						</S.FriendInfo>
-						<S.FriendDelete>
-							<button>삭제</button>
-						</S.FriendDelete>
-					</S.Friend>
+					))}
 				</ul>
 			</S.Container>
 		</S.Wrap>
@@ -94,6 +103,13 @@ const S = {
     overflow-y: auto;
 		max-height: 250px;
 
+		> h4 {
+      font-size: 12px;
+			font-weight: bold;
+			line-height: 20px;
+			margin-left: 7px;
+			text-align: left;
+    }
 		> ul > li {
 			width: 100%;
 		}

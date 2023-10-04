@@ -1,12 +1,34 @@
 import { useEffect, useState } from "react";
+import useStore from "../../store/userInfoStore";
 // import {} from "./config/firebase";
 import React from "react";
 import styled from "styled-components";
+import axios from 'axios';
 import MusicImage from "assets/images/icon-music.png"
 import DanceImage from "assets/images/icon-dance.png"
 import FreepassImage from "assets/images/icon-freepass.png"
 
 const Main = () => {
+	const userInfo = useStore((state) => state.User);
+	const [top, setTop] = useState([]);
+
+	useEffect(() => {
+		const userTop3 = async () => {
+			try {
+				const id = userInfo.id;
+				axios.get("https://j9a510.p.ssafy.io/api/votes/top/${id}")
+					.then((data) => {
+						if (data.data.message === "TOP3 불러오기 완료") {
+							setTop(data.data.data);
+						}
+					})
+			} catch (e) {
+				console.log(e);
+			}
+		}
+		userTop3();
+	}, []);
+
 	return (
 		<S.Wrap>
 			<S.Title>
@@ -15,15 +37,15 @@ const Main = () => {
 			<S.Container>
 				<S.Question>
 					<img src={MusicImage} alt="music" />
-					<p>감미로운 목소리를 가진 사람</p>
+					<p>{top[0].qtnContent}</p>
 				</S.Question>
 				<S.Question>
 					<img src={DanceImage} alt="dance" />
-					<p>HYPE BOY를 가장 잘 출 것 같은 사람</p>
+					<p>{top[1].qtnContent}</p>
 				</S.Question>
 				<S.Question>
 					<img src={FreepassImage} alt="Freepass" />
-					<p>상견례 프리패스상</p>
+					<p>{top[2].qtnContent}</p>
 				</S.Question>
 			</S.Container>
 		</S.Wrap>

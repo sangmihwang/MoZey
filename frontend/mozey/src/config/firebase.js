@@ -22,11 +22,12 @@ export const messaging = getMessaging(app);
 function requestPermission() {
   Notification.requestPermission().then((permission) => {
     if (permission === "granted") {
-      console.log("알림 설정 완료aasdasdsadsd");
+      console.log("알림 설정 완료");
       // const userInfo = useStore((state) => state.User);
-      // console.log(userInfo.userId);
+      // console.log(userInfo.data.userId);
       // const [userName, setUserName] = useState(null);
-      // console.log(userInfo);
+      // console.log(userInfo.data.userId);
+      // setUserName(userInfo.data.userId);
     }
   });
 }
@@ -38,9 +39,9 @@ const token = getToken(messaging, {
   .then((currentToken) => {
     if (currentToken) {
       // axios.post("localhost:3000/api/users/firebase/{userId}");
-      axios.post("https://j9a510.p.ssafy.io:/api/users/firebase/50");
+      // axios.post("https://j9a510.p.ssafy.io:/api/users/firebase/50");
       console.log(currentToken);
-      console.log(localStorage.userInfo);
+      // console.log(localStorage.userInfo);
     } else {
       // Show permission request UI
       // console.log(userId);
