@@ -25,6 +25,7 @@ const App = () => {
             <Route path={utils.URL.VOTE.MAIN} element={<pages.Vote />} />
             <Route path={utils.URL.NEWS.MAIN} element={<pages.News />} />
             <Route path={utils.URL.MYPAGE.MAIN} element={<pages.Mypage />} />
+            <Route path={utils.URL.REQUEST.MAIN} element={<pages.Request />} />
           </Routes>
 
         </S.ContentContainer>

@@ -21,4 +21,5 @@ export { default as RecommendFriends } from "./mypage/RecommendFriends";
 export { default as RequestQuestion } from "./mypage/RequestQuestion";
 export { default as Logout } from "./mypage/Logout";
 export { default as DeleteAccount } from "./mypage/DeleteAccount";
+export { default as Request } from './request/Request';
 export { default as TobTab } from "./common/TobTab";
