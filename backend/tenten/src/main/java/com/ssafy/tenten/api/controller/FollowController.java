@@ -5,6 +5,7 @@ import com.ssafy.tenten.api.repository.UserRepository;
 import com.ssafy.tenten.api.service.FollowService;
 import com.ssafy.tenten.api.service.UserService;
 import com.ssafy.tenten.exception.SuccessResponseEntity;
+import com.ssafy.tenten.vo.Response.RecommendUserResponse;
 import com.ssafy.tenten.vo.Response.UserResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,16 +22,16 @@ public class FollowController {
     private final FollowService followService;
 
     // 1.4 친구 조건부 조회
-    @GetMapping("/friends/{name}") // 여기 반환값 RecommendFriend처럼 바꿔야 됨
-    public ResponseEntity<?> getFreindsByName(Long senderId, @PathVariable("name") String name) {
-        List<UserResponse> friends = followService.searchFriendsByName(name, senderId);
+    @GetMapping("/friends/{senderId}/name/{name}")
+    public ResponseEntity<?> getFreindsByName(@PathVariable("senderId") Long senderId, @PathVariable("name") String name) {
+        List<RecommendUserResponse> friends = followService.searchFriendsByName(name, senderId);
         return SuccessResponseEntity.toResponseEntity("조건부 친구 조회 성공", friends);
     }
 
     // 1.5 친구 전체 목록 조회
-    @GetMapping("/friends") // 여기 반환값 RecommendFriend처럼 바꿔야 됨
-    public ResponseEntity<?> getFreinds(Long senderId) {
-        List<UserResponse> friends = followService.searchAllFriends(senderId);
+    @GetMapping("/friends/{senderId}")
+    public ResponseEntity<?> getFreinds(@PathVariable("senderId") Long senderId) {
+        List<RecommendUserResponse> friends = followService.searchAllFriends(senderId);
         return SuccessResponseEntity.toResponseEntity("친구 전체 목록 조회 성공", friends);
     }
 
