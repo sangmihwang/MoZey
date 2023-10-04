@@ -5,7 +5,7 @@ import { msgFindoutState } from "hooks";
 
 const MessageList = () => {
   const { isMsgFindoutOpen, toggleMsgFindoutOpen } = msgFindoutState();
-  console.log(isMsgFindoutOpen);
+
   return (
     <S.Wrap>
       <S.MessageBox onClick={toggleMsgFindoutOpen}>

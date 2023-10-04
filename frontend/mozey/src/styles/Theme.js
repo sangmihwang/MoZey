@@ -47,6 +47,7 @@ const fontsize = {
 
 const lineheight = {
   content: "24px",
+  quiztitle: "28px",
   title1: "24px",
   title2: "20px",
   title3: "16px",
