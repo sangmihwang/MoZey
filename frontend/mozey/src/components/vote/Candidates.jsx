@@ -6,11 +6,13 @@ import axios from "axios";
 import { MdPersonSearch } from "react-icons/md";
 import { BsPersonHeart } from "react-icons/bs";
 import { CgProfile } from "react-icons/cg";
+import voteAPI from "../../api/voteAPI";
 
 const Candidates = ({ questionsData }) => {
   const { isCandiChangeOpen, toggleCandiChangeOpen } = candiChangeState();
   const [candidatesData, setCandidatesData] = useState([]);
   const [myuserId, setMyUserId] = useState(null);
+  const [fbToken, setfbToken] = useState(null);
 
   // 무작위로 배열 섞기 (Fisher-Yates shuffle 알고리즘)
   function shuffleArray(array) {
@@ -44,19 +46,17 @@ const Candidates = ({ questionsData }) => {
   const ChooseCandidate = async (chosen, qtnId, userId) => {
     try {
       const time = new Date().toISOString(); // 현재 시간을 ISO 문자열로 변환합니다.
-
+      console.log(time);
       const postData = {
         qtnId,
         userId,
         chosen,
         time,
       };
-      const response = await axios.post(
-        `https://j9a510.p.ssafy.io/api/votes`,
-        postData
-      );
-
+      const response = await voteAPI.postVoteNotification(postData);
+      setfbToken(response.data.data.fbToken);
       console.log(response.data);
+      console.log(fbToken);
     } catch (error) {
       console.error("에러:", chosen, error);
     }
