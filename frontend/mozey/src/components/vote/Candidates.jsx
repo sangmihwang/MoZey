@@ -11,21 +11,33 @@ const Candidates = ({ questionsData }) => {
   const { isCandiChangeOpen, toggleCandiChangeOpen } = candiChangeState();
   const [candidatesData, setCandidatesData] = useState([]);
   const [myuserId, setMyUserId] = useState(null);
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const userId = 47;
-        setMyUserId(userId);
-        const response = await axios.get(
-          `https://j9a510.p.ssafy.io/api/votes/candidates/${userId}`
-        );
-        setCandidatesData(response.data.data);
-        console.log(response.data.data);
-      } catch (error) {
-        console.error("데이터를 가져오는 중 오류가 발생했습니다:", error);
-      }
-    };
 
+  // 무작위로 배열 섞기 (Fisher-Yates shuffle 알고리즘)
+  function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]]; // 배열 원소 교환
+    }
+    return array;
+  }
+
+  const shuffledCandidates = shuffleArray([...candidatesData]);
+
+  const fetchData = async () => {
+    try {
+      const userId = 47;
+      setMyUserId(userId);
+      const response = await axios.get(
+        `https://j9a510.p.ssafy.io/api/votes/candidates/${userId}`
+      );
+      setCandidatesData(response.data.data);
+      console.log(response.data.data);
+    } catch (error) {
+      console.error("데이터를 가져오는 중 오류가 발생했습니다:", error);
+    }
+  };
+
+  useEffect(() => {
     fetchData();
   }, []); // 빈 의존성 배열을 전달하여 이 훅이 한 번만 실행되게
 
@@ -56,7 +68,7 @@ const Candidates = ({ questionsData }) => {
         {candidatesData && (
           <>
             <S.CandidatesTop>
-              {candidatesData.slice(0, 2).map((candidate) => (
+              {shuffledCandidates.slice(0, 2).map((candidate) => (
                 <S.CandidateBox key={candidate.userId}>
                   <CgProfile />
                   <S.NameBox
@@ -74,7 +86,7 @@ const Candidates = ({ questionsData }) => {
               ))}
             </S.CandidatesTop>
             <S.CandidatesBottom>
-              {candidatesData.slice(2, 4).map((candidate) => (
+              {shuffledCandidates.slice(2, 4).map((candidate) => (
                 <S.CandidateBox key={candidate.userId}>
                   <CgProfile />
                   <S.NameBox onClick={() => ChooseCandidate(candidate.name)}>
@@ -87,7 +99,7 @@ const Candidates = ({ questionsData }) => {
         )}
       </S.CandidatesList>
       <S.CandidatesChange>
-        <S.ChangeButton>
+        <S.ChangeButton onClick={fetchData}>
           <S.StyledBsPersonHeart />
           후보 교체
         </S.ChangeButton>
@@ -114,7 +126,8 @@ const Candidates = ({ questionsData }) => {
 const S = {
   Wrap: styled.div`
     background-color: ${({ theme }) => theme.color.background};
-    min-height: 100vh;
+    height: 100%;
+    overflow-y: hidden;
   `,
   CandidatesList: styled.div``,
   CandidatesTop: styled.div`

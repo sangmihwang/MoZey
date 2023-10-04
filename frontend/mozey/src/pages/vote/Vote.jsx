@@ -13,7 +13,6 @@ const Vote = () => {
           `https://j9a510.p.ssafy.io/api/votes/questions`
         );
         setQuestionsData(response.data.data);
-        // console.log("퀘스ㅌ천:", response.data.data);
       } catch (error) {
         console.error("데이터를 가져오는 중 오류가 발생했습니다:", error);
       }
@@ -39,7 +38,8 @@ const S = {
     flex-direction: column;
     align-items: center;
     width: 100%;
-    height: 100%;
+    height: 100vh;
+    overflow-y: hidden;
     background-color: ${({ theme }) => theme.color.background};
   `,
   QuestionBox: styled.div`
