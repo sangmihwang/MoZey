@@ -1,21 +1,18 @@
-import { useEffect, useState } from "react";
-import React from "react";
-import coinPriceAPI from "api/coinPriceAPI";
-import Chart from "react-apexcharts";
-import styled from "styled-components";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
-
+import styled from "styled-components";
+import Chart from "react-apexcharts";
+import { Select, MenuItem } from "@mui/material";
+import { FaCoins, FaCommentDollar } from "react-icons/fa";
+import { AiOutlineArrowRight } from "react-icons/ai";
+import { BiSolidCoinStack } from "react-icons/bi";
+import { TbStarFilled, TbDiamondFilled } from "react-icons/tb";
+import coinPriceAPI from "api/coinPriceAPI";
+import { ExchangeCoin } from "components";
 // firebase
 import { auth, messaging } from "config/firebase";
 // css
 import "semantic-ui-css/semantic.min.css";
-
-import MenuItem from "@mui/material/MenuItem";
-import Select from "@mui/material/Select";
-import TextField from "@mui/material/TextField";
-import { FaCoins, FaCommentDollar } from "react-icons/fa";
-import { AiOutlineArrowRight } from "react-icons/ai";
-import { ExchangeCoin } from "components";
 
 const Exchange = () => {
   const [options] = useState({
@@ -178,84 +175,124 @@ const Exchange = () => {
     }
   }, [selectedPeriod2]);
 
-  // 코인 테스트
-
   return (
-    <div>
-      <S.Wrap>
-        <br />
-        <S.Chart1>
-          {/* <a class="ui red ribbon label">오늘의 KOSPI 50 시세</a> */}
-          <div class="ui black ribbon label">KOSPI 50 차트</div>
-          <Select
-            name="period"
-            className="select"
-            value={selectedPeriod1}
-            onChange={(e) => setSelectedPeriod1(e.target.value)}
-          >
-            <MenuItem value="default">조회 기간 변경 🍊</MenuItem>
-            <MenuItem value="7days">7일</MenuItem>
-            <MenuItem value="30days">30일</MenuItem>
-            <MenuItem value="total">전체</MenuItem>
-          </Select>
-        </S.Chart1>
-        <br />
-        <S.Centered>
-          <Chart options={options} series={filteredSeries1} />
-        </S.Centered>
-        <S.Chart1>
-          <a class="ui red ribbon label">S&P 500 차트</a>
-          <Select
-            name="period"
-            className="select"
-            value={selectedPeriod2}
-            onChange={(e) => setSelectedPeriod2(e.target.value)}
-          >
-            <MenuItem value="default">조회 기간 변경 🍊</MenuItem>
-            <MenuItem value="7days">7일</MenuItem>
-            <MenuItem value="30days">30일</MenuItem>
-            <MenuItem value="total">전체</MenuItem>
-          </Select>
-        </S.Chart1>
-        <br />
-        <S.Centered>
-          <Chart options={options} series={filteredSeries2} />
-        </S.Centered>
-
-        {/* <ExchangeCoin transformedData={transformedData} /> */}
-      </S.Wrap>
-    </div>
+    <S.Wrap>
+      <S.ChartContainer>
+        <S.CoinTitle color="yellow">
+          <S.StyledTbStar />
+          KOSPI 50
+        </S.CoinTitle>
+        <S.StyledSelect
+          name="period"
+          value={selectedPeriod1}
+          onChange={(e) => setSelectedPeriod1(e.target.value)}
+        >
+          <S.StyledMenuItem value="default">기간</S.StyledMenuItem>
+          <S.StyledMenuItem value="7days">7일</S.StyledMenuItem>
+          <S.StyledMenuItem value="30days">30일</S.StyledMenuItem>
+          <S.StyledMenuItem value="total">전체</S.StyledMenuItem>
+        </S.StyledSelect>
+      </S.ChartContainer>
+      <S.Centered>
+        <Chart options={options} series={filteredSeries1} />
+      </S.Centered>
+      <S.ChartContainer>
+        <S.CoinTitle color="red">
+          <S.StyledTbDiamond />
+          S&P 500
+        </S.CoinTitle>
+        <S.StyledSelect
+          name="period"
+          value={selectedPeriod2}
+          onChange={(e) => setSelectedPeriod2(e.target.value)}
+        >
+          <S.StyledMenuItem value="default">기간</S.StyledMenuItem>
+          <S.StyledMenuItem value="7days">7일</S.StyledMenuItem>
+          <S.StyledMenuItem value="30days">30일</S.StyledMenuItem>
+          <S.StyledMenuItem value="total">전체</S.StyledMenuItem>
+        </S.StyledSelect>
+      </S.ChartContainer>
+      <S.Centered>
+        <Chart options={options} series={filteredSeries2} />
+      </S.Centered>
+      {/* <ExchangeCoin transformedData={transformedData} /> */}
+    </S.Wrap>
   );
 };
 
 const S = {
-  Bottom: styled.div`
-    bottom: 0%;
-    height: 15%;
-    width: 100%;
-    position: absolute;
-    text-align: center;
-  `,
-
   Wrap: styled.div`
     width: 100%;
     background: ${({ theme }) => theme.color.background};
     flex-direction: column;
     align-items: center;
+    padding: 20px;
+    min-height: 100vh;
   `,
 
-  Chart1: styled.div`
-    margin: 0% auto;
-    width: 90%; // 차트크기와 동일하게
+  ChartContainer: styled.div`
+    width: 100%;
     display: flex;
     justify-content: space-between;
   `,
 
   Centered: styled.div`
-    max-width: 1500px;
-    margin: 35px auto;
-    padding: 20px;
+    margin: 8px auto;
+    padding: 16px 10px;
     opacity: 0.9;
+  `,
+  CoinTitle: styled.div`
+    display: flex;
+    align-items: center;
+    font-weight: 600;
+    position: relative;
+    padding-right: 10px;
+
+    &::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background-color: ${({ theme, color }) =>
+        color === "yellow"
+          ? theme.color.yellow
+          : color === "red"
+          ? theme.color.red
+          : "transparent"};
+    }
+  `,
+  StyledSelect: styled(Select)`
+    .MuiSelect-select {
+      padding: 8px;
+    }
+  `,
+
+  StyledMenuItem: styled(MenuItem)`
+    height: 30px;
+  `,
+  StyledBiSolidCoinStack: styled(BiSolidCoinStack)`
+    font-size: ${({ theme }) => theme.fontsize.title3};
+    margin-left: 8px;
+    margin-right: 4px;
+    color: ${({ theme }) => theme.color.blue};
+  `,
+  StyledTbStar: styled(TbStarFilled)`
+    width: 30px;
+    height: 30px;
+    font-size: ${({ theme }) => theme.fontsize.title2};
+    margin: 8px;
+    margin-right: 12px;
+    color: ${({ theme }) => theme.color.yellow};
+  `,
+  StyledTbDiamond: styled(TbDiamondFilled)`
+    width: 30px;
+    height: 30px;
+    font-size: ${({ theme }) => theme.fontsize.title2};
+    margin: 8px;
+    margin-right: 12px;
+    color: ${({ theme }) => theme.color.red};
   `,
 };
 

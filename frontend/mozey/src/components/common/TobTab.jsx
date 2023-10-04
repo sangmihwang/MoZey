@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useLocation } from "react-router-dom";
-import { BsCoin } from "react-icons/bs";
+import { BiSolidCoinStack } from "react-icons/bi";
+import { TbStarFilled, TbDiamondFilled } from "react-icons/tb";
 import * as utils from "utils";
 
 const TobTab = () => {
@@ -76,11 +77,11 @@ const TobTab = () => {
         <S.Title>{title}</S.Title>
         {showsub && (
           <S.CoinAmount>
-            <S.StyledBsCoin />
+            <S.StyledBiSolidCoinStack />
             100
-            <S.StyledBsCoin />
+            <S.StyledTbStar />
             100
-            <S.StyledBsCoin />
+            <S.StyledTbDiamond />
             100
           </S.CoinAmount>
         )}
@@ -117,10 +118,23 @@ const S = {
     margin-right: 20px;
     padding: 4px;
   `,
-  StyledBsCoin: styled(BsCoin)`
-    font-size: ${({ theme }) => theme.fontsize.title3};
+  StyledBiSolidCoinStack: styled(BiSolidCoinStack)`
+    font-size: ${({ theme }) => theme.fontsize.title2};
     margin-left: 8px;
     margin-right: 4px;
+    color: ${({ theme }) => theme.color.blue};
+  `,
+  StyledTbStar: styled(TbStarFilled)`
+    font-size: ${({ theme }) => theme.fontsize.title2};
+    margin-left: 8px;
+    margin-right: 4px;
+    color: ${({ theme }) => theme.color.yellow};
+  `,
+  StyledTbDiamond: styled(TbDiamondFilled)`
+    font-size: ${({ theme }) => theme.fontsize.title2};
+    margin-left: 8px;
+    margin-right: 4px;
+    color: ${({ theme }) => theme.color.red};
   `,
   Subtitle: styled.div`
     margin-top: 10px;
