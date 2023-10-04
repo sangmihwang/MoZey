@@ -19,8 +19,8 @@ public class UserHintResponse {
 
     public static UserHintResponse createUserHintByLocationResponse(User user, int location) {
         String username = user.getName();
-        char randomChar = username.charAt(location);
-        char extract = extractConsonant(randomChar);
+        char selectedChar = username.charAt(location - 1);
+        char extract = extractConsonant(selectedChar);
         return UserHintResponse.builder()
                 .location(location)
                 .consonant(extract)
