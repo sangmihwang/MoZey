@@ -1,10 +1,20 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import * as components from "components";
 import { MdAccountCircle } from "react-icons/md";
 import { BsCoin } from "react-icons/bs";
 
 const MessageInfo = () => {
+  const isSub = getSubFromLocalStorage === 1;
+
+
+  const getSubFromLocalStorage = () => {
+    const userInfo = localStorage.getItem('userInfo');
+    if (!userInfo) return null;
+  
+    const user = JSON.parse(userInfo);
+    return user.User?.sub_yn;
+  };
   return (
     <S.Wrap onClick={(e) => e.stopPropagation()}>
       <S.FindoutBox>

@@ -13,7 +13,7 @@ const MessageList = () => {
     // const userId = getUserIDFromLocalStorage();
     // if (!userId) return;
 
-    axios.get(`https://j9a510.p.ssafy.io/api/message?userId=${48}`)
+    axios.get(`https://j9a510.p.ssafy.io/api/message/48`)
       .then(response => {
         setMessages(response.data.data);
       })

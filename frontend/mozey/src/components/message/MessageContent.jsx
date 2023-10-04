@@ -12,12 +12,12 @@ const MessageContent = ({ messageData }) => {
           <img src={QuestionImage} alt="프로필" />
         </S.ProfilePic>
         <S.ProfileTextContainer>
-          <S.ProfileInfo>{messageData.campus}캠퍼스 | {messageData.term}기 | 여자{messageData.gender === "M" ? "남자" : "여자"}</S.ProfileInfo>
+          <S.ProfileInfo>{messageData.campus}캠퍼스 | {messageData.term}기 | {messageData.gender === "M" ? "남자" : "여자"}</S.ProfileInfo>
           <S.SentDate>방금</S.SentDate>
         </S.ProfileTextContainer>
       </S.ProfileInfoBox>
       <S.Message>
-        {messageData.qtnContent}상견례 프리패스상에 {user.User?.username}님을 선택했습니다
+        {messageData.qtnContent}에 {user.User?.username}님을 선택했습니다
       </S.Message>
     </S.Wrap>
   );
