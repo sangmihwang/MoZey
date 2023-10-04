@@ -34,20 +34,24 @@ const Main = () => {
 			<S.Title>
 				<h2>가장 많이 받은 칭찬 TOP3</h2>
 			</S.Title>
-			<S.Container>
-				<S.Question>
-					<img src={MusicImage} alt="music" />
-					<p>{top[0].qtnContent}</p>
-				</S.Question>
-				<S.Question>
-					<img src={DanceImage} alt="dance" />
-					<p>{top[1].qtnContent}</p>
-				</S.Question>
-				<S.Question>
-					<img src={FreepassImage} alt="Freepass" />
-					<p>{top[2].qtnContent}</p>
-				</S.Question>
-			</S.Container>
+			{top.length === 3
+				? (<S.Container>
+					<S.Question>
+						<img src={MusicImage} alt="music" />
+						<p>{top[0].qtnContent}</p>
+					</S.Question>
+					<S.Question>
+						<img src={DanceImage} alt="dance" />
+						<p>{top[1].qtnContent}</p>
+					</S.Question>
+					<S.Question>
+						<img src={FreepassImage} alt="Freepass" />
+						<p>{top[2].qtnContent}</p>
+					</S.Question>
+				</S.Container>)
+				: (<h4>아직 받은 칭찬이 없습니다</h4>)
+			}
+
 		</S.Wrap>
 	);
 };
@@ -59,6 +63,14 @@ const S = {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+
+	> h4 {
+		font-size: 12px;
+		font-weight: bold;
+		line-height: 20px;
+		margin-left: 7px;
+		text-align: left;
+	}
 	`,
 	Title: styled.div`
 	width: 87.7%;
