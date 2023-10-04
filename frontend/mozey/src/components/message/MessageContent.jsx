@@ -17,7 +17,7 @@ const MessageContent = ({ messageData }) => {
         </S.ProfileTextContainer>
       </S.ProfileInfoBox>
       <S.Message>
-        {messageData.qtnContent}에 {user.User?.username}님을 선택했습니다
+        {messageData.qtnContent}에 {user.state?.User.username}님을 선택했습니다
       </S.Message>
     </S.Wrap>
   );
