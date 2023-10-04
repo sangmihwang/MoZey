@@ -23,7 +23,7 @@ const SignUpSuccess = () => {
               </tr>
             </tbody>
           </table>
-          <button onClick={() => navigate('/')} style={{ backgroundColor: "white" }}>
+          <button onClick={() => navigate('/mypage')} style={{ backgroundColor: "white" }}>
             홈으로
           </button>
         </S.Container>
