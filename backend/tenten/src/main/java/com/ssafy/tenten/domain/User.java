@@ -48,11 +48,14 @@ public class User {
     private int subYn;
 
     @Column(nullable = false)
+    private Instant createTime;
+
+    @Column
     private Instant subStartTime;
 
     @PrePersist
     public void prePersist() {
-        if (subStartTime == null) subStartTime = Instant.now();
+        if (createTime == null) createTime = Instant.now();
         if (point == null) point = 0L;
         if (coin1 == null) coin1 = 0L;
         if (coin2 == null) coin2 = 0L;
@@ -82,9 +85,12 @@ public class User {
     private String firebaseToken;
 
     public void subscribe() {
+//        if (this.subStartTime == null) this.subStartTime = Instant.now();
+        if (this.subStartTime == null) this.subStartTime = Instant.now();
         this.subYn = 1;
     }
     public void unsubscribe() {
+        if (subStartTime != null) subStartTime = null;
         this.subYn = 0;
     }
 

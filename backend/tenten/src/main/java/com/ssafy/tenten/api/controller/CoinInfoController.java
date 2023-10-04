@@ -7,6 +7,7 @@ import com.ssafy.tenten.exception.SuccessResponseEntity;
 import com.ssafy.tenten.vo.Response.CoinInfoResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
