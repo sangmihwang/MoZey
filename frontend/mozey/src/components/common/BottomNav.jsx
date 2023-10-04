@@ -1,13 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import {
-  FaCheck,
-  FaMoneyBillTransfer,
-  FaRegNewspaper,
-  FaPaperPlane,
-  FaRegUser,
-} from "react-icons/fa6";
+import { FaCheck, FaRegNewspaper, FaRegUser } from "react-icons/fa6";
 import { TbMessageHeart } from "react-icons/tb";
 import { MdCurrencyExchange } from "react-icons/md";
 import * as utils from "utils";
@@ -56,25 +50,22 @@ const S = {
     left: 0;
     right: 0;
     z-index: 1000;
-    height: 73px;
+    height: 75px;
     overflow: hidden;
     display: flex;
     justify-content: space-between;
+    padding: 0 10px;
     background-color: ${({ theme }) => theme.color.background};
   `,
   StyledLink: styled(Link)`
     text-align: center;
     flex: 1;
     width: 20%;
-    height: 73px;
+    height: 80px;
     line-height: 73px;
     display: flex;
     align-items: center;
     justify-content: center;
-    img {
-      width: 20px;
-      height: 20px;
-    }
   `,
   Circle: styled.div`
     width: 54px;
