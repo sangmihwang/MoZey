@@ -4,6 +4,7 @@ import { getMessaging, getToken } from "firebase/messaging";
 import axios from "axios";
 import useStore from ".././store/userInfoStore";
 import { useEffect, useState } from "react";
+
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 
@@ -39,7 +40,7 @@ const token = getToken(messaging, {
   .then((currentToken) => {
     if (currentToken) {
       // axios.post("localhost:3000/api/users/firebase/{userId}");
-      // axios.post("https://j9a510.p.ssafy.io:/api/users/firebase/50");
+      axios.post("https://j9a510.p.ssafy.io:/api/users/firebase/50");
       console.log(currentToken);
       // console.log(localStorage.userInfo);
     } else {
