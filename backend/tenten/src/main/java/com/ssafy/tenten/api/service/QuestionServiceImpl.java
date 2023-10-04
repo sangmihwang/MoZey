@@ -60,23 +60,13 @@ public class QuestionServiceImpl implements QuestionService{
     }
 
     @Override
-//    @Cacheable(value = "quesitons", key = "#id",cacheManager = "testCacheManager")
     public Slice<QuestionResponse> getQuestions(Long id,Character status ,Pageable pageable) {
 
         Slice<QuestionResponse> questions = questionRepository.getPageQuestions(id,status,pageable)
                 .orElseThrow(() ->new CustomException(USER_NOT_FOUND));
 
         questions.hasNext();
-/**
-        List<QuestionResponse> collect = questions.stream()
-                .map(a -> QuestionResponse.builder()
-                        .qtnId(a.getQtnId())
-                        .userId(a.getUserId().getUserId())
-                        .qtnContent(a.getQtnContent())
-                        .status(a.getStatus())
-                        .build())
-                .collect(Collectors.toList());
-**/
+
         return questions;
     }
 
