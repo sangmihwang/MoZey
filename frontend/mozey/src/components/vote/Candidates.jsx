@@ -53,14 +53,15 @@ const Candidates = ({
 
       console.log(chosen, selectedQuestionId, userId);
       const postData = {
-        selectedQuestionId,
-        userId,
-        chosen,
+        qtnId: selectedQuestionId,
+        userId: userId,
+        chosen: chosen,
+
         // time,
       };
       const response = await voteAPI.postVoteNotification(postData);
-      setfbToken(response.data.data.fbToken);
       console.log(response.data);
+      setfbToken(response.data.data.fbToken);
       console.log(fbToken);
       const encodedToken = fbToken;
       const decodedToken = decodeURIComponent(encodedToken);
