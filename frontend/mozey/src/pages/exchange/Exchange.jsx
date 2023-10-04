@@ -7,7 +7,7 @@ const Exchange = () => {
   const userId = 49;
   const chosen = 50;
   const [fbToken, setfbToken] = useState(null);
-  const [qtnId, setQtnId] = useState(1);
+  const [qtnId, setQtnId] = useState("1");
   const handleClick = async () => {
     const requestData = {
       qtnId: qtnId,
