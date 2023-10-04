@@ -119,7 +119,7 @@ const S = {
   NameBox: styled.div`
     padding: 20px auto;
     margin-left: 16px;
-    font-size: ${({ theme }) => theme.fontsize.title2};
+    font-size: ${({ theme }) => theme.fontsize.title3};
   `,
   ModalOverlay: styled.div`
     position: fixed;
