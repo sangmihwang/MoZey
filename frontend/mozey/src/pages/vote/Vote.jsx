@@ -1,19 +1,34 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import axios from "axios";
 import * as components from "components";
 
 const Vote = () => {
+  const [questionsData, setQuestionsData] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          `https://j9a510.p.ssafy.io/api/votes/questions`
+        );
+        setQuestionsData(response.data.data);
+      } catch (error) {
+        console.error("데이터를 가져오는 중 오류가 발생했습니다:", error);
+      }
+    };
+    fetchData();
+  }, []);
+
   return (
-    <div>
-      <S.Wrap>
-        <S.QuestionBox>
-          <components.Question></components.Question>
-        </S.QuestionBox>
-        <S.CandidatesBox>
-          <components.Candidates></components.Candidates>
-        </S.CandidatesBox>
-      </S.Wrap>
-    </div>
+    <S.Wrap>
+      <S.QuestionBox>
+        <components.Question questionsData={questionsData} />
+      </S.QuestionBox>
+      <S.CandidatesBox>
+        <components.Candidates questionsData={questionsData} />
+      </S.CandidatesBox>
+    </S.Wrap>
   );
 };
 
@@ -23,7 +38,8 @@ const S = {
     flex-direction: column;
     align-items: center;
     width: 100%;
-    height: 100%;
+    height: 100vh;
+    overflow-y: hidden;
     background-color: ${({ theme }) => theme.color.background};
   `,
   QuestionBox: styled.div`
