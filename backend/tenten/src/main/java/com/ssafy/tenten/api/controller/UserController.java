@@ -29,7 +29,6 @@ import java.util.List;
 @RequestMapping("/api/users")
 @RequiredArgsConstructor
 @Slf4j
-@CrossOrigin("*")
 public class UserController {
     private final UserService userService;
     private final UserRepository userRepository;
@@ -49,7 +48,11 @@ public class UserController {
     }
 
     // 1.1.1 회원탈퇴
-//    @DeleteMapping
+    @DeleteMapping("/{userId}")
+    public ResponseEntity<?> deleteUser(@PathVariable("userId") Long id) {
+        userRepository.deleteById(id);
+        return SuccessResponseEntity.toResponseEntity("회원 탈퇴 완료", null);
+    }
 
     // 1.2 로그아웃
     @GetMapping("/logout")

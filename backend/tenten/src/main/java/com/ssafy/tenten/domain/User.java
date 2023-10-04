@@ -1,6 +1,7 @@
 package com.ssafy.tenten.domain;
 
 import com.ssafy.tenten.vo.Request.UserJoinRequest;
+import com.ssafy.tenten.vo.Request.UserUpdateRequest;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
@@ -115,6 +116,15 @@ public class User {
         this.group = dto.getGroup();
         this.term = dto.getTerm();
         this.campus = dto.getCampus();
+    }
+
+    public void update(UserUpdateRequest dto) {
+        this.gender = dto.getGender();
+        this.image = dto.getImage();
+        this.name = dto.getName();
+        this.term = dto.getTerm();
+        this.campus = dto.getCampus();
+        this.group = dto.getGroup();
     }
 
     public void updateFirebaseToken(String token) {
