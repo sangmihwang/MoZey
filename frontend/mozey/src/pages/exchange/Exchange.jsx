@@ -4,8 +4,8 @@ import * as components from "components";
 import useStore from "store";
 import voteAPI from "../../api/voteAPI";
 const Exchange = () => {
-  const userId = 50;
-  const chosen = 49;
+  const userId = 49;
+  const chosen = 50;
   const [fbToken, setfbToken] = useState(null);
   const [qtnId, setQtnId] = useState(1);
   const handleClick = async () => {
@@ -16,7 +16,7 @@ const Exchange = () => {
     };
     try {
       const response = await voteAPI.postVoteNotification(requestData);
-      console.log("Notification Data:", response.data.data);
+      console.log("Notification Data:", response.data);
       setfbToken(response.data.data);
       setQtnId(response.data.data);
     } catch (error) {
@@ -24,6 +24,8 @@ const Exchange = () => {
     }
   };
   const sendClick = async () => {
+    console.log(fbToken);
+    console.log(qtnId);
     const requestData = {
       targetToken: fbToken,
       title: qtnId,
