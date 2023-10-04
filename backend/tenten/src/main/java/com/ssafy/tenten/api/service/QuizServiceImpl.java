@@ -9,6 +9,7 @@ import com.ssafy.tenten.exception.CustomException;
 import com.ssafy.tenten.exception.ErrorCode;
 import com.ssafy.tenten.vo.Response.QuizResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,10 +25,10 @@ public class QuizServiceImpl implements QuizService {
     private final NewsRepository newsRepository;
 
     @Override
+    @Cacheable(value = "QUIZ", key = "#date.toLocalDate().toString()",cacheManager = "testCacheManager")
     public List<QuizResponse> getQuizzesByDate(LocalDateTime date) {
-        System.out.println(date.toLocalDate());
         List<Quiz> quizzes = quizRepository.findAllByDate(date.toLocalDate());
-        System.out.println(quizzes.size());
+
         return quizzes.stream()
                 .map(quiz -> QuizResponse.builder()
                         .quizId(quiz.getQuizId())
