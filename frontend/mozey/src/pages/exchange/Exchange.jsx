@@ -17,8 +17,8 @@ const Exchange = () => {
     try {
       const response = await voteAPI.postVoteNotification(requestData);
       console.log("Notification Data:", response.data);
-      setfbToken(response.data.data);
-      setQtnId(response.data.data);
+      setfbToken(response.data.data.fbToken);
+      // setQtnId(response.data.data);
     } catch (error) {
       console.log("에러", error);
     }
@@ -27,7 +27,7 @@ const Exchange = () => {
     console.log(fbToken);
     console.log(qtnId);
     const requestData = {
-      targetToken: fbToken,
+      targetUserId: fbToken,
       title: qtnId,
       body: "이것은 새로운 알림 메시지입니다.",
     };
