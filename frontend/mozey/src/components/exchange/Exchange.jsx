@@ -4,7 +4,6 @@ import coinPriceAPI from "api/coinPriceAPI";
 import Chart from "react-apexcharts";
 import styled from "styled-components";
 import axios from "axios";
-import useStore from "../../store";
 
 // firebase
 import { auth, messaging } from "config/firebase";
@@ -59,7 +58,44 @@ const Exchange = () => {
     },
   });
 
-  const transformedData = useStore().CoinData;
+  const distributeData = (rawData) => {
+    const transformedData = {};
+    rawData.forEach((item) => {
+      const { coinName, coinPrice, date } = item;
+      const seriesName = coinName === "Coin1" ? "KOSPI 50" : "S&P 500";
+      if (!transformedData[coinName]) {
+        transformedData[coinName] = {
+          name: seriesName,
+          data: [],
+        };
+      }
+      transformedData[coinName].data.push({
+        x: new Date(date).getTime(),
+        y: coinPrice,
+      });
+    });
+    return Object.values(transformedData);
+  };
+
+  const [transformedData, setTransformedData] = useState(0);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        if (transformedData === 0) {
+          const response =
+            await axios.get`https://j9a510.p.ssafy.io:/api/coins/price`;
+          console.log(response.data.data);
+          const response2 = distributeData(response.data.data);
+          setTransformedData(response2);
+        } else {
+          console.log("test");
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchData();
+  }, [transformedData]);
 
   // 날짜를 원하는 형식으로 변환 (YYYYMMDD을 YYYY-MM-DD로 변환)
   const formatDate = (date) => {
@@ -186,7 +222,7 @@ const Exchange = () => {
           <Chart options={options} series={filteredSeries2} />
         </S.Centered>
 
-        <ExchangeCoin></ExchangeCoin>
+        {/* <ExchangeCoin transformedData={transformedData} /> */}
       </S.Wrap>
     </div>
   );

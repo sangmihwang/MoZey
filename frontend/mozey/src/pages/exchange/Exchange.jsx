@@ -1,12 +1,9 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import * as components from "components";
 import useStore from "store";
 
 const Exchange = () => {
-  const store = useStore();
-  store.fetchData();
-
   return (
     <div>
       <S.Wrap>

@@ -11,13 +11,13 @@ import { AiOutlineArrowRight } from "react-icons/ai";
 
 //  코인 교환 파트
 
-const ExchangeCoin = () => {
-  const transformedData = useStore().CoinData;
+const ExchangeCoin = (transformedData) => {
+  console.log(transformedData);
   const series_KOSPI = transformedData.filter(
     (item) => item.name === "KOSPI 50"
   );
+  console.log(series_KOSPI);
   const [series1, setSeries1] = useState(series_KOSPI);
-
   // S&P 차트 상태
   const series_SandP = transformedData.filter(
     (item) => item.name === "S&P 500"
@@ -33,7 +33,6 @@ const ExchangeCoin = () => {
   const calculateExchange = (value, selectFromOption, selectToOption) => {
     const todayKospi = series1[0].data[series1[0].data.length - 1].y;
     const todaySandP = series2[0].data[series2[0].data.length - 1].y;
-
     let exchangeRate = 1;
     const KToS = todayKospi / todaySandP;
     const PToS = todaySandP;
@@ -71,15 +70,12 @@ const ExchangeCoin = () => {
   const handleSelectToOpitonChange = (e) => {
     setSelectToOption(e);
   };
-
   const handleExchangeClick = (e) => {
     console.log(e);
   };
-
   useEffect(() => {
     calculateExchange(fromCoin, selectFromOption, selectToOption);
   }, [fromCoin, selectFromOption, selectToOption]);
-
   return (
     <S.ExContainer>
       <S.CoinCentered>
@@ -97,7 +93,6 @@ const ExchangeCoin = () => {
             <MenuItem value="S&P 500">S&P 500</MenuItem>
           </Select>
           <br />
-
           <TextField
             type="number"
             value={fromCoin}
@@ -155,7 +150,6 @@ const S = {
     text-align: center;
     width: 100%;
   `,
-
   ExContainer: styled.div`
     height: 300px;
     margin: 0% auto;
@@ -164,11 +158,9 @@ const S = {
     width: 90%;
     background-color: white;
   `,
-
   Logo: styled.img`
     height: 15px;
   `,
-
   YellowButton: styled.button`
     background-color: #ffd94a;
     padding: 10px 30px;
