@@ -5,7 +5,7 @@ import useStore from "store";
 import voteAPI from "../../api/voteAPI";
 const Exchange = () => {
   const userId = 49;
-  const chosen = 50;
+  const chosen = 55;
   const [fbToken, setfbToken] = useState(null);
   const [qtnId, setQtnId] = useState("1");
   const handleClick = async () => {
