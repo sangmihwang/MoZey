@@ -7,7 +7,7 @@ import { TbMoodSadDizzy } from "react-icons/tb";
 
 const MessageList = () => {
   const { isMsgFindoutOpen, toggleMsgFindoutOpen } = msgFindoutState();
-  console.log(isMsgFindoutOpen);
+  // console.log(isMsgFindoutOpen);
   const [messages, setMessages] = useState([]);
   const [dataforMessageInfo, setDataForMessageInfo] = useState(null);
   const [isSubscribed, setIsSubscribed] = useState(null);
