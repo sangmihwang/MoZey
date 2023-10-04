@@ -7,6 +7,7 @@ import com.ssafy.tenten.exception.SuccessResponseEntity;
 import com.ssafy.tenten.vo.Response.CoinInfoResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,6 +21,7 @@ public class CoinInfoController {
     * 코인 정보 삽입
     */
     @PostMapping("/coins/today")
+    @Scheduled(cron = "0 10 21 * * *")
     public ResponseEntity<?> postCoinInfo(){
         CoinInfo coinInfo = coinInfoService.createCoinInfo();
         return SuccessResponseEntity.toResponseEntity("코인 정보 등록 완료", coinInfo);

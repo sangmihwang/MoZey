@@ -35,7 +35,7 @@ public class CoinInfoServiceImpl implements CoinInfoService{
 
     @Override
     @Transactional
-    @Scheduled(cron = "0 28 15 * * *")
+//    @Scheduled(cron = "0 28 15 * * *")
     public CoinInfo createCoinInfo() {
         CoinInfoDto kospiDto = getKospi();
         if (kospiDto != null) {
