@@ -1,38 +1,90 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import * as components from "components";
 import { candiChangeState } from "hooks";
-
+import axios from "axios";
 import { MdPersonSearch } from "react-icons/md";
 import { BsPersonHeart } from "react-icons/bs";
 import { CgProfile } from "react-icons/cg";
 
-const Candidates = () => {
+const Candidates = ({ questionsData }) => {
   const { isCandiChangeOpen, toggleCandiChangeOpen } = candiChangeState();
+  const [candidatesData, setCandidatesData] = useState([]);
+  const [myuserId, setMyUserId] = useState(null);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const userId = 47;
+        setMyUserId(userId);
+        const response = await axios.get(
+          `https://j9a510.p.ssafy.io/api/votes/candidates/${userId}`
+        );
+        setCandidatesData(response.data.data);
+        console.log(response.data.data);
+      } catch (error) {
+        console.error("데이터를 가져오는 중 오류가 발생했습니다:", error);
+      }
+    };
+
+    fetchData();
+  }, []); // 빈 의존성 배열을 전달하여 이 훅이 한 번만 실행되게
+
+  const ChooseCandidate = async (chosen, qtnId, userId) => {
+    try {
+      const time = new Date().toISOString(); // 현재 시간을 ISO 문자열로 변환합니다.
+
+      const postData = {
+        qtnId,
+        userId,
+        chosen,
+        time,
+      };
+      const response = await axios.post(
+        `https://j9a510.p.ssafy.io/api/votes`,
+        postData
+      );
+
+      console.log(response.data);
+    } catch (error) {
+      console.error("에러:", chosen, error);
+    }
+  };
 
   return (
     <S.Wrap>
       <S.CandidatesList>
-        <S.CandidatesTop>
-          <S.CandidateBox>
-            <CgProfile />
-            <S.NameBox>지한얼</S.NameBox>
-          </S.CandidateBox>
-          <S.CandidateBox>
-            <CgProfile />
-            <S.NameBox>이민웅</S.NameBox>
-          </S.CandidateBox>
-        </S.CandidatesTop>
-        <S.CandidatesBottom>
-          <S.CandidateBox>
-            <CgProfile />
-            <S.NameBox>임병국</S.NameBox>
-          </S.CandidateBox>
-          <S.CandidateBox>
-            <CgProfile />
-            <S.NameBox>조윤상</S.NameBox>
-          </S.CandidateBox>
-        </S.CandidatesBottom>
+        {candidatesData && (
+          <>
+            <S.CandidatesTop>
+              {candidatesData.slice(0, 2).map((candidate) => (
+                <S.CandidateBox key={candidate.userId}>
+                  <CgProfile />
+                  <S.NameBox
+                    onClick={() =>
+                      ChooseCandidate(
+                        candidate.userId,
+                        questionsData.qtnId,
+                        myuserId
+                      )
+                    }
+                  >
+                    {candidate.name}
+                  </S.NameBox>
+                </S.CandidateBox>
+              ))}
+            </S.CandidatesTop>
+            <S.CandidatesBottom>
+              {candidatesData.slice(2, 4).map((candidate) => (
+                <S.CandidateBox key={candidate.userId}>
+                  <CgProfile />
+                  <S.NameBox onClick={() => ChooseCandidate(candidate.name)}>
+                    {candidate.name}
+                  </S.NameBox>
+                </S.CandidateBox>
+              ))}
+            </S.CandidatesBottom>
+          </>
+        )}
       </S.CandidatesList>
       <S.CandidatesChange>
         <S.ChangeButton>
