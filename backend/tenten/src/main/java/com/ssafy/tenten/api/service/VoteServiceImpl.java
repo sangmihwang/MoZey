@@ -8,6 +8,8 @@ import com.ssafy.tenten.exception.ErrorCode;
 import com.ssafy.tenten.vo.Response.MessageResponse;
 import com.ssafy.tenten.vo.Response.VoteResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -66,11 +68,8 @@ public class VoteServiceImpl implements VoteService {
         }
 
         return VoteResponse.builder()
-                .time(voteHistory.getVoteTime())
-                .image(voteHistory.getQuestionId().getImg())
-                .name(voteCount.getUserId().getName())
-                .qtnId(voteDto.getQtnId())
-                .qtnContent(questionId.getQtnContent())
+                .userId(voteDto.getUserId())
+                .fbToken(voteHistory.getChosen().getFirebaseToken())
                 .build();
     }
 
@@ -122,22 +121,9 @@ public class VoteServiceImpl implements VoteService {
     }
 
     @Override
-    public List<MessageResponse> getMessage(Long userId) {
-        List<VoteHistory> messages = voteHistrotyRepository.getMessage(userId);
+    public Slice<MessageResponse> getMessage(Long userId, PageRequest pageRequest) {
+        Slice<MessageResponse> messages = voteHistrotyRepository.getMessage(userId,pageRequest);
 
-        List<MessageResponse> collect = messages.stream()
-                .map(message -> {
-                    User user = message.getUserId();
-                    return MessageResponse.builder()
-                            .term(user.getTerm())
-                            .gender(user.getGender())
-                            .campus(user.getCampus())
-                            .qtnContent(message.getQuestionId().getQtnContent())
-                            .time(message.getVoteTime())
-                            .userId(user.getUserId())
-                            .build();
-                }).collect(Collectors.toList());
-
-        return collect;
+        return messages;
     }
 }
