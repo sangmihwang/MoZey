@@ -134,6 +134,7 @@ public class VoteServiceImpl implements VoteService {
                             .campus(user.getCampus())
                             .qtnContent(message.getQuestionId().getQtnContent())
                             .time(message.getVoteTime())
+                            .userId(user.getUserId())
                             .build();
                 }).collect(Collectors.toList());
 

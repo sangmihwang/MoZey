@@ -14,6 +14,7 @@ public class MessageResponse {
     private Character gender;
     private Long time;
     private String qtnContent;
+    private Long userId;
 
 
 }
