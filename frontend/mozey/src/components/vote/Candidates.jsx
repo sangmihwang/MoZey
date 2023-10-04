@@ -8,7 +8,8 @@ import { BsPersonHeart } from "react-icons/bs";
 import { CgProfile } from "react-icons/cg";
 import voteAPI from "../../api/voteAPI";
 
-const Candidates = ({ questionsData }) => {
+const Candidates = ({ questionsData, selectedQuestionId }) => {
+  console.log(selectedQuestionId);
   const { isCandiChangeOpen, toggleCandiChangeOpen } = candiChangeState();
   const [candidatesData, setCandidatesData] = useState([]);
   const [myuserId, setMyUserId] = useState(null);
@@ -42,13 +43,14 @@ const Candidates = ({ questionsData }) => {
   useEffect(() => {
     fetchData();
   }, []); // 빈 의존성 배열을 전달하여 이 훅이 한 번만 실행되게
-  const ChooseCandidate = async (chosen, qtnId, userId) => {
+  const ChooseCandidate = async (chosen, qtnselectedQuestionIdId, userId) => {
     try {
       const time = new Date().toISOString(); // 현재 시간을 ISO 문자열로 변환합니다.
       console.log(time);
-      console.log(chosen, qtnId, userId);
+      console.log(chosen, selectedQuestionId, userId);
+      console.log(questionsData[selectedQuestionId + 1].qtnContent);
       const postData = {
-        qtnId,
+        selectedQuestionId,
         userId,
         chosen,
         // time,
@@ -62,7 +64,7 @@ const Candidates = ({ questionsData }) => {
       const decodedToken = decodeURIComponent(encodedToken);
       const postData2 = {
         targetUserId: decodedToken,
-        title: qtnId,
+        title: questionsData[selectedQuestionId],
         body: "누군가가 당신에게 투표했습니다.",
         // img: 넣을예정..
       };
@@ -84,11 +86,7 @@ const Candidates = ({ questionsData }) => {
                   <CgProfile />
                   <S.NameBox
                     onClick={() =>
-                      ChooseCandidate(
-                        candidate.userId,
-                        questionsData.qtnId,
-                        myuserId
-                      )
+                      ChooseCandidate(candidate.userId, questionsData, myuserId)
                     }
                   >
                     {candidate.name}
