@@ -1,17 +1,29 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import axios from "axios";
 import * as components from "components";
 import QuestionImage from "assets/images/icon-question-default.png";
 
-const Question = () => {
+const Question = ({ questionsData }) => {
+  // 무작위로 배열 섞기 (Fisher-Yates shuffle 알고리즘)
+  function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]]; // 배열 원소 교환
+    }
+    return array;
+  }
+
+  const randomQuestions = shuffleArray([...questionsData]).slice(0, 1);
+
   return (
     <S.Wrap>
       <S.ImageBox>
         <img src={QuestionImage} alt="질문이미지" />
       </S.ImageBox>
-      <S.QuestionContent>
-        자율 프로젝트를 같이 하고 싶은 사람은?
-      </S.QuestionContent>
+      {randomQuestions.map((question, index) => (
+        <S.QuestionContent key={index}>{question.qtnContent}</S.QuestionContent>
+      ))}
     </S.Wrap>
   );
 };
