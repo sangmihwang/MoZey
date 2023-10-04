@@ -4,6 +4,7 @@ import com.ssafy.tenten.domain.User;
 import com.ssafy.tenten.vo.Request.UserJoinRequest;
 import com.ssafy.tenten.vo.Request.UserUpdateRequest;
 import com.ssafy.tenten.vo.Response.RecommendUserResponse;
+import com.ssafy.tenten.vo.Response.UserHintResponse;
 import com.ssafy.tenten.vo.Response.UserResponse;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -38,4 +39,8 @@ public interface UserService {
 
     // 1.9 구독 취소
     void unsubscribe(Long userId);
+
+    UserHintResponse extract(Long userId);
+
+    UserHintResponse extract(Long userId, int location);
 }
