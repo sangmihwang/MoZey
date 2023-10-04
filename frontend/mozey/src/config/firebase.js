@@ -24,11 +24,12 @@ function requestPermission() {
   Notification.requestPermission().then((permission) => {
     if (permission === "granted") {
       console.log("알림 설정 완료");
-      // const userInfo = useStore((state) => state.User);
-      // console.log(userInfo.data.userId);
-      // const [userName, setUserName] = useState(null);
-      // console.log(userInfo.data.userId);
-      // setUserName(userInfo.data.userId);
+      const userInfo = useStore((state) => state.User);
+      console.log(userInfo.data.userId);
+      const [userId, setUserID] = useState(null);
+      console.log(userInfo.data.userId);
+      setUserID(userInfo.data.userId);
+      console.log(userId);
     }
   });
 }
@@ -41,9 +42,10 @@ const token = getToken(messaging, {
     if (currentToken) {
       // axios.post("localhost:3000/api/users/firebase/{userId}");
       axios.post("https://j9a510.p.ssafy.io:/api/users/firebase/50", {
-        firebaseToken: currentToken,
+        currentToken,
       });
       console.log(currentToken);
+      console.log();
       // console.log(localStorage.userInfo);
     } else {
       // Show permission request UI
