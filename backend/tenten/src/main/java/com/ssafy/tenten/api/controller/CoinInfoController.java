@@ -21,7 +21,6 @@ public class CoinInfoController {
     * 코인 정보 삽입
     */
     @PostMapping("/coins/today")
-    @Scheduled(cron = "0 25 21 * * *")
     public ResponseEntity<?> postCoinInfo(){
         CoinInfo coinInfo = coinInfoService.createCoinInfo();
         return SuccessResponseEntity.toResponseEntity("코인 정보 등록 완료", coinInfo);
