@@ -1,14 +1,43 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import styled from "styled-components";
 import * as components from "components";
 import { msgFindoutState } from "hooks";
+import axios from 'axios';
 
 const MessageList = () => {
   const { isMsgFindoutOpen, toggleMsgFindoutOpen } = msgFindoutState();
+  console.log(isMsgFindoutOpen);
+  const [ messages, setMessages ] = useState([]);
+
+  useEffect(() => {
+    // const userId = getUserIDFromLocalStorage();
+    // if (!userId) return;
+
+    axios.get(`https://j9a510.p.ssafy.io/api/message?userId=${48}`)
+      .then(response => {
+        setMessages(response.data.data);
+      })
+      .catch(error =>{
+        console.log("데이터 받아오기 에러", error);
+      })
+  }, []);
+
+  const getUserIDFromLocalStorage = () => {
+    const userInfo = localStorage.getItem('userInfo');
+    if (!userInfo) return null;
+    
+    const user = JSON.parse(userInfo);
+    return user.User?.id;
+  };
 
   return (
     <S.Wrap>
-      <S.MessageBox onClick={toggleMsgFindoutOpen}>
+      {messages.map((messageData, index) => (
+        <S.MessageBox key={index} onClick={toggleMsgFindoutOpen}>
+          <components.MessageContent messageData={messageData} />
+        </S.MessageBox>
+      ))}
+      {/* <S.MessageBox onClick={toggleMsgFindoutOpen}>
         <components.MessageContent />
       </S.MessageBox>
       <S.MessageBox onClick={toggleMsgFindoutOpen}>
@@ -22,7 +51,7 @@ const MessageList = () => {
       </S.MessageBox>
       <S.MessageBox onClick={toggleMsgFindoutOpen}>
         <components.MessageContent></components.MessageContent>
-      </S.MessageBox>
+      </S.MessageBox> */}
 
       {isMsgFindoutOpen && (
         <S.ModalOverlay
