@@ -1,11 +1,50 @@
 import { useEffect, useState } from "react";
+import useStore from "../../store/userInfoStore";
+import { Routes, Route, Link } from 'react-router-dom'
 // import {} from "./config/firebase";
 import React from "react";
 import styled from "styled-components";
+import axios from 'axios';
 import SearchImage from "assets/images/icon-searchFriends.png"
 import ProfileImage from "assets/images/icon-profileImg-default.svg"
 
 const Main = () => {
+	const userInfo = useStore((state) => state.User);
+	const [recommend, setRecommend] = useState([]);
+
+	useEffect(() => {
+		const getRecommend = async () => {
+			try {
+				const id = userInfo.id;
+				//친구의 캠퍼스, 기수, 반 조회에 포함되는지 확인 필요
+				axios.get("https://j9a510.p.ssafy.io/api/users/friends/recommend/${id}")
+					.then((data) => {
+						if (data.data.message === "친구 조회 완료") {
+							setRecommend(data.data.data);
+						}
+					})
+			} catch (e) {
+				console.log(e);
+			}
+		}
+		getRecommend();
+	}, []);
+
+	const addFriend = (id) => {
+		try {
+			const senderId = userInfo.id;
+			axios.post("https://j9a510.p.ssafy.io/api/users/friends/follow/${senderId}/${id}")
+				.then((data) => {
+					if (data.data.message === "친구 추가 완료") {
+						alert("추가했습니다");
+						window.location.href = "/mypage";
+					}
+				})
+		} catch (e) {
+			console.log(e);
+		}
+	}
+
 	return (
 		<S.Wrap>
 			<S.Top>
@@ -15,60 +54,28 @@ const Main = () => {
 				<S.Search>
 					<button>
 						<img src={SearchImage} alt="search" />
-						친구검색
+						<Link to="/request">친구검색</Link>
 					</button>
 				</S.Search>
 			</S.Top>
 			<S.Container>
 				<ul>
-					<S.Friend>
-						<S.FriendProfileBox>
-							<img src={ProfileImage} alt="profile" />
-						</S.FriendProfileBox>
-						<S.FriendInfo>
-							<h2>김물때</h2>
-							<h4>서울캠퍼스 | 9기 | 4반</h4>
-						</S.FriendInfo>
-						<S.FriendAdd>
-							<button>추가</button>
-						</S.FriendAdd>
-					</S.Friend>
-					<S.Friend>
-						<S.FriendProfileBox>
-							<img src={ProfileImage} alt="profile" />
-						</S.FriendProfileBox>
-						<S.FriendInfo>
-							<h2>홍길서</h2>
-							<h4>부울경캠퍼스 | 9기 | 2반</h4>
-						</S.FriendInfo>
-						<S.FriendAdd>
-							<button>추가</button>
-						</S.FriendAdd>
-					</S.Friend>
-					<S.Friend>
-						<S.FriendProfileBox>
-							<img src={ProfileImage} alt="profile" />
-						</S.FriendProfileBox>
-						<S.FriendInfo>
-							<h2>삼민웅</h2>
-							<h4>서울캠퍼스 | 9기 | 5반</h4>
-						</S.FriendInfo>
-						<S.FriendAdd>
-							<button>추가</button>
-						</S.FriendAdd>
-					</S.Friend>
-					<S.Friend>
-						<S.FriendProfileBox>
-							<img src={ProfileImage} alt="profile" />
-						</S.FriendProfileBox>
-						<S.FriendInfo>
-							<h2>황하미</h2>
-							<h4>서울캠퍼스 | 9기 | 5반</h4>
-						</S.FriendInfo>
-						<S.FriendAdd>
-							<button>추가</button>
-						</S.FriendAdd>
-					</S.Friend>
+					{recommend.map(friend => (
+						<S.Friend>
+							<S.FriendProfileBox>
+								{friend.image === null
+									? (<img src={ProfileImage} alt="profile" />)
+									: (<img src={friend.image} alt="profile" />)
+								}
+							</S.FriendProfileBox>
+							<S.FriendInfo>
+								<h2>{friend.name}</h2>
+							</S.FriendInfo>
+							<S.FriendAdd>
+								<button onClick={addFriend(friend.userId)}>추가</button>
+							</S.FriendAdd>
+						</S.Friend>
+					))}
 				</ul>
 			</S.Container>
 		</S.Wrap>
