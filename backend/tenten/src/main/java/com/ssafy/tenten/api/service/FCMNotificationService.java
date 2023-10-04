@@ -17,21 +17,20 @@ public class FCMNotificationService {
     private final UserRepository usersRepository;
 
     public String sendNotificationByToken(FCMNotificationRequestDto requestDto) throws FirebaseMessagingException {
-
 //        Optional<User> user = usersRepository.findById(requestDto.getTargetUserId());
 
         Notification notification = Notification.builder()
-                .setTitle("임병국")
-                .setBody("dsadadasdas")
-                // .setImage(requestDto.getImage())
+                .setTitle(requestDto.getTitle())
+                .setBody(requestDto.getBody())
+//                 .setImage(requestDto.getImage())
                 .build();
 
         firebaseMessaging.send(Message.builder()
-                        .setToken("ezFz9PqdOzqEeD8Id-MklV:APA91bGSDfro_OpJQOFzIaYVG3Q5uNVfDvsqzJEHL3pTaNCrwWhWF-fikzSruG19GfivzfHYQqwYNUZy1dLNzd8vYUHmWbjOJ2QlFyYCS9XwP9vHTlTauhSMfizJ8075z8a_bN0YZerU")
+                        .setToken(requestDto.getTargetUserId())
                         .setNotification(notification)
                         .build());
 
-        return " zzz";
+        return " 알림갔습니다!";
 
 //        if (user.isPresent()) {
 //            if (user.get().getFirebaseToken() != null) {
