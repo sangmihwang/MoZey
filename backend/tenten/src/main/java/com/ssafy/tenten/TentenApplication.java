@@ -10,12 +10,14 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 import javax.persistence.EntityManager;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
+@EnableScheduling
 @SpringBootApplication
 public class TentenApplication {
 
