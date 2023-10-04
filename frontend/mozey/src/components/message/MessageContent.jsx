@@ -2,7 +2,9 @@ import React from "react";
 import styled from "styled-components";
 import QuestionImage from "assets/images/icon-question-default.png";
 
-const MessageContent = () => {
+const MessageContent = ({ messageData }) => {
+  const userInfo = localStorage.getItem('userInfo');
+  const user = JSON.parse(userInfo);
   return (
     <S.Wrap>
       <S.ProfileInfoBox>
@@ -10,13 +12,12 @@ const MessageContent = () => {
           <img src={QuestionImage} alt="프로필" />
         </S.ProfilePic>
         <S.ProfileTextContainer>
-          <S.ProfileInfo>서울캠퍼스 | 9기 | 여자</S.ProfileInfo>
+          <S.ProfileInfo>{messageData.campus}캠퍼스 | {messageData.term}기 | {messageData.gender === "M" ? "남자" : "여자"}</S.ProfileInfo>
           <S.SentDate>방금</S.SentDate>
         </S.ProfileTextContainer>
       </S.ProfileInfoBox>
       <S.Message>
-        상견례 프리패스상에 조윤상님을 선택했습니다 상견례 프리패스상에
-        조윤상님을 선택했습니다
+        {messageData.qtnContent}에 {user.state?.User.username}님을 선택했습니다
       </S.Message>
     </S.Wrap>
   );

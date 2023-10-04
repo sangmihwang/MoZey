@@ -1,21 +1,56 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import * as components from "components";
 import { MdAccountCircle } from "react-icons/md";
 import { BsCoin } from "react-icons/bs";
+import axios from 'axios';
 
-const MessageInfo = () => {
+const MessageInfo = ({ dataforMessageInfo }) => {
+  console.log("dataforMessageInfo:", dataforMessageInfo);
+  const [secretUserData, setSecretUserData] = useState([]);
+  const getUserFromLocalStorage = () => {
+    const userInfo = localStorage.getItem('userInfo');
+    if (!userInfo) return null;
+  
+    const user = JSON.parse(userInfo);
+    return user.User;
+  };
+  
+
+  const userData = getUserFromLocalStorage();
+
+
+  useEffect(() => {
+    // const isSub = getSubFromLocalStorage();
+    const isSub = 0;
+
+    // 비 구독자인 경우
+    if (isSub === 0 && dataforMessageInfo.userId) {
+      axios.get(`https://j9a510.p.ssafy.io/api/users/extract/${dataforMessageInfo.userId}`)
+        .then(response => {
+          setSecretUserData(response.data);
+          console.log(response.data)
+        })
+        .catch(error => {
+          console.log("비 구독자 데이터조회 에러", error);
+        })
+    }
+
+  }, [dataforMessageInfo]);
+
+
+  
   return (
     <S.Wrap onClick={(e) => e.stopPropagation()}>
       <S.FindoutBox>
         <S.StyledMdAccountCircle />
         <S.Question>
-          싸피 최고의 상견례 프리패스 상으로 조윤상님을 선택한 사람은
+          {dataforMessageInfo.qtnContent} 에 {userData?.username}님을 선택한 사람은
         </S.Question>
         <S.FriendName>
-          <S.NameBox>ㄱ</S.NameBox>
-          <S.NameBox>ㄱ</S.NameBox>
-          <S.NameBox>ㄱ</S.NameBox>
+        <S.NameBox>{secretUserData.data?.location === 1 ? secretUserData.data?.consonant : 'X'}</S.NameBox>
+        <S.NameBox>{secretUserData.data?.location === 2 ? secretUserData.data?.consonant : 'X'}</S.NameBox>
+        <S.NameBox>{secretUserData.data?.location === 3 ? secretUserData.data?.consonant : 'X'}</S.NameBox>
         </S.FriendName>
       </S.FindoutBox>
     </S.Wrap>
@@ -64,9 +99,12 @@ const S = {
   NameBox: styled.div`
     display: flex;
     align-items: center;
+    justify-content: center;
     background-color: ${({ theme }) => theme.color.yellow};
     padding: 8px;
     margin: 0 4px;
+    width: 40px;
+    text-align: center;
     border-radius: 10px;
     box-shadow: ${({ theme }) => theme.shadow.card};
   `,
