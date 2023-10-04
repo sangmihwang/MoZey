@@ -54,16 +54,13 @@ const token = getToken(messaging, {
         },
       });
       console.log(currentToken);
-      // console.log(localStorage.userInfo);
     } else {
-      // Show permission request UI
-      // console.log(userId);
       console.log("토큰 없습니다");
       // ...
     }
   })
   .catch((err) => {
-    console.log("에러", err);
+    console.log("알림 설정 필요", err);
     // ...
   });
 // export const token = await getToken(messaging, {
