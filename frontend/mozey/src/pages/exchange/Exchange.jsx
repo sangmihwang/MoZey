@@ -24,10 +24,13 @@ const Exchange = () => {
     }
   };
   const sendClick = async () => {
+    const encodedToken = fbToken;
+    const decodedToken = decodeURIComponent(encodedToken);
+    console.log(decodedToken);
     console.log(fbToken);
     console.log(qtnId);
     const requestData = {
-      targetUserId: fbToken,
+      targetUserId: decodedToken,
       title: qtnId,
       body: "이것은 새로운 알림 메시지입니다.",
     };
