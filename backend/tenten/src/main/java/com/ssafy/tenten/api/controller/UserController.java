@@ -44,7 +44,9 @@ public class UserController {
     @PostMapping
     public ResponseEntity<?> join(@Valid @RequestBody UserJoinRequest userJoinRequest, @AuthenticationPrincipal PrincipalDetails principalDetails) {
         userService.join(userJoinRequest);
-        return new ResponseEntity<>(HttpStatus.OK);
+        String email = userJoinRequest.getEmail();
+        User user = userRepository.findByEmail(email).get();
+        return new ResponseEntity<>(UserResponse.createUserResponse(user), HttpStatus.OK);
     }
 
     // 1.1.1 회원탈퇴
