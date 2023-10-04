@@ -57,6 +57,7 @@ const lineheight = {
 const shadow = {
   // card: `0px 3px 3px 0px rgba(0, 0, 0, 0.03);`,
   card: `0px 6px 6px 0px rgba(0, 0, 0, 0.07);`,
+  strong: `0px 8px 9px 1px rgba(0, 0, 0, 0.1);`,
 };
 
 const Theme = {
