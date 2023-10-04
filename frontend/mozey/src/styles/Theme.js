@@ -39,7 +39,8 @@ const fontsize = {
   logo: "27px",
   title1: "24px",
   title2: "20px",
-  title3: "16px",
+  title3: "18px",
+  title4: "16px",
   content: "14px",
   subcontent: "12px",
 };
