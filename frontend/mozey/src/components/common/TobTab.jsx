@@ -25,6 +25,12 @@ const TobTab = () => {
         setShowsub(false);
         setShowTobTab(true);
         break;
+      case utils.URL.REQUEST.MAIN:
+        setTitle("질문 신청");
+        setSubtitle("request request request request request request request request request request request request request request request request request request request request request request");
+        setShowsub(false);
+        setShowTobTab(true);
+        break;
       case utils.URL.EXCHANGE.MAIN:
         setTitle("환전소");
         setSubtitle(
