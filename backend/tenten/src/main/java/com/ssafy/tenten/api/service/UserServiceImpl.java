@@ -5,6 +5,7 @@ import com.ssafy.tenten.domain.User;
 import com.ssafy.tenten.vo.Request.UserJoinRequest;
 import com.ssafy.tenten.vo.Request.UserUpdateRequest;
 import com.ssafy.tenten.vo.Response.RecommendUserResponse;
+import com.ssafy.tenten.vo.Response.UserHintResponse;
 import com.ssafy.tenten.vo.Response.UserResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -103,5 +104,19 @@ public class UserServiceImpl implements UserService{
     public void unsubscribe(Long userId) {
         User user = userRepository.findById(userId).get();
         user.unsubscribe();
+    }
+
+    @Override
+    public UserHintResponse extract(Long userId) {
+        User user = userRepository.findById(userId).get();
+        UserHintResponse userHintResponse = UserHintResponse.createUserHintResponse(user);
+        return userHintResponse;
+    }
+
+    @Override
+    public UserHintResponse extract(Long userId, int location) {
+        User user = userRepository.findById(userId).get();
+        UserHintResponse userHintResponse = UserHintResponse.createUserHintByLocationResponse(user, location);
+        return userHintResponse;
     }
 }
