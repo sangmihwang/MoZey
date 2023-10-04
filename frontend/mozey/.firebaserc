@@ -1,5 +1,7 @@
 {
   "projects": {
-    "default": "tentenpjt"
-  }
+    "mozey": "mozey-9078a"
+  },
+  "targets": {},
+  "etags": {}
 }
