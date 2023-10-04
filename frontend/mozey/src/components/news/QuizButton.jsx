@@ -44,7 +44,7 @@ const S = {
     }
 
     &:focus {
-      background-color: ${({ theme }) => theme.color.yellow};  // focus 상태에서 원래의 yellow로 유지
+      background-color: ${({ theme }) => theme.color.yellow};
     }
   `,
 };
