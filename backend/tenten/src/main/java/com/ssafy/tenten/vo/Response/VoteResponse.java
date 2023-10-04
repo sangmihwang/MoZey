@@ -15,6 +15,7 @@ public class VoteResponse {
     private final Long chosen;
     private final Long time;
     private final String name;
+    private final String fbToken;
     public static VoteResponse getTop3(VoteCount voteCount){
         return VoteResponse.builder()
                 .qtnContent(voteCount.getQuestionId().getQtnContent())

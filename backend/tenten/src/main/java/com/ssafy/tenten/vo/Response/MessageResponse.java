@@ -7,7 +7,7 @@ import lombok.Setter;
 
 
 @Getter
-@Builder
+@NoArgsConstructor
 public class MessageResponse {
     private String campus;
     private String term;
@@ -16,5 +16,12 @@ public class MessageResponse {
     private String qtnContent;
     private Long userId;
 
-
+    public MessageResponse(String campus, String term, Character gender, Long time, String qtnContent, Long userId) {
+        this.campus = campus;
+        this.term = term;
+        this.gender = gender;
+        this.time = time;
+        this.qtnContent = qtnContent;
+        this.userId = userId;
+    }
 }
