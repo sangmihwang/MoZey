@@ -12,28 +12,39 @@ const QuizSection = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      try {
-        const currentDate = new Date();
-        let dateToFetch;
+      const savedQuizzes = localStorage.getItem('quizzes');
+      const savedQuizIndex = localStorage.getItem('currentQuizIndex');
 
-        if (currentDate.getUTCHours() >= 12) {
-          dateToFetch = currentDate.toISOString().split('T')[0];
-        } else {
-          currentDate.setDate(currentDate.getUTCDate() - 1);
-          dateToFetch = currentDate.toISOString().split('T')[0];
+      if (savedQuizzes && savedQuizIndex) {
+        setQuizzes(JSON.parse(savedQuizzes));
+        setCurrentQuizIndex(parseInt(savedQuizIndex, 10));
+      } else {
+        try {
+          const currentDate = new Date();
+          let dateToFetch;
+  
+          if (currentDate.getUTCHours() >= 12) {
+            dateToFetch = currentDate.toISOString().split('T')[0];
+          } else {
+            currentDate.setDate(currentDate.getUTCDate() - 1);
+            dateToFetch = currentDate.toISOString().split('T')[0];
+          }
+          console.log(dateToFetch)
+  
+          const response = await axios.get(`https://j9a510.p.ssafy.io/api/quiz?date=${dateToFetch}`);
+          
+          // Randomly select 5 quizzes
+          const shuffledQuizzes = response.data.sort(() => 0.5 - Math.random());
+          const selectedQuizzes = shuffledQuizzes.slice(0, 5);
+          
+          setQuizzes(selectedQuizzes);
+          console.log(selectedQuizzes)
+          localStorage.setItem('quizzes', JSON.stringify(selectedQuizzes));
+          localStorage.setItem('currentQuizIndex', '0');
+
+        } catch (error) {
+          console.error("퀴즈데이터 안불러와짐", error);
         }
-        console.log(dateToFetch)
-
-        const response = await axios.get(`https://j9a510.p.ssafy.io/api/quiz?date=${dateToFetch}`);
-        
-        // Randomly select 5 quizzes
-        const shuffledQuizzes = response.data.sort(() => 0.5 - Math.random());
-        const selectedQuizzes = shuffledQuizzes.slice(0, 5);
-        
-        setQuizzes(selectedQuizzes);
-        console.log(selectedQuizzes)
-      } catch (error) {
-        console.error("퀴즈데이터 안불러와짐", error);
       }
     };
 
@@ -44,6 +55,11 @@ const QuizSection = () => {
     setShowModal(true);
     if (selectedChoice === answer) {
       setIsCorrect(true);
+      setCurrentQuizIndex(prevIndex => {
+        const newIndex = prevIndex + 1;
+        localStorage.setItem('currentQuizIndex', newIndex.toString());
+        return newIndex;
+      });
     } else {
       setIsCorrect(false);
     }
@@ -64,7 +80,9 @@ const QuizSection = () => {
           <S.Modal>
             <S.ModalContent isCorrect={isCorrect}>
               <S.ModalText>
-                {isCorrect ? "정답입니다!" : "틀렸습니다! 다시 한번 풀어보세요!"}
+                {isCorrect ? "정답입니다!" : "틀렸습니다!"}
+                <br /><br />
+                {isCorrect ? "포인트가 적립되었습니다!" : "다시 한번 풀어보세요!"}
               </S.ModalText>
             </S.ModalContent>
             <S.ModalButton onClick={moveToNextQuiz}>
@@ -175,31 +193,38 @@ const S = {
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: rgba(0, 0, 0, 0.5);
     display: flex;
     align-items: center;
     justify-content: center;
+    z-index: 999;
   `,
   Modal: styled.div`
-    background-color: white;
+    background-color: ${({ theme }) => theme.color.background};
     padding: 20px;
     border-radius: 10px;
+    width: 85%;
+    min-height: 270px;
+    max-width: 500px;
+    box-shadow: ${({ theme }) => theme.shadow.card};
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
   `,
   ModalContent: styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-  `,
-  ModalImage: styled.img`
-    width: 100%;
-    height: auto;
+    gap: 10px; // 각 텍스트 사이의 간격을 조정
   `,
   ModalText: styled.div`
     font-size: 24px;
     font-weight: bold;
+    text-align: center; // 텍스트 가운데 정렬
     color: ${({ isCorrect }) => (isCorrect ? "green" : "red")};
-    margin: 20px 0;
+    margin: 10px 0;
   `,
   ModalButton: styled.button`
     padding: 10px 20px;
@@ -209,6 +234,7 @@ const S = {
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    margin-top: 15px;
     &:hover {
       background-color: #555;
     }
