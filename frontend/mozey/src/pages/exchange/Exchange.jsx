@@ -7,7 +7,7 @@ const Exchange = () => {
   const userId = 49;
   const chosen = 50;
   const [fbToken, setfbToken] = useState(null);
-  const [qtnId, setQtnId] = useState(1);
+  const [qtnId, setQtnId] = useState("1");
   const handleClick = async () => {
     const requestData = {
       qtnId: qtnId,
@@ -24,10 +24,13 @@ const Exchange = () => {
     }
   };
   const sendClick = async () => {
+    const encodedToken = fbToken;
+    const decodedToken = decodeURIComponent(encodedToken);
+    console.log(decodedToken);
     console.log(fbToken);
     console.log(qtnId);
     const requestData = {
-      targetUserId: fbToken,
+      targetUserId: decodedToken,
       title: qtnId,
       body: "이것은 새로운 알림 메시지입니다.",
     };
