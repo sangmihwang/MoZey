@@ -72,6 +72,14 @@ const TobTab = () => {
         setShowsub(false);
         setShowTobTab(true);
         break;
+      case utils.URL.AUTH.SUCCESS:
+        setTitle("가입 완료");
+        setSubtitle(
+          "Success Success Success Success Success Success Success Success Success Success Success Success Success Success Success Success Success Success Success Success Success Success Success Success Success Success Success Success Success Success Success Success Success Success Success Success Success Success Success"
+        );
+        setShowsub(false);
+        setShowTobTab(true);
+        break;  
       default:
         setShowsub(false);
         setShowTobTab(false);
