@@ -16,12 +16,13 @@ const QuizSection = () => {
         const currentDate = new Date();
         let dateToFetch;
 
-        if (currentDate.getHours() >= 12) {
+        if (currentDate.getUTCHours() >= 12) {
           dateToFetch = currentDate.toISOString().split('T')[0];
         } else {
-          currentDate.setDate(currentDate.getDate() - 1);
+          currentDate.setDate(currentDate.getUTCDate() - 1);
           dateToFetch = currentDate.toISOString().split('T')[0];
         }
+        console.log(dateToFetch)
 
         const response = await axios.get(`https://j9a510.p.ssafy.io/api/quiz?date=${dateToFetch}`);
         
@@ -30,6 +31,7 @@ const QuizSection = () => {
         const selectedQuizzes = shuffledQuizzes.slice(0, 5);
         
         setQuizzes(selectedQuizzes);
+        console.log(selectedQuizzes)
       } catch (error) {
         console.error("퀴즈데이터 안불러와짐", error);
       }
