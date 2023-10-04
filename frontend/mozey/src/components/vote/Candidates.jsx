@@ -7,7 +7,7 @@ import { MdPersonSearch } from "react-icons/md";
 import { BsPersonHeart } from "react-icons/bs";
 import { CgProfile } from "react-icons/cg";
 import voteAPI from "../../api/voteAPI";
-
+import useStore from "../../store/userInfoStore";
 const Candidates = ({
   questionsData,
   selectedQuestionId,
@@ -28,14 +28,18 @@ const Candidates = ({
   }
 
   const shuffledCandidates = shuffleArray([...candidatesData]);
+  const userInfo = useStore((state) => state.User);
 
   const fetchData = async () => {
     try {
-      const userId = 47;
+      const userId = userInfo.id;
       setMyUserId(userId);
       const response = await axios.get(
-        `https://j9a510.p.ssafy.io/api/votes/candidates/${userId}`
+        `https://j9a510.p.ssafy.io/api/votes/candidates/${userInfo.id}`
       );
+      console.log(userId);
+      console.log(userInfo.id);
+      console.log(response);
       setCandidatesData(response.data.data);
       console.log(response.data.data);
     } catch (error) {
