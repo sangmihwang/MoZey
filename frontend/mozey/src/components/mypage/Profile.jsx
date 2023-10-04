@@ -3,15 +3,15 @@ import useStore from "../../store/userInfoStore";
 // import {} from "./config/firebase";
 import React from "react";
 import styled from "styled-components";
-import axios from 'axios';
-import ProfileImage from "assets/images/icon-profileImg-default.svg"
-import pointImage from "assets/images/icon-point.png"
-import coin1Image from "assets/images/icon-coin1.png"
-import coin2Image from "assets/images/icon-coin2.png"
+import axios from "axios";
+import ProfileImage from "assets/images/icon-profileImg-default.svg";
+import pointImage from "assets/images/icon-point.png";
+import coin1Image from "assets/images/icon-coin1.png";
+import coin2Image from "assets/images/icon-coin2.png";
 
 const Main = () => {
   const userInfo = useStore((state) => state.User);
-  
+
   // const [userProfileImage, setUserProfileImage] = useState(null);
   // const [userName, setUserName] = useState(null);
   // const [campus, setCampus] = useState(null);
@@ -51,10 +51,11 @@ const Main = () => {
     <S.Wrap>
       <S.ProfileImage>
         <S.ProfileBox>
-          {userInfo.img === null
-            ? (<img src={ProfileImage} alt="profile" />)
-            : (<img src={userInfo.img} alt="profile" />)
-          }
+          {userInfo.img === null ? (
+            <img src={ProfileImage} alt="profile" />
+          ) : (
+            <img src={userInfo.img} alt="profile" />
+          )}
         </S.ProfileBox>
       </S.ProfileImage>
       <S.Info>
@@ -63,7 +64,9 @@ const Main = () => {
           <button>구독</button>
         </S.Name>
         <S.CampusInfo>
-          <h2>{userInfo.campus}캠퍼스 | {userInfo.term}기 | {userInfo.unit}반</h2>
+          <h2>
+            {userInfo.campus}캠퍼스 | {userInfo.term}기 | {userInfo.unit}반
+          </h2>
         </S.CampusInfo>
         <S.CoinInfo>
           <img src={pointImage} alt="point" />
@@ -156,7 +159,7 @@ const S = {
   CampusInfo: styled.div`
     margin-top: 10px;
     > h2 {
-      color: #6D675B;
+      color: #6d675b;
     }
   `,
   CoinInfo: styled.div`
