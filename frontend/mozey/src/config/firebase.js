@@ -37,13 +37,11 @@ function FirebaseComponent() {
 
           if (currentToken) {
             console.log(userInfo);
-            console.log(userInfo.id);
-            setUserID(userInfo);
+            setUserID(userInfo.id);
             const formData = new URLSearchParams();
             formData.append("firebaseToken", currentToken);
-
-            await axios.post(
-              "https://j9a510.p.ssafy.io:/api/users/firebase/50",
+            const response = await axios.post(
+              `https://j9a510.p.ssafy.io:/api/users/firebase/${userId}`,
               formData,
               {
                 headers: {
@@ -51,8 +49,7 @@ function FirebaseComponent() {
                 },
               }
             );
-            console.log(userInfo);
-            console.log(userInfo.id);
+            console.log(response, "토큰발급완료");
             console.log(currentToken);
           } else {
             console.log("토큰 없습니다");
