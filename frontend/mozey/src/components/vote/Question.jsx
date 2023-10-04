@@ -4,7 +4,7 @@ import axios from "axios";
 import * as components from "components";
 import QuestionImage from "assets/images/icon-question-default.png";
 
-const Question = ({ questionsData }) => {
+const Question = ({ questionsData, oneSelectedQuestionId }) => {
   // 무작위로 배열 섞기 (Fisher-Yates shuffle 알고리즘)
   function shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
@@ -15,6 +15,12 @@ const Question = ({ questionsData }) => {
   }
 
   const randomQuestions = shuffleArray([...questionsData]).slice(0, 1);
+  // 선택된 질문의 ID를 상위 컴포넌트에 전달
+  useEffect(() => {
+    if (randomQuestions.length > 0) {
+      oneSelectedQuestionId(randomQuestions[0].qtnId);
+    }
+  }, [randomQuestions, oneSelectedQuestionId]);
 
   return (
     <S.Wrap>
