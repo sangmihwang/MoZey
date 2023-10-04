@@ -40,7 +40,9 @@ const token = getToken(messaging, {
   .then((currentToken) => {
     if (currentToken) {
       // axios.post("localhost:3000/api/users/firebase/{userId}");
-      axios.post("https://j9a510.p.ssafy.io:/api/users/firebase/50");
+      axios.post("https://j9a510.p.ssafy.io:/api/users/firebase/50", {
+        firebaseToken: currentToken,
+      });
       console.log(currentToken);
       // console.log(localStorage.userInfo);
     } else {
