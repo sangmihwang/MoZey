@@ -42,6 +42,9 @@ const token = getToken(messaging, {
 })
   .then((currentToken) => {
     if (currentToken) {
+      const userInfo = useStore((state) => state.User);
+      console.log(userInfo);
+      console.log(userInfo.data.userId, "asdasd");
       const formData = new URLSearchParams();
       formData.append("firebaseToken", currentToken);
 
