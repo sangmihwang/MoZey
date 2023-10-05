@@ -129,6 +129,8 @@ const ExchangeCoin = () => {
       };
       const response = await coinPriceAPI.exchangeCoin(postData);
       console.log(response.data);
+      console.log(userInfo);
+      console.log(userInfo.id, "아이디");
       axios
         .post(`https://j9a510.p.ssafy.io:/api/coins/exchange/${userInfo.id}`)
         .then((res) => {
