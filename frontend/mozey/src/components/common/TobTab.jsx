@@ -4,6 +4,7 @@ import { useLocation } from "react-router-dom";
 import { BiSolidCoinStack } from "react-icons/bi";
 import { TbStarFilled, TbDiamondFilled } from "react-icons/tb";
 import * as utils from "utils";
+import useStore from "../../store/userInfoStore";
 
 const TobTab = () => {
   const location = useLocation();
@@ -11,6 +12,7 @@ const TobTab = () => {
   const [subtitle, setSubtitle] = useState("");
   const [showsub, setShowsub] = useState(true);
   const [showTobTab, setShowTobTab] = useState(true);
+  const userInfo = useStore((state) => state.User);
 
   useEffect(() => {
     switch (location.pathname) {
@@ -93,12 +95,12 @@ const TobTab = () => {
         <S.Title>{title}</S.Title>
         {showsub && (
           <S.CoinAmount>
-            <S.StyledBiSolidCoinStack />
-            100
-            <S.StyledTbStar />
-            100
-            <S.StyledTbDiamond />
-            100
+            <S.StyledBiSolidCoinStack/>
+            {userInfo.point}
+            <S.StyledTbStar/>
+            {userInfo.coin1}
+            <S.StyledTbDiamond/>
+            {userInfo.coin2}
           </S.CoinAmount>
         )}
       </S.TopSection>
