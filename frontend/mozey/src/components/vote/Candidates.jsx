@@ -113,9 +113,14 @@ const Candidates = ({
                 <S.CandidateBox key={candidate.userId}>
                   <CgProfile />
                   <S.NameBox
-                    onClick={() =>
-                      ChooseCandidate(candidate.userId, questionsData, myuserId)
-                    }
+                    onClick={() => {
+                      ChooseCandidate(
+                        candidate.userId,
+                        questionsData,
+                        myuserId
+                      );
+                      showNextQuestion();
+                    }}
                   >
                     {candidate.name}
                   </S.NameBox>
