@@ -122,7 +122,7 @@ const RequestQuestion = () => {
           </select>
           <button>
             {/* <img src={RequestImage} alt="request" /> */}
-            <Link to="/request">질문 신청</Link>
+            <Link to="/request">질문신청</Link>
           </button>
         </S.Search>
       </S.Top>
