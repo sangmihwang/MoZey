@@ -1,21 +1,15 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import styled from "styled-components";
 import Chart from "react-apexcharts";
 import { Select, MenuItem } from "@mui/material";
-import { FaCoins, FaCommentDollar } from "react-icons/fa";
-import { AiOutlineArrowRight } from "react-icons/ai";
 import { BiSolidCoinStack } from "react-icons/bi";
 import { TbStarFilled, TbDiamondFilled } from "react-icons/tb";
-import coinPriceAPI from "api/coinPriceAPI";
 import { ExchangeCoin } from "components";
-import { auth, messaging } from "config/firebase";
 import "semantic-ui-css/semantic.min.css";
 import useStore from "../../store/chartDataStore";
 
 const Exchange = () => {
   const chartDataStore = useStore((state) => state.chartData);
-  console.log(chartDataStore, "제발됐으면,,!!!!");
   const [options] = useState({
     colors: ["#0fbcf9"],
     chart: {
@@ -154,12 +148,14 @@ const Exchange = () => {
 
   // S&P 차트 구현
   useEffect(() => {
+    let targetData = UseChartData.filter((item) => item.name === "S&P 500");
+
     if (selectedPeriod2 === "total" || selectedPeriod2 === "default") {
       setFilteredSeries2(
         UseChartData.filter((item) => item.name === "S&P 500")
       );
     } else if (selectedPeriod2 === "7days") {
-      const filteredData2 = UseChartData.map((item) => {
+      targetData = targetData.map((item) => {
         const filteredData2 = item.data.filter((dataItem) => {
           const sevenDaysAgo = new Date();
           sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
@@ -169,9 +165,9 @@ const Exchange = () => {
         });
         return { ...item, data: filteredData2 };
       });
-      setFilteredSeries2(filteredData2);
+      setFilteredSeries2(targetData);
     } else if (selectedPeriod2 === "30days") {
-      const filteredData2 = UseChartData.map((item) => {
+      targetData = targetData.map((item) => {
         const filteredData2 = item.data.filter((dataItem) => {
           const monthAgo = new Date();
           monthAgo.setDate(monthAgo.getDate() - 30);
@@ -179,7 +175,7 @@ const Exchange = () => {
         });
         return { ...item, data: filteredData2 };
       });
-      setFilteredSeries2(filteredData2);
+      setFilteredSeries2(targetData);
     }
   }, [selectedPeriod2]);
 
