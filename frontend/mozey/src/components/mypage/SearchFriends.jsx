@@ -38,7 +38,6 @@ const SearchModal = (setModalOpen) => {
 			return userName.includes(searchText);
 		});
 
-		console.log("결과", filteredUsers);
 		setSearchResult(filteredUsers);
 	};
 
