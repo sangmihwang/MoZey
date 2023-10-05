@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import useStore from "../../store/userInfoStore";
 import { Routes, Route, Link } from 'react-router-dom'
 import axios from 'axios';
-// import {} from "./config/firebase";
 import React from "react";
 import styled from "styled-components";
 import RequestImage from "assets/images/icon-request.png"
@@ -11,24 +10,32 @@ import QuestionImage from "assets/images/icon-question-default.png"
 const RequestQuestion = () => {
   const userInfo = useStore((state) => state.User);
   const [status, setStatus] = useState('P');
-  const [pageIdx, setPageIdx] = useState(0);
+  const [pageIdxP, setPageIdxP] = useState(0);
+  const [pageIdxY, setPageIdxY] = useState(0);
   const [list, setList] = useState([]);
   const [hasNext, setHasNext] = useState(false);
 
   const getP = async () => {
-    try {
+    const check = async () => {
+      const id = userInfo.id;
       if (status === 'Y') {
         setStatus('P');
-        setPageIdx(0);
         setList([]);
+        setPageIdxY(0);
       }
+    }
+    await check();
+    try {
       const id = userInfo.id;
-      await axios.get(`https://j9a510.p.ssafy.io/api/questions/users/${id}/P/?pageIdx=${pageIdx}`)
+      await axios.get(`https://j9a510.p.ssafy.io/api/questions/users/${id}/P/?pageIdx=${pageIdxP}`)
         .then((data) => {
           if (data.data.message === "질문 신청 내역 조회 - 사용자") {
-            setList(list.concat(data.data.data));
-            setPageIdx(pageIdx + 1);
+            console.log("질문 내역 P", data);
+            console.log("현재 인덱스", pageIdxP);
+            //setList(list.concat(data.data.data));
+            setPageIdxP(pageIdxP + 1);
             setHasNext(data.data.hasNext);
+            setList((prevList) => [...prevList, ...data.data.data]);
           }
         })
     } catch (e) {
@@ -37,19 +44,26 @@ const RequestQuestion = () => {
   };
 
   const getY = async () => {
-    try {
+    const check = () => {
+      const id = userInfo.id;
       if (status === 'P') {
         setStatus('Y');
-        setPageIdx(0);
         setList([]);
+        setPageIdxP(0);
       }
+    }
+    await check();
+    try {
       const id = userInfo.id;
-      await axios.get(`https://j9a510.p.ssafy.io/api/questions/users/${id}/Y/?pageIdx=${pageIdx}`)
+      await axios.get(`https://j9a510.p.ssafy.io/api/questions/users/${id}/Y/?pageIdx=${pageIdxY}`)
         .then((data) => {
           if (data.data.message === "질문 신청 내역 조회 - 사용자") {
-            setList(list.concat(data.data.data));
-            setPageIdx(pageIdx + 1);
+            console.log("질문 내역 Y", data);
+            console.log("현재 인덱스", pageIdxY);
+            //setList(list.concat(data.data.data));
+            setPageIdxY(pageIdxY + 1);
             setHasNext(data.data.hasNext);
+            setList((prevList) => [...prevList, ...data.data.data]);
           }
         })
     } catch (e) {
@@ -69,6 +83,17 @@ const RequestQuestion = () => {
     }
   }
 
+  const handleStatusChange = (e) => {
+    const selectedStatus = e.target.value;
+    setStatus(selectedStatus);
+
+    if (selectedStatus === 'P') {
+      getP();
+    } else if (selectedStatus === 'Y') {
+      getY();
+    }
+  };
+
   useEffect(() => {
     getP();
   }, []);
@@ -80,9 +105,9 @@ const RequestQuestion = () => {
           <h2>질문 신청 내역</h2>
         </S.Title>
         <S.Search>
-          <select name="status" id="status">
-            <option value="P" onClick={getP}>대기</option>
-            <option value="Y" onClick={getY}>승인</option>
+          <select name="status" id="status" onChange={(e) => handleStatusChange(e)}>
+            <option value="P">대기</option>
+            <option value="Y">승인</option>
           </select>
           <button>
             <img src={RequestImage} alt="request" />
@@ -92,10 +117,10 @@ const RequestQuestion = () => {
       </S.Top>
       <S.Container>
         <ul>
-          {list.map(qtn => (
-            <S.Question>
+          {list.map((qtn, index) => (
+            <S.Question key={index}>
               <S.QuestionImgBox>
-                {qtn.image === null
+                {qtn.image === null || !qtn.image
                   ? (<img src={QuestionImage} alt="profile" />)
                   : (<img src={qtn.image} alt="profile" />)
                 }
@@ -105,7 +130,7 @@ const RequestQuestion = () => {
               </S.QuestionInfo>
               <S.QuestionPBtn>
                 {status === 'P'
-                  ? (<button onClick={deleteQtn(qtn.qtnId)}>삭제</button>)
+                  ? (<button onClick={() => deleteQtn(qtn.qtnId)}>삭제</button>)
                   : (null)
                 }
                 {status === 'P'
@@ -154,7 +179,7 @@ const S = {
 		> select {
 			background-color: ${({ theme }) => theme.color.white};
 			color: ${({ theme }) => theme.color.gray};
-			box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+			box-shadow: ${({ theme }) => theme.shadow.card};
 			border-radius: 10px;
 			width: 60px;
 			height: 25px;
@@ -177,7 +202,7 @@ const S = {
 		> button {
 		background-color: ${({ theme }) => theme.color.white};
 		color: ${({ theme }) => theme.color.lightgray};
-		box-shadow: 0 4px 4px rgb(0, 0, 0, 0.25);
+		box-shadow: ${({ theme }) => theme.shadow.card};
 		border-radius: 10px;
 		width: 83px;
 		height: 25px;
@@ -199,7 +224,7 @@ const S = {
     display: flex;
     flex-direction: column;
     padding: 3% 7% 3%;
-    box-shadow: 0 4px 4px rgb(0, 0, 0, 0.25);
+    box-shadow: ${({ theme }) => theme.shadow.card};
     overflow-y: auto;
 		max-height: 250px;
 
@@ -207,12 +232,12 @@ const S = {
 			width: 100%;
 		}
 		> button {
-			margin-top: 16px;
+			margin: 16px auto 0;
+      padding: 2%;
 			background-color: ${({ theme }) => theme.color.yellow};
       color: ${({ theme }) => theme.color.darkgray};
       border-radius: 10px;
       width: 80px;
-      height: 20px;
       font-weight: bold;
 		}
     `,

@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import useStore from "../../store/userInfoStore";
-// import {} from "./config/firebase";
 import React from "react";
 import styled from "styled-components";
 import axios from "axios";
@@ -14,7 +13,6 @@ const MyFriends = () => {
     const userFriends = async () => {
       try {
         const id = userInfo.id;
-        // 친구의 캠퍼스, 기수, 반 조회에 포함되는지 확인 필요
         axios
           .get(`https://j9a510.p.ssafy.io/api/users/friends/${id}`)
           .then((data) => {
@@ -52,25 +50,25 @@ const MyFriends = () => {
       </S.Title>
       <S.Container>
         {friends.length === 0 && (
-          <h4>추가된 친구가 없습니다. 추천 친구 목록에서 추가해보세요!</h4>
+          <h4>추가된 친구가 없습니다<br></br>추천 친구 목록에서 추가해보세요!</h4>
         )}
         <ul>
           {friends.map((friend) => (
-            // map 함수 같은 Array Method 쓸 때, iteration 돌면서 렌더링되는 요소마다 key값 부여해줘야함.
-            // <S.Friend key={friend.userId}>
             <S.Friend key={friend.userId}>
               <S.FriendProfileBox>
-                {friend.image === null ? (
-                  <img src={ProfileImage} alt="profile" />
-                ) : (
-                  <img src={friend.image} alt="profile" />
-                )}
+                {friend.image === null || !friend.image
+                  ? (<img src={ProfileImage} alt="profile" />)
+                  : (<img src={friend.image} alt="profile" />)
+                }
               </S.FriendProfileBox>
               <S.FriendInfo>
                 <h2>{friend.name}</h2>
+                {friend.campus && friend.term && friend.group && (
+                  <h4>{friend.campus}캠퍼스 | {friend.term}기 | {friend.group}반</h4>
+                )}
               </S.FriendInfo>
               <S.FriendDelete>
-                <button onClick={deleteFriend(friend.userId)}>삭제</button>
+                <button onClick={() => deleteFriend(friend.userId)}>삭제</button>
               </S.FriendDelete>
             </S.Friend>
           ))}
@@ -104,7 +102,7 @@ const S = {
     display: flex;
     flex-direction: column;
     padding: 3% 7% 3%;
-    box-shadow: 0 4px 4px rgb(0, 0, 0, 0.25);
+    box-shadow: ${({ theme }) => theme.shadow.card};
     overflow-y: auto;
     max-height: 250px;
 
@@ -113,7 +111,7 @@ const S = {
       font-weight: bold;
       line-height: 20px;
       margin-left: 7px;
-      text-align: left;
+      text-align: center;
     }
     > ul > li {
       width: 100%;
