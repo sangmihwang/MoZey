@@ -146,17 +146,11 @@ const Exchange = () => {
         UseChartData.filter((item) => item.name === "KOSPI 50")
       );
     } else if (selectedPeriod1 === "7days") {
-      const filteredData1 = filteredSeries1.map((item) => {
+      const filteredData1 = UseChartData.map((item) => {
         console.log(item);
         const filteredData1 = item.data.filter((dataItem) => {
-          console.log(dataItem);
-          console.log(dataItem.x);
-          console.log(formatDate(dataItem.x));
           const sevenDaysAgo = new Date();
           sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
-          console.log(sevenDaysAgo);
-          console.log(sevenDaysAgo.getDate() - 7);
-          console.log(formatDate(dataItem.x) - sevenDaysAgo);
           return (
             formatDate(dataItem.x) >= sevenDaysAgo && item.name === "KOSPI 50"
           );
@@ -165,15 +159,10 @@ const Exchange = () => {
       });
       setFilteredSeries1(filteredData1);
     } else if (selectedPeriod1 === "30days") {
-      const filteredData1 = filteredSeries1.map((item) => {
+      const filteredData1 = UseChartData.map((item) => {
         const filteredData1 = item.data.filter((dataItem) => {
-          console.log(dataItem);
-          console.log(dataItem.x);
-          console.log(formatDate(dataItem.x));
           const monthAgo = new Date();
-          console.log(monthAgo);
           monthAgo.setDate(monthAgo.getDate() - 30);
-          console.log(monthAgo.getDate() - 30);
           return formatDate(dataItem.x) >= monthAgo && item.name === "KOSPI 50";
         });
         return { ...item, data: filteredData1 };
@@ -189,16 +178,10 @@ const Exchange = () => {
         UseChartData.filter((item) => item.name === "S&P 500")
       );
     } else if (selectedPeriod2 === "7days") {
-      const filteredData2 = filteredSeries2.map((item) => {
+      const filteredData2 = UseChartData.map((item) => {
         const filteredData2 = item.data.filter((dataItem) => {
-          console.log(dataItem);
-          console.log(dataItem.x);
-          console.log(formatDate(dataItem.x));
           const sevenDaysAgo = new Date();
           sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
-          console.log(sevenDaysAgo);
-          console.log(sevenDaysAgo.getDate() - 7);
-          console.log(formatDate(dataItem.x) - sevenDaysAgo);
           return (
             formatDate(dataItem.x) >= sevenDaysAgo && item.name === "S&P 500"
           );
@@ -207,15 +190,10 @@ const Exchange = () => {
       });
       setFilteredSeries2(filteredData2);
     } else if (selectedPeriod2 === "30days") {
-      const filteredData2 = filteredSeries2.map((item) => {
+      const filteredData2 = UseChartData.map((item) => {
         const filteredData2 = item.data.filter((dataItem) => {
-          console.log(dataItem);
-          console.log(dataItem.x);
-          console.log(formatDate(dataItem.x));
           const monthAgo = new Date();
-          console.log(monthAgo);
           monthAgo.setDate(monthAgo.getDate() - 30);
-          console.log(monthAgo.getDate() - 30);
           return formatDate(dataItem.x) >= monthAgo && item.name === "S&P 500";
         });
         return { ...item, data: filteredData2 };
