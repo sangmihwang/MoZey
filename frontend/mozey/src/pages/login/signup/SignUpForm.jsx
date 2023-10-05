@@ -18,12 +18,13 @@ const SignUpForm = () => {
   const nameRef = useRef(null);
 
   const submitUserInfo = async () => {
+    const myCampus = campus || "서울";  // campus 값이 빈 문자열이면 "서울"을 default 값으로
     const requestData = {
-      name: nameRef.current.value,
-      campus: campus,
-      group: group,
-      term: 9,
-      email: localStorage.getItem("email"),
+        name: nameRef.current.value,
+        campus: myCampus,
+        group: group,
+        term: 9,
+        email: localStorage.getItem("email"),
     };
     console.log("Submitting the following data:", requestData);
 
@@ -60,7 +61,7 @@ const SignUpForm = () => {
                 <td className="content">캠퍼스</td>
                 <td className="enterContent">
                   <S.StyledSelect value={campus} onChange={handleCampus}>
-                    <option value="서울">서울</option>
+                    <option value="서울" selected>서울</option>
                     <option value="대전">대전</option>
                     <option value="광주">광주</option>
                     <option value="구미">구미</option>
