@@ -27,6 +27,7 @@ const SignUpForm = () => {
     };
     console.log("Submitting the following data:", requestData);
 
+    // axios.post("https://j9a510.p.ssafy.io/api/users", requestData)
     await axios
       .post("https://j9a510.p.ssafy.io/api/users", requestData, {
         headers: {
