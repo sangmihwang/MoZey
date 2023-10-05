@@ -6,7 +6,18 @@ import { FcAlarmClock } from "react-icons/fc";
 
 const Vote = () => {
   const [questionsData, setQuestionsData] = useState([]);
-  const [showTimer, setShowTimer] = useState(false);
+  const [showTimer, setShowTimer] = useState(true);
+
+  const getUserFromLocalStorage = () => {
+    const userInfo = localStorage.getItem("userInfo");
+    if (!userInfo) return null;
+
+    const userState = JSON.parse(userInfo);
+    return userState.state?.User || {};
+  };
+
+  const userData = getUserFromLocalStorage();
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     const storedStartTime = localStorage.getItem("startTime");
@@ -17,33 +28,65 @@ const Vote = () => {
     }
   }, []);
 
+
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(`https://j9a510.p.ssafy.io/api/votes/questions`);
+      setQuestionsData(response.data.data);
+    } catch (error) {
+      console.error("데이터를 가져오는 중 오류가 발생했습니다:", error);
+    }
+  };
+
+
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(
-          `https://j9a510.p.ssafy.io/api/votes/questions`
-        );
-        // setNoShuffleData(response.data.data);
-        setQuestionsData(response.data.data);
-      } catch (error) {
-        console.error("데이터를 가져오는 중 오류가 발생했습니다:", error);
-      }
-    };
     fetchData();
   }, []);
   const [currentIndex, setCurrentIndex] = useState(0);
 
+
+  // 포인트 획득 하고 타이머 띄우기
+  const handleConfirm = async () => {
+    setShowModal(false);
+    const userId = userData.id;
+
+    const requestBody = {
+      "fromCoinName" : "None",
+      "toCoinName" : "Point",
+      "minusCoinAmount" : 0,
+      "plusCoinAmount" : 200
+    };
+
+    try {
+      const response = await axios.post(`https://j9a510.p.ssafy.io/api/coins/exchange/${userId}`, requestBody);
+      
+      if(response.status === 200) {
+        console.log(response.data)
+      } else {
+        console.log('200이 반환되지않음')
+      }
+
+    } catch (error) {
+      console.error("POST 요청 중 오류 발생:", error);
+    }
+    if (!localStorage.getItem("startTime")) {
+      // 타이머 띄우기
+      localStorage.setItem("startTime", new Date().toISOString());
+    }
+    setShowTimer(true);
+  };
+
+
   const showNextQuestion = () => {
-    console.log("지금상태", currentIndex, questionsData.length);
     if (currentIndex < questionsData.length - 1) {
+      console.log("지금상태", currentIndex, questionsData.length);
       setCurrentIndex(currentIndex + 1);
     } else if (currentIndex === questionsData.length - 1) {
-      if (!localStorage.getItem("startTime")) {
-        localStorage.setItem("startTime", new Date().toISOString());
-      }
-      setShowTimer(true);
+      setShowModal(true);
     }
   };
+
+  
   const TimerComponent = ({ duration }) => {
     const calculateTimeLeft = () => {
       const startTime = localStorage.getItem("startTime");
@@ -63,6 +106,7 @@ const Vote = () => {
       } else {
         localStorage.removeItem("startTime");
         setShowTimer(false);
+        fetchData();  // 타이머가 끝나면 데이터 갱신해야함
       }
     }, [timeLeft, duration]);
 
@@ -71,6 +115,7 @@ const Vote = () => {
 
     return (
       <S.TimerStyled>
+        <FcAlarmClock size={32} />
         Time left: {minutes}:{seconds < 10 ? "0" : ""}
         {seconds}
       </S.TimerStyled>
@@ -79,9 +124,19 @@ const Vote = () => {
 
   return (
     <S.Wrap>
+      {showModal && (
+        <S.ModalOverlay>
+          <S.Modal>
+            <S.ModalContent>
+              다음 질문이 기다려요<br/>200 포인트를 획득!
+            </S.ModalContent>
+            <S.ConfirmButton onClick={handleConfirm}>확인</S.ConfirmButton>
+          </S.Modal>
+        </S.ModalOverlay>
+      )}
+
       {showTimer ? (
         <>
-          <FcAlarmClock />
           <TimerComponent duration={15 * 1} />
         </>
       ) : (
@@ -124,11 +179,73 @@ const S = {
     overflow-y: hidden;
   `,
   TimerStyled: styled.div`
-    color: #ff0000;
-    background-color: #ffff00;
-    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: ${({ theme }) => theme.color.white};
+    background-color: ${({ theme }) => theme.color.red};
+    padding: 15px 30px;
+    border-radius: 20px;
+    font-size: 1.5em;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    margin: 20px;
+
+    svg {
+        margin-right: 10px;
+    }
+  `,
+  ModalOverlay: styled.div`
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+  `,
+  Modal: styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    margin: 12px;
+    padding: 10px 20px;
+    border-radius: 10px;
+    width: 70%;
+    height: 30%;
+    min-height: 150px;
+    max-width: 500px;
+    box-shadow: ${({ theme }) => theme.shadow.card};
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+  `,
+  ModalContent: styled.div`
+    text-align: center;
+    font-size: ${({ theme }) => theme.fontsize.title3};
+    line-height: ${({ theme }) => theme.lineheight.quiztitle};
+    font-weight: 700;
+    margin: 20px;
+  `,
+  ConfirmButton: styled.button`
+    margin-top: 20px;
+    padding: 10px 20px;
     border-radius: 5px;
-    font-size: 2em;
+    background-color: ${({ theme }) => theme.color.red};
+    color: ${({ theme }) => theme.color.white};
+    cursor: pointer;
+    transition: background-color 0.3s;
+
+    &:hover {
+      background-color: ${({ theme }) => theme.color.white};
+      border: 1px solid ${({ theme }) => theme.color.red};
+      color: ${({ theme }) => theme.color.red};
+    }
   `,
 };
 
