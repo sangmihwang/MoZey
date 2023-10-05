@@ -5,6 +5,31 @@ import QuestionImage from "assets/images/icon-question-default.png";
 const MessageContent = ({ messageData }) => {
   const userInfo = localStorage.getItem("userInfo");
   const user = JSON.parse(userInfo);
+  // console.log('메세지데이터:',messageData)
+  // console.log(messageData.time)
+
+  const timeAgo = (unixtimeInSeconds) => {
+    const timestampInMillis = unixtimeInSeconds * 1000;
+  
+    const currentTime = new Date().getTime();
+  
+    const timeDiff = currentTime - timestampInMillis;
+  
+    const minute = 60 * 1000;
+    const hour = minute * 60;
+    const day = hour * 24;
+  
+    if (timeDiff < minute) {
+      return "방금";
+    } else if (timeDiff < hour) {
+      return Math.floor(timeDiff / minute) + "분 전";
+    } else if (timeDiff < day) {
+      return Math.floor(timeDiff / hour) + "시간 전";
+    } else {
+      return Math.floor(timeDiff / day) + "일 전";
+    }
+  };
+
   return (
     <S.Wrap>
       <S.ProfileInfoBox>
@@ -16,7 +41,7 @@ const MessageContent = ({ messageData }) => {
             {messageData.campus}캠퍼스 | {messageData.term}기 |{" "}
             {messageData.gender === "M" ? "남자" : "여자"}
           </S.ProfileInfo>
-          <S.SentDate>방금</S.SentDate>
+          <S.SentDate>{timeAgo(messageData.time)}</S.SentDate>
         </S.ProfileTextContainer>
       </S.ProfileInfoBox>
       <S.Message>

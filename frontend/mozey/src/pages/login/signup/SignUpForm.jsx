@@ -18,13 +18,17 @@ const SignUpForm = () => {
   const nameRef = useRef(null);
   
   const submitUserInfo = () => {
-    axios.post("https://j9a510.p.ssafy.io/api/users", {
+    const requestData = {
       name: nameRef.current.value,
       campus: campus,
       group: group,
       term: 9,
       email: localStorage.getItem("email"),
-    }).then((res) => {
+    };
+    console.log("Submitting the following data:", requestData);
+
+    axios.post("https://j9a510.p.ssafy.io/api/users", requestData)
+    .then((res) => {
       localStorage.removeItem("accessToken");
       localStorage.removeItem("email");
       setUserInfo(res.data);
