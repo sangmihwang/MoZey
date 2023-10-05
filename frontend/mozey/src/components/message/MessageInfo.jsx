@@ -6,7 +6,7 @@ import { BsCoin } from "react-icons/bs";
 import axios from "axios";
 
 const MessageInfo = ({ dataforMessageInfo, selectedInfo }) => {
-  console.log("dataforMessageInfo:", dataforMessageInfo);
+  // console.log("dataforMessageInfo:", dataforMessageInfo);
   const [secretUserData, setSecretUserData] = useState([]);
   const getUserFromLocalStorage = () => {
     const userInfo = localStorage.getItem("userInfo");
@@ -20,7 +20,7 @@ const MessageInfo = ({ dataforMessageInfo, selectedInfo }) => {
   const isSub = userData.sub_yn;
 
   useEffect(() => {
-    console.log("구독여부?", isSub);
+    // console.log("구독여부?", isSub);
 
     // 비 구독자인 경우
     if (isSub === 0 && dataforMessageInfo.userId) {

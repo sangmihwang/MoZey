@@ -20,15 +20,57 @@ const MessageFindoutSub = ({ dataforMessageInfo, onSelectInfo }) => {
   const [showModal, setShowModal] = useState(false);
   const [selectedType, setSelectedType] = useState(null);
   const [selectedValue, setSelectedValue] = useState(null);
+  // 코인 사용 부분
+  const [coinType, setCoinType] = useState(null);
+  const [coinAmount, setCoinAmount] = useState(null);
 
-  const InfoSelect = (type, value = null) => {
+  const InfoSelect = (type, coin, amount, value = null) => {
     setSelectedType(type);
     setSelectedValue(value);
-    setShowModal(true);
+    setCoinType(coin);
+    setCoinAmount(amount);
+    handleDataRequest(coin, amount);
   };
 
-  const handleConfirm = () => {
+  const handleDataRequest = async (coin, amount) => {
+    try {
+      const response = await axios.get(`https://j9a510.p.ssafy.io/api/users/info/${userData.email}`);
+      console.log(response.data);
+
+      if (coin === "Coin1" && response.data.coin1 >= amount) {
+        setShowModal(true);
+      } else if (coin === "Coin2" && response.data.coin2 >= amount) {
+        setShowModal(true);
+      } else {
+        alert(`${coin} 잔액이 부족합니다.`);
+      }
+    } catch (error) {
+      console.error(`${coin} 조회 중 오류 발생:`, error);
+    }
+  };
+
+  const handleConfirm = async () => {
     setShowModal(false);
+    const userId = userData.id;
+
+    const requestBody = {
+      "fromCoinName" : coinType,
+      "toCoinName" : "None",
+      "minusCoinAmount" : coinAmount,
+      "plusCoinAmount" : 0
+    };
+
+    try {
+      const response = await axios.post(`https://j9a510.p.ssafy.io/api/coins/exchange/${userId}`, requestBody);
+      
+      if(response.status === 200) {
+        onSelectInfo(selectedType, selectedValue);
+      } else {
+        console.log('200이 반환되지않음')
+      }
+    } catch (error) {
+      console.error("POST 요청 중 오류 발생:", error);
+    }
     onSelectInfo(selectedType, selectedValue);
   };
 
@@ -49,28 +91,28 @@ const MessageFindoutSub = ({ dataforMessageInfo, onSelectInfo }) => {
                 10
               </S.CampusCheck>
             </S.Campus> */}
-            <S.Class onClick={() => InfoSelect("class")}>
+            <S.Class onClick={() => InfoSelect("class", "Coin1", 50)}>
               반
               <S.ClassCheck>
                 <S.StyledBiSolidCoinStack />
-                10
+                50
               </S.ClassCheck>
             </S.Class>
           </S.FriendInfoTop>
           <S.FriendInfoBottom>
             <S.Name>
               이름
-              <S.NameCheck onClick={() => InfoSelect("location", 1)}>
+              <S.NameCheck onClick={() => InfoSelect("location", "Coin2", 30, 1)}>
                 <S.StyledBiSolidCoinStack />
-                10
+                30
               </S.NameCheck>
-              <S.NameCheck onClick={() => InfoSelect("location", 2)}>
+              <S.NameCheck onClick={() => InfoSelect("location", "Coin2", 30, 2)}>
                 <S.StyledBiSolidCoinStack />
-                10
+                30
               </S.NameCheck>
-              <S.NameCheck onClick={() => InfoSelect("location", 3)}>
+              <S.NameCheck onClick={() => InfoSelect("location", "Coin2", 30, 3)}>
                 <S.StyledBiSolidCoinStack />
-                10
+                30
               </S.NameCheck>
             </S.Name>
           </S.FriendInfoBottom>

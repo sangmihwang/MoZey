@@ -9,18 +9,12 @@ import { CgProfile } from "react-icons/cg";
 import voteAPI from "../../api/voteAPI";
 import useStore from "../../store/userInfoStore";
 
-const Candidates = ({
-  questionsData,
-  selectedQuestionId,
-  selectedQuestionContent,
-  showNextQuestion,
-}) => {
+const Candidates = ({ questionsData, currentIndex, showNextQuestion }) => {
   const { isCandiChangeOpen, toggleCandiChangeOpen } = candiChangeState();
   const [candidatesData, setCandidatesData] = useState([]);
   const [myuserId, setMyUserId] = useState(null);
   const [fbToken, setfbToken] = useState(null);
   const [selectedUserId, setSelectedUserId] = useState(null);
-
   // 무작위로 배열 섞기 (Fisher-Yates shuffle 알고리즘)
   function shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
@@ -40,11 +34,7 @@ const Candidates = ({
       const response = await axios.get(
         `https://j9a510.p.ssafy.io/api/users/friends/${userInfo.id}`
       );
-      // console.log(userId);
-      // console.log(userInfo.id);
-      // console.log(response);
       setCandidatesData(response.data.data);
-      // console.log(response.data.data);
     } catch (error) {
       console.error("데이터를 가져오는 중 오류가 발생했습니다:", error);
     }
@@ -53,31 +43,31 @@ const Candidates = ({
   useEffect(() => {
     fetchData();
   }, []); // 빈 의존성 배열을 전달하여 이 훅이 한 번만 실행되게
-  
-  const ChooseCandidate = async (chosen, qtnselectedQuestionIdId, userId) => {
+
+  const ChooseCandidate = async (chosen) => {
     try {
       const time = new Date().toISOString(); // 현재 시간을 ISO 문자열로 변환합니다.
-      console.log(time);
-      console.log(qtnselectedQuestionIdId);
-      // console.log(chosen, selectedQuestionId, userId);
+      const qtnData = questionsData[currentIndex];
       const postData = {
-        qtnId: selectedQuestionId,
-        userId: userId,
+        qtnId: qtnData["qtnId"],
+        userId: userInfo.id,
         chosen: chosen,
 
         // time,
       };
+      console.log(postData);
       const response = await voteAPI.postVoteNotification(postData);
       // console.log(response.data);
       setfbToken(response.data.data.fbToken);
 
       const encodedToken = response.data.data.fbToken;
       const decodedToken = decodeURIComponent(encodedToken);
+
       const postData2 = {
         targetUserId: decodedToken,
-        title: selectedQuestionContent,
+        title: qtnData["qtnContent"],
         body: "누군가가 당신에게 투표했습니다.",
-        // img: 넣을예정..
+        img: `https://j9a510.p.ssafy.io/api/v1/image/${qtnData["image"]}?option=vote`,
       };
       const response2 = await voteAPI.sendNotification(postData2);
       console.log("Notification Data:", response2);
@@ -90,8 +80,8 @@ const Candidates = ({
   const handleSelectedUserId = (selected) => {
     toggleCandiChangeOpen();
     setSelectedUserId(selected);
-    ChooseCandidate(selectedUserId, selectedQuestionId, myuserId);
-  }
+    ChooseCandidate(selectedUserId, currentIndex, myuserId);
+  };
 
   return (
     <S.Wrap>

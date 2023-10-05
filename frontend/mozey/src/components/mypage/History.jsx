@@ -17,15 +17,15 @@ const History = () => {
       try {
         const id = userInfo.id;
         axios
-          .get(`https://j9a510.p.ssafy.io/api/coins/users/${id}`)
+          .get(`https://j9a510.p.ssafy.io/api/coins/users/${id}`, { validateStatus: false })
           .then((data) => {
             console.log("히스토리", data);
             if (data.data.message === "사용자 코인 내역 조회완료") {
               setHistory(data.data.data);
+            } else if(data.status === 404){
             }
           });
       } catch (e) {
-        console.log(e);
       }
     };
     userHistory();

@@ -4,16 +4,87 @@ import React from "react";
 import styled from "styled-components";
 import axios from "axios";
 import ProfileImage from "assets/images/icon-profileImg-default.svg";
-import pointImage from "assets/images/icon-point.png";
-import coin1Image from "assets/images/icon-coin1.png";
-import coin2Image from "assets/images/icon-coin2.png";
 import FirebaseComponent from "../../config/firebase";
 import { BiSolidCoinStack } from "react-icons/bi";
 import { TbStarFilled, TbDiamondFilled } from "react-icons/tb";
 
 const Profile = () => {
-  const userInfo = useStore((state) => state.User);
   FirebaseComponent();
+  const userInfo = useStore((state) => state.User);
+
+  const [userProfile, setUserProfile] = useState([]);
+  const [subInfo, setSubInfo] = useState(0);
+
+  // 유저 정보 조회
+  useEffect(() => {
+    const loginUserInfo = async () => {
+      try {
+        const email = userInfo.email;
+        axios
+          .get(`https://j9a510.p.ssafy.io/api/users/info/${email}`)
+          .then((data) => {
+            setUserProfile(data.data);
+          });
+      } catch (e) {
+        console.log(e);
+      }
+    };
+
+    // 구독 확인
+    const checkSub = async () => {
+      try {
+        const id = userInfo.id;
+        axios
+          .get(`https://j9a510.p.ssafy.io/api/users/members/${id}`)
+          .then((data) => {
+            if (data.data.message === "구독 확인 완료") {
+              setSubInfo(1);
+            }
+          });
+      } catch (e) {
+        console.log(e);
+      }
+    }
+
+    loginUserInfo();
+    //checkSub();
+  }, []);
+
+
+  // 구독 신청
+  const registerSub = () => {
+    try {
+      const id = userInfo.id;
+      axios
+        .put(`https://j9a510.p.ssafy.io/api/users/members/sub/${id}`)
+        .then((data) => {
+          if(data.data === "구독 완료"){
+            alert("구독이 완료되었습니다");
+            window.location.href = "/mypage";
+          }
+        });
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  // 구독 취소
+  const unregisterSub = () => {
+    try {
+      const id = userInfo.id;
+      axios
+        .put(`https://j9a510.p.ssafy.io/api/users/members/unsub/${id}`)
+        .then((data) => {
+          if(data.data === "구독 취소 완료"){
+            alert("구독이 취소되었습니다");
+            window.location.href = "/mypage";
+          }
+        });
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
   return (
     <S.Wrap>
       <S.ProfileImage>
@@ -28,23 +99,26 @@ const Profile = () => {
       <S.Info>
         <S.Name>
           <h2>{userInfo.username}</h2>
-          <button>구독</button>
+          {userProfile.sub_yn === 0
+            ? (<button onClick={() => registerSub()}>구독</button>)
+            : (<button onClick={() => unregisterSub()}>구독 취소</button>)
+          }
         </S.Name>
         <S.CampusInfo>
           <h2>
-            {userInfo.campus}캠퍼스 | {userInfo.term}기 | {userInfo.unit}반
+            {userInfo.campus}캠퍼스 | {userInfo.term}기 | {userProfile.group}반
           </h2>
         </S.CampusInfo>
         <S.CoinInfo>
           {/* <img src={pointImage} alt="point" /> */}
           <S.StyledBiSolidCoinStack />
-          <p>{userInfo.point}</p>
+          <p>{userProfile.point}</p>
           {/* <img src={coin1Image} alt="coin1" /> */}
           <S.StyledTbStar />
-          <p>{userInfo.coin1}</p>
+          <p>{userProfile.coin1}</p>
           {/* <img src={coin2Image} alt="coin2" /> */}
           <S.StyledTbDiamond />
-          <p>{userInfo.coin2}</p>
+          <p>{userProfile.coin2}</p>
         </S.CoinInfo>
       </S.Info>
     </S.Wrap>
@@ -99,10 +173,9 @@ const S = {
       background-color: ${({ theme }) => theme.color.red};
       color: ${({ theme }) => theme.color.background};
       border-radius: 10px;
-      width: 50px;
       height: 24px;
       font-weight: bold;
-      padding: 2px;
+      padding: 3px 10px 3px;
       margin-left: auto;
       font-size: ${({ theme }) => theme.fontsize.title4};
     }

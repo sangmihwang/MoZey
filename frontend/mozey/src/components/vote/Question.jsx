@@ -4,34 +4,20 @@ import axios from "axios";
 import * as components from "components";
 import QuestionImage from "assets/images/icon-question-default.png";
 
-const Question = ({
-  questionsData,
-  oneSelectedQuestionId,
-  oneSelectedQuestionContent,
-  currentIndex,
-}) => {
-  // console.log("데잌터", questionsData);
+const Question = ({ questionsData, currentIndex }) => {
+  const currentQuestion = questionsData[currentIndex];
 
-  useEffect(() => {
-    if (questionsData.length > 0) {
-      console.log(questionsData);
-      oneSelectedQuestionId(questionsData[oneSelectedQuestionId].qtnId);
-      oneSelectedQuestionContent(
-        questionsData[oneSelectedQuestionId].qtnContent
-      );
-    }
-  }, [questionsData, oneSelectedQuestionId, oneSelectedQuestionContent]);
+  const imageSrc = currentQuestion?.image
+    ? `https://j9a510.p.ssafy.io/api/v1/image/${currentQuestion.image}?option=vote`
+    : QuestionImage;
 
   return (
     <S.Wrap>
       <S.ImageBox>
-        <img
-          src={questionsData[currentIndex]?.image || QuestionImage}
-          alt="질문이미지"
-        />
+        <img src={imageSrc} alt="질문이미지" />
       </S.ImageBox>
       <S.QuestionContent>
-        {questionsData[currentIndex] && questionsData[currentIndex].qtnContent}
+        {currentQuestion?.qtnContent}
       </S.QuestionContent>
     </S.Wrap>
   );

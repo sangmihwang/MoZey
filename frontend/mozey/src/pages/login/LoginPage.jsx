@@ -7,13 +7,14 @@ import kakaoLogin from "assets/images/kakao_login.png";
 
 const LoginPage = () => {
   return (
-    // <S.Wrap onClick={}>
     <S.Wrap>
       <S.Logo>
         <img src={mozeyLogo} alt={"로고"} />
       </S.Logo>
       <S.ThinkerImage>
-        <a href='http://j9a510.p.ssafy.io:8000/oauth2/authorization/kakao'><img src={kakaoLogin} alt={"카카오로그인"} /></a>
+        <a href="http://j9a510.p.ssafy.io:8000/oauth2/authorization/kakao">
+          <img src={kakaoLogin} alt={"카카오로그인"} />
+        </a>
       </S.ThinkerImage>
     </S.Wrap>
   );
@@ -40,8 +41,8 @@ const S = {
   `,
   ThinkerImage: styled.div`
     align-self: center;
-    width: 300px;
-    margin: 7em auto;
+    width: 260px;
+    margin: 12em auto;
     img {
       width: 100%;
       height: auto;
