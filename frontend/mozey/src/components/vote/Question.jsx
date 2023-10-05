@@ -8,33 +8,35 @@ const Question = ({
   questionsData,
   oneSelectedQuestionId,
   oneSelectedQuestionContent,
+  currentIndex,
 }) => {
-  // 무작위로 배열 섞기 (Fisher-Yates shuffle 알고리즘)
-  function shuffleArray(array) {
-    for (let i = array.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [array[i], array[j]] = [array[j], array[i]]; // 배열 원소 교환
-    }
-    return array;
-  }
+  console.log(questionsData);
+  // // 무작위로 배열 섞기 (Fisher-Yates shuffle 알고리즘)
+  // function shuffleArray(array) {
+  //   for (let i = array.length - 1; i > 0; i--) {
+  //     const j = Math.floor(Math.random() * (i + 1));
+  //     [array[i], array[j]] = [array[j], array[i]]; // 배열 원소 교환
+  //   }
+  //   return array;
+  // }
 
-  const randomQuestions = shuffleArray([...questionsData]).slice(0, 1);
+  // const randomQuestions = shuffleArray([...questionsData]).slice(0, 1);
   // 선택된 질문의 ID를 상위 컴포넌트에 전달
   useEffect(() => {
-    if (randomQuestions.length > 0) {
-      oneSelectedQuestionId(randomQuestions[0].qtnId);
-      oneSelectedQuestionContent(randomQuestions[0].qtnContent);
+    if (questionsData.length > 0) {
+      oneSelectedQuestionId(questionsData[0].qtnId);
+      oneSelectedQuestionContent(questionsData[0].qtnContent);
     }
-  }, [randomQuestions, oneSelectedQuestionId, oneSelectedQuestionContent]);
+  }, [questionsData, oneSelectedQuestionId, oneSelectedQuestionContent]);
 
   return (
     <S.Wrap>
       <S.ImageBox>
         <img src={QuestionImage} alt="질문이미지" />
       </S.ImageBox>
-      {randomQuestions.map((question, index) => (
-        <S.QuestionContent key={index}>{question.qtnContent}</S.QuestionContent>
-      ))}
+      <S.QuestionContent>
+        {questionsData[currentIndex] && questionsData[currentIndex].qtnContent}
+      </S.QuestionContent>
     </S.Wrap>
   );
 };
