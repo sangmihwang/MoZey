@@ -35,6 +35,7 @@ const RecommendFriends = () => {
   const addFriend = (id) => {
     try {
       const senderId = userInfo.id;
+      console.log("친구 아이디", id);
       axios
         .post(
           `https://j9a510.p.ssafy.io/api/users/friends/follow/${senderId}/${id}`
@@ -91,7 +92,11 @@ const RecommendFriends = () => {
                 )}
               </S.FriendInfo>
               <S.FriendAdd>
-                <button onClick={() => addFriend(friend.userId)}>추가</button>
+                <button onClick={() => {
+                  const friendId = friend.userId;
+                  console.log("칭구칭구", friend);
+                  addFriend(friendId);
+                }}>추가</button>
               </S.FriendAdd>
             </S.Friend>
           ))}
