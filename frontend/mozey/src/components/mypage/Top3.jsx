@@ -38,15 +38,15 @@ const Top3 = () => {
       {top.length === 3 ? (
         <S.Container>
           <S.Question>
-            <img src={top[0].image || MusicImage} alt="music" />
+            <img src={"https://j9a510.p.ssafy.io/api/v1/image/" + top[0].image + "?option=vote" || MusicImage} alt="music" />
             <p>{top[0].qtnContent}</p>
           </S.Question>
           <S.Question>
-            <img src={top[1].image || DanceImage} alt="dance" />
+            <img src={"https://j9a510.p.ssafy.io/api/v1/image/" + top[1].image + "?option=vote" || DanceImage} alt="dance" />
             <p>{top[1].qtnContent}</p>
           </S.Question>
           <S.Question>
-            <img src={top[2].image || FreepassImage} alt="Freepass" />
+            <img src={"https://j9a510.p.ssafy.io/api/v1/image/" + top[2].image + "?option=vote" || FreepassImage} alt="Freepass" />
             <p>{top[2].qtnContent}</p>
           </S.Question>
         </S.Container>
