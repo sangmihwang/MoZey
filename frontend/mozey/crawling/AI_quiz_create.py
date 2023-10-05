@@ -3,10 +3,12 @@ import datetime
 import mysql.connector
 
 current_date = datetime.date.today().strftime('%Y-%m-%d')
+yesterday = datetime.date.today() - datetime.timedelta(days=1)
+yesterday_date = yesterday.strftime('%Y-%m-%d')
 
 conn = mysql.connector.connect(
     host='j9a510.p.ssafy.io',
-    user='A510',
+    user='root',
     password='3jbhrVyqstWs9ud',
     database='test'
 )
