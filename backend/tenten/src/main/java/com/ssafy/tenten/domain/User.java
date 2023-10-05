@@ -4,6 +4,7 @@ import com.ssafy.tenten.vo.Request.UserJoinRequest;
 import com.ssafy.tenten.vo.Request.UserUpdateRequest;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import javax.persistence.*;
 import java.time.Instant;
@@ -17,6 +18,7 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Builder
 @AllArgsConstructor
+@CrossOrigin("*")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
