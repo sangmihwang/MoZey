@@ -7,7 +7,11 @@ import * as components from "components";
 
 const SignUpForm = () => {
   const navigate = useNavigate();
+
+  const [nameError, setNameError] = useState("");
+  const [groupError, setGroupError] = useState("");
   const [campus, setCampus] = useState("서울");
+
   const handleCampus = (e) => {
     setCampus(e.target.value);
   };
@@ -18,12 +22,31 @@ const SignUpForm = () => {
   const nameRef = useRef(null);
 
   const submitUserInfo = async () => {
+    let hasError = false;
+
+    if (!nameRef.current.value.trim()) {
+        setNameError("이름을 입력해주세요!");
+        hasError = true;
+    } else {
+        setNameError("");
+    }
+
+    if (!group.trim()) {
+        setGroupError("특화 반을 입력해주세요!");
+        hasError = true;
+    } else {
+        setGroupError("");
+    }
+
+    if (hasError) return;
+
+    const myCampus = campus || "서울";  // campus 값이 빈 문자열이면 "서울"을 default 값으로
     const requestData = {
-      name: nameRef.current.value,
-      campus: campus,
-      group: group,
-      term: 9,
-      email: localStorage.getItem("email"),
+        name: nameRef.current.value,
+        campus: myCampus,
+        group: group,
+        term: 9,
+        email: localStorage.getItem("email"),
     };
     console.log("Submitting the following data:", requestData);
 
@@ -51,7 +74,7 @@ const SignUpForm = () => {
                 <td className="enterContent">
                   <input
                     type="text"
-                    placeholder="이름을 입력하세요"
+                    placeholder={nameError ? "이름을 입력해주세요!" : "이름을 입력하세요"}
                     ref={nameRef}
                   />
                 </td>
@@ -60,7 +83,7 @@ const SignUpForm = () => {
                 <td className="content">캠퍼스</td>
                 <td className="enterContent">
                   <S.StyledSelect value={campus} onChange={handleCampus}>
-                    <option value="서울">서울</option>
+                    <option value="서울" selected>서울</option>
                     <option value="대전">대전</option>
                     <option value="광주">광주</option>
                     <option value="구미">구미</option>
@@ -82,6 +105,7 @@ const SignUpForm = () => {
                     min="1"
                     max="7"
                     value={group}
+                    placeholder={groupError ? "특화 반을 입력해주세요!" : "특화반을 입력하세요"}
                     onChange={(e) => setGroup(e.target.value)}
                   />
                 </td>
@@ -184,11 +208,25 @@ const S = {
     }
   `,
   StyledSelect: styled.select`
-    height: 32px;
-    font-size: ${({ theme }) => theme.fontsize.title3};
-    border-radius: 6px;
+    height: 5vh;
+    width: 100%;
+    background-color: ${({ theme }) => theme.color.background};
+    border: none;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: bold;
+    color: ${({ theme }) => theme.color.gray};
+    text-align: center;
+    padding: 3%;
+    cursor: pointer;
+    &:focus {
+      outline: none;
+      border: 1px solid ${({ theme }) => theme.color.yellow};
+    }
     > option {
-      font-size: 12px;
+      font-size: 14px;
+      padding: 3%;
+      color: ${({ theme }) => theme.color.gray};
     }
   `,
 };
