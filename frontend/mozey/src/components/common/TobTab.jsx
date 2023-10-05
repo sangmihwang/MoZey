@@ -12,6 +12,32 @@ const TobTab = () => {
   const [showsub, setShowsub] = useState(true);
   const [showTobTab, setShowTobTab] = useState(true);
 
+  const [userPoint, setUserPoint] = useState(0);
+  const [userCoin1, setUserCoin1] = useState(0);
+  const [userCoin2, setUserCoin2] = useState(0);
+
+  const updateUserInfoFromLocalStorage = () => {
+    const storedUserInfo = localStorage.getItem('userInfo');
+    if (storedUserInfo) {
+      const parsedUserInfo = JSON.parse(storedUserInfo);
+      if (parsedUserInfo.state && parsedUserInfo.state.User) {
+        setUserPoint(parsedUserInfo.state.User.point || 0);
+        setUserCoin1(parsedUserInfo.state.User.coin1 || 0);
+        setUserCoin2(parsedUserInfo.state.User.coin2 || 0);
+      }
+    }
+  };
+
+  useEffect(() => {
+    updateUserInfoFromLocalStorage();
+
+    window.addEventListener('storage', updateUserInfoFromLocalStorage);
+
+    return () => {
+      window.removeEventListener('storage', updateUserInfoFromLocalStorage);
+    };
+  }, []);
+
   useEffect(() => {
     switch (location.pathname) {
       case utils.URL.HOME.MAIN:
@@ -94,12 +120,12 @@ const TobTab = () => {
         {showsub && (
           <S.CoinAmount>
             <S.StyledBiSolidCoinStack />
-            100
+              {userPoint}
             <S.StyledTbStar />
-            100
+              {userCoin1}
             <S.StyledTbDiamond />
-            100
-          </S.CoinAmount>
+              {userCoin2}
+        </S.CoinAmount>
         )}
       </S.TopSection>
       <S.FlowText>

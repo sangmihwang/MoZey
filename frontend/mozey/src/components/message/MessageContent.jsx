@@ -33,9 +33,16 @@ const MessageContent = ({ messageData }) => {
   return (
     <S.Wrap>
       <S.ProfileInfoBox>
-        <S.ProfilePic>
-          <img src={QuestionImage} alt="프로필" />
-        </S.ProfilePic>
+      <S.ProfilePic>
+        <img 
+          src={
+            messageData.gender === "M" 
+            ? "https://j9a510.p.ssafy.io/api/v1/image/ee2853e3-61ee-4316-9616-5bccaf48d170_%EB%82%A8%EC%9E%90.jpg?option=vote"
+            : "https://j9a510.p.ssafy.io/api/v1/image/d4bfde8f-1958-40bb-a051-c42206766443_여자.jpg?option=vote"
+          } 
+          alt="프로필" 
+        />
+      </S.ProfilePic>
         <S.ProfileTextContainer>
           <S.ProfileInfo>
             {messageData.campus}캠퍼스 | {messageData.term}기 |{" "}
