@@ -17,12 +17,20 @@ const Vote = () => {
         );
         setNoShuffleData(response.data.data);
         setQuestionsData(response.data.data);
+        // console.log(response.data);
       } catch (error) {
         console.error("데이터를 가져오는 중 오류가 발생했습니다:", error);
       }
     };
     fetchData();
   }, []);
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const showNextQuestion = () => {
+    if (currentIndex < questionsData.length - 1) {
+      setCurrentIndex(currentIndex + 1);
+    }
+  };
 
   return (
     <S.Wrap>
@@ -31,6 +39,7 @@ const Vote = () => {
           questionsData={questionsData}
           oneSelectedQuestionId={setSelectedQuestionId}
           oneSelectedQuestionContent={setSelectedQuestionContent}
+          currentIndex={currentIndex}
         />
       </S.QuestionBox>
       <S.CandidatesBox>
@@ -38,6 +47,7 @@ const Vote = () => {
           questionsData={questionsData}
           selectedQuestionId={selectedQuestionId}
           selectedQuestionContent={selectedQuestionContent}
+          showNextQuestion={showNextQuestion}
         />
       </S.CandidatesBox>
     </S.Wrap>
@@ -56,8 +66,12 @@ const S = {
   `,
   QuestionBox: styled.div`
     margin: 24px 0;
+    flex-shrink: 0;
   `,
-  CandidatesBox: styled.div``,
+  CandidatesBox: styled.div`
+    flex-grow: 1;
+    overflow-y: hidden;
+  `,
 };
 
 export default Vote;

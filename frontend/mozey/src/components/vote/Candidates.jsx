@@ -8,10 +8,12 @@ import { BsPersonHeart } from "react-icons/bs";
 import { CgProfile } from "react-icons/cg";
 import voteAPI from "../../api/voteAPI";
 import useStore from "../../store/userInfoStore";
+
 const Candidates = ({
   questionsData,
   selectedQuestionId,
   selectedQuestionContent,
+  showNextQuestion,
 }) => {
   const { isCandiChangeOpen, toggleCandiChangeOpen } = candiChangeState();
   const [candidatesData, setCandidatesData] = useState([]);
@@ -35,7 +37,7 @@ const Candidates = ({
       const userId = userInfo.id;
       setMyUserId(userId);
       const response = await axios.get(
-        `https://j9a510.p.ssafy.io/api/votes/candidates/${userInfo.id}`
+        `https://j9a510.p.ssafy.io/api/users/friends/${userInfo.id}`
       );
       // console.log(userId);
       // console.log(userInfo.id);
@@ -55,7 +57,7 @@ const Candidates = ({
       const time = new Date().toISOString(); // 현재 시간을 ISO 문자열로 변환합니다.
       console.log(time);
 
-      console.log(chosen, selectedQuestionId, userId);
+      // console.log(chosen, selectedQuestionId, userId);
       const postData = {
         qtnId: selectedQuestionId,
         userId: userId,
@@ -64,7 +66,7 @@ const Candidates = ({
         // time,
       };
       const response = await voteAPI.postVoteNotification(postData);
-      console.log(response.data);
+      // console.log(response.data);
       setfbToken(response.data.data.fbToken);
 
       const encodedToken = response.data.data.fbToken;
@@ -92,9 +94,14 @@ const Candidates = ({
                 <S.CandidateBox key={candidate.userId}>
                   <CgProfile />
                   <S.NameBox
-                    onClick={() =>
-                      ChooseCandidate(candidate.userId, questionsData, myuserId)
-                    }
+                    onClick={() => {
+                      ChooseCandidate(
+                        candidate.userId,
+                        questionsData,
+                        myuserId
+                      );
+                      showNextQuestion();
+                    }}
                   >
                     {candidate.name}
                   </S.NameBox>
@@ -106,11 +113,11 @@ const Candidates = ({
                 <S.CandidateBox key={candidate.userId}>
                   <CgProfile />
                   <S.NameBox
-                      onClick={() =>
-                          ChooseCandidate(candidate.userId, questionsData, myuserId)
-                      }
+                    onClick={() =>
+                      ChooseCandidate(candidate.userId, questionsData, myuserId)
+                    }
                   >
-                      {candidate.name}
+                    {candidate.name}
                   </S.NameBox>
                 </S.CandidateBox>
               ))}
@@ -146,8 +153,6 @@ const Candidates = ({
 const S = {
   Wrap: styled.div`
     background-color: ${({ theme }) => theme.color.background};
-    height: 100%;
-    overflow-y: hidden;
   `,
   CandidatesList: styled.div``,
   CandidatesTop: styled.div`
@@ -164,9 +169,19 @@ const S = {
     width: 130px;
     margin: 10px;
     padding: 20px;
+    font-weight: 700;
     background-color: ${({ theme }) => theme.color.white};
     border-radius: 10px;
     box-shadow: ${({ theme }) => theme.shadow.card};
+    transition: border 0.3s;
+
+    &:hover {
+      border-color: ${({ theme }) => theme.color.blue};
+      box-shadow:
+        0 0 5px ${({ theme }) => theme.color.blue},
+        0 0 10px ${({ theme }) => theme.color.blue},
+        0 0 15px ${({ theme }) => theme.color.blue};
+    }
   `,
   CandidatesChange: styled.div`
     display: flex;

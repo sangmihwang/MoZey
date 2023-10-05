@@ -22,7 +22,6 @@ const QuizSection = () => {
         dateToFetch = currentDate.toISOString().split("T")[0];
       }
 
-
       const savedQuizzes = localStorage.getItem("quizzes");
       const savedQuizDate = localStorage.getItem("quizDate");
       const savedQuizIndex = localStorage.getItem("currentQuizIndex");
@@ -58,9 +57,9 @@ const QuizSection = () => {
   const checkAnswer = (answer) => {
     setShowModal(true);
     if (selectedChoice === answer) {
-        setIsCorrect(true);
+      setIsCorrect(true);
     } else {
-        setIsCorrect(false);
+      setIsCorrect(false);
     }
   };
 
@@ -68,11 +67,11 @@ const QuizSection = () => {
     setShowModal(false);
     setSelectedChoice(null);
     if (isCorrect) {
-        setCurrentQuizIndex((prevIndex) => {
-            const newIndex = prevIndex + 1;
-            localStorage.setItem("currentQuizIndex", newIndex.toString());
-            return newIndex;
-        });
+      setCurrentQuizIndex((prevIndex) => {
+        const newIndex = prevIndex + 1;
+        localStorage.setItem("currentQuizIndex", newIndex.toString());
+        return newIndex;
+      });
     }
   };
 
@@ -113,11 +112,13 @@ const QuizSection = () => {
               {Object.entries(quizzes[currentQuizIndex].multipleChoice).map(
                 ([key, choice]) => (
                   <S.ChoiceContainer key={key}>
-                    {selectedChoice === choice ? (
-                      <S.StyledGrCheckboxSelected />
-                    ) : (
-                      <S.StyledGrCheckbox />
-                    )}
+                    <S.IconContainer>
+                      {selectedChoice === choice ? (
+                        <S.StyledGrCheckboxSelected />
+                      ) : (
+                        <S.StyledGrCheckbox />
+                      )}
+                    </S.IconContainer>
                     <S.QuizChoice
                       selected={selectedChoice === choice}
                       onClick={() => setSelectedChoice(choice)}
@@ -194,6 +195,7 @@ const S = {
     color: ${({ selected, theme }) =>
       selected ? theme.color.blue : theme.color.black};
     font-size: ${({ theme }) => theme.fontsize.title3};
+    font-weight: ${({ selected }) => (selected ? 900 : 600)};
     padding: 10px 20px;
     border-radius: 5px;
     transition: background-color 0.3s;
@@ -278,6 +280,13 @@ const S = {
   `,
   StyledGrCheckboxSelected: styled(GrCheckboxSelected)`
     color: ${({ theme }) => theme.color.blue};
+  `,
+  IconContainer: styled.div`
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   `,
 };
 
