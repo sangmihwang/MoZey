@@ -18,17 +18,42 @@ const ExchangeCoin = () => {
 
   console.log(chartDataStore);
   console.log(userInfo);
-  // console.log(userInfo.point);
-  // console.log(userInfo.coin1);
-  // console.log(userInfo.coin2);
+  console.log(userInfo.coin1);
+  console.log(userInfo.coin2);
+  console.log(userInfo.point);
 
-  const series_KOSPI = chartDataStore.filter(
-    (item) => item.name === "KOSPI 50"
-  );
+  const distributeData = (rawData) => {
+    const transformedData = {};
+    rawData.forEach((item) => {
+      const { coinName, coinPrice, date } = item;
+      const seriesName = coinName === "Coin1" ? "KOSPI 50" : "S&P 500";
+      if (!transformedData[coinName]) {
+        transformedData[coinName] = {
+          name: seriesName,
+          data: [],
+        };
+      }
+      transformedData[coinName].data.push({
+        x: new Date(
+          `${date.toString().slice(0, 4)}-${date.toString().slice(4, 6)}-${date
+            .toString()
+            .slice(6, 8)}`
+        ).toISOString(),
+        y: coinPrice,
+      });
+    });
+    return Object.values(transformedData);
+  };
+
+  const UseChartData = distributeData(chartDataStore);
+
+  const series_KOSPI = UseChartData.filter((item) => item.name === "KOSPI 50");
+
   console.log(series_KOSPI);
   const [series1, setSeries1] = useState(series_KOSPI);
 
-  const series_SandP = chartDataStore.filter((item) => item.name === "S&P 500");
+  const series_SandP = UseChartData.filter((item) => item.name === "S&P 500");
+  console.log(series_SandP);
   const [series2, setSeries2] = useState(series_SandP);
 
   const [fromCoin, setFromCoin] = useState("");
@@ -41,6 +66,9 @@ const ExchangeCoin = () => {
   const calculateExchange = (value, selectFromOption, selectToOption) => {
     const todayKospi = series1[0].data[series1[0].data.length - 1].y;
     const todaySandP = series2[0].data[series2[0].data.length - 1].y;
+    console.log(series1[0]);
+    console.log(series2[0]);
+
     let exchangeRate = 1;
     const KToS = todayKospi / todaySandP;
     const PToS = todaySandP;
