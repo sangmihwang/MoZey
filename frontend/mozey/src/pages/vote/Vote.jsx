@@ -86,7 +86,7 @@ const Vote = () => {
       {showTimer ? (
         <>
           <FcAlarmClock />
-          <TimerComponent duration={15 * 60} />
+          <TimerComponent duration={15 * 1} />
         </>
       ) : (
         <>
