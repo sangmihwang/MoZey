@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
 import * as components from "components";
+import Loading from "../../components/loading/Loading";
 
 const Main = () => {
   return (
@@ -15,6 +16,7 @@ const Main = () => {
         <components.Logout></components.Logout>
         <components.DeleteAccount></components.DeleteAccount>
       </S.Wrap>
+      <Loading />
     </div>
   );
 };
