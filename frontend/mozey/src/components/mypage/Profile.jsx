@@ -112,13 +112,13 @@ const Profile = () => {
         <S.CoinInfo>
           {/* <img src={pointImage} alt="point" /> */}
           <S.StyledBiSolidCoinStack />
-          <p>{userInfo.point}</p>
+          <p>{userProfile.point}</p>
           {/* <img src={coin1Image} alt="coin1" /> */}
           <S.StyledTbStar />
-          <p>{userInfo.coin1}</p>
+          <p>{userProfile.coin1}</p>
           {/* <img src={coin2Image} alt="coin2" /> */}
           <S.StyledTbDiamond />
-          <p>{userInfo.coin2}</p>
+          <p>{userProfile.coin2}</p>
         </S.CoinInfo>
       </S.Info>
     </S.Wrap>
