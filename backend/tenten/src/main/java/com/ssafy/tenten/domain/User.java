@@ -18,7 +18,6 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Builder
 @AllArgsConstructor
-@CrossOrigin("*")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
