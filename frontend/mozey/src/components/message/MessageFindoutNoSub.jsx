@@ -3,6 +3,7 @@ import styled from "styled-components";
 import * as components from "components";
 import { MdAccountCircle } from "react-icons/md";
 import { BiSolidCoinStack } from "react-icons/bi";
+import axios from "axios";
 
 const MessageFindoutNoSub = ({ dataforMessageInfo, onDataRequest }) => {
   const getUserFromLocalStorage = () => {
@@ -21,8 +22,28 @@ const MessageFindoutNoSub = ({ dataforMessageInfo, onDataRequest }) => {
     setShowModal(true);
   };
 
-  const handleConfirm = () => {
+  const handleConfirm = async () => {
     setShowModal(false);
+    const userId = userData.id; // 로컬 스토리지 객체에 'id' 속성이 사용자 ID를 가리킨다고 가정합니다.
+
+    const requestBody = {
+      "fromCoinName" : "None",
+      "toCoinName" : "Coin1",
+      "minusCoinAmount" : 10,
+      "plusCoinAmount" : 0
+    };
+
+    try {
+      const response = await axios.post(`https://j9a510.p.ssafy.io/api/coins/exchange/${userId}`, requestBody);
+      
+      if(response.status === 200) {
+        onDataRequest();
+      } else {
+      }
+
+    } catch (error) {
+      console.error("POST 요청 중 오류 발생:", error);
+    }
     onDataRequest();
   };
 
