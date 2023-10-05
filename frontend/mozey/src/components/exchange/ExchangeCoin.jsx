@@ -15,13 +15,6 @@ import useStore1 from "../../store/userInfoStore";
 const ExchangeCoin = () => {
   const chartDataStore = useStore((state) => state.chartData);
   const userInfo = useStore1((state) => state.User);
-
-  console.log(chartDataStore);
-  console.log(userInfo);
-  console.log(userInfo.coin1);
-  console.log(userInfo.coin2);
-  console.log(userInfo.point);
-
   const distributeData = (rawData) => {
     const transformedData = {};
     rawData.forEach((item) => {
@@ -49,11 +42,9 @@ const ExchangeCoin = () => {
 
   const series_KOSPI = UseChartData.filter((item) => item.name === "KOSPI 50");
 
-  console.log(series_KOSPI);
   const [series1, setSeries1] = useState(series_KOSPI);
 
   const series_SandP = UseChartData.filter((item) => item.name === "S&P 500");
-  console.log(series_SandP);
   const [series2, setSeries2] = useState(series_SandP);
 
   const [fromCoin, setFromCoin] = useState("");
@@ -66,9 +57,6 @@ const ExchangeCoin = () => {
   const calculateExchange = (value, selectFromOption, selectToOption) => {
     const todayKospi = series1[0].data[series1[0].data.length - 1].y;
     const todaySandP = series2[0].data[series2[0].data.length - 1].y;
-    console.log(todayKospi);
-    console.log(todaySandP);
-    console.log(selectFromOption);
     let exchangeRate = 1;
     const KToS = todayKospi / todaySandP;
     const PToS = todaySandP;
@@ -125,14 +113,22 @@ const ExchangeCoin = () => {
     toCoin
   ) => {
     try {
+      const coinModify = {
+        "S&P 500": "Coin2",
+        "KOSPI 50": "Coin1",
+        Point: "Point",
+      };
+      selectFromOption = coinModify[selectFromOption];
+      selectToOption = coinModify[selectToOption];
+
       const postData = {
         fromCoinName: selectFromOption,
         toCoinName: selectToOption,
-        minusCoinAmount: fromCoin,
+        minusCoinAmount: parseInt(fromCoin),
         plusCoinAmount: toCoin,
       };
       const response = await coinPriceAPI.exchangeCoin(postData);
-      console.log(response);
+      console.log(response, "asd");
     } catch (error) {
       console.log("에러", error);
     }
@@ -159,7 +155,6 @@ const ExchangeCoin = () => {
           </Select>
           <br />
           <TextField
-            type="number"
             value={fromCoin}
             onChange={(e) => handleFromCoinChange(e.target.value)}
             error={error} // Add the error prop to display error styling

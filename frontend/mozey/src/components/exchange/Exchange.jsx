@@ -91,13 +91,9 @@ const Exchange = () => {
   // 날짜를 원하는 형식으로 변환 (YYYYMMDD을 YYYY-MM-DD로 변환)
   const formatDate = (date) => {
     const date2 = date.toString();
-    console.log(date2);
     const year = date2.slice(0, 4);
-    console.log(year);
     const month = date2.slice(5, 7);
-    console.log(month);
     const day = date2.slice(8, 10);
-    console.log(day);
     const newDate = `${year}-${month}-${day}`;
     return new Date(newDate);
   };

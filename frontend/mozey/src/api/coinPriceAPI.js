@@ -5,7 +5,8 @@ const coinPriceAPI = {
   // 코인 교환
   exchangeCoin: (data) => {
     const userId = getUserID();
-    axios.post(
+    console.log(data);
+    return axios.post(
       `https://j9a510.p.ssafy.io:/api/coins/exchange/${userId}`,
       data,
       {
