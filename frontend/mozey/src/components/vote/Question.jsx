@@ -56,8 +56,9 @@ const S = {
   QuestionContent: styled.div`
     margin: 8px auto;
     font-size: ${({ theme }) => theme.fontsize.title2};
-    line-height: ${({ theme }) => theme.lineheight.title1};
+    line-height: ${({ theme }) => theme.lineheight.quiztitle};
     font-weight: 700;
+    word-break: keep-all;
     padding: 20px 30px;
     text-align: center;
   `,
