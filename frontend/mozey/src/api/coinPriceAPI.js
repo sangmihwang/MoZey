@@ -1,18 +1,19 @@
-import { axiosInstance } from "api";
 import axios from "axios";
+import useStore from "../store/userInfoStore";
 
+const userInfo = useStore((state) => state.User);
 const coinPriceAPI = {
-  // 투표 알림 받기
-  getCoinPrice: () =>
-    axiosInstance.get("https://j9a510.p.ssafy.io:/api/coins/price"),
-
   // 코인 교환
   exchangeCoin: (data) =>
-    axios.post(`https://j9a510.p.ssafy.io:/api/coins/exchange/`, data, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }),
+    axios.post(
+      `https://j9a510.p.ssafy.io:/api/coins/exchange/${userInfo.id}`,
+      data,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    ),
 };
 
 export default coinPriceAPI;
