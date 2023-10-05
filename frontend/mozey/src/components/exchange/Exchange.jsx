@@ -7,6 +7,7 @@ import { TbStarFilled, TbDiamondFilled } from "react-icons/tb";
 import { ExchangeCoin } from "components";
 import "semantic-ui-css/semantic.min.css";
 import useStore from "../../store/chartDataStore";
+import Loading from "../loading/Loading";
 
 const Exchange = () => {
   const chartDataStore = useStore((state) => state.chartData);
@@ -55,10 +56,7 @@ const Exchange = () => {
         formatter: function (val) {
           const date = new Date(val);
           const day = date.getDate();
-          if (day % 2 === 0) {
-            return `${date.getFullYear()}-${date.getMonth() + 1}-${day}`;
-          }
-          return "";
+          return `${date.getFullYear()}-${date.getMonth() + 1}-${day}`;
         },
       },
     },
@@ -214,6 +212,7 @@ const Exchange = () => {
         <Chart options={options} series={filteredSeries2} />
       </S.Centered>
       <ExchangeCoin></ExchangeCoin>
+      <Loading />
     </S.Wrap>
   );
 };
