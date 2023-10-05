@@ -14,11 +14,13 @@ const Question = ({
 
   useEffect(() => {
     if (questionsData.length > 0) {
-      console.log(questionsData);
-      oneSelectedQuestionId(questionsData[oneSelectedQuestionId].qtnId);
-      oneSelectedQuestionContent(
-        questionsData[oneSelectedQuestionId].qtnContent
-      );
+      const selectedQuestionIndex = oneSelectedQuestionId;
+      const selectedQuestion = questionsData[selectedQuestionIndex];
+  
+      if (selectedQuestion) {  // 선택된 질문이 있는지 확인하는 과정 추가
+        oneSelectedQuestionId(selectedQuestion.qtnId);
+        oneSelectedQuestionContent(selectedQuestion.qtnContent);
+      }
     }
   }, [questionsData, oneSelectedQuestionId, oneSelectedQuestionContent]);
 
@@ -26,7 +28,9 @@ const Question = ({
     <S.Wrap>
       <S.ImageBox>
         <img
-          src={questionsData[currentIndex]?.image || QuestionImage}
+          src={questionsData[currentIndex]?.image 
+              ? `https://j9a510.p.ssafy.io/api/v1/image/${questionsData[currentIndex].image}?option=vote` 
+              : QuestionImage}
           alt="질문이미지"
         />
       </S.ImageBox>
