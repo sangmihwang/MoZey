@@ -110,7 +110,7 @@ const Exchange = () => {
   useEffect(() => {
     let targetData = UseChartData.filter((item) => item.name === "KOSPI 50");
 
-    if (selectedPeriod1 === "total" || selectedPeriod1 === "default") {
+    if (selectedPeriod1 === "default") {
       setFilteredSeries1(
         UseChartData.filter((item) => item.name === "KOSPI 50")
       );
@@ -146,7 +146,7 @@ const Exchange = () => {
   useEffect(() => {
     let targetData = UseChartData.filter((item) => item.name === "S&P 500");
 
-    if (selectedPeriod2 === "total" || selectedPeriod2 === "default") {
+    if (selectedPeriod2 === "default") {
       setFilteredSeries2(
         UseChartData.filter((item) => item.name === "S&P 500")
       );
@@ -187,10 +187,9 @@ const Exchange = () => {
           value={selectedPeriod1}
           onChange={(e) => setSelectedPeriod1(e.target.value)}
         >
-          <S.StyledMenuItem value="default">기간</S.StyledMenuItem>
+          <S.StyledMenuItem value="default">전체</S.StyledMenuItem>
           <S.StyledMenuItem value="7days">7일</S.StyledMenuItem>
           <S.StyledMenuItem value="30days">30일</S.StyledMenuItem>
-          <S.StyledMenuItem value="total">전체</S.StyledMenuItem>
         </S.StyledSelect>
       </S.ChartContainer>
       <S.Centered>
@@ -206,10 +205,9 @@ const Exchange = () => {
           value={selectedPeriod2}
           onChange={(e) => setSelectedPeriod2(e.target.value)}
         >
-          <S.StyledMenuItem value="default">기간</S.StyledMenuItem>
+          <S.StyledMenuItem value="default">전체</S.StyledMenuItem>
           <S.StyledMenuItem value="7days">7일</S.StyledMenuItem>
           <S.StyledMenuItem value="30days">30일</S.StyledMenuItem>
-          <S.StyledMenuItem value="total">전체</S.StyledMenuItem>
         </S.StyledSelect>
       </S.ChartContainer>
       <S.Centered>
