@@ -7,6 +7,7 @@ import com.google.firebase.messaging.FirebaseMessaging;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.ssafy.tenten.api.service.CoinInfoService;
 import com.ssafy.tenten.domain.CoinInfo;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -24,6 +25,7 @@ import java.util.List;
 
 @EnableScheduling
 @SpringBootApplication
+@Slf4j
 public class TentenApplication {
 	@Autowired
 	private CoinInfoService coinInfoService;
@@ -68,10 +70,9 @@ public class TentenApplication {
 		return FirebaseMessaging.getInstance(firebaseApp);
 	}
 	@Transactional
-//	@Scheduled(cron = "0 0 9 * * *")
-	@Scheduled(cron = "0 * * * * *")
+	@Scheduled(cron = "0 0 9 * * *")
 	public void saveTodayCoinInfo() throws Exception {
-		System.out.println("코인 정보 update");
+		log.info("코인 정보 Update");
 		try{
 			CoinInfo coinInfo = coinInfoService.createCoinInfo();
 		}catch (Exception e) {
