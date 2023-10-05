@@ -4,33 +4,34 @@ import axios from "axios";
 import * as components from "components";
 import QuestionImage from "assets/images/icon-question-default.png";
 
-const Question = ({
-  questionsData,
-  oneSelectedQuestionId,
-  oneSelectedQuestionContent,
-  currentIndex,
-}) => {
+const Question = ({ questionsData, currentIndex }) => {
   // console.log("데잌터", questionsData);
+  const [qContent, setQContent] = useState(null);
+  const [qId, setQId] = useState(null);
+  const [qImg, setQImg] = useState(null);
 
   useEffect(() => {
     if (questionsData.length > 0) {
-      const selectedQuestionIndex = oneSelectedQuestionId;
-      const selectedQuestion = questionsData[selectedQuestionIndex];
-  
-      if (selectedQuestion) {  // 선택된 질문이 있는지 확인하는 과정 추가
-        oneSelectedQuestionId(selectedQuestion.qtnId);
-        oneSelectedQuestionContent(selectedQuestion.qtnContent);
+      console.log(questionsData);
+      const selectedQuestion = questionsData[currentIndex];
+      console.log(selectedQuestion);
+      if (selectedQuestion) {
+        setQContent(selectedQuestion["qtnContent"]);
+        setQId(selectedQuestion["image"]);
+        setQImg(selectedQuestion["qtnId"]);
       }
     }
-  }, [questionsData, oneSelectedQuestionId, oneSelectedQuestionContent]);
+  }, [currentIndex]);
 
   return (
     <S.Wrap>
       <S.ImageBox>
         <img
-          src={questionsData[currentIndex]?.image 
-              ? `https://j9a510.p.ssafy.io/api/v1/image/${questionsData[currentIndex].image}?option=vote` 
-              : QuestionImage}
+          src={
+            questionsData[currentIndex]?.image
+              ? `https://j9a510.p.ssafy.io/api/v1/image/${questionsData[currentIndex].image}?option=vote`
+              : QuestionImage
+          }
           alt="질문이미지"
         />
       </S.ImageBox>

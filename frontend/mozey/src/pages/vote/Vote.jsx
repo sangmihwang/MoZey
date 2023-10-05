@@ -6,8 +6,6 @@ import { FcAlarmClock } from "react-icons/fc";
 
 const Vote = () => {
   const [questionsData, setQuestionsData] = useState([]);
-  const [selectedQuestionId, setSelectedQuestionId] = useState(null);
-  const [selectedQuestionContent, setSelectedQuestionContent] = useState(null);
   const [showTimer, setShowTimer] = useState(false);
 
   useEffect(() => {
@@ -27,7 +25,6 @@ const Vote = () => {
         );
         // setNoShuffleData(response.data.data);
         setQuestionsData(response.data.data);
-        // console.log(response.data);
       } catch (error) {
         console.error("데이터를 가져오는 중 오류가 발생했습니다:", error);
       }
@@ -41,7 +38,6 @@ const Vote = () => {
     if (currentIndex < questionsData.length - 1) {
       setCurrentIndex(currentIndex + 1);
     } else if (currentIndex === questionsData.length - 1) {
-      console.log("들어왓나");
       if (!localStorage.getItem("startTime")) {
         localStorage.setItem("startTime", new Date().toISOString());
       }
@@ -93,16 +89,13 @@ const Vote = () => {
           <S.QuestionBox>
             <components.Question
               questionsData={questionsData}
-              oneSelectedQuestionId={setSelectedQuestionId}
-              oneSelectedQuestionContent={setSelectedQuestionContent}
               currentIndex={currentIndex}
             />
           </S.QuestionBox>
           <S.CandidatesBox>
             <components.Candidates
               questionsData={questionsData}
-              selectedQuestionId={selectedQuestionId}
-              selectedQuestionContent={selectedQuestionContent}
+              currentIndex={currentIndex}
               showNextQuestion={showNextQuestion}
             />
           </S.CandidatesBox>
