@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -25,6 +26,9 @@ public class FollowServiceImpl implements FollowService {
     @Transactional(readOnly = true)
     public List<RecommendUserResponse> searchFriendsByName(String name, Long fromUserId) {
         List<Follow> friends = followRepository.findAllByReceiverName(name, fromUserId);
+        if (friends.isEmpty()) {
+            throw new EntityNotFoundException("No users found in the database.");
+        }
         List<User> user = new ArrayList<>();
         for (Follow friend : friends) {
             user.add(friend.getReceiverId());
@@ -47,6 +51,9 @@ public class FollowServiceImpl implements FollowService {
     @Transactional(readOnly = true)
     public List<RecommendUserResponse> searchAllFriends(Long fromUserId) {
         List<Follow> friends = followRepository.findAllBySenderId(fromUserId);
+        if (friends.isEmpty()) {
+            throw new EntityNotFoundException("No users found in the database.");
+        }
         List<User> user = new ArrayList<>();
         for (Follow friend : friends) {
             user.add(friend.getReceiverId());
@@ -70,11 +77,11 @@ public class FollowServiceImpl implements FollowService {
     @Transactional(readOnly = false)
     public boolean addFriend(Long fromUserId, Long toUserId) {
         // 나
-        User from = userRepository.findById(fromUserId).get();
+        User from = userRepository.findById(fromUserId).orElseThrow(() -> new EntityNotFoundException("User not found with id: " + fromUserId));
         // 친구
-        User to = userRepository.findById(toUserId).get();
-        // 추가된 친구면 false 리턴
+        User to = userRepository.findById(toUserId).orElseThrow(() -> new EntityNotFoundException("User not found with id: " + toUserId));
 
+        // 추가된 친구면 false 리턴
 //        if (followRepository.existsBySenderIdAndReceiverId(fromUserId, toUserId)) {
 //            return false;
 //        }

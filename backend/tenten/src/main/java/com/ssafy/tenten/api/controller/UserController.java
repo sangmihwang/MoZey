@@ -22,6 +22,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -63,11 +64,10 @@ public class UserController {
     }
 
     // 1.3 사용자 정보 조회
-    @GetMapping("/info/{userId}")
-    public ResponseEntity<?> getUserInfo(@PathVariable("userId") Long userId, @AuthenticationPrincipal PrincipalDetails principalDetails) {
-//        Long userId = principalDetails.getId();
-        User user = userRepository.findById(userId).get();
-//        User user = userRepository.findByEmail(email).get();
+    @GetMapping("/info/{email}")
+    public ResponseEntity<?> getUserInfo(@PathVariable("email") String email, @AuthenticationPrincipal PrincipalDetails principalDetails) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new EntityNotFoundException("User not found with email: " + email));
         return new ResponseEntity<>(UserResponse.createUserResponse(user), HttpStatus.OK);
     }
 
