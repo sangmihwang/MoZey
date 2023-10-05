@@ -9,7 +9,7 @@ import coin1Image from "assets/images/icon-coin1.png";
 import coin2Image from "assets/images/icon-coin2.png";
 import FirebaseComponent from "../../config/firebase";
 import { BiSolidCoinStack } from "react-icons/bi";
-import { TbStarFilled, TbDiamondFilled } from "react-icons/tb"
+import { TbStarFilled, TbDiamondFilled } from "react-icons/tb";
 
 const Profile = () => {
   const userInfo = useStore((state) => state.User);
@@ -54,17 +54,18 @@ const Profile = () => {
 const S = {
   Wrap: styled.div`
     background: ${({ theme }) => theme.color.white};
-    width: 87.7%;
+    width: 90%;
     margin-top: 20px;
     border-radius: 10px;
     display: flex;
     flex-direction: row;
-    padding: 7%;
+    padding: 20px 28px;
     box-shadow: ${({ theme }) => theme.shadow.card};
     text-align: center;
   `,
   ProfileImage: styled.div`
-    display: inline-block;
+    display: flex;
+    align-items: center;
   `,
   ProfileBox: styled.div`
     width: 20yw;
@@ -73,7 +74,7 @@ const S = {
     border-radius: 70%;
     overflow: hidden;
     > img {
-      width: 100%;
+      width: 80px;
       height: 100%;
       object-fit: cover;
     }
@@ -83,37 +84,45 @@ const S = {
     flex-direction: column;
     text-align: left;
     font-weight: bold;
-    margin-left: 9.35%;
+    margin-left: 26px;
+    width: 100%;
   `,
   Name: styled.div`
     color: #040404;
     display: flex;
     justify-content: space-between;
-    font-size: 16px;
+    font-size: ${({ theme }) => theme.fontsize.title3};
+    padding: 4px;
+    display: flex;
+    align-items: center;
     > button {
       background-color: ${({ theme }) => theme.color.red};
       color: ${({ theme }) => theme.color.background};
       border-radius: 10px;
       width: 50px;
-      height: 20px;
+      height: 24px;
       font-weight: bold;
+      padding: 2px;
+      margin-left: auto;
+      font-size: ${({ theme }) => theme.fontsize.title4};
     }
   `,
   CampusInfo: styled.div`
     margin-top: 10px;
+    padding: 0 4px;
     > h2 {
       color: #6d675b;
     }
   `,
   CoinInfo: styled.div`
-    margin-top: 10px;
+    margin-top: 18px;
     display: flex;
     flex-direction: row;
     > img {
       width: 20px;
     }
     > p {
-      margin-right: 10px;
+      margin-right: 6px;
     }
   `,
   StyledBiSolidCoinStack: styled(BiSolidCoinStack)`

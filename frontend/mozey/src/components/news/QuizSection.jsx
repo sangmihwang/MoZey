@@ -192,10 +192,11 @@ const S = {
   `,
   QuizChoice: styled.button`
     text-align: left;
+    word-break: keep-all;
     color: ${({ selected, theme }) =>
       selected ? theme.color.blue : theme.color.black};
-    font-size: ${({ theme }) => theme.fontsize.title3};
-    font-weight: ${({ selected }) => (selected ? 900 : 600)};
+    font-size: ${({ theme }) => theme.fontsize.title4};
+    font-weight: ${({ selected }) => (selected ? 900 : 500)};
     padding: 10px 20px;
     border-radius: 5px;
     transition: background-color 0.3s;

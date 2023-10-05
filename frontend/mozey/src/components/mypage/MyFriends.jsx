@@ -50,25 +50,32 @@ const MyFriends = () => {
       </S.Title>
       <S.Container>
         {friends.length === 0 && (
-          <h4>추가된 친구가 없습니다<br></br>추천 친구 목록에서 추가해보세요!</h4>
+          <h4>
+            추가된 친구가 없습니다<br></br>추천 친구 목록에서 추가해보세요!
+          </h4>
         )}
         <ul>
           {friends.map((friend) => (
             <S.Friend key={friend.userId}>
               <S.FriendProfileBox>
-                {friend.image === null || !friend.image
-                  ? (<img src={ProfileImage} alt="profile" />)
-                  : (<img src={friend.image} alt="profile" />)
-                }
+                {friend.image === null || !friend.image ? (
+                  <img src={ProfileImage} alt="profile" />
+                ) : (
+                  <img src={friend.image} alt="profile" />
+                )}
               </S.FriendProfileBox>
               <S.FriendInfo>
                 <h2>{friend.name}</h2>
                 {friend.campus && friend.term && friend.group && (
-                  <h4>{friend.campus}캠퍼스 | {friend.term}기 | {friend.group}반</h4>
+                  <h4>
+                    {friend.campus}캠퍼스 | {friend.term}기 | {friend.group}반
+                  </h4>
                 )}
               </S.FriendInfo>
               <S.FriendDelete>
-                <button onClick={() => deleteFriend(friend.userId)}>삭제</button>
+                <button onClick={() => deleteFriend(friend.userId)}>
+                  삭제
+                </button>
               </S.FriendDelete>
             </S.Friend>
           ))}
@@ -96,7 +103,7 @@ const S = {
   `,
   Container: styled.div`
     background: ${({ theme }) => theme.color.white};
-    width: 87.7%;
+    width: 90%;
     border-radius: 10px;
     margin-top: 10px;
     display: flex;
