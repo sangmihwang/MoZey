@@ -13,6 +13,7 @@ import com.ssafy.tenten.vo.Response.RecommendUserResponse;
 import com.ssafy.tenten.vo.Response.UserHintResponse;
 import com.ssafy.tenten.vo.Response.UserHintSelectedDataResponse;
 import com.ssafy.tenten.vo.Response.UserResponse;
+import io.swagger.models.auth.In;
 import lombok.RequiredArgsConstructor;
 import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
+import java.time.Instant;
 import java.util.List;
 
 @RestController
@@ -96,7 +98,7 @@ public class UserController {
     // 1.8.1 구독 확인
     @GetMapping("/members/{userId}")
     public ResponseEntity<?> checkSubscribe(@PathVariable("userId") Long userId) {
-        Long startTime = userService.checkSub(userId);
+        Instant startTime = userService.checkSub(userId);
         return SuccessResponseEntity.toResponseEntity("구독 확인 완료", startTime);
     }
 
