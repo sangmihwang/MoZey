@@ -14,7 +14,6 @@ import { auth, messaging } from "config/firebase";
 // css
 import "semantic-ui-css/semantic.min.css";
 import useStore from "../../store/chartDataStore";
-// const { setcoinChartData } = chartDataStore();
 const Exchange = () => {
   const chartDataStore = useStore((state) => state.chartData);
   console.log(chartDataStore, "제발됐으면,,!!!!");
@@ -94,28 +93,29 @@ const Exchange = () => {
     });
     return Object.values(transformedData);
   };
-
-  const [transformedData, setTransformedData] = useState(0);
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        if (transformedData === 0) {
-          const response =
-            await axios.get`https://j9a510.p.ssafy.io:/api/coins/price`;
-          const response2 = distributeData(response.data.data);
-          setTransformedData(response2);
-          console.log(chartDataStore, "asd");
-          // (response2);
-          // console.log(chartDataStore);
-        } else {
-          console.log("test");
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchData();
-  }, [transformedData]);
+  const UseChartData = distributeData(chartDataStore);
+  console.log(UseChartData);
+  // const [transformedData, setTransformedData] = useState(0);
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       if (transformedData === 0) {
+  //         const response =
+  //           await axios.get`https://j9a510.p.ssafy.io:/api/coins/price`;
+  //         const response2 = distributeData(response.data.data);
+  //         setTransformedData(response2);
+  //         console.log(chartDataStore, "asd");
+  //         // (response2);
+  //         // console.log(chartDataStore);
+  //       } else {
+  //         console.log("test");
+  //       }
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   };
+  //   fetchData();
+  // }, [transformedData]);
 
   // 날짜를 원하는 형식으로 변환 (YYYYMMDD을 YYYY-MM-DD로 변환)
   const formatDate = (date) => {
@@ -138,9 +138,9 @@ const Exchange = () => {
   // 코스피 차트 구현
   useEffect(() => {
     if (selectedPeriod1 === "total") {
-      console.log(transformedData.filter((item) => item.name === "KOSPI 50"));
+      console.log(UseChartData.filter((item) => item.name === "KOSPI 50"));
       setFilteredSeries1(
-        transformedData.filter((item) => item.name === "KOSPI 50")
+        UseChartData.filter((item) => item.name === "KOSPI 50")
       );
     } else if (selectedPeriod1 === "7days") {
       const filteredData1 = filteredSeries1.map((item) => {
@@ -171,7 +171,7 @@ const Exchange = () => {
   useEffect(() => {
     if (selectedPeriod2 === "total") {
       setFilteredSeries2(
-        transformedData.filter((item) => item.name === "S&P 500")
+        UseChartData.filter((item) => item.name === "S&P 500")
       );
     } else if (selectedPeriod2 === "7days") {
       const filteredData = filteredSeries2.map((item) => {
