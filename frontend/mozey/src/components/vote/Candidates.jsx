@@ -56,7 +56,7 @@ const Candidates = ({
     try {
       const time = new Date().toISOString(); // 현재 시간을 ISO 문자열로 변환합니다.
       console.log(time);
-
+      console.log(qtnselectedQuestionIdId);
       // console.log(chosen, selectedQuestionId, userId);
       const postData = {
         qtnId: selectedQuestionId,
