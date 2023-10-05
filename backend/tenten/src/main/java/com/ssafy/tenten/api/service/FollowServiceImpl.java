@@ -96,6 +96,6 @@ public class FollowServiceImpl implements FollowService {
     @Override
     @Transactional(readOnly = false)
     public void deleteFreind(Long fromUserId, Long toUserId) {
-        followRepository.deleteBySenderIdAndReceiverId(fromUserId, toUserId);
+        followRepository.deleteBySenderId_userIdAndReceiverId_userId(fromUserId, toUserId);
     }
 }

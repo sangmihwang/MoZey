@@ -13,6 +13,6 @@ public interface FollowRepository extends JpaRepository<Follow, Long>{
     @Query(value = "select f from Follow f join fetch f.receiverId fr join fetch f.senderId fs where fs.userId = :senderId and fr.name like CONCAT('%', :name, '%')")
     List<Follow> findAllByReceiverName(@Param("name") String name, @Param("senderId") Long senderId);
     boolean existsBySenderIdAndReceiverId(Long senderId, Long receiverId);
-    void deleteBySenderIdAndReceiverId(Long senderId, Long receiverId);
+    void deleteBySenderId_userIdAndReceiverId_userId(Long senderId, Long receiverId);
     List<Follow> findBySenderId_UserId(Long userId);
 }
