@@ -10,7 +10,7 @@ import java.io.Serializable;
 public class MoneyHistoryDto implements Serializable {
     private Long userId;
     private String coinName;
-    private Long coinChangeDate;
+//    private Long coinChangeDate;
     private Long coinChangeAmount;
     private String transactionType;
 }
