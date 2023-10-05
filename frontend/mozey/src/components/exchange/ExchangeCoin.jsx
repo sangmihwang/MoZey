@@ -9,6 +9,7 @@ import { FaCoins, FaCommentDollar } from "react-icons/fa";
 import { AiOutlineArrowRight } from "react-icons/ai";
 import useStore from "../../store/chartDataStore";
 import useStore1 from "../../store/userInfoStore";
+import axios from "axios";
 
 //  코인 교환 파트
 
@@ -94,6 +95,11 @@ const ExchangeCoin = () => {
   };
   const handleFromCoinChange = (e) => {
     console.log(fromCoin, "프롬코");
+    console.log(selectFromOption);
+    console.log(userInfo.coin1);
+    console.log(userInfo.coin2);
+    console.log(userInfo.point);
+
     if (e > myCoin) {
       setError(true);
     } else {
@@ -107,9 +113,32 @@ const ExchangeCoin = () => {
   const handleSelectToOpitonChange = (e) => {
     setSelectToOption(e);
   };
-  const handleExchangeClick = (e) => {
-    console.log(e);
+
+  const handleExchangeClick = async (
+    selectFromOption,
+    selectToOption,
+    fromCoin,
+    toCoin
+  ) => {
+    try {
+      const postData = {
+        fromCoinName: selectFromOption,
+        toCoinName: selectToOption,
+        minusCoinAmount: fromCoin,
+        plusCoinAmount: toCoin,
+      };
+      const response = await coinPriceAPI.exchangeCoin(postData);
+      console.log(response.data);
+      axios
+        .post(`https://j9a510.p.ssafy.io:/api/coins/exchange`)
+        .then((res) => {
+          console.log(res.data);
+        });
+    } catch (error) {
+      console.log("에러", error);
+    }
   };
+
   useEffect(() => {
     calculateExchange(fromCoin, selectFromOption, selectToOption);
   }, [fromCoin, selectFromOption, selectToOption]);
@@ -165,7 +194,7 @@ const ExchangeCoin = () => {
       </S.CoinCentered>
       <S.YellowButton
         onClick={() =>
-          coinPriceAPI.exchangeCoin(
+          handleExchangeClick(
             selectFromOption,
             selectToOption,
             fromCoin,
