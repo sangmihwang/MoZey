@@ -205,7 +205,7 @@ const Exchange = () => {
         });
         return { ...item, data: filteredData2 };
       });
-      setFilteredSeries1(filteredData2);
+      setFilteredSeries2(filteredData2);
     } else if (selectedPeriod2 === "30days") {
       const filteredData2 = filteredSeries2.map((item) => {
         const filteredData2 = item.data.filter((dataItem) => {
@@ -220,7 +220,7 @@ const Exchange = () => {
         });
         return { ...item, data: filteredData2 };
       });
-      setFilteredSeries1(filteredData2);
+      setFilteredSeries2(filteredData2);
     }
   }, [selectedPeriod2]);
 
