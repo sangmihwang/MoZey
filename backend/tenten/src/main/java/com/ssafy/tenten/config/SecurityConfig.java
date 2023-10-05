@@ -88,13 +88,13 @@ public class SecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
 
-        config.setAllowCredentials(true);
-        config.setAllowedOrigins(List.of("http://localhost:3000", "http://localhost:8000", "https://accounts.kakao.com/login",
-                "http://j9a510.p.ssafy.io:3000", "http://j9a510.p.ssafy.io:8000", "http://j9a510.p.ssafy.io"));
-//        config.setAllowedOrigins(List.of("*"));
-        config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-        config.setAllowedHeaders(List.of("*"));
-        config.setExposedHeaders(List.of("*"));
+        config.setAllowCredentials(false);
+//        config.setAllowedOrigins(List.of("http://localhost:3000", "http://localhost:8000", "https://accounts.kakao.com/login",
+//                "http://j9a510.p.ssafy.io:3000", "http://j9a510.p.ssafy.io:8000", "http://j9a510.p.ssafy.io"));
+////        config.setAllowedOrigins(List.of("*"));
+//        config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+//        config.setAllowedHeaders(List.of("*"));
+//        config.setExposedHeaders(List.of("*"));
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", config);
