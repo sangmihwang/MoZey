@@ -68,8 +68,10 @@ public class TentenApplication {
 		return FirebaseMessaging.getInstance(firebaseApp);
 	}
 	@Transactional
-	@Scheduled(cron = "0 0 9 * * *")
+//	@Scheduled(cron = "0 0 9 * * *")
+	@Scheduled(cron = "0 * * * * *")
 	public void saveTodayCoinInfo() throws Exception {
+		System.out.println("코인 정보 update");
 		try{
 			CoinInfo coinInfo = coinInfoService.createCoinInfo();
 		}catch (Exception e) {
