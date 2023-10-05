@@ -9,7 +9,6 @@ import { FaCoins, FaCommentDollar } from "react-icons/fa";
 import { AiOutlineArrowRight } from "react-icons/ai";
 import useStore from "../../store/chartDataStore";
 import useStore1 from "../../store/userInfoStore";
-import axios from "axios";
 
 //  코인 교환 파트
 
@@ -94,17 +93,22 @@ const ExchangeCoin = () => {
     setToCoin(result);
   };
   const handleFromCoinChange = (e) => {
-    console.log(fromCoin, "프롬코");
-    console.log(selectFromOption);
-    console.log(userInfo.coin1);
-    console.log(userInfo.coin2);
-    console.log(userInfo.point);
+    const inputAmount = e;
+    console.log(inputAmount);
+    let tmp = "";
+    if (selectFromOption === "Point") {
+      tmp = userInfo.Point;
+    } else if (selectFromOption === "KOSPI 50") {
+      tmp = userInfo.Coin1;
+    } else if (selectFromOption === "S&P 500") {
+      tmp = userInfo.Coin2;
+    }
 
-    if (e > myCoin) {
+    if (inputAmount > tmp) {
       setError(true);
     } else {
       setError(false);
-      setFromCoin(e);
+      setFromCoin(inputAmount);
     }
   };
   const handleSelectFromOpitonChange = (e) => {
@@ -188,6 +192,7 @@ const ExchangeCoin = () => {
         </div>
       </S.CoinCentered>
       <S.YellowButton
+        disabled={error}
         onClick={() =>
           handleExchangeClick(
             selectFromOption,
