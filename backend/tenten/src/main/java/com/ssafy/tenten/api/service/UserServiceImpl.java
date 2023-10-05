@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -105,10 +106,16 @@ public class UserServiceImpl implements UserService{
     }
     // 구독 여부
     @Override
-    public Long checkSub(Long userId) {
+    public Instant checkSub(Long userId) {
         User user = userRepository.findById(userId).get();
-        Long startTime = user.getSubStartTime().getEpochSecond();
-        return startTime;
+        int sub = user.getSubYn();
+        Instant time;
+        if (sub == 1) {
+            time = user.getSubStartTime();
+        } else {
+            return null;
+        }
+        return time;
     }
 
     // 구독 취소

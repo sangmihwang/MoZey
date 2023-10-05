@@ -10,6 +10,7 @@ import com.ssafy.tenten.vo.Response.UserResponse;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.util.List;
 
 public interface UserService {
@@ -38,7 +39,7 @@ public interface UserService {
     void subscribe(Long userId);
 
     // 1.8.1 구독 확인
-    Long checkSub(Long userId);
+    Instant checkSub(Long userId);
 
     // 1.9 구독 취소
     void unsubscribe(Long userId);
