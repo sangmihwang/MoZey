@@ -75,8 +75,7 @@ public class User {
     @Column(nullable = false)
     private int withdraw;
 
-    @Column(nullable = false, columnDefinition = "char(10)")
-    @ColumnDefault("USER")
+    @Column(nullable = false, columnDefinition = "char(10) default 'USER'")
     private String role;
 
     private String provider;
