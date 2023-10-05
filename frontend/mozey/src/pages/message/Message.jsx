@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
 import * as components from "components";
 
@@ -16,6 +16,7 @@ const S = {
   Wrap: styled.div`
     width: 100%;
     height: 100%;
+    background-color: ${({ theme }) => theme.color.background};
   `,
 };
 

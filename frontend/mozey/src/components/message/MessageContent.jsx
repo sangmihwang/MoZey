@@ -3,7 +3,7 @@ import styled from "styled-components";
 import QuestionImage from "assets/images/icon-question-default.png";
 
 const MessageContent = ({ messageData }) => {
-  const userInfo = localStorage.getItem('userInfo');
+  const userInfo = localStorage.getItem("userInfo");
   const user = JSON.parse(userInfo);
   return (
     <S.Wrap>
@@ -12,7 +12,10 @@ const MessageContent = ({ messageData }) => {
           <img src={QuestionImage} alt="프로필" />
         </S.ProfilePic>
         <S.ProfileTextContainer>
-          <S.ProfileInfo>{messageData.campus}캠퍼스 | {messageData.term}기 | {messageData.gender === "M" ? "남자" : "여자"}</S.ProfileInfo>
+          <S.ProfileInfo>
+            {messageData.campus}캠퍼스 | {messageData.term}기 |{" "}
+            {messageData.gender === "M" ? "남자" : "여자"}
+          </S.ProfileInfo>
           <S.SentDate>방금</S.SentDate>
         </S.ProfileTextContainer>
       </S.ProfileInfoBox>
