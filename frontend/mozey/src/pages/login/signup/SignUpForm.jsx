@@ -29,7 +29,7 @@ const SignUpForm = () => {
 
     // axios.post("https://j9a510.p.ssafy.io/api/users", requestData)
     await axios
-      .post("https://j9a510.p.ssafy.io/api/users", requestData, {
+      .post("https://j9a510.p.ssafy.io:/api/users", requestData, {
         headers: {
           "Content-Type": "application/json",
         },
