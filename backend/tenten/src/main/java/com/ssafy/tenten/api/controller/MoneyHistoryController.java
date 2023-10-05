@@ -38,7 +38,7 @@ public class MoneyHistoryController {
         moneyHistoryDto1.setCoinName(moneyHistoryRequest.getFromCoinName());
         moneyHistoryDto1.setCoinChangeDate(System.currentTimeMillis()/1000L);
         moneyHistoryDto1.setCoinChangeAmount(moneyHistoryRequest.getMinusCoinAmount());
-        moneyHistoryDto1.setTransactionType("redeem");
+        moneyHistoryDto1.setTransactionType("REDEEM");
         moneyHistoryService.createMoneyHistory(moneyHistoryDto1);
 
         if(!moneyHistoryRequest.getToCoinName().equals("None")){
@@ -47,7 +47,7 @@ public class MoneyHistoryController {
             moneyHistoryDto2.setCoinName(moneyHistoryRequest.getToCoinName());
             moneyHistoryDto2.setCoinChangeDate(System.currentTimeMillis()/1000L);
             moneyHistoryDto2.setCoinChangeAmount(moneyHistoryRequest.getPlusCoinAmount());
-            moneyHistoryDto2.setTransactionType("earn");
+            moneyHistoryDto2.setTransactionType("EARN");
             moneyHistoryService.createMoneyHistory(moneyHistoryDto2);
         }
 
