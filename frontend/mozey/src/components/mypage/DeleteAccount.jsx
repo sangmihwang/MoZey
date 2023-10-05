@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import React from "react";
 import styled from "styled-components";
 
-const Main = () => {
+const DeleteAccount = () => {
   return (
     <S.Wrap>
       <button>회원탈퇴</button>
@@ -34,4 +34,4 @@ const S = {
   `,
 };
 
-export default Main;
+export default DeleteAccount;

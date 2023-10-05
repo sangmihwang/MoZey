@@ -5,7 +5,7 @@ import styled from "styled-components";
 import { userInfoStore } from 'store/userInfoStore';
 import { useNavigate } from 'react-router-dom';
 
-const Main = () => {
+const Logout = () => {
   const navigate = useNavigate();
   const deleteUserInfo = userInfoStore(state => state.deleteUserInfo);
 
@@ -41,4 +41,4 @@ const S = {
   `,
 };
 
-export default Main;
+export default Logout;
