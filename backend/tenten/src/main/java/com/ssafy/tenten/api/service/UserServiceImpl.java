@@ -88,6 +88,9 @@ public class UserServiceImpl implements UserService{
                 .map(a -> RecommendUserResponse.builder()
                         .name(a.getName())
                         .image(a.getImage())
+                        .term(a.getTerm())
+                        .campus(a.getCampus())
+                        .group(a.getGroup())
                         .build())
                 .collect(Collectors.toList());
         return userResponses;
@@ -183,5 +186,12 @@ public class UserServiceImpl implements UserService{
                         .build())
                 .collect(Collectors.toList());
         return userResponses;
+    }
+
+    @Transactional(readOnly = false)
+    @Override
+    public void updateMoney(Long userId, String coinType, Long amount, String type) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new EntityNotFoundException("User not found with id: " + userId));
+        user.updateMoney(coinType, amount, type);
     }
 }

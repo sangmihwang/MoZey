@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
+import java.time.Instant;
 
 @Entity
 @Getter
@@ -28,7 +29,12 @@ public class MoneyHistory {
     private CoinType coinName;
 
     @Column(name = "coin_change_date")
-    private Long coinChangeDate;
+    private Instant coinChangeDate;
+
+    @PrePersist
+    public void prePersist() {
+        if (coinChangeDate == null) coinChangeDate = Instant.now();
+    }
 
     @Column(name = "coin_change_amount")
     private Long coinChangeAmount;
@@ -41,7 +47,7 @@ public class MoneyHistory {
     MoneyHistory(User userId, CoinType coinName, Long coinChangeAmount, CoinTransactionType transactionType){
         this.userId = userId;
         this.coinName = coinName;
-        this.coinChangeDate = System.currentTimeMillis()/1000L;
+//        this.coinChangeDate = System.currentTimeMillis()/1000L;
         this.coinChangeAmount = coinChangeAmount;
         this.transactionType = transactionType;
     }

@@ -55,4 +55,6 @@ public interface UserService {
 
     // 사용자 조건부 조회
     List<UserResponse> searchAllUsersByName(String name);
+
+    void updateMoney(Long userId, String coinType, Long amount, String type);
 }
