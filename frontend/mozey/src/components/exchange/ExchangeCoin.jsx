@@ -130,7 +130,7 @@ const ExchangeCoin = () => {
       const response = await coinPriceAPI.exchangeCoin(postData);
       console.log(response.data);
       axios
-        .post(`https://j9a510.p.ssafy.io:/api/coins/exchange`)
+        .post(`https://j9a510.p.ssafy.io:/api/coins/exchange/${userInfo.id}`)
         .then((res) => {
           console.log(res.data);
         });
