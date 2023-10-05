@@ -25,7 +25,7 @@ const LoginSuccess = () => {
         console.log(err);
       });
     axios
-      .get(`https://j9a510.p.ssafy.io:/api/coins/price`)
+      .get(`https://j9a510.p.ssafy.io/api/coins/price`)
       .then((res) => {
         console.log(res.data);
         setChartData(res.data.data);
