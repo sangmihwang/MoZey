@@ -66,9 +66,9 @@ const ExchangeCoin = () => {
   const calculateExchange = (value, selectFromOption, selectToOption) => {
     const todayKospi = series1[0].data[series1[0].data.length - 1].y;
     const todaySandP = series2[0].data[series2[0].data.length - 1].y;
-    console.log(series1[0]);
-    console.log(series2[0]);
-
+    console.log(todayKospi);
+    console.log(todaySandP);
+    console.log(selectFromOption);
     let exchangeRate = 1;
     const KToS = todayKospi / todaySandP;
     const PToS = todaySandP;
@@ -92,8 +92,8 @@ const ExchangeCoin = () => {
     const result = Math.round(value * exchangeRate);
     setToCoin(result);
   };
-  const handleFromCoinChange = (fromCoin, e) => {
-    console.log(fromCoin);
+  const handleFromCoinChange = (e) => {
+    console.log(fromCoin, "프롬코");
     if (e > myCoin) {
       setError(true);
     } else {
