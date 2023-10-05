@@ -9,6 +9,7 @@ import { FaCoins, FaCommentDollar } from "react-icons/fa";
 import { AiOutlineArrowRight } from "react-icons/ai";
 import useStore from "../../store/chartDataStore";
 import useStore1 from "../../store/userInfoStore";
+
 //  코인 교환 파트
 
 const ExchangeCoin = () => {
@@ -17,9 +18,9 @@ const ExchangeCoin = () => {
 
   console.log(chartDataStore);
   console.log(userInfo);
-  console.log(userInfo.point);
-  console.log(userInfo.coin1);
-  console.log(userInfo.coin2);
+  // console.log(userInfo.point);
+  // console.log(userInfo.coin1);
+  // console.log(userInfo.coin2);
 
   const series_KOSPI = chartDataStore.filter(
     (item) => item.name === "KOSPI 50"
