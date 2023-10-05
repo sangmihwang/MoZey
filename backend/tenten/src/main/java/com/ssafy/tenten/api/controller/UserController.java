@@ -43,7 +43,7 @@ public class UserController {
 
     // 1.1 회원가입
     @PostMapping
-    public ResponseEntity<?> join(@RequestBody UserJoinRequest userJoinRequest, @AuthenticationPrincipal PrincipalDetails principalDetails) {
+    public ResponseEntity<?> join(@Valid @RequestBody UserJoinRequest userJoinRequest, @AuthenticationPrincipal PrincipalDetails principalDetails) {
         System.out.println(userJoinRequest);
         userService.join(userJoinRequest);
         String email = userJoinRequest.getEmail();
