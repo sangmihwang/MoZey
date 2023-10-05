@@ -37,15 +37,15 @@ const Top3 = () => {
 			{top.length === 3
 				? (<S.Container>
 					<S.Question>
-						<img src={MusicImage} alt="music" />
+						<img src={top[0].image || MusicImage} alt="music" />
 						<p>{top[0].qtnContent}</p>
 					</S.Question>
 					<S.Question>
-						<img src={DanceImage} alt="dance" />
+						<img src={top[1].image || DanceImage} alt="dance" />
 						<p>{top[1].qtnContent}</p>
 					</S.Question>
 					<S.Question>
-						<img src={FreepassImage} alt="Freepass" />
+						<img src={top[2].image || FreepassImage} alt="Freepass" />
 						<p>{top[2].qtnContent}</p>
 					</S.Question>
 				</S.Container>)
@@ -91,7 +91,7 @@ const S = {
     width: 31%;
 	height: 25vw;
 		margin-top: 10px;
-    box-shadow: 0 4px 4px rgb(0, 0, 0, 0.25);
+    	box-shadow: ${({ theme }) => theme.shadow.card};
 		border-radius: 10px;
 		display: flex;
 		flex-direction: column;

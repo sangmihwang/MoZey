@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import useStore from "../../store/userInfoStore";
-// import {} from "./config/firebase";
 import React from "react";
 import styled from "styled-components";
 import axios from "axios";
@@ -9,6 +8,8 @@ import pointImage from "assets/images/icon-point.png";
 import coin1Image from "assets/images/icon-coin1.png";
 import coin2Image from "assets/images/icon-coin2.png";
 import FirebaseComponent from "../../config/firebase";
+import { BiSolidCoinStack } from "react-icons/bi";
+import { TbStarFilled, TbDiamondFilled } from "react-icons/tb"
 
 const Profile = () => {
   const userInfo = useStore((state) => state.User);
@@ -35,11 +36,14 @@ const Profile = () => {
           </h2>
         </S.CampusInfo>
         <S.CoinInfo>
-          <img src={pointImage} alt="point" />
+          {/* <img src={pointImage} alt="point" /> */}
+          <S.StyledBiSolidCoinStack />
           <p>{userInfo.point}</p>
-          <img src={coin1Image} alt="coin1" />
+          {/* <img src={coin1Image} alt="coin1" /> */}
+          <S.StyledTbStar />
           <p>{userInfo.coin1}</p>
-          <img src={coin2Image} alt="coin2" />
+          {/* <img src={coin2Image} alt="coin2" /> */}
+          <S.StyledTbDiamond />
           <p>{userInfo.coin2}</p>
         </S.CoinInfo>
       </S.Info>
@@ -56,7 +60,7 @@ const S = {
     display: flex;
     flex-direction: row;
     padding: 7%;
-    box-shadow: 0 4px 4px rgb(0, 0, 0, 0.25);
+    box-shadow: ${({ theme }) => theme.shadow.card};
     text-align: center;
   `,
   ProfileImage: styled.div`
@@ -111,6 +115,24 @@ const S = {
     > p {
       margin-right: 10px;
     }
+  `,
+  StyledBiSolidCoinStack: styled(BiSolidCoinStack)`
+    font-size: ${({ theme }) => theme.fontsize.title2};
+    margin-left: 8px;
+    margin-right: 4px;
+    color: ${({ theme }) => theme.color.blue};
+  `,
+  StyledTbStar: styled(TbStarFilled)`
+    font-size: ${({ theme }) => theme.fontsize.title2};
+    margin-left: 8px;
+    margin-right: 4px;
+    color: ${({ theme }) => theme.color.yellow};
+  `,
+  StyledTbDiamond: styled(TbDiamondFilled)`
+    font-size: ${({ theme }) => theme.fontsize.title2};
+    margin-left: 8px;
+    margin-right: 4px;
+    color: ${({ theme }) => theme.color.red};
   `,
 };
 

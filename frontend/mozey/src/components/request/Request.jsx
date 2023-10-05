@@ -8,6 +8,7 @@ import axios from 'axios';
 import PlusImage from "assets/images/icon-plus.png"
 import CancelImage from "assets/images/icon-cancel.png"
 import RequestImage from "assets/images/icon-request-btn.png"
+import RequestDefaultImage from "assets/images/icon-request-default.png"
 
 const Main = () => {
   const userInfo = useStore((state) => state.User);
@@ -21,10 +22,11 @@ const Main = () => {
 			axios.post("https://j9a510.p.ssafy.io/api/questions", {
 				qtnContent: qtnRef.current.value,
 				userId: userInfo.id,
-				image: selectedImage,
+				// image: selectedImage,
+				image: null,
+        status: "P",
 			}).then((data) => {
 				if(data.data.message === "질문 신청 등록 완료"){
-					// console.log("질문 신청 성공");
 					alert("작성해주신 질문을 신청했습니다. 감사합니다.");
 					window.location.href = "/mypage";
 				}
@@ -45,7 +47,6 @@ const Main = () => {
         setSelectedImage(event.target.result);
       };
       reader.readAsDataURL(file);
-			// S3 업로드 코드 추가 작성 예정
     }
   };
 
@@ -60,11 +61,15 @@ const Main = () => {
             style={{ display: "none" }}
             onChange={handleImageUpload}
           />
-          <img
+          {/* <img
             src={selectedImage || PlusImage}
             alt="plus"
             onClick={() => imageInputRef.current.click()}
 						style={{ maxWidth: "100%", maxHeight: "100%" }}
+          /> */}
+          <img
+            src={RequestDefaultImage}
+            alt="request"
           />
         </S.AddImage>
         <S.AddQuestion>
@@ -108,7 +113,7 @@ const S = {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    box-shadow: 0 4px 4px rgb(0, 0, 0, 0.25);
+    box-shadow: ${({ theme }) => theme.shadow.card};
   `,
   AddImage: styled.div`
     background: ${({ theme }) => theme.color.lightgray};
@@ -118,7 +123,7 @@ const S = {
     justify-content: center;
     align-items: center;
     border-radius: 10px;
-    cursor: pointer;
+    // cursor: pointer;
   `,
   AddQuestion: styled.div`
     margin-top: 20px;
@@ -165,6 +170,7 @@ const S = {
       font-size: 15px;
       font-weight: bold;
       color: #040404;
+      box-shadow: ${({ theme }) => theme.shadow.card};
 
       > img {
         margin-right: 10px;
