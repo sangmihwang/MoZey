@@ -14,8 +14,11 @@ const Question = ({
 
   useEffect(() => {
     if (questionsData.length > 0) {
-      oneSelectedQuestionId(questionsData[0].qtnId);
-      oneSelectedQuestionContent(questionsData[0].qtnContent);
+      console.log(questionsData);
+      oneSelectedQuestionId(questionsData[oneSelectedQuestionId].qtnId);
+      oneSelectedQuestionContent(
+        questionsData[oneSelectedQuestionId].qtnContent
+      );
     }
   }, [questionsData, oneSelectedQuestionId, oneSelectedQuestionContent]);
 
