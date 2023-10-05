@@ -25,6 +25,7 @@ public class LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
                                         Authentication authentication) throws IOException {
         String email = extractEmail(authentication);
         String accessToken = jwtService.createAccessToken(email);
+
         User user = getMember(authentication);
         log.info("accessToken : ", accessToken);
         if (user.getName() == null) {
