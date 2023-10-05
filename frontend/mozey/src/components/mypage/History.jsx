@@ -8,7 +8,7 @@ import pointImage from "assets/images/icon-point.png"
 import coin1Image from "assets/images/icon-coin1.png"
 import coin2Image from "assets/images/icon-coin2.png"
 
-const Main = () => {
+const History = () => {
   const userInfo = useStore((state) => state.User);
 	const [history, setHistory] = useState([]);
 	const [visibleItems, setVisibleItems] = useState(3);
@@ -17,7 +17,7 @@ const Main = () => {
 		const userHistory = async () => {
 			try {
         const id = userInfo.id;
-				axios.get("https://j9a510.p.ssafy.io/api/users/info/${id}")
+				axios.get(`https://j9a510.p.ssafy.io/api/users/info/${id}`)
 					.then((data) => {
 						if (data.data.message === "사용자 코인 내역 조회 완료") {
 							setHistory(data.data.data);
@@ -185,4 +185,4 @@ const S = {
   `,
 };
 
-export default Main;
+export default History;

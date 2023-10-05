@@ -8,7 +8,7 @@ import styled from "styled-components";
 import RequestImage from "assets/images/icon-request.png"
 import QuestionImage from "assets/images/icon-question-default.png"
 
-const Main = () => {
+const RequestQuestion = () => {
   const userInfo = useStore((state) => state.User);
   const [status, setStatus] = useState('P');
   const [pageIdx, setPageIdx] = useState(0);
@@ -23,7 +23,7 @@ const Main = () => {
         setList([]);
       }
       const id = userInfo.id;
-      await axios.get("https://j9a510.p.ssafy.io/api/questions/users/${id}/P/?pageIdx=${pageIdx}")
+      await axios.get(`https://j9a510.p.ssafy.io/api/questions/users/${id}/P/?pageIdx=${pageIdx}`)
         .then((data) => {
           if (data.data.message === "질문 신청 내역 조회 - 사용자") {
             setList(list.concat(data.data.data));
@@ -44,7 +44,7 @@ const Main = () => {
         setList([]);
       }
       const id = userInfo.id;
-      await axios.get("https://j9a510.p.ssafy.io/api/questions/users/${id}/Y/?pageIdx=${pageIdx}")
+      await axios.get(`https://j9a510.p.ssafy.io/api/questions/users/${id}/Y/?pageIdx=${pageIdx}`)
         .then((data) => {
           if (data.data.message === "질문 신청 내역 조회 - 사용자") {
             setList(list.concat(data.data.data));
@@ -59,7 +59,7 @@ const Main = () => {
 
   const deleteQtn = (qtnId) => {
     try {
-      axios.delete("https://j9a510.p.ssafy.io/api/questions/${qtnId}")
+      axios.delete(`https://j9a510.p.ssafy.io/api/questions/${qtnId}`)
         .then((data) => {
           alert("신청한 질문을 삭제했습니다");
           window.location.href = "/mypage";
@@ -280,4 +280,4 @@ const S = {
 	`,
 };
 
-export default Main;
+export default RequestQuestion;

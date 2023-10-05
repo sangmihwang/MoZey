@@ -9,7 +9,8 @@ import pointImage from "assets/images/icon-point.png";
 import coin1Image from "assets/images/icon-coin1.png";
 import coin2Image from "assets/images/icon-coin2.png";
 import FirebaseComponent from "../../config/firebase";
-const Main = () => {
+
+const Profile = () => {
   const userInfo = useStore((state) => state.User);
   FirebaseComponent();
   return (
@@ -113,4 +114,4 @@ const S = {
   `,
 };
 
-export default Main;
+export default Profile;
