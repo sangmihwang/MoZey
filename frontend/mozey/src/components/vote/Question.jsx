@@ -5,38 +5,19 @@ import * as components from "components";
 import QuestionImage from "assets/images/icon-question-default.png";
 
 const Question = ({ questionsData, currentIndex }) => {
-  // console.log("데잌터", questionsData);
-  const [qContent, setQContent] = useState(null);
-  const [qId, setQId] = useState(null);
-  const [qImg, setQImg] = useState(null);
+  const currentQuestion = questionsData[currentIndex];
 
-  useEffect(() => {
-    if (questionsData.length > 0) {
-      console.log(questionsData);
-      const selectedQuestion = questionsData[currentIndex];
-      console.log(selectedQuestion);
-      if (selectedQuestion) {
-        setQContent(selectedQuestion["qtnContent"]);
-        setQId(selectedQuestion["image"]);
-        setQImg(selectedQuestion["qtnId"]);
-      }
-    }
-  }, [currentIndex]);
+  const imageSrc = currentQuestion?.image
+    ? `https://j9a510.p.ssafy.io/api/v1/image/${currentQuestion.image}?option=vote`
+    : QuestionImage;
 
   return (
     <S.Wrap>
       <S.ImageBox>
-        <img
-          src={
-            questionsData[currentIndex]?.image
-              ? `https://j9a510.p.ssafy.io/api/v1/image/${questionsData[currentIndex].image}?option=vote`
-              : QuestionImage
-          }
-          alt="질문이미지"
-        />
+        <img src={imageSrc} alt="질문이미지" />
       </S.ImageBox>
       <S.QuestionContent>
-        {questionsData[currentIndex] && questionsData[currentIndex].qtnContent}
+        {currentQuestion?.qtnContent}
       </S.QuestionContent>
     </S.Wrap>
   );
