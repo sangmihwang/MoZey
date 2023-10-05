@@ -22,6 +22,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -29,7 +30,6 @@ import java.util.List;
 @RequestMapping("/api/users")
 @RequiredArgsConstructor
 @Slf4j
-@CrossOrigin("*")
 public class UserController {
     private final UserService userService;
     private final UserRepository userRepository;
@@ -45,11 +45,17 @@ public class UserController {
     @PostMapping
     public ResponseEntity<?> join(@Valid @RequestBody UserJoinRequest userJoinRequest, @AuthenticationPrincipal PrincipalDetails principalDetails) {
         userService.join(userJoinRequest);
-        return new ResponseEntity<>(HttpStatus.OK);
+        String email = userJoinRequest.getEmail();
+        User user = userRepository.findByEmail(email).get();
+        return new ResponseEntity<>(UserResponse.createUserResponse(user), HttpStatus.OK);
     }
 
     // 1.1.1 회원탈퇴
-//    @DeleteMapping
+    @DeleteMapping("/{userId}")
+    public ResponseEntity<?> deleteUser(@PathVariable("userId") Long id) {
+        userRepository.deleteById(id);
+        return SuccessResponseEntity.toResponseEntity("회원 탈퇴 완료", null);
+    }
 
     // 1.2 로그아웃
     @GetMapping("/logout")
@@ -60,9 +66,8 @@ public class UserController {
     // 1.3 사용자 정보 조회
     @GetMapping("/info/{email}")
     public ResponseEntity<?> getUserInfo(@PathVariable("email") String email, @AuthenticationPrincipal PrincipalDetails principalDetails) {
-//        Long userId = principalDetails.getId();
-//        User user = userRepository.findById(userId).get();
-        User user = userRepository.findByEmail(email).get();
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new EntityNotFoundException("User not found with email: " + email));
         return new ResponseEntity<>(UserResponse.createUserResponse(user), HttpStatus.OK);
     }
 

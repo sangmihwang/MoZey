@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -41,8 +42,8 @@ public class UserServiceImpl implements UserService{
     @Override
     public User update(Long userId, UserUpdateRequest userUpdateRequest) {
         User user = userRepository.findById(userId).get();
-
-        return null;
+        user.update(userUpdateRequest);
+        return user;
     }
 
 //    @Override
@@ -117,21 +118,24 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public UserHintResponse extract(Long userId) {
-        User user = userRepository.findById(userId).get();
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + userId));
         UserHintResponse userHintResponse = UserHintResponse.createUserHintResponse(user);
         return userHintResponse;
     }
 
     @Override
     public UserHintResponse extract(Long userId, int location) {
-        User user = userRepository.findById(userId).get();
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + userId));
         UserHintResponse userHintResponse = UserHintResponse.createUserHintByLocationResponse(user, location);
         return userHintResponse;
     }
 
     @Override
     public UserHintSelectedDataResponse extractBySelectedData(Long userId, String data) {
-        User user = userRepository.findById(userId).get();
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + userId));
         String value = "";
         if (data.equals("class")) value = user.getGroup();
         // 다른 거 추가하면 else if 넣기
@@ -142,6 +146,9 @@ public class UserServiceImpl implements UserService{
     @Override
     public List<UserResponse> searchAllUsers() {
         List<User> users = userRepository.findAll();
+        if (users.isEmpty()) {
+            throw new EntityNotFoundException("No users found in the database.");
+        }
         List<UserResponse> userResponses = users.stream()
                 .map(a -> UserResponse.builder()
                         .userId(a.getUserId())
@@ -160,6 +167,9 @@ public class UserServiceImpl implements UserService{
     @Override
     public List<UserResponse> searchAllUsersByName(String name) {
         List<User> users = userRepository.findAllByName(name);
+        if (users.isEmpty()) {
+            throw new EntityNotFoundException("No users found in the database.");
+        }
         List<UserResponse> userResponses = users.stream()
                 .map(a -> UserResponse.builder()
                         .userId(a.getUserId())

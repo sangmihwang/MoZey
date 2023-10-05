@@ -39,13 +39,9 @@ public class FollowController {
     // 1.6.1 친구 추가
     @PostMapping("/follow/{senderId}/{receiverId}")
     public ResponseEntity<?> addFriends (@PathVariable("senderId") Long fromUserId, @PathVariable("receiverId") Long toUserId) {
-//        System.out.println("senderId : "+fromUserId);
-//        System.out.println("receiverId : "+toUserId);
-//        boolean isAdd = followService.addFriend(fromUserId, toUserId);
         if (followService.addFriend(fromUserId, toUserId)) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-//        return SuccessResponseEntity.toResponseEntity("친구 추가 완료", isAdd);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
