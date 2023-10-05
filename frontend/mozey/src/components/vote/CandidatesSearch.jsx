@@ -9,160 +9,26 @@ import Candidates from "./Candidates";
 const CandidatesSearch = ({onSelectedUserId}) => {
   const userInfo = useStore((state) => state.User);
 
-  // const [friends, setFriends] = useState([]);
+  const [friends, setFriends] = useState([]);
   const [searchResult, setSearchResult] = useState([]);
   const [searchText, setSearchText] = useState("");
-  const [selected, setSelected] = useState(null);
-
-  const friends = [
-    {
-      "userId": 2,
-      "name": "조윤상",
-      "email": "ysang10@gmail.com",
-      "gender": "M",
-      "term": "9",
-      "campus": "서울",
-      "group": "5",
-      "sub_yn": 0
-    },
-    {
-      "userId": 3,
-      "name": "이민웅",
-      "email": "dlalsdnd2@gmail.com",
-      "gender": "M",
-      "term": "9",
-      "campus": "서울",
-      "group": "5",
-      "sub_yn": 0
-    },
-    {
-      "userId": 4,
-      "name": "임병국",
-      "email": "lbk5770@gmail.com",
-      "gender": "M",
-      "term": "9",
-      "campus": "서울",
-      "group": "5",
-      "sub_yn": 0
-    },
-    {
-      "userId": 5,
-      "name": "지한얼",
-      "email": "gksdjf0626@gmail.com",
-      "gender": "M",
-      "term": "9",
-      "campus": "서울",
-      "group": "5",
-      "sub_yn": 0
-    },
-    {
-      "userId": 6,
-      "name": "송채은",
-      "email": "sce9842@gmail.com",
-      "gender": "W",
-      "term": "9",
-      "campus": "서울",
-      "group": "5",
-      "sub_yn": 0
-    },
-    {
-      "userId": 7,
-      "name": "황상미",
-      "email": "sangmihwangz@gmail.com",
-      "gender": "W",
-      "term": "9",
-      "campus": "서울",
-      "group": "5",
-      "sub_yn": 0
-    },
-    {
-      "userId": 47,
-      "name": "황상미",
-      "email": "sangmi_babe@hotmail.com",
-      "gender": "W",
-      "image": "http://k.kakaocdn.net/dn/dpk9l1/btqmGhA2lKL/Oz0wDuJn1YV2DIn92f6DVK/img_110x110.jpg",
-      "term": "9",
-      "campus": "서울",
-      "group": "5",
-      "sub_yn": 0
-    },
-    {
-      "userId": 48,
-      "name": "이민웅",
-      "email": "dlalsdnd2@kakao.com",
-      "gender": "M",
-      "image": "http://k.kakaocdn.net/dn/BdrKU/btsrUunCaLi/iSo1OEkWaeIDvtnLZLUrR1/img_110x110.jpg",
-      "term": "9",
-      "campus": "서울",
-      "group": "5",
-      "sub_yn": 0
-    },
-    {
-      "userId": 49,
-      "name": "송채은",
-      "email": "sce9842@hanmail.net",
-      "gender": "W",
-      "image": "http://k.kakaocdn.net/dn/dpk9l1/btqmGhA2lKL/Oz0wDuJn1YV2DIn92f6DVK/img_110x110.jpg",
-      "term": "9",
-      "campus": "서울",
-      "group": "5",
-      "sub_yn": 0
-    },
-    {
-      "userId": 50,
-      "name": "임병국",
-      "email": "dla5324@nate.com",
-      "gender": "M",
-      "image": "http://k.kakaocdn.net/dn/eeBoKD/btspUhKqd13/dSXXOkVXKDV5uOqYBRRkA0/img_110x110.jpg",
-      "term": "9",
-      "campus": "서울",
-      "group": "5",
-      "sub_yn": 0
-    },
-    {
-      "userId": 52,
-      "name": "지한얼",
-      "email": "6531z@naver.com",
-      "gender": "M",
-      "image": "http://k.kakaocdn.net/dn/8M09M/btsbVd8lmXg/r9uGAJIIDD4YeMQHSEJOE1/img_110x110.jpg",
-      "term": "9",
-      "campus": "서울",
-      "group": "5",
-      "sub_yn": 0
-    },
-    {
-      "userId": 55,
-      "name": "조윤상",
-      "email": "ysang7961@hanmail.net",
-      "gender": "M",
-      "image": "http://k.kakaocdn.net/dn/dpk9l1/btqmGhA2lKL/Oz0wDuJn1YV2DIn92f6DVK/img_110x110.jpg",
-      "term": "9",
-      "campus": "",
-      "group": "5",
-      "sub_yn": 0
-    }
-  ];
 
   useEffect(() => {
-    setSearchResult(friends);
+    const getAllFriends = async () => {
+      try {
+        const id = userInfo.id;
+        axios.get(`https://j9a510.p.ssafy.io//api/users/friends/${id}`)
+          .then((data) => {
+            if (data.data.message === "친구 전체 목록 조회 성공") {
+              setFriends(data.data.data);
+            }
+          })
+      } catch (e) {
+        console.log(e);
+      }
+    }
+    getAllFriends();
   }, []);
-
-  // useEffect(() => {
-  //   const getAllFriends = async () => {
-  //     try {
-  //       const id = userInfo.id;
-  //       axios.get(`https://j9a510.p.ssafy.io//api/users/friends/${id}`)
-  //         .then((data) => {
-  //           if (data.data.message === "친구 전체 목록 조회 성공") {
-  //             setFriends(data.data.data);
-  //           }
-  //         })
-  //     } catch (e) {
-  //       console.log(e);
-  //     }
-  //   }
-  //   getAllFriends();
-  // }, []);
 
   const search = (e) => {
     const searchText = e.target.value;
@@ -177,9 +43,6 @@ const CandidatesSearch = ({onSelectedUserId}) => {
   }
 
   const voteFriend = (userId) => {
-    // ChooseCandidate(userId, questionData, myuserId);
-    // Candidates.ChooseCandidate(userId, Candidates.questionData, Candidates.myuserId);
-    // Candidates(userId, Candidates.questionData, Candidates.myuserId);
     onSelectedUserId(userId);
   }
 
