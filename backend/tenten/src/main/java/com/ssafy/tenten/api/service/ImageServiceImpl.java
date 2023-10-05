@@ -41,7 +41,7 @@ public class ImageServiceImpl implements ImageService {
         if(!uploadDir.exists()) uploadDir.mkdirs();
 
         // 파일 이름을 유니크한 값으로 생성(UUID)
-        String newFileName =UUID.randomUUID().toString()+"_"+image.getOriginalFilename();
+        String newFileName =image.getOriginalFilename();
 
         String[] split = image.getOriginalFilename().split("\\.");
 
