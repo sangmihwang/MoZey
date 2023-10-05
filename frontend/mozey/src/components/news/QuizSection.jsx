@@ -10,6 +10,16 @@ const QuizSection = () => {
   const [showModal, setShowModal] = useState(false);
   const [isCorrect, setIsCorrect] = useState(false);
 
+  const getUserFromLocalStorage = () => {
+    const userInfo = localStorage.getItem("userInfo");
+    if (!userInfo) return null;
+
+    const userState = JSON.parse(userInfo);
+    return userState.state?.User || {};
+  };
+
+  const userData = getUserFromLocalStorage();
+
   useEffect(() => {
     const fetchData = async () => {
       const currentDate = new Date();
@@ -54,10 +64,34 @@ const QuizSection = () => {
     fetchData();
   }, []);
 
-  const checkAnswer = (answer) => {
+  const checkAnswer = async (answer) => {
     setShowModal(true);
     if (selectedChoice === answer) {
       setIsCorrect(true);
+
+      // 정답을 맞췄을 경우 포인트 획득 로직 추가
+      const userId = userData.id;
+
+      const requestBody = {
+        "fromCoinName" : "None",
+        "toCoinName" : "Point",
+        "minusCoinAmount" : 0,
+        "plusCoinAmount" : 100
+      };
+
+      try {
+        const response = await axios.post(`https://j9a510.p.ssafy.io/api/coins/exchange/${userId}`, requestBody);
+        
+        if(response.status === 200) {
+          console.log(response.data)
+        } else {
+          console.log('200이 반환되지 않음')
+        }
+
+      } catch (error) {
+        console.error("POST 요청 중 오류 발생:", error);
+      }
+
     } else {
       setIsCorrect(false);
     }
@@ -86,7 +120,7 @@ const QuizSection = () => {
                   <>
                     정답입니다!
                     <br />
-                    포인트가 적립되었습니다!
+                    100 포인트가 적립되었습니다!
                   </>
                 ) : (
                   <>
