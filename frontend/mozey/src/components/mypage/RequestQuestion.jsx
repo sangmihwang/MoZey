@@ -33,9 +33,6 @@ const RequestQuestion = () => {
         )
         .then((data) => {
           if (data.data.message === "질문 신청 내역 조회 - 사용자") {
-            console.log("질문 내역 P", data);
-            console.log("현재 인덱스", pageIdxP);
-            //setList(list.concat(data.data.data));
             setPageIdxP(pageIdxP + 1);
             setHasNext(data.data.hasNext);
             setList((prevList) => [...prevList, ...data.data.data]);
@@ -64,9 +61,6 @@ const RequestQuestion = () => {
         )
         .then((data) => {
           if (data.data.message === "질문 신청 내역 조회 - 사용자") {
-            console.log("질문 내역 Y", data);
-            console.log("현재 인덱스", pageIdxY);
-            //setList(list.concat(data.data.data));
             setPageIdxY(pageIdxY + 1);
             setHasNext(data.data.hasNext);
             setList((prevList) => [...prevList, ...data.data.data]);
@@ -131,10 +125,12 @@ const RequestQuestion = () => {
           {list.map((qtn, index) => (
             <S.Question key={index}>
               <S.QuestionImgBox>
-                {qtn.image === null || !qtn.image ? (
+                {qtn.image === null || !qtn.image
+                ? (
                   <img src={QuestionImage} alt="profile" />
-                ) : (
-                  <img src={qtn.image} alt="profile" />
+                )
+                : ( 
+                  <img src={`https://j9a510.p.ssafy.io/api/v1/image/${qtn.image}?option=vote`} alt="profile" />
                 )}
               </S.QuestionImgBox>
               <S.QuestionInfo>
