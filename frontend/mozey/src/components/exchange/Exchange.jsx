@@ -120,6 +120,7 @@ const Exchange = () => {
   // 날짜를 원하는 형식으로 변환 (YYYYMMDD을 YYYY-MM-DD로 변환)
   const formatDate = (date) => {
     const date2 = date.toString();
+    console.log(date2);
     const year = date2.slice(0, 4);
     const month = date2.slice(4, 6);
     const day = date2.slice(6, 8);
@@ -137,16 +138,20 @@ const Exchange = () => {
 
   // 코스피 차트 구현
   useEffect(() => {
-    if (selectedPeriod1 === "total") {
-      console.log(UseChartData.filter((item) => item.name === "KOSPI 50"));
+    if (selectedPeriod1 === "total" || selectedPeriod1 === "default") {
       setFilteredSeries1(
         UseChartData.filter((item) => item.name === "KOSPI 50")
       );
     } else if (selectedPeriod1 === "7days") {
       const filteredData1 = filteredSeries1.map((item) => {
+        console.log(item);
         const filteredData1 = item.data.filter((dataItem) => {
+          console.log(dataItem);
+          console.log(dataItem.x);
+          console.log(formatDate(dataItem.x));
           const sevenDaysAgo = new Date();
           sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+          console.log(sevenDaysAgo.getDate() - 7);
           return (
             formatDate(dataItem.x) >= sevenDaysAgo && item.name === "KOSPI 50"
           );
@@ -169,7 +174,7 @@ const Exchange = () => {
 
   // S&P 차트 구현
   useEffect(() => {
-    if (selectedPeriod2 === "total") {
+    if (selectedPeriod2 === "total" || selectedPeriod2 === "default") {
       setFilteredSeries2(
         UseChartData.filter((item) => item.name === "S&P 500")
       );
