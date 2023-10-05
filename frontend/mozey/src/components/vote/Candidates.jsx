@@ -19,6 +19,7 @@ const Candidates = ({
   const [candidatesData, setCandidatesData] = useState([]);
   const [myuserId, setMyUserId] = useState(null);
   const [fbToken, setfbToken] = useState(null);
+  const [selectedUserId, setSelectedUserId] = useState(null);
 
   // 무작위로 배열 섞기 (Fisher-Yates shuffle 알고리즘)
   function shuffleArray(array) {
@@ -52,10 +53,11 @@ const Candidates = ({
   useEffect(() => {
     fetchData();
   }, []); // 빈 의존성 배열을 전달하여 이 훅이 한 번만 실행되게
+  
   const ChooseCandidate = async (chosen, qtnselectedQuestionIdId, userId) => {
     try {
       const time = new Date().toISOString(); // 현재 시간을 ISO 문자열로 변환합니다.
-      console.log(time);
+      // console.log(time);
 
       // console.log(chosen, selectedQuestionId, userId);
       const postData = {
@@ -83,6 +85,13 @@ const Candidates = ({
       console.log("에러", error);
     }
   };
+
+  // 친구 검색 모달창에서 친구를 선택한 경우
+  const handleSelectedUserId = (selected) => {
+    toggleCandiChangeOpen();
+    setSelectedUserId(selected);
+    ChooseCandidate(selectedUserId, selectedQuestionId, myuserId);
+  }
 
   return (
     <S.Wrap>
@@ -146,7 +155,9 @@ const Candidates = ({
                 toggleCandiChangeOpen();
               }}
             >
-              <components.CandidatesSearch />
+              <components.CandidatesSearch
+                onSelectedUserId={handleSelectedUserId}
+              />
             </S.ModalOverlay>
           )}
         </S.SearchButton>

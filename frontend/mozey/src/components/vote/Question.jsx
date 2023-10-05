@@ -10,7 +10,7 @@ const Question = ({
   oneSelectedQuestionContent,
   currentIndex,
 }) => {
-  console.log("데잌터", questionsData);
+  // console.log("데잌터", questionsData);
 
   useEffect(() => {
     if (questionsData.length > 0) {
