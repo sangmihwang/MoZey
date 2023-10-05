@@ -42,7 +42,6 @@ const MessageList = () => {
   };
 
   const handleSelectInfo = (type, value) => {
-    console.log(type, value);
     toggleMsgFindoutOpen();
     setSelectedInfo({ type, value });
     // MessageInfo 모달 열기
