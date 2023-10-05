@@ -223,7 +223,7 @@ const Exchange = () => {
       <S.Centered>
         <Chart options={options} series={filteredSeries2} />
       </S.Centered>
-      <ExchangeCoin />
+      <ExchangeCoin></ExchangeCoin>
     </S.Wrap>
   );
 };
