@@ -40,7 +40,7 @@ for news in news_items:
         # MySQL 연결 및 데이터 저장 부분
         conn = mysql.connector.connect(
             host='j9a510.p.ssafy.io',
-            user='A510',
+            user='root',
             password='3jbhrVyqstWs9ud',
             database='test'
         )
