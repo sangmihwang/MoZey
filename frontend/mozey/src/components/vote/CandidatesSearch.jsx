@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import useStore from "../../store/userInfoStore";
+import axios from "axios";
 import styled from "styled-components";
 import * as components from "components";
 import { BiSearch } from "react-icons/bi";
