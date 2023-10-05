@@ -128,9 +128,7 @@ const ExchangeCoin = () => {
         plusCoinAmount: toCoin,
       };
       const response = await coinPriceAPI.exchangeCoin(postData);
-      console.log(response.data);
-      console.log(userInfo);
-      console.log(userInfo.id, "아이디");
+      console.log(response);
     } catch (error) {
       console.log("에러", error);
     }
