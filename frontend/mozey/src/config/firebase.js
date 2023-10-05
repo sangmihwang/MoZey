@@ -36,7 +36,8 @@ function FirebaseComponent() {
           });
 
           if (currentToken) {
-            console.log(userInfo);
+            console.log("유저인포", userInfo);
+            console.log("토큰", currentToken);
             setUserID(userInfo.id);
             const formData = new URLSearchParams();
             formData.append("firebaseToken", currentToken);
