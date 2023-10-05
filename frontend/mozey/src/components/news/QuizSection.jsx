@@ -15,21 +15,22 @@ const QuizSection = () => {
       const currentDate = new Date();
       let dateToFetch;
 
-      if (currentDate.getUTCHours() >= 11) {
+      if (currentDate.getUTCHours() >= 2) {
         dateToFetch = currentDate.toISOString().split("T")[0];
       } else {
         currentDate.setDate(currentDate.getUTCDate() - 1);
         dateToFetch = currentDate.toISOString().split("T")[0];
       }
 
+
       const savedQuizzes = localStorage.getItem("quizzes");
       const savedQuizDate = localStorage.getItem("quizDate");
       const savedQuizIndex = localStorage.getItem("currentQuizIndex");
 
-      if (savedQuizzes && savedQuizIndex && savedQuizDate === dateToFetch) {
+      if (savedQuizzes && savedQuizDate === dateToFetch) {
         // 저장된 퀴즈의 날짜와 현재 날짜가 같으면 그대로 유지
         setQuizzes(JSON.parse(savedQuizzes));
-        setCurrentQuizIndex(parseInt(savedQuizIndex, 10));
+        setCurrentQuizIndex(savedQuizIndex ? parseInt(savedQuizIndex, 10) : 0);
       } else {
         try {
           const response = await axios.get(
@@ -57,14 +58,9 @@ const QuizSection = () => {
   const checkAnswer = (answer) => {
     setShowModal(true);
     if (selectedChoice === answer) {
-      setIsCorrect(true);
-      setCurrentQuizIndex((prevIndex) => {
-        const newIndex = prevIndex + 1;
-        localStorage.setItem("currentQuizIndex", newIndex.toString());
-        return newIndex;
-      });
+        setIsCorrect(true);
     } else {
-      setIsCorrect(false);
+        setIsCorrect(false);
     }
   };
 
@@ -72,7 +68,11 @@ const QuizSection = () => {
     setShowModal(false);
     setSelectedChoice(null);
     if (isCorrect) {
-      setCurrentQuizIndex((prevIndex) => prevIndex + 1);
+        setCurrentQuizIndex((prevIndex) => {
+            const newIndex = prevIndex + 1;
+            localStorage.setItem("currentQuizIndex", newIndex.toString());
+            return newIndex;
+        });
     }
   };
 

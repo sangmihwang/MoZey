@@ -37,11 +37,11 @@ const Candidates = ({
       const response = await axios.get(
         `https://j9a510.p.ssafy.io/api/votes/candidates/${userInfo.id}`
       );
-      console.log(userId);
-      console.log(userInfo.id);
-      console.log(response);
+      // console.log(userId);
+      // console.log(userInfo.id);
+      // console.log(response);
       setCandidatesData(response.data.data);
-      console.log(response.data.data);
+      // console.log(response.data.data);
     } catch (error) {
       console.error("데이터를 가져오는 중 오류가 발생했습니다:", error);
     }
@@ -66,8 +66,8 @@ const Candidates = ({
       const response = await voteAPI.postVoteNotification(postData);
       console.log(response.data);
       setfbToken(response.data.data.fbToken);
-      console.log(fbToken);
-      const encodedToken = fbToken;
+
+      const encodedToken = response.data.data.fbToken;
       const decodedToken = decodeURIComponent(encodedToken);
       const postData2 = {
         targetUserId: decodedToken,
@@ -105,8 +105,12 @@ const Candidates = ({
               {shuffledCandidates.slice(2, 4).map((candidate) => (
                 <S.CandidateBox key={candidate.userId}>
                   <CgProfile />
-                  <S.NameBox onClick={() => ChooseCandidate(candidate.name)}>
-                    {candidate.name}
+                  <S.NameBox
+                      onClick={() =>
+                          ChooseCandidate(candidate.userId, questionsData, myuserId)
+                      }
+                  >
+                      {candidate.name}
                   </S.NameBox>
                 </S.CandidateBox>
               ))}
