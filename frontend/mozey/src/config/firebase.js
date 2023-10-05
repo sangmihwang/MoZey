@@ -36,8 +36,8 @@ function FirebaseComponent() {
           });
 
           if (currentToken) {
-            console.log("유저인포", userInfo);
-            console.log("토큰", currentToken);
+            console.log(userInfo);
+            console.log("FB토큰", currentToken);
             setUserID(userInfo.id);
             const formData = new URLSearchParams();
             formData.append("firebaseToken", currentToken);
@@ -51,9 +51,8 @@ function FirebaseComponent() {
               }
             );
             console.log(response, "토큰발급완료");
-            console.log(currentToken);
           } else {
-            console.log("토큰 없습니다");
+            console.log("error");
           }
         } catch (error) {
           console.log("알림 설정 필요", error);
