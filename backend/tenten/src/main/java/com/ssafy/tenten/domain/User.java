@@ -134,4 +134,25 @@ public class User {
     public void updateRefreshToken(String refreshToken) {
         this.refreshToken = refreshToken;
     }
+
+    public void updateMoney(String token, Long amount, String type) {
+        if (type.equals("EARN")) {
+            if (token.equals("Point")) {
+                this.point += amount;
+            } else if (token.equals("Coin1")) {
+                this.coin1 += amount;
+            } else {
+                this.coin2 += amount;
+            }
+        } else {
+            if (token.equals("Point")) {
+                this.point -= amount;
+            } else if (token.equals("Coin1")) {
+                this.coin1 -= amount;
+            } else {
+                this.coin2 -= amount;
+            }
+        }
+
+    }
 }
