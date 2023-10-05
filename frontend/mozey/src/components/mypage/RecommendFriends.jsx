@@ -58,7 +58,7 @@ const RecommendFriends = () => {
 					</button>
 				</S.Search>
 			</S.Top>
-			<S.Container>
+			{/* <S.Container>
 				<ul>
 					{recommend.map(friend => (
 						<S.Friend key={friend.userId}>
@@ -72,14 +72,14 @@ const RecommendFriends = () => {
 								<h2>{friend.name}</h2>
 							</S.FriendInfo>
 							<S.FriendAdd>
-								{/* 아래 처럼 하면 페이지 렌더링할때 addFriend 가 한번 호출 -> friend.userId 가 undefined로 에러 */}
+								아래 처럼 하면 페이지 렌더링할때 addFriend 가 한번 호출 -> friend.userId 가 undefined로 에러
 								<button onClick={() => addFriend(friend.userId)}>추가</button>
-								{/* <button onClick={addFriend(friend.userId)}>추가</button> */}
+								<button onClick={addFriend(friend.userId)}>추가</button>
 							</S.FriendAdd>
 						</S.Friend>
 					))}
 				</ul>
-			</S.Container>
+			</S.Container> */}
 		</S.Wrap>
 	);
 };
