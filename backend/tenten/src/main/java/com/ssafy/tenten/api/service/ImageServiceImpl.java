@@ -38,21 +38,17 @@ public class ImageServiceImpl implements ImageService {
         File uploadDir = new File(uploadPath);
 
         // 폴더 없으면 폴더 생성
-        if(!uploadDir.exists())
-            uploadDir.mkdirs();
+        if(!uploadDir.exists()) uploadDir.mkdirs();
 
         // 파일 이름을 유니크한 값으로 생성(UUID)
-        String newFileName =image.getOriginalFilename();
+        String newFileName =UUID.randomUUID().toString()+"_"+image.getOriginalFilename();
 
-        System.out.println(image.getOriginalFilename());
         String[] split = image.getOriginalFilename().split("\\.");
 
-        try(InputStream inputStream = image.getInputStream()){
-            BufferedImage bi=ImageIO.read(inputStream);
-            bi=resizeImage(bi,450,450);
-            ImageIO.write(bi,split[1],new File(uploadPath,newFileName));
-        }catch (Exception e){
-            System.out.println(e.getMessage());
+        try(InputStream inputStream = image.getInputStream()) {
+            BufferedImage bi = ImageIO.read(inputStream);
+            bi = resizeImage(bi, 450, 450);
+            ImageIO.write(bi, split[1], new File(uploadPath, newFileName));
         }
 
         log.info("[이미징 업로드] 이미지 업로드 완료");
