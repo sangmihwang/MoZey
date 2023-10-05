@@ -122,8 +122,11 @@ const Exchange = () => {
     const date2 = date.toString();
     console.log(date2);
     const year = date2.slice(0, 4);
-    const month = date2.slice(4, 6);
-    const day = date2.slice(6, 8);
+    console.log(year);
+    const month = date2.slice(5, 7);
+    console.log(month);
+    const day = date2.slice(8, 10);
+    console.log(day);
     const newDate = `${year}-${month}-${day}`;
     return new Date(newDate);
   };
@@ -151,6 +154,7 @@ const Exchange = () => {
           console.log(formatDate(dataItem.x));
           const sevenDaysAgo = new Date();
           sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+          console.log(sevenDaysAgo);
           console.log(sevenDaysAgo.getDate() - 7);
           return (
             formatDate(dataItem.x) >= sevenDaysAgo && item.name === "KOSPI 50"
@@ -162,8 +166,13 @@ const Exchange = () => {
     } else if (selectedPeriod1 === "30days") {
       const filteredData1 = filteredSeries1.map((item) => {
         const filteredData1 = item.data.filter((dataItem) => {
+          console.log(dataItem);
+          console.log(dataItem.x);
+          console.log(formatDate(dataItem.x));
           const monthAgo = new Date();
+          console.log(monthAgo);
           monthAgo.setDate(monthAgo.getDate() - 30);
+          console.log(monthAgo.getDate() - 30);
           return formatDate(dataItem.x) >= monthAgo && item.name === "KOSPI 50";
         });
         return { ...item, data: filteredData1 };
