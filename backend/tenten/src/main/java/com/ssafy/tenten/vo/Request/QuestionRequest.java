@@ -1,7 +1,9 @@
 package com.ssafy.tenten.vo.Request;
 
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
 import lombok.Getter;
+
 
 @Getter
 public class QuestionRequest {

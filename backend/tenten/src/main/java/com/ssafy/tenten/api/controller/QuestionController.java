@@ -20,9 +20,6 @@ import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.util.UUID;
 
 import static com.ssafy.tenten.exception.ErrorCode.QUESTION_NOT_FOUND;
 
@@ -44,8 +41,10 @@ public class QuestionController {
 
     @ApiOperation(value = "개인 질문 신청 내역 조회")
     @GetMapping(value = {"/questions/users/{userId}/{status}", "/questions/users/{userId}"})
-    public ResponseEntity<?> getAppQuestion(@PathVariable("userId") Long id, @PathVariable(name = "status", required = false) Character status, @RequestParam(defaultValue = "0", required = false) int pageIdx) {
-        PageRequest pageRequest = PageRequest.of(pageIdx, 10, Sort.by(Sort.Direction.DESC, "qtnId"));
+    public ResponseEntity<?> getAppQuestion(@PathVariable("userId") Long id,
+                                            @PathVariable(name = "status", required = false) Character status,
+                                            @RequestParam(defaultValue = "0", required = false) int pageIdx) {
+        PageRequest pageRequest = PageRequest.of(pageIdx, 10, Sort.by(Sort.Direction.DESC,"qtnId"));
         Slice<QuestionResponse> questions = questionService.getQuestions(id, status, pageRequest);
 
         return SuccessResponseEntity.toResponseEntityPage("질문 신청 내역 조회 - 사용자", questions.getContent(), questions.hasNext());
@@ -56,13 +55,9 @@ public class QuestionController {
      */
     @ApiOperation(value = "질문 신청 등록")
     @PostMapping("/questions")
-    public ResponseEntity<?> postQuestions(QuestionRequest questionRequest
-                                           //MultipartFile image
-    ) {
-
+    public ResponseEntity<?> postQuestions(@RequestBody QuestionRequest questionRequest) {
         mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
         QuestionDto questionDto = mapper.map(questionRequest, QuestionDto.class);
-//        questionDto.setImage(UUID.randomUUID().toString()+ "_" +image.getOriginalFilename());
         questionService.postQuestions(questionDto);
 
         return SuccessResponseEntity.toResponseEntity("질문 신청 등록 완료", null);
@@ -88,10 +83,10 @@ public class QuestionController {
      */
     @GetMapping("/questions")
     public ResponseEntity<?> getQuestions(@RequestParam(defaultValue = "0", required = false) int pageIdx) {
-        PageRequest pageRequest = PageRequest.of(pageIdx, 10, Sort.by(Sort.Direction.DESC, "qtnId"));
+        PageRequest pageRequest = PageRequest.of(pageIdx, 10, Sort.by(Sort.Direction.DESC,"qtnId"));
         Page<QuestionResponse> questions = questionService.getAllQuestions(pageRequest);
 
-        PageResponse pageResponse = PageResponse.PageResponse("등록된 질문 전체 조회 성공", questions);
+        PageResponse pageResponse = PageResponse.PageResponse("등록된 질문 전체 조회 성공",questions);
         return ResponseEntity.ok().body(pageResponse);
     }
 
@@ -100,14 +95,16 @@ public class QuestionController {
      * 상세 조회 또는 P 인 애들만 Y인 애들
      */
     @GetMapping(value = {"/questions/{qtnId}", "/questions/status/{status}"})
-    public ResponseEntity<?> getQuestion(@PathVariable(value = "qtnId", required = false) Long qtnId, @PathVariable(value = "status", required = false) Character status, @RequestParam(defaultValue = "0", required = false) int pageIdx) {
+    public ResponseEntity<?> getQuestion(@PathVariable(value = "qtnId", required = false) Long qtnId,
+                                         @PathVariable(value = "status", required = false) Character status,
+                                         @RequestParam(defaultValue = "0", required = false) int pageIdx) {
         PageRequest pageRequest = PageRequest.of(pageIdx, 10, Sort.by(Sort.Direction.DESC, "qtnId"));
         if (status == null) {
             QuestionResponse question = questionService.getQuestion(qtnId);
             return SuccessResponseEntity.toResponseEntity("등록된 질문 상세 조회 성공", question);
         } else {
             Page<QuestionResponse> questionPage = questionService.getQuestionPage(status, pageRequest);
-            PageResponse pageResponse = PageResponse.PageResponse("등록된 질문 상태 조회 성공", questionPage);
+            PageResponse pageResponse = PageResponse.PageResponse("등록된 질문 상태 조회 성공",questionPage);
             return ResponseEntity.ok().body(pageResponse);
         }
 
