@@ -17,7 +17,7 @@ const RecommendFriends = () => {
 		const getRecommend = async () => {
 			try {
 				const id = userInfo.id;
-				axios.get(`https://j9a510.p.ssafy.io/api/users/friends/recommend/${id}}`)
+				axios.get(`https://j9a510.p.ssafy.io/api/users/friends/recommend/${id}`)
 					.then((data) => {
 						if (data.data.message === "친구 조회 완료") {
 							setRecommend(data.data.data);
