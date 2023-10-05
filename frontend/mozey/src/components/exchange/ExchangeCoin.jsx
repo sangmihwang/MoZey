@@ -157,7 +157,6 @@ const ExchangeCoin = () => {
             <S.StyledTbStar size="25%" padding="10%" />
           )}
           <br />
-          <br />
           <Select
             name="fromOption"
             className="select"
@@ -169,12 +168,12 @@ const ExchangeCoin = () => {
             <MenuItem value="S&P 500">S&P 500</MenuItem>
           </Select>
           <br />
-          <br />
           <TextField
             value={fromCoin}
             onChange={(e) => handleFromCoinChange(e.target.value)}
             error={error} // Add the error prop to display error styling
             label={error ? "보유 금액을 초과했습니다." : ""}
+            padding="10%"
           />
         </div>
         <div>
