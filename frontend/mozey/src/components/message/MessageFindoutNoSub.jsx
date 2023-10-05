@@ -22,10 +22,10 @@ const MessageFindoutNoSub = ({ dataforMessageInfo, onDataRequest }) => {
     try {
       const response = await axios.get(`https://j9a510.p.ssafy.io/api/users/info/${userData.email}`);
       console.log(response.data)
-      if (response.data.coin1 >= 10) {
+      if (response.data.coin2 >= 10) {
         setShowModal(true);
       } else {
-        alert("coin1 잔액이 부족합니다.");
+        alert("coin2 잔액이 부족합니다.");
       }
     } catch (error) {
       console.error("coin1 조회 중 오류 발생:", error);
@@ -35,12 +35,12 @@ const MessageFindoutNoSub = ({ dataforMessageInfo, onDataRequest }) => {
 
   const handleConfirm = async () => {
     setShowModal(false);
-    const userId = userData.id; // 로컬 스토리지 객체에 'id' 속성이 사용자 ID를 가리킨다고 가정합니다.
+    const userId = userData.id;
 
     const requestBody = {
-      "fromCoinName" : "None",
-      "toCoinName" : "coin1",
-      "minusCoinAmount" : 10,
+      "fromCoinName" : "Coin2",
+      "toCoinName" : "None",
+      "minusCoinAmount" : 30,
       "plusCoinAmount" : 0
     };
 
@@ -50,6 +50,7 @@ const MessageFindoutNoSub = ({ dataforMessageInfo, onDataRequest }) => {
       if(response.status === 200) {
         onDataRequest();
       } else {
+        console.log('200이 반환되지않음')
       }
 
     } catch (error) {
@@ -68,7 +69,7 @@ const MessageFindoutNoSub = ({ dataforMessageInfo, onDataRequest }) => {
         </S.Question>
         <S.FriendName onClick={handleDataRequest}>
           <S.StyledBiSolidCoinStack />
-          10 확인
+          30 확인
         </S.FriendName>
       </S.FindoutBox>
       {showModal && (
