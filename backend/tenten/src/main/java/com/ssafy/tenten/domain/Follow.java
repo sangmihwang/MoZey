@@ -16,11 +16,11 @@ public class Follow {
     @Column(name = "follow_id", updatable = false)
     private Long followId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     @JoinColumn(name = "sender_id", updatable = false)
     private User senderId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     @JoinColumn(name = "receiver_id", updatable = false)
     private User receiverId;
 
