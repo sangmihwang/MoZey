@@ -36,7 +36,7 @@ public class MoneyHistoryServiceImpl implements MoneyHistoryService{
                 .map(a -> MoneyHistoryResponse.builder()
                         .coinName(String.valueOf(a.getCoinName()))
                         .coinChangeAmount(a.getCoinChangeAmount())
-                        .coinChangeDate(a.getCoinChangeDate())
+//                        .coinChangeDate(a.getCoinChangeDate())
                         .transactionType(String.valueOf(a.getTransactionType()))
                         .build())
                 .collect(Collectors.toList());
