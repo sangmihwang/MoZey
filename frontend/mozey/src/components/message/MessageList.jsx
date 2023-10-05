@@ -120,6 +120,7 @@ const S = {
   Wrap: styled.div`
     background-color: ${({ theme }) => theme.color.background};
     padding: 12px 18px;
+    min-height: 100vh;
   `,
   MessageBox: styled.div`
     background-color: ${({ theme }) => theme.color.white};

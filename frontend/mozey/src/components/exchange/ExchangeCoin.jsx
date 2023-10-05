@@ -84,7 +84,7 @@ const ExchangeCoin = () => {
       }
     }
     const result = value * exchangeRate;
-    setToCoin(result.toFixed(2));
+    setToCoin(Math.floor(result));
   };
   const handleFromCoinChange = (e) => {
     const inputAmount = e;
@@ -157,6 +157,7 @@ const ExchangeCoin = () => {
             <S.StyledTbStar size="25%" padding="10%" />
           )}
           <br />
+          <br />
           <Select
             name="fromOption"
             className="select"
@@ -167,6 +168,7 @@ const ExchangeCoin = () => {
             <MenuItem value="KOSPI 50">KOSPI 50</MenuItem>
             <MenuItem value="S&P 500">S&P 500</MenuItem>
           </Select>
+          <br />
           <br />
           <TextField
             value={fromCoin}
