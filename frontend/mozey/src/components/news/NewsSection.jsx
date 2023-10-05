@@ -91,8 +91,8 @@ const S = {
     margin: 20px;
     display: flex;
     flex-direction: column;
-    padding: 3% 3%; // 내부 상하, 좌우 여백
-    box-shadow: 0 4px 4px rgb(0, 0, 0, 0.25);
+    padding: 3% 3%;
+    box-shadow: ${({ theme }) => theme.shadow.card};
     overflow-y: auto;
     max-height: ${({ $isExpanded }) => ($isExpanded ? "100%" : "547px")};
     min-height: 547px;
