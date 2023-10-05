@@ -9,11 +9,10 @@ import { BiSolidCoinStack } from "react-icons/bi";
 import { TbStarFilled, TbDiamondFilled } from "react-icons/tb";
 import coinPriceAPI from "api/coinPriceAPI";
 import { ExchangeCoin } from "components";
-// firebase
 import { auth, messaging } from "config/firebase";
-// css
 import "semantic-ui-css/semantic.min.css";
 import useStore from "../../store/chartDataStore";
+
 const Exchange = () => {
   const chartDataStore = useStore((state) => state.chartData);
   console.log(chartDataStore, "제발됐으면,,!!!!");
@@ -95,28 +94,6 @@ const Exchange = () => {
   };
   const UseChartData = distributeData(chartDataStore);
   console.log(UseChartData);
-  // const [transformedData, setTransformedData] = useState(0);
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       if (transformedData === 0) {
-  //         const response =
-  //           await axios.get`https://j9a510.p.ssafy.io:/api/coins/price`;
-  //         const response2 = distributeData(response.data.data);
-  //         setTransformedData(response2);
-  //         console.log(chartDataStore, "asd");
-  //         // (response2);
-  //         // console.log(chartDataStore);
-  //       } else {
-  //         console.log("test");
-  //       }
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   };
-  //   fetchData();
-  // }, [transformedData]);
-
   // 날짜를 원하는 형식으로 변환 (YYYYMMDD을 YYYY-MM-DD로 변환)
   const formatDate = (date) => {
     const date2 = date.toString();
@@ -141,13 +118,14 @@ const Exchange = () => {
 
   // 코스피 차트 구현
   useEffect(() => {
+    let targetData = UseChartData.filter((item) => item.name === "KOSPI 50");
+
     if (selectedPeriod1 === "total" || selectedPeriod1 === "default") {
       setFilteredSeries1(
         UseChartData.filter((item) => item.name === "KOSPI 50")
       );
     } else if (selectedPeriod1 === "7days") {
-      const filteredData1 = UseChartData.map((item) => {
-        console.log(item);
+      targetData = targetData.map((item) => {
         const filteredData1 = item.data.filter((dataItem) => {
           const sevenDaysAgo = new Date();
           sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
@@ -157,9 +135,12 @@ const Exchange = () => {
         });
         return { ...item, data: filteredData1 };
       });
-      setFilteredSeries1(filteredData1);
+      setFilteredSeries1(targetData);
     } else if (selectedPeriod1 === "30days") {
-      const filteredData1 = UseChartData.map((item) => {
+      setFilteredSeries1(
+        UseChartData.filter((item) => item.name === "KOSPI 50")
+      );
+      targetData = targetData.map((item) => {
         const filteredData1 = item.data.filter((dataItem) => {
           const monthAgo = new Date();
           monthAgo.setDate(monthAgo.getDate() - 30);
@@ -167,7 +148,7 @@ const Exchange = () => {
         });
         return { ...item, data: filteredData1 };
       });
-      setFilteredSeries1(filteredData1);
+      setFilteredSeries1(targetData);
     }
   }, [selectedPeriod1]);
 
@@ -242,7 +223,7 @@ const Exchange = () => {
       <S.Centered>
         <Chart options={options} series={filteredSeries2} />
       </S.Centered>
-      {/* <ExchangeCoin transformedData={transformedData} /> */}
+      <ExchangeCoin />
     </S.Wrap>
   );
 };
