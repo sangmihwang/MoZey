@@ -1,28 +1,35 @@
 import { useEffect, useState } from "react";
 import React from "react";
 import coinPriceAPI from "api/coinPriceAPI";
-import useStore from "../../store";
 import styled from "styled-components";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import TextField from "@mui/material/TextField";
 import { FaCoins, FaCommentDollar } from "react-icons/fa";
 import { AiOutlineArrowRight } from "react-icons/ai";
-
+import useStore from "../../store/chartDataStore";
+import useStore1 from "../../store/userInfoStore";
 //  코인 교환 파트
 
-const ExchangeCoin = (transformedData) => {
-  console.log(transformedData);
-  const series_KOSPI = transformedData.filter(
+const ExchangeCoin = () => {
+  const chartDataStore = useStore((state) => state.chartData);
+  const userInfo = useStore1((state) => state.User);
+
+  console.log(chartDataStore);
+  console.log(userInfo);
+  console.log(userInfo.point);
+  console.log(userInfo.coin1);
+  console.log(userInfo.coin2);
+
+  const series_KOSPI = chartDataStore.filter(
     (item) => item.name === "KOSPI 50"
   );
   console.log(series_KOSPI);
   const [series1, setSeries1] = useState(series_KOSPI);
-  // S&P 차트 상태
-  const series_SandP = transformedData.filter(
-    (item) => item.name === "S&P 500"
-  );
+
+  const series_SandP = chartDataStore.filter((item) => item.name === "S&P 500");
   const [series2, setSeries2] = useState(series_SandP);
+
   const [fromCoin, setFromCoin] = useState("");
   const [toCoin, setToCoin] = useState("");
   const [selectFromOption, setSelectFromOption] = useState("Point");
@@ -56,7 +63,8 @@ const ExchangeCoin = (transformedData) => {
     const result = Math.round(value * exchangeRate);
     setToCoin(result);
   };
-  const handleFromCoinChange = (e) => {
+  const handleFromCoinChange = (fromCoin, e) => {
+    console.log(fromCoin);
     if (e > myCoin) {
       setError(true);
     } else {
