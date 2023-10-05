@@ -7,11 +7,9 @@ import { TbMoodSadDizzy } from "react-icons/tb";
 
 const MessageList = () => {
   const { isMsgFindoutOpen, toggleMsgFindoutOpen } = msgFindoutState();
-  // console.log(isMsgFindoutOpen);
   const [messages, setMessages] = useState([]);
   const [dataforMessageInfo, setDataForMessageInfo] = useState(null);
   const [isSubscribed, setIsSubscribed] = useState(null);
-
   const [showMessageInfo, setShowMessageInfo] = useState(false);
   const [selectedInfo, setSelectedInfo] = useState({ type: null, value: null });
 
@@ -49,12 +47,11 @@ const MessageList = () => {
     setSelectedInfo({ type, value });
     // MessageInfo 모달 열기
     setShowMessageInfo(true);
-    
   };
   const onDataRequest = () => {
     toggleMsgFindoutOpen();
-    setSelectedInfo({ type: 'location', value: null });
-     // MessageInfo 모달 열기
+    setSelectedInfo({ type: "location", value: null });
+    // MessageInfo 모달 열기
     setShowMessageInfo(true);
   };
 
@@ -109,7 +106,10 @@ const MessageList = () => {
             setShowMessageInfo(false);
           }}
         >
-          <components.MessageInfo dataforMessageInfo={dataforMessageInfo} selectedInfo={selectedInfo} />
+          <components.MessageInfo
+            dataforMessageInfo={dataforMessageInfo}
+            selectedInfo={selectedInfo}
+          />
         </S.ModalOverlay>
       )}
     </S.Wrap>
@@ -119,13 +119,13 @@ const MessageList = () => {
 const S = {
   Wrap: styled.div`
     background-color: ${({ theme }) => theme.color.background};
-    padding: 0 18px;
+    padding: 12px 18px;
   `,
   MessageBox: styled.div`
     background-color: ${({ theme }) => theme.color.white};
     width: 100%;
     height: 114px;
-    margin: 8px auto 18px;
+    margin: 0 auto 18px;
     border-radius: 10px;
     box-shadow: ${({ theme }) => theme.shadow.card};
   `,
