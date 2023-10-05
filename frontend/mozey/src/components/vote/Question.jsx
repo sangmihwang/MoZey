@@ -10,18 +10,8 @@ const Question = ({
   oneSelectedQuestionContent,
   currentIndex,
 }) => {
-  console.log(questionsData);
-  // // 무작위로 배열 섞기 (Fisher-Yates shuffle 알고리즘)
-  // function shuffleArray(array) {
-  //   for (let i = array.length - 1; i > 0; i--) {
-  //     const j = Math.floor(Math.random() * (i + 1));
-  //     [array[i], array[j]] = [array[j], array[i]]; // 배열 원소 교환
-  //   }
-  //   return array;
-  // }
+  console.log("데잌터", questionsData);
 
-  // const randomQuestions = shuffleArray([...questionsData]).slice(0, 1);
-  // 선택된 질문의 ID를 상위 컴포넌트에 전달
   useEffect(() => {
     if (questionsData.length > 0) {
       oneSelectedQuestionId(questionsData[0].qtnId);
