@@ -1,12 +1,15 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import styled, { ThemeProvider } from "styled-components";
+import useStore from "./store/userInfoStore";
 import * as style from "styles";
 import * as utils from "utils";
 import * as pages from "pages";
 import * as components from "components";
 import { FirebaseApp } from "firebase/app";
 const App = () => {
+  const userInfo = useStore((state) => state.User);
+
   return (
     <ThemeProvider theme={style.Theme}>
       <style.GlobalStyles />
@@ -32,8 +35,7 @@ const App = () => {
             <Route path={utils.URL.REQUEST.MAIN} element={<pages.Request />} />
           </Routes>
         </S.ContentContainer>
-
-        <components.BottomNav />
+        {loginUser.id !== 0 && <components.BottomNav />}
       </Router>
     </ThemeProvider>
   );
