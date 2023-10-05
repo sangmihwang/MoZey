@@ -23,7 +23,7 @@ const S = {
 			border-radius: 10px;
             background: ${({ theme }) => theme.color.red};
 			color: ${({ theme }) => theme.color.white};
-			box-shadow: 0 4px 4px rgb(0, 0, 0, 0.25);
+			box-shadow: ${({ theme }) => theme.shadow.card};
 			text-align: center;
 			font-size: 14px;
 			font-weight: bold;

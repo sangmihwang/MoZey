@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import useStore from "../../store/userInfoStore";
-// import {} from "./config/firebase";
 import React from "react";
 import styled from "styled-components";
 import axios from 'axios';
@@ -9,17 +8,18 @@ import coin1Image from "assets/images/icon-coin1.png"
 import coin2Image from "assets/images/icon-coin2.png"
 
 const History = () => {
-  const userInfo = useStore((state) => state.User);
+	const userInfo = useStore((state) => state.User);
 	const [history, setHistory] = useState([]);
 	const [visibleItems, setVisibleItems] = useState(3);
 
 	useEffect(() => {
 		const userHistory = async () => {
 			try {
-        const id = userInfo.id;
-				axios.get(`https://j9a510.p.ssafy.io/api/users/info/${id}`)
+				const id = userInfo.id;
+				axios.get(`https://j9a510.p.ssafy.io/api/coins/users/${id}`)
 					.then((data) => {
-						if (data.data.message === "사용자 코인 내역 조회 완료") {
+						console.log("히스토리", data)
+						if (data.data.message === "사용자 코인 내역 조회완료") {
 							setHistory(data.data.data);
 						}
 					})
@@ -36,62 +36,62 @@ const History = () => {
 				<h2>재산 히스토리</h2>
 			</S.Title>
 			<S.Container>
-        {history.length === 0 && (
-          <h4>히스토리 내역이 없습니다</h4>
-        )}
+				{history.length === 0 && (
+					<h4>히스토리 내역이 없습니다</h4>
+				)}
 				<ul>
 					{history.slice(0, visibleItems).map((item, index) => {
-						if (item.coinName === "point") {
-							if (item.type === "적립") {
+						if (item.coinName === "Point") {
+							if (item.transactionType === "EARN") {
 								return (
-									<li>
+									<li key={index}>
 										<img src={pointImage} alt="point" />
-										<h4>{item.usage} 포인트를 받았습니다</h4>
-										<p>{item.date}</p>
+										<h4>{item.coinChangeAmount} 포인트를 받았습니다</h4>
+										<p>{item.coinChangeDate}</p>
 									</li>
 								)
 							} else {
 								return (
-									<li>
+									<li key={index}>
 										<img src={pointImage} alt="point" />
-										<h4>{item.usage} 포인트를 사용했습니다</h4>
-										<p>{item.date}</p>
+										<h4>{item.coinChangeAmount} 포인트를 사용했습니다</h4>
+										<p>{item.coinChangeDate}</p>
 									</li>
 								)
 							}
-						} else if (item.coinName === "coin1") {
-							if (item.type === "적립") {
+						} else if (item.coinName === "Coin1") {
+							if (item.transactionType === "EARN") {
 								return (
-									<li>
+									<li key={index}>
 										<img src={coin1Image} alt="coin1" />
-										<h4>{item.usage} 코인을 받았습니다</h4>
-										<p>{item.date}</p>
+										<h4>{item.coinChangeAmount} 코인을 받았습니다</h4>
+										<p>{item.coinChangeDate}</p>
 									</li>
 								)
 							} else {
 								return (
-									<li>
+									<li key={index}>
 										<img src={coin1Image} alt="coin1" />
-										<h4>{item.usage} 코인을 사용했습니다</h4>
-										<p>{item.date}</p>
+										<h4>{item.coinChangeAmount} 코인을 사용했습니다</h4>
+										<p>{item.coinChangeDate}</p>
 									</li>
 								)
 							}
 						} else {
-							if (item.type === "적립") {
+							if (item.transactionType === "EARN") {
 								return (
-									<li>
+									<li key={index}>
 										<img src={coin2Image} alt="coin2" />
-										<h4>{item.usage} 코인을 받았습니다</h4>
-										<p>{item.date}</p>
+										<h4>{item.coinChangeAmount} 코인을 받았습니다</h4>
+										<p>{item.coinChangeDate}</p>
 									</li>
 								)
 							} else {
 								return (
-									<li>
+									<li key={index}>
 										<img src={coin2Image} alt="coin2" />
-										<h4>{item.usage} 코인을 사용했습니다</h4>
-										<p>{item.date}</p>
+										<h4>{item.coinChangeAmount} 코인을 사용했습니다</h4>
+										<p>{item.coinChangeDate}</p>
 									</li>
 								)
 							}
@@ -99,7 +99,7 @@ const History = () => {
 					})}
 				</ul>
 				{history && visibleItems < history.length && (
-					<button>더보기</button>
+					<button onClick={() => setVisibleItems(visibleItems + 3)}>더보기</button>
 				)}
 			</S.Container>
 		</S.Wrap>
@@ -130,7 +130,7 @@ const S = {
     display: flex;
     flex-direction: column;
     padding: 7%;
-    box-shadow: 0 4px 4px rgb(0, 0, 0, 0.25);
+    box-shadow: ${({ theme }) => theme.shadow.card};
     text-align: center;
 		align-items: center;
 

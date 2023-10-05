@@ -1,35 +1,46 @@
 import { useEffect, useState } from "react";
 import useStore from "../../store/userInfoStore";
-import { Routes, Route, Link } from 'react-router-dom'
-import React from "react";
-import styled from "styled-components";
 import axios from 'axios';
-import SearchModal from "./SearchFriends";
-import SearchImage from "assets/images/icon-searchFriends.png"
+import styled from "styled-components";
 import ProfileImage from "assets/images/icon-profileImg-default.svg"
 
-const RecommendFriends = () => {
+const SearchModal = (setModalOpen) => {
 	const userInfo = useStore((state) => state.User);
-	const [recommend, setRecommend] = useState([]);
-	const [modalOpen, setModalOpen] = useState(false);
+
+	const [allUsers, setAllUsers] = useState([]);
+	const [searchResult, setSearchResult] = useState([]);
+	const [searchText, setSearchText] = useState("");
+	const { open, close } = setModalOpen;
 
 	useEffect(() => {
-		const getRecommend = async () => {
+		const getAllUsers = async () => {
 			try {
-				const id = userInfo.id;
-				axios.get(`https://j9a510.p.ssafy.io/api/users/friends/recommend/${id}}`)
+				axios.get(`https://j9a510.p.ssafy.io/api/users/all`)
 					.then((data) => {
-						if (data.data.message === "친구 조회 완료") {
-							setRecommend(data.data.data);
-							console.log("추천 친구 조회", data.data.data);
+						if (data.data.message === "전체 사용자 조회 완료") {
+							setAllUsers(data.data.data);
+							setSearchResult(data.data.data);
 						}
 					})
 			} catch (e) {
 				console.log(e);
 			}
 		}
-		getRecommend();
+		getAllUsers();
 	}, []);
+
+	const search = (e) => {
+		const searchText = e.target.value;
+		setSearchText(searchText);
+
+		const filteredUsers = allUsers.filter((user) => {
+			const userName = user.name || '';
+			return userName.includes(searchText);
+		});
+
+		console.log("결과", filteredUsers);
+		setSearchResult(filteredUsers);
+	};
 
 	const addFriend = (id) => {
 		try {
@@ -46,31 +57,19 @@ const RecommendFriends = () => {
 		}
 	}
 
-	const leaveModalOpen = async () => {
-		setModalOpen(true);
-	}
-
-	const leaveModalClose = async () => {
-		setModalOpen(false);
-	}
-
 	return (
 		<S.Wrap>
-			<S.Top>
-				<S.Title>
-					<h2>추천 친구들</h2>
-				</S.Title>
-				<S.Search>
-					<button>
-						<img src={SearchImage} alt="search" />
-						<a onClick={() => leaveModalOpen()}>친구검색</a>
-					</button>
-				</S.Search>
-			</S.Top>
+			<S.BG onClick={close}></S.BG>
 			<S.Container>
-				<ul>
-					{recommend.map(friend => (
-						<S.Friend key={friend.userId}>
+				<S.Sticky>
+					<S.Title>
+						<h2>친구 검색</h2>
+					</S.Title>
+					<input type="text" placeholder="검색할 친구의 이름을 입력하세요" onChange={search} value={searchText} />
+				</S.Sticky>
+				<S.Result>
+					{searchResult.map((friend) => (
+						<S.Friend key={friend.id}>
 							<S.FriendProfileBox>
 								{friend.image === null || !friend.image
 									? (<img src={ProfileImage} alt="profile" />)
@@ -88,68 +87,86 @@ const RecommendFriends = () => {
 							</S.FriendAdd>
 						</S.Friend>
 					))}
-				</ul>
-			</S.Container>
-			{modalOpen && (
-				<SearchModal open={modalOpen} close={leaveModalClose}></SearchModal>
-			)}
+				</S.Result>
+			</S.Container>``
 		</S.Wrap>
 	);
 };
 
 const S = {
 	Wrap: styled.div`
-	margin-top: 20px;
-	width: 100%;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	`,
-	Top: styled.div`
-		width: 87.7%;
+		width: 100%;
+		height: 100%;
 		display: flex;
-		flex-direction: row;
-		justify-content: space-between;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		position: fixed;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+	`,
+	BG: styled.div`
+	background-color: rgba(0, 0, 0, 0.4);
+	width: 100%;
+	height: 100%;
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	z-index: 1 !important;
+	`,
+	Sticky: styled.div`
+	position: sticky;
+	top: 0;
+	background-color: ${({ theme }) => theme.color.white};
+	z-index: 3;
+
+	> input {
+		background-color: ${({ theme }) => theme.color.background};
+      width: 100%;
+			margin-top: 2vh;
+			margin-bottom: 2vh;
+      border: none;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: bold;
+      color: ${({ theme }) => theme.color.gray};
+      text-align: center;
+      padding: 3%;
+      cursor: pointer;
+
+      &:hover {
+        outline: 2px solid ${({ theme }) => theme.color.lightgray};
+        outline-offset: -2px;
+      }
+      &:focus {
+        outline: 2px solid ${({ theme }) => theme.color.lightgray};
+        outline-offset: -2px;
+      }
 	`,
 	Title: styled.div`
-	font-size: 16px;
-	font-weight: bold;
-	color: #040404;
-    `,
-	Search: styled.div`
-		> button {
-		background-color: ${({ theme }) => theme.color.white};
-		color: ${({ theme }) => theme.color.lightgray};
-		box-shadow: ${({ theme }) => theme.shadow.card};
-		border-radius: 10px;
-		width: 83px;
-		height: 25px;
-		font-size: 14px;
+		font-size: 20px;
 		font-weight: bold;
-		display: flex;
-    align-items: center;
-    justify-content: center;
-		}
-		> button:hover {
-    	background: #FBF7EF;
-  	}
+		color: #040404;
+		margin-top: 15px;
+		margin-bottom: 10px;
+	`,
+	Result: styled.div`
+	overflow: auto;
 	`,
 	Container: styled.div`
 		background: ${({ theme }) => theme.color.white};
-    width: 87.7%;
+    width: 80%;
+		height: 100vw;
     border-radius: 10px;
-		margin-top: 10px;
     display: flex;
     flex-direction: column;
     padding: 3% 7% 3%;
-    box-shadow: ${({ theme }) => theme.shadow.card};
+    box-shadow: 0 4px 4px rgb(0, 0, 0, 0.25);
     overflow-y: auto;
-		max-height: 250px;
-
-		> ul > li {
-			width: 100%;
-		}
-    `,
+		z-index: 2 !important;
+	}
+  `,
 	Friend: styled.div`
 		display: flex;
 		flex-direction: row;
@@ -200,4 +217,4 @@ const S = {
 	`,
 };
 
-export default RecommendFriends;
+export default SearchModal;
