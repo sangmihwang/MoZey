@@ -87,5 +87,9 @@ export const userInfoStore = create(
     }
   )
 );
+export const getUserID = () => {
+  const state = userInfoStore.getState();
+  return state.User.id;
+};
 
 export default userInfoStore;
