@@ -18,7 +18,18 @@ const MessageFindoutNoSub = ({ dataforMessageInfo, onDataRequest }) => {
 
   const [showModal, setShowModal] = useState(false);
 
-  const handleDataRequest = () => {
+  const handleDataRequest = async () => {
+    try {
+      const response = await axios.get(`https://j9a510.p.ssafy.io/api/users/info/${userData.email}`);
+      console.log(response.data)
+      if (response.data.coin1 >= 10) {
+        setShowModal(true);
+      } else {
+        alert("coin1 잔액이 부족합니다.");
+      }
+    } catch (error) {
+      console.error("coin1 조회 중 오류 발생:", error);
+    }
     setShowModal(true);
   };
 
@@ -28,7 +39,7 @@ const MessageFindoutNoSub = ({ dataforMessageInfo, onDataRequest }) => {
 
     const requestBody = {
       "fromCoinName" : "None",
-      "toCoinName" : "Coin1",
+      "toCoinName" : "coin1",
       "minusCoinAmount" : 10,
       "plusCoinAmount" : 0
     };

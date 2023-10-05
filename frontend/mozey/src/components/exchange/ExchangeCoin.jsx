@@ -9,7 +9,8 @@ import { FaCoins, FaCommentDollar } from "react-icons/fa";
 import { AiOutlineArrowRight } from "react-icons/ai";
 import useStore from "../../store/chartDataStore";
 import useStore1 from "../../store/userInfoStore";
-
+import { BiSolidCoinStack } from "react-icons/bi";
+import { TbStarFilled, TbDiamondFilled } from "react-icons/tb";
 //  코인 교환 파트
 
 const ExchangeCoin = () => {
@@ -55,13 +56,18 @@ const ExchangeCoin = () => {
   // 테스트
   const myCoin = 1000;
   const calculateExchange = (value, selectFromOption, selectToOption) => {
-    const todayKospi = series1[0].data[series1[0].data.length - 1].y;
-    const todaySandP = series2[0].data[series2[0].data.length - 1].y;
-    let exchangeRate = 1;
-    const KToS = todayKospi / todaySandP;
-    const PToS = todaySandP;
-    const PToK = todayKospi;
-    const SToK = todaySandP / todayKospi;
+    const todayKospi =
+      Math.round(series1[0].data[series1[0].data.length - 1].y / 1000) / 10;
+    const todaySandP =
+      Math.round(series2[0].data[series2[0].data.length - 1].y / 1000) / 10;
+    let exchangeRate = 0.85;
+    console.log("오늘의 스타 지수 ", todayKospi);
+    console.log("오늘의 다이아 지수 ", todaySandP);
+
+    const KToS = (todayKospi / todaySandP) * 0.9;
+    const PToS = todaySandP / 1000;
+    const PToK = todayKospi / 1000;
+    const SToK = (todaySandP / todayKospi) * 0.9;
     if (selectFromOption === "Point") {
       if (selectToOption === "KOSPI 50") {
         exchangeRate = PToK;
@@ -77,8 +83,8 @@ const ExchangeCoin = () => {
         exchangeRate = SToK;
       }
     }
-    const result = Math.round(value * exchangeRate);
-    setToCoin(result);
+    const result = value * exchangeRate;
+    setToCoin(Math.floor(result));
   };
   const handleFromCoinChange = (e) => {
     const inputAmount = e;
@@ -141,7 +147,16 @@ const ExchangeCoin = () => {
     <S.ExContainer>
       <S.CoinCentered>
         <div>
-          <FaCommentDollar size="30%" padding="10%" />
+          {selectFromOption === "Point" && (
+            <S.StyledBiSolidCoinStack size="25%" padding="10%" />
+          )}
+          {selectFromOption === "KOSPI 50" && (
+            <S.StyledTbDiamond size="25%" padding="10%" />
+          )}
+          {selectFromOption === "S&P 500" && (
+            <S.StyledTbStar size="25%" padding="10%" />
+          )}
+          <br />
           <br />
           <Select
             name="fromOption"
@@ -154,6 +169,7 @@ const ExchangeCoin = () => {
             <MenuItem value="S&P 500">S&P 500</MenuItem>
           </Select>
           <br />
+          <br />
           <TextField
             value={fromCoin}
             onChange={(e) => handleFromCoinChange(e.target.value)}
@@ -165,7 +181,12 @@ const ExchangeCoin = () => {
           <AiOutlineArrowRight size="30%" padding="10%" />
         </div>
         <div>
-          <FaCoins size="30%" padding="10%" />
+          {selectToOption === "KOSPI 50" && (
+            <S.StyledTbDiamond size="25%" padding="10%" />
+          )}
+          {selectToOption === "S&P 500" && (
+            <S.StyledTbStar size="25%" padding="10%" />
+          )}
           <br />
           <Select
             name="toOption"
@@ -229,6 +250,24 @@ const S = {
     display: block;
     border-radius: 10px;
     margin-top: 20px;
+  `,
+  StyledBiSolidCoinStack: styled(BiSolidCoinStack)`
+    font-size: ${({ theme }) => theme.fontsize.title2};
+    margin-left: 8px;
+    margin-right: 4px;
+    color: ${({ theme }) => theme.color.blue};
+  `,
+  StyledTbStar: styled(TbStarFilled)`
+    font-size: ${({ theme }) => theme.fontsize.title2};
+    margin-left: 8px;
+    margin-right: 4px;
+    color: ${({ theme }) => theme.color.yellow};
+  `,
+  StyledTbDiamond: styled(TbDiamondFilled)`
+    font-size: ${({ theme }) => theme.fontsize.title2};
+    margin-left: 8px;
+    margin-right: 4px;
+    color: ${({ theme }) => theme.color.red};
   `,
 };
 export default ExchangeCoin;
