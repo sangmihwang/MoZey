@@ -24,10 +24,10 @@ public class JwtService {
     private String jwtSecret;
 
     @Value("${jwt.access.expiration}")
-    private static long accessExpirationMs;
+    private long accessExpirationMs;
 
     @Value("${jwt.refresh.expiration}")
-    private static long refreshExpirationMs;
+    private long refreshExpirationMs;
 
     @Value("${jwt.access.header}")
     private String accessHeader;
@@ -65,7 +65,7 @@ public class JwtService {
     }
     
     // 토큰 생성
-    public static String createAccessToken (String key) {
+    public String createAccessToken (String key) {
         Claims claims = Jwts.claims();
         return Jwts.builder()
                 .setClaims(claims)
@@ -74,7 +74,7 @@ public class JwtService {
                 .signWith(SignatureAlgorithm.HS256, key)
                 .compact();
     }
-    public static String createRefreshToken (String key) {
+    public String createRefreshToken (String key) {
         Claims claims = Jwts.claims();
         return Jwts.builder()
                 .setClaims(claims)
