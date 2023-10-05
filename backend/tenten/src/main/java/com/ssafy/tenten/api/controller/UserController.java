@@ -30,7 +30,6 @@ import java.util.List;
 @RequestMapping("/api/users")
 @RequiredArgsConstructor
 @Slf4j
-@CrossOrigin("*")
 public class UserController {
     private final UserService userService;
     private final UserRepository userRepository;
