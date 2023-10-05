@@ -6,7 +6,7 @@ import styled from "styled-components";
 import axios from 'axios';
 import ProfileImage from "assets/images/icon-profileImg-default.svg"
 
-const Main = () => {
+const MyFriends = () => {
 	const userInfo = useStore((state) => state.User);
 	const [friends, setFriends] = useState([]);
 
@@ -15,7 +15,7 @@ const Main = () => {
 			try {
 				const id = userInfo.id;
 				// 친구의 캠퍼스, 기수, 반 조회에 포함되는지 확인 필요
-				axios.get("https://j9a510.p.ssafy.io/api/users/friends/${id}")
+				axios.get(`https://j9a510.p.ssafy.io/api/users/friends/${id}`)
 					.then((data) => {
 						if (data.data.message === "친구 전체 목록 조회 성공") {
 							setFriends(data.data.data);
@@ -31,7 +31,7 @@ const Main = () => {
 	const deleteFriend = (id) => {
 		try {
 			const senderId = userInfo.id;
-			axios.delete("https://j9a510.p.ssafy.io/api/users/friends/${senderId}/${id}")
+			axios.delete(`https://j9a510.p.ssafy.io/api/users/friends/${senderId}/${id}`)
 			.then((data) => {
 				if(data.data.message === "친구 삭제 완료"){
 					alert("삭제가 완료되었습니다");
@@ -54,20 +54,22 @@ const Main = () => {
 				)}
 				<ul>
 					{friends.map(friend => (
-						<S.Friend>
-						<S.FriendProfileBox>
-							{friend.image === null
-							? (<img src={ProfileImage} alt="profile" />)
-							: (<img src={friend.image} alt="profile" />)
-							}
-						</S.FriendProfileBox>
-						<S.FriendInfo>
-							<h2>{friend.name}</h2>
-						</S.FriendInfo>
-						<S.FriendDelete>
-							<button onClick={deleteFriend(friend.userId)}>삭제</button>
-						</S.FriendDelete>
-					</S.Friend>
+            // map 함수 같은 Array Method 쓸 때, iteration 돌면서 렌더링되는 요소마다 key값 부여해줘야함.
+						// <S.Friend key={friend.userId}>
+						<S.Friend key={friend.userId}>
+							<S.FriendProfileBox>
+								{friend.image === null
+								? (<img src={ProfileImage} alt="profile" />)
+								: (<img src={friend.image} alt="profile" />)
+								}
+							</S.FriendProfileBox>
+							<S.FriendInfo>
+								<h2>{friend.name}</h2>
+							</S.FriendInfo>
+							<S.FriendDelete>
+								<button onClick={deleteFriend(friend.userId)}>삭제</button>
+							</S.FriendDelete>
+						</S.Friend>
 					))}
 				</ul>
 			</S.Container>
@@ -164,4 +166,4 @@ const S = {
 	`,
 };
 
-export default Main;
+export default MyFriends;

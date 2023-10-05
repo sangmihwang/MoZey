@@ -8,7 +8,7 @@ import MusicImage from "assets/images/icon-music.png"
 import DanceImage from "assets/images/icon-dance.png"
 import FreepassImage from "assets/images/icon-freepass.png"
 
-const Main = () => {
+const Top3 = () => {
 	const userInfo = useStore((state) => state.User);
 	const [top, setTop] = useState([]);
 
@@ -16,7 +16,7 @@ const Main = () => {
 		const userTop3 = async () => {
 			try {
 				const id = userInfo.id;
-				axios.get("https://j9a510.p.ssafy.io/api/votes/top/${id}")
+				axios.get(`https://j9a510.p.ssafy.io/api/votes/top/${id}`)
 					.then((data) => {
 						if (data.data.message === "TOP3 불러오기 완료") {
 							setTop(data.data.data);
@@ -119,4 +119,4 @@ const S = {
     `,
 };
 
-export default Main;
+export default Top3;

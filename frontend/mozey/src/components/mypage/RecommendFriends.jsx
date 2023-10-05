@@ -8,7 +8,7 @@ import axios from 'axios';
 import SearchImage from "assets/images/icon-searchFriends.png"
 import ProfileImage from "assets/images/icon-profileImg-default.svg"
 
-const Main = () => {
+const RecommendFriends = () => {
 	const userInfo = useStore((state) => state.User);
 	const [recommend, setRecommend] = useState([]);
 
@@ -17,7 +17,7 @@ const Main = () => {
 			try {
 				const id = userInfo.id;
 				//친구의 캠퍼스, 기수, 반 조회에 포함되는지 확인 필요
-				axios.get("https://j9a510.p.ssafy.io/api/users/friends/recommend/${id}")
+				axios.get(`https://j9a510.p.ssafy.io/api/users/friends/recommend/${id}`)
 					.then((data) => {
 						if (data.data.message === "친구 조회 완료") {
 							setRecommend(data.data.data);
@@ -33,7 +33,7 @@ const Main = () => {
 	const addFriend = (id) => {
 		try {
 			const senderId = userInfo.id;
-			axios.post("https://j9a510.p.ssafy.io/api/users/friends/follow/${senderId}/${id}")
+			axios.post(`https://j9a510.p.ssafy.io/api/users/friends/follow/${senderId}/${id}`)
 				.then((data) => {
 					if (data.data.message === "친구 추가 완료") {
 						alert("추가했습니다");
@@ -61,7 +61,7 @@ const Main = () => {
 			<S.Container>
 				<ul>
 					{recommend.map(friend => (
-						<S.Friend>
+						<S.Friend key={friend.userId}>
 							<S.FriendProfileBox>
 								{friend.image === null
 									? (<img src={ProfileImage} alt="profile" />)
@@ -72,7 +72,9 @@ const Main = () => {
 								<h2>{friend.name}</h2>
 							</S.FriendInfo>
 							<S.FriendAdd>
-								<button onClick={addFriend(friend.userId)}>추가</button>
+								{/* 아래 처럼 하면 페이지 렌더링할때 addFriend 가 한번 호출 -> friend.userId 가 undefined로 에러 */}
+								<button onClick={() => addFriend(friend.userId)}>추가</button>
+								{/* <button onClick={addFriend(friend.userId)}>추가</button> */}
 							</S.FriendAdd>
 						</S.Friend>
 					))}
@@ -185,4 +187,4 @@ const S = {
 	`,
 };
 
-export default Main;
+export default RecommendFriends;
