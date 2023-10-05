@@ -8,7 +8,7 @@ import * as pages from "pages";
 import * as components from "components";
 import { FirebaseApp } from "firebase/app";
 const App = () => {
-  const userInfo = useStore((state) => state.User);
+  const loginUser = useStore((state) => state.User);
 
   return (
     <ThemeProvider theme={style.Theme}>
