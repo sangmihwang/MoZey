@@ -34,12 +34,7 @@ public class UserServiceImpl implements UserService{
     @Transactional
     @Override
     public void join(UserJoinRequest dto) {
-        Optional<User> optionalUser = userRepository.findByEmail(dto.getEmail());
-        if (!optionalUser.isPresent()) {
-            // 적절한 예외를 던지거나 다른 처리를 합니다.
-            throw new EntityNotFoundException("User not found with email: " + dto.getEmail());
-        }
-        User user = optionalUser.get();
+        User user = userRepository.findByEmail(dto.getEmail()).get();
         user.join(dto);
     }
 
