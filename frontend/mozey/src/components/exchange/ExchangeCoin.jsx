@@ -1,28 +1,52 @@
 import { useEffect, useState } from "react";
 import React from "react";
 import coinPriceAPI from "api/coinPriceAPI";
-import useStore from "../../store";
 import styled from "styled-components";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import TextField from "@mui/material/TextField";
 import { FaCoins, FaCommentDollar } from "react-icons/fa";
 import { AiOutlineArrowRight } from "react-icons/ai";
+import useStore from "../../store/chartDataStore";
+import useStore1 from "../../store/userInfoStore";
 
 //  코인 교환 파트
 
-const ExchangeCoin = (transformedData) => {
-  console.log(transformedData);
-  const series_KOSPI = transformedData.filter(
-    (item) => item.name === "KOSPI 50"
-  );
-  console.log(series_KOSPI);
+const ExchangeCoin = () => {
+  const chartDataStore = useStore((state) => state.chartData);
+  const userInfo = useStore1((state) => state.User);
+  const distributeData = (rawData) => {
+    const transformedData = {};
+    rawData.forEach((item) => {
+      const { coinName, coinPrice, date } = item;
+      const seriesName = coinName === "Coin1" ? "KOSPI 50" : "S&P 500";
+      if (!transformedData[coinName]) {
+        transformedData[coinName] = {
+          name: seriesName,
+          data: [],
+        };
+      }
+      transformedData[coinName].data.push({
+        x: new Date(
+          `${date.toString().slice(0, 4)}-${date.toString().slice(4, 6)}-${date
+            .toString()
+            .slice(6, 8)}`
+        ).toISOString(),
+        y: coinPrice,
+      });
+    });
+    return Object.values(transformedData);
+  };
+
+  const UseChartData = distributeData(chartDataStore);
+
+  const series_KOSPI = UseChartData.filter((item) => item.name === "KOSPI 50");
+
   const [series1, setSeries1] = useState(series_KOSPI);
-  // S&P 차트 상태
-  const series_SandP = transformedData.filter(
-    (item) => item.name === "S&P 500"
-  );
+
+  const series_SandP = UseChartData.filter((item) => item.name === "S&P 500");
   const [series2, setSeries2] = useState(series_SandP);
+
   const [fromCoin, setFromCoin] = useState("");
   const [toCoin, setToCoin] = useState("");
   const [selectFromOption, setSelectFromOption] = useState("Point");
@@ -57,11 +81,22 @@ const ExchangeCoin = (transformedData) => {
     setToCoin(result);
   };
   const handleFromCoinChange = (e) => {
-    if (e > myCoin) {
+    const inputAmount = e;
+    console.log(inputAmount);
+    let tmp = "";
+    if (selectFromOption === "Point") {
+      tmp = userInfo.Point;
+    } else if (selectFromOption === "KOSPI 50") {
+      tmp = userInfo.Coin1;
+    } else if (selectFromOption === "S&P 500") {
+      tmp = userInfo.Coin2;
+    }
+
+    if (inputAmount > tmp) {
       setError(true);
     } else {
       setError(false);
-      setFromCoin(e);
+      setFromCoin(inputAmount);
     }
   };
   const handleSelectFromOpitonChange = (e) => {
@@ -70,9 +105,35 @@ const ExchangeCoin = (transformedData) => {
   const handleSelectToOpitonChange = (e) => {
     setSelectToOption(e);
   };
-  const handleExchangeClick = (e) => {
-    console.log(e);
+
+  const handleExchangeClick = async (
+    selectFromOption,
+    selectToOption,
+    fromCoin,
+    toCoin
+  ) => {
+    try {
+      const coinModify = {
+        "S&P 500": "Coin2",
+        "KOSPI 50": "Coin1",
+        Point: "Point",
+      };
+      selectFromOption = coinModify[selectFromOption];
+      selectToOption = coinModify[selectToOption];
+
+      const postData = {
+        fromCoinName: selectFromOption,
+        toCoinName: selectToOption,
+        minusCoinAmount: parseInt(fromCoin),
+        plusCoinAmount: toCoin,
+      };
+      const response = await coinPriceAPI.exchangeCoin(postData);
+      console.log(response, "asd");
+    } catch (error) {
+      console.log("에러", error);
+    }
   };
+
   useEffect(() => {
     calculateExchange(fromCoin, selectFromOption, selectToOption);
   }, [fromCoin, selectFromOption, selectToOption]);
@@ -94,7 +155,6 @@ const ExchangeCoin = (transformedData) => {
           </Select>
           <br />
           <TextField
-            type="number"
             value={fromCoin}
             onChange={(e) => handleFromCoinChange(e.target.value)}
             error={error} // Add the error prop to display error styling
@@ -127,8 +187,9 @@ const ExchangeCoin = (transformedData) => {
         </div>
       </S.CoinCentered>
       <S.YellowButton
+        disabled={error}
         onClick={() =>
-          coinPriceAPI.exchangeCoin(
+          handleExchangeClick(
             selectFromOption,
             selectToOption,
             fromCoin,

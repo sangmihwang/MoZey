@@ -1,14 +1,21 @@
-import { axiosInstance } from "api";
+import axios from "axios";
+import { getUserID } from "../store/userInfoStore";
 
 const coinPriceAPI = {
-  // 투표 알림 받기
-  getCoinPrice: () =>
-    axiosInstance.get("https://j9a510.p.ssafy.io:/api/coins/price"),
-
   // 코인 교환
-  exchangeCoin: (fromCoinName, toCoinName, minusCoinAmount, plusCoinAmount) =>
-    // console.log(fromCoinName, toCoinName, minusCoinAmount, plusCoinAmount),
-    axiosInstance.post(`/api/coins/exchange/`),
+  exchangeCoin: (data) => {
+    const userId = getUserID();
+    console.log(data);
+    return axios.post(
+      `https://j9a510.p.ssafy.io:/api/coins/exchange/${userId}`,
+      data,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+  },
 };
 
 export default coinPriceAPI;
