@@ -13,8 +13,11 @@ import { ExchangeCoin } from "components";
 import { auth, messaging } from "config/firebase";
 // css
 import "semantic-ui-css/semantic.min.css";
-
+import useStore from "../../store/chartDataStore";
+// const { setcoinChartData } = chartDataStore();
 const Exchange = () => {
+  const chartDataStore = useStore((state) => state.chartData);
+  console.log(chartDataStore, "제발됐으면,,!!!!");
   const [options] = useState({
     colors: ["#0fbcf9"],
     chart: {
@@ -39,6 +42,7 @@ const Exchange = () => {
         shadeIntensity: 0.65,
       },
     },
+
     // 보조선
     grid: {
       show: false,
@@ -52,6 +56,19 @@ const Exchange = () => {
     fill: {
       type: "gradient",
       gradient: { gradientToColors: ["#f7dc6f"], stops: [0, 500] },
+    },
+    xaxis: {
+      type: "datetime",
+      labels: {
+        formatter: function (val) {
+          const date = new Date(val);
+          const day = date.getDate();
+          if (day % 2 === 0) {
+            return `${date.getFullYear()}-${date.getMonth() + 1}-${day}`;
+          }
+          return "";
+        },
+      },
     },
   });
 
@@ -67,7 +84,11 @@ const Exchange = () => {
         };
       }
       transformedData[coinName].data.push({
-        x: new Date(date).getTime(),
+        x: new Date(
+          `${date.toString().slice(0, 4)}-${date.toString().slice(4, 6)}-${date
+            .toString()
+            .slice(6, 8)}`
+        ).toISOString(),
         y: coinPrice,
       });
     });
@@ -81,9 +102,11 @@ const Exchange = () => {
         if (transformedData === 0) {
           const response =
             await axios.get`https://j9a510.p.ssafy.io:/api/coins/price`;
-          console.log(response.data.data);
           const response2 = distributeData(response.data.data);
           setTransformedData(response2);
+          console.log(chartDataStore, "asd");
+          // (response2);
+          // console.log(chartDataStore);
         } else {
           console.log("test");
         }
