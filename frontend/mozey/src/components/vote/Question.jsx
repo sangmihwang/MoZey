@@ -22,7 +22,10 @@ const Question = ({
   return (
     <S.Wrap>
       <S.ImageBox>
-        <img src={QuestionImage} alt="질문이미지" />
+        <img
+          src={questionsData[currentIndex]?.image || QuestionImage}
+          alt="질문이미지"
+        />
       </S.ImageBox>
       <S.QuestionContent>
         {questionsData[currentIndex] && questionsData[currentIndex].qtnContent}

@@ -2,12 +2,22 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import axios from "axios";
 import * as components from "components";
+import { FcAlarmClock } from "react-icons/fc";
 
 const Vote = () => {
   const [questionsData, setQuestionsData] = useState([]);
   const [selectedQuestionId, setSelectedQuestionId] = useState(null);
   const [selectedQuestionContent, setSelectedQuestionContent] = useState(null);
   const [showTimer, setShowTimer] = useState(false);
+
+  useEffect(() => {
+    const storedStartTime = localStorage.getItem("startTime");
+    if (storedStartTime) {
+      setShowTimer(true);
+    } else {
+      setShowTimer(false);
+    }
+  }, []);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -32,6 +42,9 @@ const Vote = () => {
       setCurrentIndex(currentIndex + 1);
     } else if (currentIndex === questionsData.length - 1) {
       console.log("들어왓나");
+      if (!localStorage.getItem("startTime")) {
+        localStorage.setItem("startTime", new Date().toISOString());
+      }
       setShowTimer(true);
     }
   };
@@ -45,17 +58,6 @@ const Vote = () => {
     const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
 
     useEffect(() => {
-      const startTime = localStorage.getItem("startTime");
-      if (startTime) {
-        setShowTimer(true);
-      }
-    }, []);
-
-    useEffect(() => {
-      if (timeLeft === duration) {
-        localStorage.setItem("startTime", new Date().toISOString());
-      }
-
       if (timeLeft > 0) {
         const intervalId = setInterval(() => {
           setTimeLeft(timeLeft - 1);
@@ -82,7 +84,10 @@ const Vote = () => {
   return (
     <S.Wrap>
       {showTimer ? (
-        <TimerComponent duration={15 * 60} />
+        <>
+          <FcAlarmClock />
+          <TimerComponent duration={15 * 60} />
+        </>
       ) : (
         <>
           <S.QuestionBox>
