@@ -27,13 +27,7 @@ const SignUpForm = () => {
     };
     console.log("Submitting the following data:", requestData);
 
-    // axios.post("https://j9a510.p.ssafy.io/api/users", requestData)
-    await axios
-      .post("https://j9a510.p.ssafy.io:/api/users", requestData, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
+    axios.post("https://j9a510.p.ssafy.io/api/users", requestData)
     .then((res) => {
       localStorage.removeItem("accessToken");
       localStorage.removeItem("email");
