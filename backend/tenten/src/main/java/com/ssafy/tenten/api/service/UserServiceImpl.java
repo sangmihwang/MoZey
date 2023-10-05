@@ -87,6 +87,7 @@ public class UserServiceImpl implements UserService{
         System.out.println(list);
         List<RecommendUserResponse> userResponses = (List<RecommendUserResponse>) list.stream()
                 .map(a -> RecommendUserResponse.builder()
+                        .userId(a.getUserId())
                         .name(a.getName())
                         .image(a.getImage())
                         .term(a.getTerm())
