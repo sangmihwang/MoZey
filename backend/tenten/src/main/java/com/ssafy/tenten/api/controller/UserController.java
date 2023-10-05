@@ -63,11 +63,11 @@ public class UserController {
     }
 
     // 1.3 사용자 정보 조회
-    @GetMapping("/info/{email}")
-    public ResponseEntity<?> getUserInfo(@PathVariable("email") String email, @AuthenticationPrincipal PrincipalDetails principalDetails) {
+    @GetMapping("/info/{userId}")
+    public ResponseEntity<?> getUserInfo(@PathVariable("userId") Long userId, @AuthenticationPrincipal PrincipalDetails principalDetails) {
 //        Long userId = principalDetails.getId();
-//        User user = userRepository.findById(userId).get();
-        User user = userRepository.findByEmail(email).get();
+        User user = userRepository.findById(userId).get();
+//        User user = userRepository.findByEmail(email).get();
         return new ResponseEntity<>(UserResponse.createUserResponse(user), HttpStatus.OK);
     }
 
