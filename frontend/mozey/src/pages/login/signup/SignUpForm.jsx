@@ -7,7 +7,7 @@ import * as components from "components";
 
 const SignUpForm = () => {
   const navigate = useNavigate();
-  const [campus, setCampus] = useState("");
+  const [campus, setCampus] = useState("서울");
   const handleCampus = (e) => {
     setCampus(e.target.value);
   };
@@ -27,16 +27,18 @@ const SignUpForm = () => {
     };
     console.log("Submitting the following data:", requestData);
 
-    axios.post("https://j9a510.p.ssafy.io/api/users", requestData)
-    .then((res) => {
-      localStorage.removeItem("accessToken");
-      localStorage.removeItem("email");
-      setUserInfo(res.data);
-      navigate('/success');
-    }).catch((err) => {
-      console.log(err);
-    });
-  }
+    axios
+      .post("https://j9a510.p.ssafy.io/api/users", requestData)
+      .then((res) => {
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("email");
+        setUserInfo(res.data);
+        navigate("/success");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
     <div>
@@ -57,13 +59,13 @@ const SignUpForm = () => {
               <tr>
                 <td className="content">캠퍼스</td>
                 <td className="enterContent">
-                  <select value={campus} onChange={handleCampus}>
+                  <S.StyledSelect value={campus} onChange={handleCampus}>
                     <option value="서울">서울</option>
                     <option value="대전">대전</option>
                     <option value="광주">광주</option>
                     <option value="구미">구미</option>
                     <option value="부울경">부울경</option>
-                  </select>
+                  </S.StyledSelect>
                 </td>
               </tr>
               <tr>
@@ -100,7 +102,7 @@ const S = {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 90vh;
+    height: 100vh;
   `,
   Title: styled.div`
     width: 87.7%;
@@ -119,16 +121,23 @@ const S = {
     display: flex;
     flex-direction: column;
     padding: 7%;
-    box-shadow: 0 4px 4px rgb(0, 0, 0, 0.25);
+    box-shadow: ${({ theme }) => theme.shadow.card};
     text-align: center;
     align-items: center;
     > button {
       background-color: ${({ theme }) => theme.color.yellow};
-      color: ${({ theme }) => theme.color.darkgray};
+      color: ${({ theme }) => theme.color.white};
       border-radius: 10px;
       width: 75%;
-      height: 30px;
-      font-weight: bold;
+      height: 40px;
+      font-weight: 700;
+      box-shadow: ${({ theme }) => theme.shadow.card};
+
+      &:hover {
+        background-color: ${({ theme }) => theme.color.white};
+        color: ${({ theme }) => theme.color.yellow};
+        border: 1px solid ${({ theme }) => theme.color.yellow};
+      }
     }
     > table {
       width: 100%;
@@ -139,8 +148,7 @@ const S = {
       height: 8vh;
       text-align: center;
       line-height: 8vh;
-      padding-rignt: 20px;
-      font-size: 14px;
+      font-size: ${({ theme }) => theme.fontsize.title3};
       font-weight: bold;
       color: ${({ theme }) => theme.color.gray};
     }
@@ -170,10 +178,17 @@ const S = {
       align-items: center;
     }
     > table > tbody > tr > td > label > span {
-      font-size: 14px;
+      font-size: 12px;
       font-weight: bold;
       color: ${({ theme }) => theme.color.gray};
-      margin-right: 5px;
+    }
+  `,
+  StyledSelect: styled.select`
+    height: 32px;
+    font-size: ${({ theme }) => theme.fontsize.title3};
+    border-radius: 6px;
+    > option {
+      font-size: 12px;
     }
   `,
 };

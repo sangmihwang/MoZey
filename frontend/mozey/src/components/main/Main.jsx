@@ -4,16 +4,23 @@ import React from "react";
 import styled from "styled-components";
 import mozeyLogo from "assets/images/mozey.png";
 import thinkerLogo from "assets/images/thinker.png";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 const Main = () => {
   const navigate = useNavigate();
   const moveToLogin = () => {
-    navigate('/kakao');
-  }
+    navigate("/kakao");
+  };
+  useEffect(() => {
+    const timer = setTimeout(moveToLogin, 3000);
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, []);
 
   return (
-    <S.Wrap onClick={moveToLogin}>
+    <S.Wrap>
       <S.Logo>
         <img src={mozeyLogo} alt={"로고"} />
       </S.Logo>
