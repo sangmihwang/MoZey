@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
-import { useNavigate } from 'react-router-dom';
-import { userInfoStore } from 'store/userInfoStore';
+import { useNavigate } from "react-router-dom";
+import { userInfoStore } from "store/userInfoStore";
 import styled from "styled-components";
 import * as components from "components";
 
@@ -14,9 +14,9 @@ const SignUpForm = () => {
 
   const [group, setGroup] = useState("");
   const setUserInfo = userInfoStore((state) => state.setUserInfo);
-  
+
   const nameRef = useRef(null);
-  
+
   const submitUserInfo = async () => {
     const requestData = {
       name: nameRef.current.value,
@@ -34,15 +34,16 @@ const SignUpForm = () => {
           "Content-Type": "application/json",
         },
       })
-    .then((res) => {
-      localStorage.removeItem("accessToken");
-      localStorage.removeItem("email");
-      setUserInfo(res.data);
-      navigate('/success');
-    }).catch((err) => {
-      console.log(err);
-    });
-  }
+      .then((res) => {
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("email");
+        setUserInfo(res.data);
+        navigate("/success");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
     <div>
@@ -81,7 +82,13 @@ const SignUpForm = () => {
               <tr>
                 <td className="content">특화 반</td>
                 <td className="enterContent">
-                  <input type="number" min="1" max="7" value={group} onChange={(e) => setGroup(e.target.value)} />
+                  <input
+                    type="number"
+                    min="1"
+                    max="7"
+                    value={group}
+                    onChange={(e) => setGroup(e.target.value)}
+                  />
                 </td>
               </tr>
             </tbody>
@@ -169,13 +176,12 @@ const S = {
       display: flex;
       align-items: center;
     }
-    > table > tbody > tr > td> label > span {
+    > table > tbody > tr > td > label > span {
       font-size: 14px;
       font-weight: bold;
       color: ${({ theme }) => theme.color.gray};
       margin-right: 5px;
     }
-
   `,
 };
 
