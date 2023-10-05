@@ -28,7 +28,7 @@ const LoginSuccess = () => {
       .get(`https://j9a510.p.ssafy.io:/api/coins/price`)
       .then((res) => {
         console.log(res.data);
-        setChartData(res.data);
+        setChartData(res.data.data);
       })
       .catch((err) => {
         console.log(err);
