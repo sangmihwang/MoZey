@@ -88,6 +88,9 @@ public class UserServiceImpl implements UserService{
                 .map(a -> RecommendUserResponse.builder()
                         .name(a.getName())
                         .image(a.getImage())
+                        .term(a.getTerm())
+                        .campus(a.getCampus())
+                        .group(a.getGroup())
                         .build())
                 .collect(Collectors.toList());
         return userResponses;
