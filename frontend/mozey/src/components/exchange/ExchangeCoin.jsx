@@ -84,7 +84,7 @@ const ExchangeCoin = () => {
       }
     }
     const result = value * exchangeRate;
-    setToCoin(result);
+    setToCoin(result.toFixed(2));
   };
   const handleFromCoinChange = (e) => {
     const inputAmount = e;
