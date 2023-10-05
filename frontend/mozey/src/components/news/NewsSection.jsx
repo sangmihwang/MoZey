@@ -30,7 +30,7 @@ const NewsSection = () => {
         const currentDate = new Date();
         let dateToFetch;
 
-        if (currentDate.getUTCHours() >= 11) {
+        if (currentDate.getUTCHours() >= 2) {
           // 11:00 이후라면 오늘 날짜로 조회
           dateToFetch = currentDate.toISOString().split("T")[0];
         } else {
