@@ -18,10 +18,12 @@ const CandidatesSearch = ({onSelectedUserId}) => {
     const getAllFriends = async () => {
       try {
         const id = userInfo.id;
-        axios.get(`https://j9a510.p.ssafy.io//api/users/friends/${id}`)
+        axios.get(`https://j9a510.p.ssafy.io/api/users/friends/${id}`)
           .then((data) => {
+            console.log(data);
             if (data.data.message === "친구 전체 목록 조회 성공") {
               setFriends(data.data.data);
+              setSearchResult(data.data.data);
             }
           })
       } catch (e) {
