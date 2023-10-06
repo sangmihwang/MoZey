@@ -6,6 +6,8 @@ import axios from "axios";
 import pointImage from "assets/images/icon-point.png";
 import coin1Image from "assets/images/icon-coin1.png";
 import coin2Image from "assets/images/icon-coin2.png";
+import { BiSolidCoinStack } from "react-icons/bi";
+import { TbStarFilled, TbDiamondFilled } from "react-icons/tb";
 
 const History = () => {
   const userInfo = useStore((state) => state.User);
@@ -44,7 +46,8 @@ const History = () => {
               if (item.transactionType === "EARN") {
                 return (
                   <li key={index}>
-                    <img src={pointImage} alt="point" />
+                    {/* <img src={pointImage} alt="point" /> */}
+                    <S.StyledBiSolidCoinStack />
                     <h4>{item.coinChangeAmount} 포인트를 받았습니다</h4>
                     <p>{item.coinChangeDate}</p>
                   </li>
@@ -52,7 +55,8 @@ const History = () => {
               } else {
                 return (
                   <li key={index}>
-                    <img src={pointImage} alt="point" />
+                    {/* <img src={pointImage} alt="point" /> */}
+                    <S.StyledBiSolidCoinStack />
                     <h4>{item.coinChangeAmount} 포인트를 사용했습니다</h4>
                     <p>{item.coinChangeDate}</p>
                   </li>
@@ -62,7 +66,8 @@ const History = () => {
               if (item.transactionType === "EARN") {
                 return (
                   <li key={index}>
-                    <img src={coin1Image} alt="coin1" />
+                    {/* <img src={coin1Image} alt="coin1" /> */}
+                    <S.StyledTbStar />
                     <h4>{item.coinChangeAmount} 코인을 받았습니다</h4>
                     <p>{item.coinChangeDate}</p>
                   </li>
@@ -70,7 +75,8 @@ const History = () => {
               } else {
                 return (
                   <li key={index}>
-                    <img src={coin1Image} alt="coin1" />
+                    {/* <img src={coin1Image} alt="coin1" /> */}
+                    <S.StyledTbStar />
                     <h4>{item.coinChangeAmount} 코인을 사용했습니다</h4>
                     <p>{item.coinChangeDate}</p>
                   </li>
@@ -80,7 +86,8 @@ const History = () => {
               if (item.transactionType === "EARN") {
                 return (
                   <li key={index}>
-                    <img src={coin2Image} alt="coin2" />
+                    {/* <img src={coin2Image} alt="coin2" /> */}
+                    <S.StyledTbDiamond />
                     <h4>{item.coinChangeAmount} 코인을 받았습니다</h4>
                     <p>{item.coinChangeDate}</p>
                   </li>
@@ -88,7 +95,8 @@ const History = () => {
               } else {
                 return (
                   <li key={index}>
-                    <img src={coin2Image} alt="coin2" />
+                    {/* <img src={coin2Image} alt="coin2" /> */}
+                    <S.StyledTbDiamond />
                     <h4>{item.coinChangeAmount} 코인을 사용했습니다</h4>
                     <p>{item.coinChangeDate}</p>
                   </li>
@@ -183,6 +191,24 @@ const S = {
       height: 20px;
       font-weight: bold;
     }
+  `,
+  StyledBiSolidCoinStack: styled(BiSolidCoinStack)`
+    font-size: ${({ theme }) => theme.fontsize.title2};
+    margin-left: 8px;
+    margin-right: 4px;
+    color: ${({ theme }) => theme.color.blue};
+  `,
+  StyledTbStar: styled(TbStarFilled)`
+    font-size: ${({ theme }) => theme.fontsize.title2};
+    margin-left: 8px;
+    margin-right: 4px;
+    color: ${({ theme }) => theme.color.yellow};
+  `,
+  StyledTbDiamond: styled(TbDiamondFilled)`
+    font-size: ${({ theme }) => theme.fontsize.title2};
+    margin-left: 8px;
+    margin-right: 4px;
+    color: ${({ theme }) => theme.color.red};
   `,
 };
 

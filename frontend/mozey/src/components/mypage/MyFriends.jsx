@@ -28,15 +28,16 @@ const MyFriends = () => {
   }, []);
 
   const deleteFriend = (id) => {
+    console.log("click");
     try {
       const senderId = userInfo.id;
       axios
-        .delete(`https://j9a510.p.ssafy.io/api/users/friends/${senderId}/${id}`)
+        .delete(`https://j9a510.p.ssafy.io/api/users/friends/follow/${senderId}/${id}`)
         .then((data) => {
-          if (data.data.message === "친구 삭제 완료") {
-            alert("삭제가 완료되었습니다");
-            window.location.href = "/mypage";
-          }
+          alert("삭제가 완료되었습니다");
+          window.location.href = "/mypage";
+          // if (data.data.message === "친구 삭제 완료") {
+          // }
         });
     } catch (e) {
       console.log(e);
