@@ -28,22 +28,21 @@ const Vote = () => {
     }
   }, []);
 
-
   const fetchData = async () => {
     try {
-      const response = await axios.get(`https://j9a510.p.ssafy.io/api/votes/questions`);
+      const response = await axios.get(
+        `https://j9a510.p.ssafy.io/api/votes/questions`
+      );
       setQuestionsData(response.data.data);
     } catch (error) {
       console.error("데이터를 가져오는 중 오류가 발생했습니다:", error);
     }
   };
 
-
   useEffect(() => {
     fetchData();
   }, []);
   const [currentIndex, setCurrentIndex] = useState(0);
-
 
   // 포인트 획득 하고 타이머 띄우기
   const handleConfirm = async () => {
@@ -51,25 +50,27 @@ const Vote = () => {
     const userId = userData.id;
 
     const requestBody = {
-      "fromCoinName" : "None",
-      "toCoinName" : "Point",
-      "minusCoinAmount" : 0,
-      "plusCoinAmount" : 200
+      fromCoinName: "None",
+      toCoinName: "Point",
+      minusCoinAmount: 0,
+      plusCoinAmount: 200,
     };
 
     try {
-      const response = await axios.post(`https://j9a510.p.ssafy.io/api/coins/exchange/${userId}`, requestBody);
-      
-      if(response.status === 200) {
-        console.log(response.data)
+      const response = await axios.post(
+        `https://j9a510.p.ssafy.io/api/coins/exchange/${userId}`,
+        requestBody
+      );
+
+      if (response.status === 200) {
+        console.log(response.data);
         // const updatedUserInfo = response.data;
         // const currentLocalStorageData = JSON.parse(localStorage.getItem('userInfo'));
         // currentLocalStorageData.state.User.point = updatedUserInfo.point;
         // localStorage.setItem('userInfo', JSON.stringify(currentLocalStorageData));
       } else {
-        console.log('200이 반환되지않음')
+        console.log("200이 반환되지않음");
       }
-
     } catch (error) {
       console.error("POST 요청 중 오류 발생:", error);
     }
@@ -80,7 +81,6 @@ const Vote = () => {
     setShowTimer(true);
   };
 
-
   const showNextQuestion = () => {
     if (currentIndex < questionsData.length - 1) {
       console.log("지금상태", currentIndex, questionsData.length);
@@ -90,7 +90,6 @@ const Vote = () => {
     }
   };
 
-  
   const TimerComponent = ({ duration }) => {
     const calculateTimeLeft = () => {
       const startTime = localStorage.getItem("startTime");
@@ -110,7 +109,7 @@ const Vote = () => {
       } else {
         localStorage.removeItem("startTime");
         setShowTimer(false);
-        fetchData();  // 타이머가 끝나면 데이터 갱신해야함
+        fetchData(); // 타이머가 끝나면 데이터 갱신해야함
       }
     }, [timeLeft, duration]);
 
@@ -132,7 +131,9 @@ const Vote = () => {
         <S.ModalOverlay>
           <S.Modal>
             <S.ModalContent>
-              다음 질문이 기다려요<br/>200 포인트를 획득!
+              다음 질문이 기다려요
+              <br />
+              200 포인트를 획득!
             </S.ModalContent>
             <S.ConfirmButton onClick={handleConfirm}>확인</S.ConfirmButton>
           </S.Modal>
@@ -141,7 +142,7 @@ const Vote = () => {
 
       {showTimer ? (
         <>
-          <TimerComponent duration={15 * 1} />
+          <TimerComponent duration={15 * 60} />
         </>
       ) : (
         <>
@@ -195,7 +196,7 @@ const S = {
     margin: 20px;
 
     svg {
-        margin-right: 10px;
+      margin-right: 10px;
     }
   `,
   ModalOverlay: styled.div`
