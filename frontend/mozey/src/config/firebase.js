@@ -36,8 +36,8 @@ function FirebaseComponent() {
           });
 
           if (currentToken) {
-            console.log(userInfo);
-            console.log("FB토큰", currentToken);
+            // console.log(userInfo);
+            // console.log("FB토큰", currentToken);
             setUserID(userInfo.id);
             const formData = new URLSearchParams();
             formData.append("firebaseToken", currentToken);
@@ -50,7 +50,7 @@ function FirebaseComponent() {
                 },
               }
             );
-            console.log(response, "토큰발급완료");
+            // console.log(response, "토큰발급완료");
           } else {
             console.log("error");
           }

@@ -62,8 +62,8 @@ const ExchangeCoin = () => {
     const todaySandP =
       Math.round(series2[0].data[series2[0].data.length - 1].y / 1000) / 10;
     let exchangeRate = 0.85;
-    console.log("오늘의 스타 지수 ", todayKospi);
-    console.log("오늘의 다이아 지수 ", todaySandP);
+    // console.log("오늘의 스타 지수 ", todayKospi);
+    // console.log("오늘의 다이아 지수 ", todaySandP);
 
     const KToS = (todayKospi / todaySandP) * 0.9;
     const PToS = todaySandP / 1000;

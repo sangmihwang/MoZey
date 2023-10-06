@@ -85,7 +85,7 @@ const Exchange = () => {
     return Object.values(transformedData);
   };
   const UseChartData = distributeData(chartDataStore);
-  console.log(UseChartData);
+  // console.log(UseChartData);
   // 날짜를 원하는 형식으로 변환 (YYYYMMDD을 YYYY-MM-DD로 변환)
   const formatDate = (date) => {
     const date2 = date.toString();
