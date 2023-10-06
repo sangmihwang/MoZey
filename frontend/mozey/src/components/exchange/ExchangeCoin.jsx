@@ -156,10 +156,10 @@ const ExchangeCoin = () => {
           {selectFromOption === "Point" && (
             <S.StyledBiSolidCoinStack size="25%" padding="10%" />
           )}
-          {selectFromOption === "KOSPI 50" && (
+          {selectFromOption === "S&P 500" && (
             <S.StyledTbDiamond size="25%" padding="10%" />
           )}
-          {selectFromOption === "S&P 500" && (
+          {selectFromOption === "KOSPI 50" && (
             <S.StyledTbStar size="25%" padding="10%" />
           )}
           <br />
@@ -190,10 +190,10 @@ const ExchangeCoin = () => {
           <AiOutlineArrowRight size="30%" padding="10%" />
         </div>
         <div>
-          {selectToOption === "KOSPI 50" && (
+          {selectToOption === "S&P 500" && (
             <S.StyledTbDiamond size="25%" padding="10%" />
           )}
-          {selectToOption === "S&P 500" && (
+          {selectToOption === "KOSPI 50" && (
             <S.StyledTbStar size="25%" padding="10%" />
           )}
           <br />
