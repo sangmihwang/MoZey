@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface UserRepositoryCustom {
     List<User> getRecommendFriend(User user);
+
+    boolean exists(Long from,Long to);
 }

@@ -85,12 +85,12 @@ public class FollowServiceImpl implements FollowService {
 //        if (followRepository.existsBySenderIdAndReceiverId(fromUserId, toUserId)) {
 //            return false;
 //        }
-
-        Follow follow = new Follow(from, to);
-
-        followRepository.save(follow);
-
-        return true;
+        if(!userRepository.exists(fromUserId,toUserId)){
+            Follow follow = new Follow(from, to);
+            followRepository.save(follow);
+            return true;
+        }
+        return false;
     }
 
     @Override
