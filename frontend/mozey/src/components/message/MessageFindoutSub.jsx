@@ -37,12 +37,15 @@ const MessageFindoutSub = ({ dataforMessageInfo, onSelectInfo }) => {
       const response = await axios.get(`https://j9a510.p.ssafy.io/api/users/info/${userData.email}`);
       console.log(response.data);
 
+      const coinName = coin === "Coin1" ? "스타" : "다이아";
       if (coin === "Coin1" && response.data.coin1 >= amount) {
         setShowModal(true);
       } else if (coin === "Coin2" && response.data.coin2 >= amount) {
         setShowModal(true);
       } else {
-        alert(`${coin} 잔액이 부족합니다.`);
+        alert(`${coinName} 가 부족합니다.`);
+        onSelectInfo(selectedType, selectedValue, false)
+        setShowModal(false);
       }
     } catch (error) {
       console.error(`${coin} 조회 중 오류 발생:`, error);
@@ -64,18 +67,19 @@ const MessageFindoutSub = ({ dataforMessageInfo, onSelectInfo }) => {
       const response = await axios.post(`https://j9a510.p.ssafy.io/api/coins/exchange/${userId}`, requestBody);
       
       if(response.status === 200) {
-        onSelectInfo(selectedType, selectedValue);
+        onSelectInfo(selectedType, selectedValue, true);
         const updatedUserInfo = response.data;
         const currentLocalStorageData = JSON.parse(localStorage.getItem('userInfo'));
         currentLocalStorageData.state.User.point = updatedUserInfo.point;
         localStorage.setItem('userInfo', JSON.stringify(currentLocalStorageData));
       } else {
+        onSelectInfo(selectedType, selectedValue, false)
         console.log('200이 반환되지않음')
       }
     } catch (error) {
       console.error("POST 요청 중 오류 발생:", error);
+      onSelectInfo(selectedType, selectedValue, false)
     }
-    onSelectInfo(selectedType, selectedValue);
   };
 
   return (
@@ -98,7 +102,7 @@ const MessageFindoutSub = ({ dataforMessageInfo, onSelectInfo }) => {
             <S.Class onClick={() => InfoSelect("class", "Coin1", 50)}>
               반
               <S.ClassCheck>
-                <S.StyledBiSolidCoinStack />
+                <S.StyledTbStar />
                 50
               </S.ClassCheck>
             </S.Class>
@@ -107,15 +111,15 @@ const MessageFindoutSub = ({ dataforMessageInfo, onSelectInfo }) => {
             <S.Name>
               이름
               <S.NameCheck onClick={() => InfoSelect("location", "Coin2", 30, 1)}>
-                <S.StyledBiSolidCoinStack />
+                <S.StyledTbDiamond />
                 30
               </S.NameCheck>
               <S.NameCheck onClick={() => InfoSelect("location", "Coin2", 30, 2)}>
-                <S.StyledBiSolidCoinStack />
+                <S.StyledTbDiamond />
                 30
               </S.NameCheck>
               <S.NameCheck onClick={() => InfoSelect("location", "Coin2", 30, 3)}>
-                <S.StyledBiSolidCoinStack />
+                <S.StyledTbDiamond />
                 30
               </S.NameCheck>
             </S.Name>
@@ -201,13 +205,19 @@ const S = {
     font-size: ${({ theme }) => theme.fontsize.title2};
     margin-left: 8px;
     margin-right: 4px;
-    color: ${({ theme }) => theme.color.yellow};
+    color: ${({ theme }) => theme.color.white};
+    &:hover {
+      color: ${({ theme }) => theme.color.blue};
+    }
   `,
   StyledTbDiamond: styled(TbDiamondFilled)`
     font-size: ${({ theme }) => theme.fontsize.title2};
     margin-left: 8px;
     margin-right: 4px;
-    color: ${({ theme }) => theme.color.red};
+    color: ${({ theme }) => theme.color.white};
+    &:hover {
+      color: ${({ theme }) => theme.color.red};
+    }
   `,
   Campus: styled.div`
     display: flex;
@@ -258,6 +268,11 @@ const S = {
     box-shadow: ${({ theme }) => theme.shadow.card};
     color: ${({ theme }) => theme.color.white};
     font-weight: 400;
+    &:hover {
+      color: ${({ theme }) => theme.color.red};
+      background-color: ${({ theme }) => theme.color.white};
+      border: 1px solid ${({ theme }) => theme.color.red};
+    }
   `,
 
   ConfirmButton: styled.button`

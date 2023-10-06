@@ -41,17 +41,18 @@ const MessageList = () => {
     return userState.state?.User || {};
   };
 
-  const handleSelectInfo = (type, value) => {
+  const handleSelectInfo = (type, value, shouldOpenModal) => {
     toggleMsgFindoutOpen();
     setSelectedInfo({ type, value });
+    console.log(type, value, shouldOpenModal)
     // MessageInfo 모달 열기
-    setShowMessageInfo(true);
+    setShowMessageInfo(shouldOpenModal);
   };
-  const onDataRequest = () => {
+  const onDataRequest = (shouldOpenModal) => {
     toggleMsgFindoutOpen();
     setSelectedInfo({ type: "location", value: null });
     // MessageInfo 모달 열기
-    setShowMessageInfo(true);
+    setShowMessageInfo(shouldOpenModal);
   };
 
   return (

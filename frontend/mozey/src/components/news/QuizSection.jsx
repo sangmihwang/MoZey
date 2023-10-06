@@ -142,7 +142,7 @@ const QuizSection = () => {
         </S.ModalOverlay>
       )}
       <S.Container>
-        {quizzes.length > 0 && currentQuizIndex < quizzes.length && (
+        {quizzes.length > 0 && currentQuizIndex < quizzes.length ? (
           <>
             <S.QuizImage src={quizimg} alt="Quiz Thumbnail" />
             <S.QuizTitle>{quizzes[currentQuizIndex].question}</S.QuizTitle>
@@ -173,6 +173,10 @@ const QuizSection = () => {
               정답 확인하기
             </S.CheckAnswerButton>
           </>
+        ) : (
+          currentQuizIndex >= quizzes.length && (
+            <S.CompletedMessage>오늘의 퀴즈를 다 풀었어요</S.CompletedMessage>
+          )
         )}
       </S.Container>
     </S.Wrap>
@@ -192,7 +196,7 @@ const S = {
     background: ${({ theme }) => theme.color.background};
   `,
   Container: styled.div`
-    background: ${({ theme }) => theme.color.white};
+    background: ${({ theme }) => theme.color.background};
     width: 100%;
     border-radius: 10px;
     margin: 20px;
@@ -327,6 +331,13 @@ const S = {
     align-items: center;
     justify-content: center;
   `,
+  CompletedMessage: styled.h3`
+    font-size: ${({ theme }) => theme.fontsize.title2};
+    font-weight: 700;
+    color: ${({ theme }) => theme.color.black};
+    text-align: center;
+    margin-top: 20px;
+  `
 };
 
 export default QuizSection;
