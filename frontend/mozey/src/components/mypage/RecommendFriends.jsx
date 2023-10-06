@@ -35,16 +35,12 @@ const RecommendFriends = () => {
   const addFriend = (id) => {
     try {
       const senderId = userInfo.id;
-      console.log("친구 아이디", id);
+      // console.log("친구 아이디", id);
       axios
-        .post(
-          `https://j9a510.p.ssafy.io/api/users/friends/follow/${senderId}/${id}`
-        )
+        .post(`https://j9a510.p.ssafy.io/api/users/friends/follow/${senderId}/${id}`)
         .then((data) => {
-          if (data.data.message === "친구 추가 완료") {
-            alert("추가했습니다");
-            window.location.href = "/mypage";
-          }
+          alert("친구를 추가했습니다");
+          window.location.href = "/mypage";
         });
     } catch (e) {
       console.log(e);
@@ -198,6 +194,7 @@ const S = {
   FriendInfo: styled.div`
     text-align: left;
     width: 60%;
+    margin-left: 2.5vw;
 
     > h2 {
       font-size: 16px;
