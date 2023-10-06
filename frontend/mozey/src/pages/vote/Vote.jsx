@@ -83,7 +83,7 @@ const Vote = () => {
 
   const showNextQuestion = () => {
     if (currentIndex < questionsData.length - 1) {
-      console.log("지금상태", currentIndex, questionsData.length);
+      // console.log("지금상태", currentIndex, questionsData.length);
       setCurrentIndex(currentIndex + 1);
     } else if (currentIndex === questionsData.length - 1) {
       setShowModal(true);

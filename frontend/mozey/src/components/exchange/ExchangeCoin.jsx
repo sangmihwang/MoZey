@@ -89,7 +89,7 @@ const ExchangeCoin = () => {
   };
   const handleFromCoinChange = (e) => {
     const inputAmount = e;
-    console.log(inputAmount);
+    // console.log(inputAmount);
     let tmp = "";
     if (selectFromOption === "Point") {
       tmp = userInfo.point;
@@ -98,7 +98,7 @@ const ExchangeCoin = () => {
     } else if (selectFromOption === "S&P 500") {
       tmp = userInfo.coin2;
     }
-    console.log(userInfo);
+    // console.log(userInfo);
 
     if (inputAmount > tmp) {
       setError(true);
@@ -136,7 +136,7 @@ const ExchangeCoin = () => {
         plusCoinAmount: toCoin,
       };
       const response = await coinPriceAPI.exchangeCoin(postData);
-      console.log(response);
+      // console.log(response);
       setShowModal(true);
     } catch (error) {
       console.log("에러", error);

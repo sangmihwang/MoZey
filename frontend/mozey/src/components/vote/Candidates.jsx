@@ -55,7 +55,7 @@ const Candidates = ({ questionsData, currentIndex, showNextQuestion }) => {
 
         // time,
       };
-      console.log(postData);
+      // console.log(postData);
       const response = await voteAPI.postVoteNotification(postData);
       // console.log(response.data);
       setfbToken(response.data.data.fbToken);
@@ -70,7 +70,7 @@ const Candidates = ({ questionsData, currentIndex, showNextQuestion }) => {
         img: `https://j9a510.p.ssafy.io/api/v1/image/${qtnData["image"]}?option=vote`,
       };
       const response2 = await voteAPI.sendNotification(postData2);
-      console.log("Notification Data:", response2);
+      console.log("알림 전송 완료", response2);
     } catch (error) {
       console.log("에러", error);
     }

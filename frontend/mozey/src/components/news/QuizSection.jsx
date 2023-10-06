@@ -73,29 +73,30 @@ const QuizSection = () => {
       const userId = userData.id;
 
       const requestBody = {
-        "fromCoinName" : "None",
-        "toCoinName" : "Point",
-        "minusCoinAmount" : 0,
-        "plusCoinAmount" : 100
+        fromCoinName: "None",
+        toCoinName: "Point",
+        minusCoinAmount: 0,
+        plusCoinAmount: 100,
       };
 
       try {
-        const response = await axios.post(`https://j9a510.p.ssafy.io/api/coins/exchange/${userId}`, requestBody);
-        
-        if(response.status === 200) {
-          console.log(response.data)
+        const response = await axios.post(
+          `https://j9a510.p.ssafy.io/api/coins/exchange/${userId}`,
+          requestBody
+        );
+
+        if (response.status === 200) {
+          // console.log(response.data)
           // const updatedUserInfo = response.data;
           // const currentLocalStorageData = JSON.parse(localStorage.getItem('userInfo'));
           // currentLocalStorageData.state.User.point = updatedUserInfo.point;
           // localStorage.setItem('userInfo', JSON.stringify(currentLocalStorageData));
         } else {
-          console.log('200이 반환되지 않음')
+          console.log("200이 반환되지 않음");
         }
-
       } catch (error) {
         console.error("POST 요청 중 오류 발생:", error);
       }
-
     } else {
       setIsCorrect(false);
     }
@@ -337,7 +338,7 @@ const S = {
     color: ${({ theme }) => theme.color.black};
     text-align: center;
     margin-top: 20px;
-  `
+  `,
 };
 
 export default QuizSection;
