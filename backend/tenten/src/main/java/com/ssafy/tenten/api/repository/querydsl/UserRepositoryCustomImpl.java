@@ -2,6 +2,7 @@ package com.ssafy.tenten.api.repository.querydsl;
 
 import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import com.ssafy.tenten.domain.Follow;
 import com.ssafy.tenten.domain.QFollow;
 import com.ssafy.tenten.domain.QUser;
 import com.ssafy.tenten.domain.User;
@@ -27,5 +28,15 @@ public class UserRepositoryCustomImpl implements UserRepositoryCustom {
                         QUser.user.group.eq(user.getGroup()),
                         QUser.user.term.eq(user.getTerm()),
                         QUser.user.ne(user)).fetch();
+    }
+
+    @Override
+    public boolean exists(Long from, Long to) {
+        Integer one = jpaQueryFactory.selectOne()
+                .from(QFollow.follow)
+                .where(QFollow.follow.senderId.userId.eq(from),
+                        QFollow.follow.receiverId.userId.eq(to))
+                .fetchFirst();
+        return one !=null;
     }
 }
