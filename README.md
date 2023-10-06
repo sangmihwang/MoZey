@@ -6,9 +6,9 @@
 
 ## **0️⃣ 프로젝트 개요**
 
-🎈 프로젝트명 : Mozey
+🎈 프로젝트명 : **Mozey**❓
 
-📌 프로젝트 컨셉 : ghrltla
+📌 프로젝트 컨셉 : 타인에 대한 호기심을 활용한 경제 지식 습득 서비스
 
 🛠 개발 기간 : 23.08.28 ~ 23.10.06 (6주)
 
@@ -107,7 +107,7 @@
 
 <h4>System Architecture</h4>
 
-![System Architecture](C:/Users/SSAFY/Desktop/ChameleHOME/exec/assets/Architecture.png)
+![System Architecture](./assets/images/Architecture.png)
 
 
 
@@ -383,81 +383,107 @@
 
 ## 6️⃣ 데이터베이스 모델링 (ERD)
 
+![System Architecture](./assets/images/erd.png)
+
 
 
 ## 7️⃣ Convention
 
 ### Commit Convention
 
-> **"[Type] #(Jira issue number) Commit message"**
+### 1. 커밋 유형 지정
 
-- Type
+- 커밋 유형은 영어 대문자로 작성하기
 
-  - **Fix** : 잘못된 동작을 고칠 때
+  | 커밋 유형 | 아이콘 | 코드                        | 의미                                                         |
+  | --------- | ------ | --------------------------- | ------------------------------------------------------------ |
+  | Feat      | ➕      | :heavy_plus_sign:           | 새로운 기능 추가                                             |
+  | Fix       | 🐛      | :bug:                       | 버그 수정                                                    |
+  | Docs      | 📝      | :memo:                      | 문서 수정 ex) .gitignore, swagger, README                    |
+  | Style     | ✨      | :sparkles:                  | 코드 formatting, 세미콜론 누락, 코드 자체의 변경이 없는 경우 |
+  | Test      | ✅      | :white_check_mark:          | 테스트 코드, 리팩토링 테스트 코드 추가                       |
+  | Design    | 🎨      | :art:                       | CSS 등 사용자 UI 디자인 변경                                 |
+  | !HOTFIX   | 🔥      | :fire:                      | 급하게 치명적인 버그를 고쳐야 하는 경우                      |
+  | Merge     | 🔀      | :twisted_rightwards_arrows: | 브랜치 합병하는 경우                                         |
+  | Infra     | 🌐      | :globe_with_meridians:      | 배포                                                         |
 
-    > fix function/error/typo in style.css
+### 2. 제목과 본문을 빈행으로 분리
 
-  - option
+* [[Git] 커밋 메시지  규약 정리](https://velog.io/@outstandingboy/Git-%EC%BB%A4%EB%B0%8B-%EB%A9%94%EC%8B%9C%EC%A7%80-%EA%B7%9C%EC%95%BD-%EC%A0%95%EB%A6%AC-the-AngularJS-commit-conventions)
 
-    - funtion : 고친 함수 명 (e.g. fix login function in index.html)
-    - error : 수정한 에러 (e.g. fix [구체적 에러명] error in login.js)
-    - typo : 오타 (e.g. fix typo in style.css)
+```
+❓유형(도메인/기능): 간단한 설명 ~~(#이슈번호)~~
+<blank>
+자세한 설명
 
-  - **Add** : 새로운 것을 추가할 때
+🔀Merge(frombranch->tobranch): 간단한 설명 ~~(#이슈번호)~~
+<blank>
+frombranch에 포함된 전체적인 설명
 
-    > add mytest.test for test (새로운 파일 추가 시)
+- front
+	중분류: design / publish / document / fix / styling / function / deploy
 
-    > add blue color to style.css (기존 파일에 내용 추가 시)
+ex) ==========================
 
-  - **Move** : 코드나 파일을 이동할 때
+➕Feat(user/join): 회원가입 api 개발 ~~(#~~)~~
 
-    > move A to B (e.g. A를 B로 이동할 때)
+- 회원가입 api controller 추가
+- 회원가입 api service 추가
+- 회원가입 api repository 추가
 
-  - **Rename** : 이름 변경이 있을 때
+ex2 - merge) ==============================
 
-    > rename A to B (e.g. A를 B로 이름을 변경할 때)
+🔀Merge(feat/join->develop): 회원가입 기능 병합 ~~(#~~)~~
 
-  - **Update** : 정상적으로 동작하는 파일을 보완하는 경우
+- 전체적인 내용 기입 (너무 detail x)
+- 회원가입 api controller 추가
+- 회원가입 api service 추가
+- 회원가입 api repository 추가
+```
 
-    > update test.js to use HTTPS (test.js에 기존의 프로토콜에서 HTTPS 프로토콜 사용으로 변경)
+- 커밋 유형 이후 제목과 본문은 한글로 작성하여 내용이 잘 전달될 수 있도록 할 것
+- 본문에는 변경한 내용과 이유 설명 (어떻게보다는 무엇 & 왜를 설명)
 
-  - **Remove** : 삭제가 있을 때
+### 3. 제목 첫 글자는 대문자로, 끝에는 `.` 금지
 
-    > remove test.js (파일 삭제 시)
+### 4. 제목은 영문 기준 50자 이내로 할 것
 
-    > remove black color from style.css (파일 내 부분 삭제 시)
+### 5. 자신의 코드가 직관적으로 바로 파악할 수 있다고 생각하지 말자
 
-- #(Jira issue number) : Click 시, Jira에서 해당 Issue에 대한 상세 내용 확인 가능
+### 6. 여러가지 항목이 있다면 글머리 기호를 통해 가독성 높이기
 
-- Commit message : 변경 사항에 대해 명확하게 기술
+```
+- 변경 내용 1
+- 변경 내용 2
+- 변경 내용 3
+```
 
 
 
 ## 8️⃣ Git Flow
 
-```
-master
-└ develop
-  ├ feature-front
-  ├ feature-back
-```
+![System Architecture](./assets/images/gitflow.png)
 
-- master : 운영 서버로 배포하기 위한 브랜치
-- develop : 다음 출시 기능을 개발하는 브랜치
-- feature : 세부 기능을 개발하는 브랜치
-  - front : 프론트엔드를 개발하는 브랜치
-  - back : 백엔드를 개발하는 브랜치
+- <h3>master : 제품으로 출시될 수 있는 브랜치</h3>
 
+- <h3>develop : 다음 출시 버전을 개발하는 브랜치</h3>
 
+- <h3>feature : 기능을 개발하는 브랜치</h3>
+
+- <h3>release : 이번 출시 버전을 준비하는 브랜치</h3>
+
+* <h3>hotfix : 출시 버전에서 발생한 버그를 수정 하는 브랜치</h3>
+
+  
 
 ## **9️⃣ 회고**
 
 | 이름   | 내용                                                         |
 | ------ | ------------------------------------------------------------ |
-|        |                                                              |
-|        |                                                              |
-|        |                                                              |
+| 이민웅 |                                                              |
+| 송채은 |                                                              |
+| 임병국 |                                                              |
 | 조윤상 | 우선 불협화음없이 좋은 팀워크로 성공적인 프로젝트를 할 수 있게 해준 조원들에게 너무나 감사하고, |
-|        |                                                              |
-|        |                                                              |
+| 지한얼 |                                                              |
+| 황상미 |                                                              |
 
