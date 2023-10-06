@@ -147,6 +147,7 @@ const S = {
   FriendInfo: styled.div`
     text-align: left;
     width: 60%;
+    margin-left: 2.5vw;
 
     > h2 {
       font-size: 16px;

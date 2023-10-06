@@ -81,6 +81,7 @@ const Candidates = ({ questionsData, currentIndex, showNextQuestion }) => {
     toggleCandiChangeOpen();
     setSelectedUserId(selected);
     ChooseCandidate(selectedUserId, currentIndex, myuserId);
+    showNextQuestion();
   };
 
   return (
