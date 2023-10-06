@@ -84,6 +84,10 @@ const QuizSection = () => {
         
         if(response.status === 200) {
           console.log(response.data)
+          // const updatedUserInfo = response.data;
+          // const currentLocalStorageData = JSON.parse(localStorage.getItem('userInfo'));
+          // currentLocalStorageData.state.User.point = updatedUserInfo.point;
+          // localStorage.setItem('userInfo', JSON.stringify(currentLocalStorageData));
         } else {
           console.log('200이 반환되지 않음')
         }
