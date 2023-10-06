@@ -14,6 +14,7 @@ import { TbStarFilled, TbDiamondFilled } from "react-icons/tb";
 //  코인 교환 파트
 
 const ExchangeCoin = () => {
+  const [showModal, setShowModal] = useState(false);
   const chartDataStore = useStore((state) => state.chartData);
   const userInfo = useStore1((state) => state.User);
   const distributeData = (rawData) => {
@@ -91,12 +92,13 @@ const ExchangeCoin = () => {
     console.log(inputAmount);
     let tmp = "";
     if (selectFromOption === "Point") {
-      tmp = userInfo.Point;
+      tmp = userInfo.point;
     } else if (selectFromOption === "KOSPI 50") {
-      tmp = userInfo.Coin1;
+      tmp = userInfo.coin1;
     } else if (selectFromOption === "S&P 500") {
-      tmp = userInfo.Coin2;
+      tmp = userInfo.coin2;
     }
+    console.log(userInfo);
 
     if (inputAmount > tmp) {
       setError(true);
@@ -134,10 +136,14 @@ const ExchangeCoin = () => {
         plusCoinAmount: toCoin,
       };
       const response = await coinPriceAPI.exchangeCoin(postData);
-      console.log(response, "asd");
+      console.log(response);
+      setShowModal(true);
     } catch (error) {
       console.log("에러", error);
     }
+  };
+  const handleConfirm = async () => {
+    setShowModal(false);
   };
 
   useEffect(() => {
@@ -219,9 +225,18 @@ const ExchangeCoin = () => {
       >
         환전
       </S.YellowButton>
+      {showModal && (
+        <S.ModalOverlay>
+          <S.Modal>
+            <S.ModalContent>포인트 교환 완료 !</S.ModalContent>
+            <S.ConfirmButton onClick={handleConfirm}>확인</S.ConfirmButton>
+          </S.Modal>
+        </S.ModalOverlay>
+      )}
     </S.ExContainer>
   );
 };
+
 const S = {
   CoinCentered: styled.form`
     margin-top: 30px;
@@ -267,6 +282,59 @@ const S = {
     margin-left: 8px;
     margin-right: 4px;
     color: ${({ theme }) => theme.color.red};
+  `,
+  ModalOverlay: styled.div`
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+  `,
+  Modal: styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    margin: 12px;
+    padding: 10px 20px;
+    border-radius: 10px;
+    width: 70%;
+    height: 30%;
+    min-height: 150px;
+    max-width: 500px;
+    box-shadow: ${({ theme }) => theme.shadow.card};
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+  `,
+  ModalContent: styled.div`
+    text-align: center;
+    font-size: ${({ theme }) => theme.fontsize.title3};
+    line-height: ${({ theme }) => theme.lineheight.quiztitle};
+    font-weight: 700;
+    margin: 20px;
+  `,
+  ConfirmButton: styled.button`
+    margin-top: 20px;
+    padding: 10px 20px;
+    border-radius: 5px;
+    background-color: ${({ theme }) => theme.color.red};
+    color: ${({ theme }) => theme.color.white};
+    cursor: pointer;
+    transition: background-color 0.3s;
+
+    &:hover {
+      background-color: ${({ theme }) => theme.color.white};
+      border: 1px solid ${({ theme }) => theme.color.red};
+      color: ${({ theme }) => theme.color.red};
+    }
   `,
 };
 export default ExchangeCoin;
