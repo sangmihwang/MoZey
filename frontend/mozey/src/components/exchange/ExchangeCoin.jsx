@@ -169,9 +169,13 @@ const ExchangeCoin = () => {
             value={selectFromOption}
             onChange={(e) => handleSelectFromOpitonChange(e.target.value)}
           >
-            <MenuItem value="Point">Point</MenuItem>
-            <MenuItem value="KOSPI 50">KOSPI 50</MenuItem>
-            <MenuItem value="S&P 500">S&P 500</MenuItem>
+            <S.StyledMenuItem value="Point">
+              &nbsp;&nbsp;&nbsp;&nbsp;Point&nbsp;&nbsp;&nbsp;&nbsp;
+            </S.StyledMenuItem>
+            <S.StyledMenuItem value="KOSPI 50">KOSPI 50</S.StyledMenuItem>
+            <S.StyledMenuItem value="S&P 500">
+              &nbsp;S&P 500&nbsp;
+            </S.StyledMenuItem>
           </Select>
           <br />
           <TextField
@@ -200,7 +204,7 @@ const ExchangeCoin = () => {
             onChange={(e) => handleSelectToOpitonChange(e.target.value)}
           >
             <MenuItem value="KOSPI 50">KOSPI 50</MenuItem>
-            <MenuItem value="S&P 500">S&P 500</MenuItem>
+            <MenuItem value="S&P 500"> &nbsp;S&P 500&nbsp;</MenuItem>
           </Select>
           <br />
           <TextField
@@ -283,6 +287,11 @@ const S = {
     margin-right: 4px;
     color: ${({ theme }) => theme.color.red};
   `,
+  StyledMenuItem: styled(MenuItem)`
+    font-size: 16px; // 원하는 글자 크기로 조절
+    width: 100px; // 원하는 너비로 조절
+    text-align: center;
+  `, // 텍스트를 중앙 정렬,
   ModalOverlay: styled.div`
     position: fixed;
     top: 0;
