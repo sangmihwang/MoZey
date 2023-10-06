@@ -22,7 +22,7 @@ const RecommendFriends = () => {
           .then((data) => {
             if (data.data.message === "친구 조회 완료") {
               setRecommend(data.data.data);
-              console.log("추천 친구 조회", data.data.data);
+              // console.log("추천 친구 조회", data.data.data);
             }
           });
       } catch (e) {
@@ -37,7 +37,9 @@ const RecommendFriends = () => {
       const senderId = userInfo.id;
       // console.log("친구 아이디", id);
       axios
-        .post(`https://j9a510.p.ssafy.io/api/users/friends/follow/${senderId}/${id}`)
+        .post(
+          `https://j9a510.p.ssafy.io/api/users/friends/follow/${senderId}/${id}`
+        )
         .then((data) => {
           alert("친구를 추가했습니다");
           window.location.href = "/mypage";
@@ -88,11 +90,15 @@ const RecommendFriends = () => {
                 )}
               </S.FriendInfo>
               <S.FriendAdd>
-                <button onClick={() => {
-                  const friendId = friend.userId;
-                  console.log("칭구칭구", friend);
-                  addFriend(friendId);
-                }}>추가</button>
+                <button
+                  onClick={() => {
+                    const friendId = friend.userId;
+                    console.log("칭구칭구", friend);
+                    addFriend(friendId);
+                  }}
+                >
+                  추가
+                </button>
               </S.FriendAdd>
             </S.Friend>
           ))}

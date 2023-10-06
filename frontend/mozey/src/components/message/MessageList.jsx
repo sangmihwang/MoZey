@@ -20,24 +20,24 @@ const MessageList = () => {
       .get(`https://j9a510.p.ssafy.io/api/message/${userData.id}`)
       .then((response) => {
         setMessages(response.data.data);
-        console.log(response.data.data);
+        // console.log(response.data.data);
       })
       .catch((error) => {
         console.log("데이터 받아오기 에러", error);
       });
 
     axios
-    .get(`https://j9a510.p.ssafy.io/api/users/info/${userData.email}`)
-    .then((response) => {
-      if (response.data.sub_yn === 1) {
-        setIsSubscribed("sub");
-      } else {
-        setIsSubscribed("noSub");
-      }
-    })
-    .catch((error) => {
-      console.log("Subscription 정보 받아오기 에러", error);
-    });
+      .get(`https://j9a510.p.ssafy.io/api/users/info/${userData.email}`)
+      .then((response) => {
+        if (response.data.sub_yn === 1) {
+          setIsSubscribed("sub");
+        } else {
+          setIsSubscribed("noSub");
+        }
+      })
+      .catch((error) => {
+        console.log("Subscription 정보 받아오기 에러", error);
+      });
   }, []);
 
   const getUserFromLocalStorage = () => {
@@ -51,7 +51,7 @@ const MessageList = () => {
   const handleSelectInfo = (type, value, shouldOpenModal) => {
     toggleMsgFindoutOpen();
     setSelectedInfo({ type, value });
-    console.log(type, value, shouldOpenModal)
+    console.log(type, value, shouldOpenModal);
     // MessageInfo 모달 열기
     setShowMessageInfo(shouldOpenModal);
   };
