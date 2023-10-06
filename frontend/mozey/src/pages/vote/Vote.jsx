@@ -89,7 +89,16 @@ const Vote = () => {
       setShowModal(true);
     }
   };
-
+  const progressPercentage = ((currentIndex + 1) / questionsData.length) * 100;
+  let progressBarClass = "";
+  if (progressPercentage <= 12.5) {
+    progressBarClass = "one-eighth";
+  } else if (progressPercentage <= 25) {
+    progressBarClass = "two-eighth";
+  } // ... 추가적으로 다른 진행도에 따른 클래스를 설정할 수 있습니다.
+  else if (progressPercentage === 100) {
+    progressBarClass = "full";
+  }
   const TimerComponent = ({ duration }) => {
     const calculateTimeLeft = () => {
       const startTime = localStorage.getItem("startTime");
@@ -147,6 +156,14 @@ const Vote = () => {
       ) : (
         <>
           <S.QuestionBox>
+            <S.ProgressBarContainer>
+              <S.ProgressBar
+                className={progressBarClass}
+                style={{ width: `${progressPercentage}%` }}
+              >
+                {currentIndex}/{questionsData.length}
+              </S.ProgressBar>
+            </S.ProgressBarContainer>
             <components.Question
               questionsData={questionsData}
               currentIndex={currentIndex}
@@ -250,6 +267,38 @@ const S = {
       background-color: ${({ theme }) => theme.color.white};
       border: 1px solid ${({ theme }) => theme.color.red};
       color: ${({ theme }) => theme.color.red};
+    }
+  `,
+  // 프로세스 바 만들기
+  ProgressBarContainer: styled.div`
+    width: 100%;
+    background-color: #f3f3f3;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+  `,
+
+  ProgressBar: styled.div`
+    height: 25px;
+    background-color: #ffd94a;
+    border-radius: 4px;
+    text-align: center;
+    line-height: 25px;
+    color: #000;
+    transition: width 0.3s;
+
+    /* 1/8 진행 */
+    &.one-eighth {
+      width: 12.5%;
+    }
+
+    /* 2/8 진행 */
+    &.two-eighth {
+      width: 25%;
+    }
+
+    /* 8/8 진행 (완료) */
+    &.full {
+      width: 100%;
     }
   `,
 };

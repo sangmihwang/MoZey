@@ -43,7 +43,7 @@ const NewsSection = () => {
           `https://j9a510.p.ssafy.io/api/news?date=${dateToFetch}`
         );
         setNewsData(response.data);
-        console.log("뉴스데이터: ", response.data);
+        // console.log("뉴스데이터: ", response.data);
       } catch (error) {
         console.error("Error fetching news by date:", error);
       }
