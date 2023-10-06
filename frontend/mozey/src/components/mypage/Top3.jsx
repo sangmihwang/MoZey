@@ -108,11 +108,11 @@ const S = {
     }
 
     > img {
-      width: 20px;
-      height: 25px;
+      width: 15vw;
+      height: 15vw;
     }
     > p {
-      margin-top: 8px;
+      // margin-top: 8px;
       font-size: 12px;
       font-weight: bold;
       color: ${({ theme }) => theme.color.darkgray};
