@@ -3,6 +3,7 @@ import styled from "styled-components";
 import * as components from "components";
 import { MdAccountCircle } from "react-icons/md";
 import { BiSolidCoinStack } from "react-icons/bi";
+import { TbDiamondFilled } from "react-icons/tb";
 import axios from "axios";
 
 const MessageFindoutNoSub = ({ dataforMessageInfo, onDataRequest }) => {
@@ -22,15 +23,16 @@ const MessageFindoutNoSub = ({ dataforMessageInfo, onDataRequest }) => {
     try {
       const response = await axios.get(`https://j9a510.p.ssafy.io/api/users/info/${userData.email}`);
       console.log(response.data)
-      if (response.data.coin2 >= 10) {
+      if (response.data.coin2 >= 30) {
         setShowModal(true);
       } else {
-        alert("coin2 잔액이 부족합니다.");
+        alert("다이아가 부족합니다.");
+        onDataRequest(false);
+        setShowModal(false);
       }
     } catch (error) {
       console.error("coin1 조회 중 오류 발생:", error);
     }
-    setShowModal(true);
   };
 
   const handleConfirm = async () => {
@@ -48,15 +50,17 @@ const MessageFindoutNoSub = ({ dataforMessageInfo, onDataRequest }) => {
       const response = await axios.post(`https://j9a510.p.ssafy.io/api/coins/exchange/${userId}`, requestBody);
       
       if(response.status === 200) {
-        onDataRequest();
+        onDataRequest(true);
       } else {
         console.log('200이 반환되지않음')
+        onDataRequest(false);
       }
 
     } catch (error) {
       console.error("POST 요청 중 오류 발생:", error);
+      onDataRequest(false);
     }
-    onDataRequest();
+    
   };
 
   return (
@@ -68,7 +72,7 @@ const MessageFindoutNoSub = ({ dataforMessageInfo, onDataRequest }) => {
           사람의 정보를 확인하시겠습니까?
         </S.Question>
         <S.FriendName onClick={handleDataRequest}>
-          <S.StyledBiSolidCoinStack />
+          <S.StyledTbDiamond />
           30 확인
         </S.FriendName>
       </S.FindoutBox>
@@ -143,6 +147,15 @@ const S = {
     font-size: ${({ theme }) => theme.fontsize.title3};
     margin-left: 4px;
     margin-right: 2px;
+  `,
+  StyledTbDiamond: styled(TbDiamondFilled)`
+    font-size: ${({ theme }) => theme.fontsize.title2};
+    margin-left: 8px;
+    margin-right: 4px;
+    color: ${({ theme }) => theme.color.white};
+    &:hover {
+      color: ${({ theme }) => theme.color.red};
+    }
   `,
   ModalOverlay: styled.div`
     position: fixed;
