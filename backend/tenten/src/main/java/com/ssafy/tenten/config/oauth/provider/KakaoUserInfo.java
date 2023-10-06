@@ -2,7 +2,7 @@ package com.ssafy.tenten.config.oauth.provider;
 
 import java.util.Map;
 
-public class KakaoUserInfo implements OAuth2UserInfo{
+public class KakaoUserInfo implements OAuth2UserInfo {
 
     private Map<String, Object> attributes;
 
@@ -39,7 +39,7 @@ public class KakaoUserInfo implements OAuth2UserInfo{
     }
 
     @Override
-    public String getGender()  {
+    public String getGender() {
         return (String) ((Map) attributes.get("kakao_account")).get("gender");
     }
 }

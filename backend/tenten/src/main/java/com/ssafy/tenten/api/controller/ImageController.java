@@ -3,20 +3,18 @@ package com.ssafy.tenten.api.controller;
 import com.ssafy.tenten.api.service.ImageService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartException;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.Map;
 
 @RestController
-@RequestMapping ("/api/v1/image")
+@RequestMapping("/api/v1/image")
 @RequiredArgsConstructor
 public class ImageController {
 
@@ -30,7 +28,7 @@ public class ImageController {
     public ResponseEntity<Resource> getImage(@PathVariable String imageName, @RequestParam("option") String option) {
 
         Map<String, Object> returnMap = imageService.getImage(imageName, option);
-        return new ResponseEntity<>((Resource) returnMap.get("resource"), (HttpHeaders)returnMap.get("header"), HttpStatus.OK);
+        return new ResponseEntity<>((Resource) returnMap.get("resource"), (HttpHeaders) returnMap.get("header"), HttpStatus.OK);
     }
 
     @Operation(

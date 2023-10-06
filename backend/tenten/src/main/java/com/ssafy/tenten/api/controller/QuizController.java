@@ -20,8 +20,8 @@ import java.util.List;
 @RequiredArgsConstructor
 @Slf4j
 public class QuizController {
+
     private final QuizService quizService;
-    private final ModelMapper mapper;
 
     @GetMapping("/quiz")
     public ResponseEntity<?> getQuizzesByDate(@RequestParam("date") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date) {
@@ -29,10 +29,11 @@ public class QuizController {
         List<QuizResponse> quizDtos = quizService.getQuizzesByDate(date.atStartOfDay());
         return ResponseEntity.ok(quizDtos);
     }
+
     @PostMapping("/quiz")
-    public ResponseEntity<?> postQuiz(@RequestBody QuizDto quizDto){
+    public ResponseEntity<?> postQuiz(@RequestBody QuizDto quizDto) {
         quizService.createQuiz(quizDto);
-        return SuccessResponseEntity.toResponseEntity("퀴즈 등록 완료",null);
+        return SuccessResponseEntity.toResponseEntity("퀴즈 등록 완료", null);
     }
 
 }

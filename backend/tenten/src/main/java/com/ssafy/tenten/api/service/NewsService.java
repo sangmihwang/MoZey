@@ -2,7 +2,6 @@ package com.ssafy.tenten.api.service;
 
 import com.ssafy.tenten.dto.NewsDto;
 import com.ssafy.tenten.vo.Response.NewsResponse;
-import com.ssafy.tenten.vo.Response.QuestionResponse;
 
 import java.time.LocalDateTime;
 import java.util.List;

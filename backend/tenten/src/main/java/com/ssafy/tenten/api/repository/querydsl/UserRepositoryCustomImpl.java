@@ -2,7 +2,6 @@ package com.ssafy.tenten.api.repository.querydsl;
 
 import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.ssafy.tenten.domain.Follow;
 import com.ssafy.tenten.domain.QFollow;
 import com.ssafy.tenten.domain.QUser;
 import com.ssafy.tenten.domain.User;
@@ -37,6 +36,6 @@ public class UserRepositoryCustomImpl implements UserRepositoryCustom {
                 .where(QFollow.follow.senderId.userId.eq(from),
                         QFollow.follow.receiverId.userId.eq(to))
                 .fetchFirst();
-        return one !=null;
+        return one != null;
     }
 }

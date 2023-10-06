@@ -2,10 +2,8 @@ package com.ssafy.tenten.api.service;
 
 import com.ssafy.tenten.api.repository.NewsRepository;
 import com.ssafy.tenten.domain.News;
-import com.ssafy.tenten.domain.Question;
 import com.ssafy.tenten.dto.NewsDto;
 import com.ssafy.tenten.vo.Response.NewsResponse;
-import com.ssafy.tenten.vo.Response.QuestionResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

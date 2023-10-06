@@ -1,6 +1,5 @@
 package com.ssafy.tenten.api.service;
 
-import com.ssafy.tenten.dto.NewsDto;
 import com.ssafy.tenten.dto.NewsReadDto;
 import com.ssafy.tenten.vo.Response.NewsReadResponse;
 
