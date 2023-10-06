@@ -31,7 +31,9 @@ public class PrincipalDetails implements OAuth2User {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Collection<GrantedAuthority> collect = new ArrayList<GrantedAuthority>();
-        collect.add(()->{ return user.getRole();});
+        collect.add(() -> {
+            return user.getRole();
+        });
         return collect;
     }
 
@@ -39,6 +41,7 @@ public class PrincipalDetails implements OAuth2User {
     public String getName() {
         return user.getEmail();
     }
+
     public Long getId() {
         return user.getUserId();
     }

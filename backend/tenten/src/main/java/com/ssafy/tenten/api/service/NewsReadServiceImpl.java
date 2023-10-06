@@ -1,7 +1,7 @@
 package com.ssafy.tenten.api.service;
 
-import com.ssafy.tenten.api.repository.NewsRepository;
 import com.ssafy.tenten.api.repository.NewsReadRepository;
+import com.ssafy.tenten.api.repository.NewsRepository;
 import com.ssafy.tenten.api.repository.UserRepository;
 import com.ssafy.tenten.domain.News;
 import com.ssafy.tenten.domain.NewsRead;
@@ -14,7 +14,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service

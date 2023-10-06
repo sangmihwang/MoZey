@@ -3,7 +3,6 @@ package com.ssafy.tenten.api.service;
 import com.ssafy.tenten.api.repository.UserRepository;
 import com.ssafy.tenten.domain.User;
 import com.ssafy.tenten.exception.CustomException;
-import com.ssafy.tenten.exception.ErrorCode;
 import com.ssafy.tenten.vo.Request.UserJoinRequest;
 import com.ssafy.tenten.vo.Request.UserUpdateRequest;
 import com.ssafy.tenten.vo.Response.RecommendUserResponse;
@@ -16,7 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
 import java.time.Instant;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -26,7 +24,7 @@ import static com.ssafy.tenten.exception.ErrorCode.USER_NOT_FOUND;
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
 
     @Transactional
@@ -50,13 +48,6 @@ public class UserServiceImpl implements UserService{
         user.update(userUpdateRequest);
         return user;
     }
-
-//    @Override
-//    public void validateDuplicateUser(User user) {
-//
-//    }
-
-
 
     // 회원 탈퇴 (withdraw를 N으로 바꾸자!)
     @Override
@@ -82,7 +73,7 @@ public class UserServiceImpl implements UserService{
     // 추천 친구 조회
     @Override
     public List<RecommendUserResponse> recommendFriends(Long userId) {
-        User user = userRepository.findById(userId).orElseThrow(() ->new CustomException(USER_NOT_FOUND));
+        User user = userRepository.findById(userId).orElseThrow(() -> new CustomException(USER_NOT_FOUND));
 
         List<User> list = userRepository.getRecommendFriend(user);
 
@@ -106,6 +97,7 @@ public class UserServiceImpl implements UserService{
         User user = userRepository.findById(userId).get();
         user.subscribe();
     }
+
     // 구독 여부
     @Override
     public Instant checkSub(Long userId) {

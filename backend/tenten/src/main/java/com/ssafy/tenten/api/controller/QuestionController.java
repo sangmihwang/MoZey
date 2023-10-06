@@ -44,7 +44,7 @@ public class QuestionController {
     public ResponseEntity<?> getAppQuestion(@PathVariable("userId") Long id,
                                             @PathVariable(name = "status", required = false) Character status,
                                             @RequestParam(defaultValue = "0", required = false) int pageIdx) {
-        PageRequest pageRequest = PageRequest.of(pageIdx, 10, Sort.by(Sort.Direction.DESC,"qtnId"));
+        PageRequest pageRequest = PageRequest.of(pageIdx, 10, Sort.by(Sort.Direction.DESC, "qtnId"));
         Slice<QuestionResponse> questions = questionService.getQuestions(id, status, pageRequest);
 
         return SuccessResponseEntity.toResponseEntityPage("질문 신청 내역 조회 - 사용자", questions.getContent(), questions.hasNext());
@@ -83,10 +83,10 @@ public class QuestionController {
      */
     @GetMapping("/questions")
     public ResponseEntity<?> getQuestions(@RequestParam(defaultValue = "0", required = false) int pageIdx) {
-        PageRequest pageRequest = PageRequest.of(pageIdx, 10, Sort.by(Sort.Direction.DESC,"qtnId"));
+        PageRequest pageRequest = PageRequest.of(pageIdx, 10, Sort.by(Sort.Direction.DESC, "qtnId"));
         Page<QuestionResponse> questions = questionService.getAllQuestions(pageRequest);
 
-        PageResponse pageResponse = PageResponse.PageResponse("등록된 질문 전체 조회 성공",questions);
+        PageResponse pageResponse = PageResponse.PageResponse("등록된 질문 전체 조회 성공", questions);
         return ResponseEntity.ok().body(pageResponse);
     }
 
@@ -104,7 +104,7 @@ public class QuestionController {
             return SuccessResponseEntity.toResponseEntity("등록된 질문 상세 조회 성공", question);
         } else {
             Page<QuestionResponse> questionPage = questionService.getQuestionPage(status, pageRequest);
-            PageResponse pageResponse = PageResponse.PageResponse("등록된 질문 상태 조회 성공",questionPage);
+            PageResponse pageResponse = PageResponse.PageResponse("등록된 질문 상태 조회 성공", questionPage);
             return ResponseEntity.ok().body(pageResponse);
         }
 

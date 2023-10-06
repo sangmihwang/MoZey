@@ -63,7 +63,7 @@ public class QuestionRepositoryCustomImpl implements QuestionRepositoryCustom {
                 .selectFrom(question)
                 .where(qtnStatusEq(status),
                         qtnUserEq(userId)
-                , question.status.ne('N'))
+                        , question.status.ne('N'))
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize() + 1)
                 .fetch();
@@ -77,9 +77,9 @@ public class QuestionRepositoryCustomImpl implements QuestionRepositoryCustom {
                         .build())
                 .collect(Collectors.toList());
         boolean hasNext = false;
-        if(collect.size()>pageable.getPageSize()){
+        if (collect.size() > pageable.getPageSize()) {
             hasNext = true;
-            collect.remove(collect.size()-1);
+            collect.remove(collect.size() - 1);
         }
 
         return Optional.of(new SliceImpl<>(collect, pageable, hasNext));

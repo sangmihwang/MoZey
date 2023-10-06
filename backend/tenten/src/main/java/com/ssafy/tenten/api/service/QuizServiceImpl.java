@@ -25,7 +25,7 @@ public class QuizServiceImpl implements QuizService {
     private final NewsRepository newsRepository;
 
     @Override
-    @Cacheable(value = "QUIZ", key = "#date.toLocalDate().toString()",cacheManager = "testCacheManager")
+    @Cacheable(value = "QUIZ", key = "#date.toLocalDate().toString()", cacheManager = "testCacheManager")
     public List<QuizResponse> getQuizzesByDate(LocalDateTime date) {
         List<Quiz> quizzes = quizRepository.findAllByDate(date.toLocalDate());
 
@@ -41,34 +41,6 @@ public class QuizServiceImpl implements QuizService {
                 .collect(Collectors.toList());
     }
 
-//    @Override
-//    public QuizDto getQuiz(Long quizId) {
-//        Quiz quiz = quizRepository.findById(quizId)
-//                .orElseThrow(() -> new CustomException(USER_NOT_FOUND));
-//
-//        return QuizDto.builder()
-//                .quizId(quiz.getQuizId())
-//                .newsId(quiz.getNewsId())
-//                .question(quiz.getQuestion())
-//                .answer(quiz.getAnswer())
-//                .date(quiz.getDate())
-//                .build();
-//    }
-//    @Override
-//    public List<QuizResponse> getQuizByNewsId(Long newsId){
-//        List<Quiz> quizzes = quizRepository.findByNewsId(newsId);
-
-    //        return quizzes.stream()
-//                .map(quiz -> QuizDto.builder()
-//                        .quizId(quiz.getQuizId())
-//                        .newsId(quiz.)
-//                        .question(quiz.getQuestion())
-//                        .answer(quiz.getAnswer())
-//                        .date(quiz.getDate())
-//                        .build())
-//                .collect(Collectors.toList());
-//        return null;
-//    }
     @Override
     @Transactional
     public void createQuiz(QuizDto quizDto) {

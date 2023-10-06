@@ -5,6 +5,7 @@ import com.ssafy.tenten.config.auth.PrincipalDetails;
 import com.ssafy.tenten.config.oauth.provider.KakaoUserInfo;
 import com.ssafy.tenten.config.oauth.provider.OAuth2UserInfo;
 import com.ssafy.tenten.domain.User;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
@@ -16,6 +17,7 @@ import java.util.Map;
 import java.util.Optional;
 
 @Service
+@Slf4j
 public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
     @Autowired
     private UserRepository userRepository;
@@ -23,11 +25,9 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
     // 구글로 부터 받은 userRequest 데이터에 대한 후처리되는 메소드
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
-        System.out.println("getClientRegistration : " + userRequest.getClientRegistration());
-        System.out.println("getAccessToken : " + userRequest.getAccessToken().getTokenValue());
+
         // 구글 로그인 버튼 클릭 -> 구글 로그인 창 -> 로그인은 완료 -> code를 return(OAuth-Client라이브러리) -> AccessToken요청
         // userRequest 정보 -> loadUser 함수 호출 -> 구글로부터 회원 프로필 받아준다
-        System.out.println("getAttributes : " + super.loadUser(userRequest).getAttributes());
 
         OAuth2User oAuth2User = super.loadUser(userRequest); // 소셜 로그인의 회원 프로필 조회
 
@@ -38,10 +38,9 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
         // Attribute를 파싱해서 공통 객체로 묶는다. 관리가 편함.
         OAuth2UserInfo oAuth2UserInfo = null;
         if (userRequest.getClientRegistration().getRegistrationId().equals("kakao")) {
-            System.out.println("카카오 로그인 요청");
             oAuth2UserInfo = new KakaoUserInfo(oAuth2User.getAttributes());
         } else {
-            System.out.println("카카오 외 다른 플랫폼 지원 X");
+            log.info("카카오 외 다른 플랫폼 지원 x");
         }
 
         Optional<User> userOptional =

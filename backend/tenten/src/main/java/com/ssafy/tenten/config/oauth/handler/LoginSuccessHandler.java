@@ -30,7 +30,7 @@ public class LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
         log.info("accessToken : ", accessToken);
         if (user.getName() == null) {
             // 회원 가입 x
-            response.sendRedirect("http://j9a510.p.ssafy.io/oauth2?token="+accessToken+"&email="+email);
+            response.sendRedirect("http://j9a510.p.ssafy.io/oauth2?token=" + accessToken + "&email=" + email);
             jwtService.sendAccessAndRefreshToken(response, accessToken, null);
             return;
         }

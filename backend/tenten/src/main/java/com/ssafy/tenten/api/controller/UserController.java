@@ -74,12 +74,6 @@ public class UserController {
         return new ResponseEntity<>(UserResponse.createUserResponse(user), HttpStatus.OK);
     }
 
-//    @PutMapping("/{memberId}/edit")
-//    public ResponseEntity<?> updateMember(@PathVariable("memberId") Long id,
-//                                          @RequestBody MemberForm memberForm) {
-//        memberService.updateMember(id, memberForm);
-//        return new ResponseEntity<>(HttpStatus.OK);
-//    }
 
     // 1.7 추천 친구 조회
     @GetMapping("/friends/recommend/{userId}")

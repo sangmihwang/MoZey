@@ -1,15 +1,11 @@
 package com.ssafy.tenten.api.service;
 
 import com.ssafy.tenten.dto.QuestionDto;
-import com.ssafy.tenten.vo.Request.QuestionRequest;
 import com.ssafy.tenten.vo.Response.QuestionResponse;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
-
-import java.util.List;
 
 public interface QuestionService {
     void postQuestions(QuestionDto questionDto);

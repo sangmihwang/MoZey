@@ -11,8 +11,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
-
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
@@ -26,8 +24,8 @@ public class MessageController {
     @GetMapping("/message/{userId}")
     public ResponseEntity<?> getMessage(@PathVariable("userId") Long userId,
                                         @RequestParam(defaultValue = "0", required = false) int pageIdx) {
-        PageRequest pageRequest = PageRequest.of(pageIdx, 10, Sort.by(Sort.Direction.DESC,"voteTime"));
-        Slice<MessageResponse> message = voteService.getMessage(userId,pageRequest);
+        PageRequest pageRequest = PageRequest.of(pageIdx, 10, Sort.by(Sort.Direction.DESC, "voteTime"));
+        Slice<MessageResponse> message = voteService.getMessage(userId, pageRequest);
 
         return SuccessResponseEntity.toResponseEntityPage("조건부 친구 조회 성공", message.getContent(), message.hasNext());
     }

@@ -12,13 +12,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 import static com.ssafy.tenten.exception.ErrorCode.QUESTION_NOT_FOUND;
 import static com.ssafy.tenten.exception.ErrorCode.USER_NOT_FOUND;
@@ -26,10 +21,10 @@ import static com.ssafy.tenten.exception.ErrorCode.USER_NOT_FOUND;
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
-public class QuestionServiceImpl implements QuestionService{
+public class QuestionServiceImpl implements QuestionService {
     private final QuestionRepository questionRepository;
     private final UserRepository userRepository;
-    private final RedisTemplate<String, Object> redisTemplate;
+
     @Override
     @Transactional
     public void postQuestions(QuestionDto questionDto) {
@@ -45,7 +40,7 @@ public class QuestionServiceImpl implements QuestionService{
     }
 
     @Override
-    public Page<QuestionResponse> getAllQuestions( PageRequest pageRequest ) {
+    public Page<QuestionResponse> getAllQuestions(PageRequest pageRequest) {
         Page<Question> questions = questionRepository.findAll(pageRequest);
 
         Page<QuestionResponse> collect = questions
@@ -60,12 +55,10 @@ public class QuestionServiceImpl implements QuestionService{
     }
 
     @Override
-    public Slice<QuestionResponse> getQuestions(Long id,Character status ,Pageable pageable) {
+    public Slice<QuestionResponse> getQuestions(Long id, Character status, Pageable pageable) {
 
-        Slice<QuestionResponse> questions = questionRepository.getPageQuestions(id,status,pageable)
-                .orElseThrow(() ->new CustomException(USER_NOT_FOUND));
-
-        questions.hasNext();
+        Slice<QuestionResponse> questions = questionRepository.getPageQuestions(id, status, pageable)
+                .orElseThrow(() -> new CustomException(USER_NOT_FOUND));
 
         return questions;
     }
