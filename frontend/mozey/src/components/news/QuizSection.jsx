@@ -142,7 +142,7 @@ const QuizSection = () => {
           </S.Modal>
         </S.ModalOverlay>
       )}
-      <S.Container>
+      <S.Container completed={currentQuizIndex >= quizzes.length}>
         {quizzes.length > 0 && currentQuizIndex < quizzes.length ? (
           <>
             <S.QuizImage src={quizimg} alt="Quiz Thumbnail" />
@@ -197,7 +197,9 @@ const S = {
     background: ${({ theme }) => theme.color.background};
   `,
   Container: styled.div`
-    background: ${({ theme }) => theme.color.background};
+    background: ${({ theme, completed }) => 
+      completed ? theme.color.background : theme.color.white
+    };
     width: 100%;
     border-radius: 10px;
     margin: 20px;
