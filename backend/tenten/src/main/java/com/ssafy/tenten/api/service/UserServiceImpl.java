@@ -2,6 +2,8 @@ package com.ssafy.tenten.api.service;
 
 import com.ssafy.tenten.api.repository.UserRepository;
 import com.ssafy.tenten.domain.User;
+import com.ssafy.tenten.exception.CustomException;
+import com.ssafy.tenten.exception.ErrorCode;
 import com.ssafy.tenten.vo.Request.UserJoinRequest;
 import com.ssafy.tenten.vo.Request.UserUpdateRequest;
 import com.ssafy.tenten.vo.Response.RecommendUserResponse;
@@ -18,6 +20,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
+import static com.ssafy.tenten.exception.ErrorCode.USER_NOT_FOUND;
 
 @Service
 @Transactional(readOnly = true)
@@ -75,17 +79,14 @@ public class UserServiceImpl implements UserService{
         return userResponse;
     }
 
-
     // 추천 친구 조회
     @Override
     public List<RecommendUserResponse> recommendFriends(Long userId) {
-        User user = userRepository.findById(userId).get();
-        String campus = user.getCampus();
-        String group = user.getGroup();
-        String term = user.getTerm();
-        List<User> list = userRepository.findAllByCampusAndTermAndGroupAndUserIdNot(campus, term, group, userId);
-        System.out.println(list);
-        List<RecommendUserResponse> userResponses = (List<RecommendUserResponse>) list.stream()
+        User user = userRepository.findById(userId).orElseThrow(() ->new CustomException(USER_NOT_FOUND));
+
+        List<User> list = userRepository.getRecommendFriend(user);
+
+        List<RecommendUserResponse> userResponses = list.stream()
                 .map(a -> RecommendUserResponse.builder()
                         .userId(a.getUserId())
                         .name(a.getName())

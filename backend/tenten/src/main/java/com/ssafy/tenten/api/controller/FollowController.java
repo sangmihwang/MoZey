@@ -38,16 +38,15 @@ public class FollowController {
 
     // 1.6.1 친구 추가
     @PostMapping("/follow/{senderId}/{receiverId}")
-    public ResponseEntity<?> addFriends (@PathVariable("senderId") Long fromUserId, @PathVariable("receiverId") Long toUserId) {
-        if (followService.addFriend(fromUserId, toUserId)) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-        return new ResponseEntity<>(HttpStatus.OK);
+    public ResponseEntity<?> addFriends(@PathVariable("senderId") Long fromUserId, @PathVariable("receiverId") Long toUserId) {
+        followService.addFriend(fromUserId, toUserId);
+        return ResponseEntity.ok("친구 추가 했습니다");
+
     }
 
     // 1.6.2 친구 삭제
     @DeleteMapping("/follow/{senderId}/{receiverId}")
-    public ResponseEntity<?> deleteFriends (@PathVariable("senderId") Long fromUserId, @PathVariable("receiverId") Long toUserId) {
+    public ResponseEntity<?> deleteFriends(@PathVariable("senderId") Long fromUserId, @PathVariable("receiverId") Long toUserId) {
         followService.deleteFreind(fromUserId, toUserId);
         return ResponseEntity.ok("친구 삭제 완료");
     }

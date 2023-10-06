@@ -146,11 +146,11 @@ public class User {
             }
         } else {
             if (token.equals("Point")) {
-                this.point -= amount;
+                if (this.point - amount > 0) this.point -= amount;
             } else if (token.equals("Coin1")) {
-                this.coin1 -= amount;
+                if (this.coin1 - amount > 0) this.coin1 -= amount;
             } else {
-                this.coin2 -= amount;
+                if (this.coin2 - amount > 0) this.coin2 -= amount;
             }
         }
 
