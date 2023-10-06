@@ -26,11 +26,18 @@ const MessageList = () => {
         console.log("데이터 받아오기 에러", error);
       });
 
-    if (userData.sub_yn === 1) {
-      setIsSubscribed("sub");
-    } else {
-      setIsSubscribed("noSub");
-    }
+    axios
+    .get(`https://j9a510.p.ssafy.io/api/users/info/${userData.email}`)
+    .then((response) => {
+      if (response.data.sub_yn === 1) {
+        setIsSubscribed("sub");
+      } else {
+        setIsSubscribed("noSub");
+      }
+    })
+    .catch((error) => {
+      console.log("Subscription 정보 받아오기 에러", error);
+    });
   }, []);
 
   const getUserFromLocalStorage = () => {
