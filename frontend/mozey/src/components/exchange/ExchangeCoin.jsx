@@ -251,12 +251,15 @@ const S = {
     width: 100%;
   `,
   ExContainer: styled.div`
-    height: 300px;
+    height: 100%;
     margin: 0% auto;
     margin-top: 30px;
-    padding: 15px;
+
+    padding: 4px 15px;
     width: 90%;
     background-color: white;
+    border-radius: 10px;
+    box-shadow: ${({ theme }) => theme.shadow.card};
   `,
   Logo: styled.img`
     height: 15px;
@@ -268,6 +271,7 @@ const S = {
     display: block;
     border-radius: 10px;
     margin-top: 20px;
+    margin-bottom: 20px;
   `,
   StyledBiSolidCoinStack: styled(BiSolidCoinStack)`
     font-size: ${({ theme }) => theme.fontsize.title2};
