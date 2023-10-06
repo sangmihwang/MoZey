@@ -35,23 +35,6 @@ public class JwtService {
     @Value("${jwt.refresh.header}")
     private String refreshHeader;
 
-//    public String generateAccessToken(AuthenticationManager authenticationManager, String userId, String password) {
-//        Authentication authentication = authenticationManager.authenticate(
-//                new UsernamePasswordAuthenticationToken(userId, password));
-//
-//        SecurityContextHolder.getContext().setAuthentication(authentication);
-//        return makeToken(authentication).getAccessToken();
-//    }
-//
-//    public TokenDto generateAccessAndRefreshTokens(AuthenticationManager authenticationManager, String userId, String password) {
-//        Authentication authentication = authenticationManager.authenticate(
-//                new UsernamePasswordAuthenticationToken(userId, password));
-//
-//        SecurityContextHolder.getContext().setAuthentication(authentication);
-//
-//        return makeToken(authentication);
-//    }
-
     // 토큰으로부터 id 값을 가져오기
     public static String getUserId(String token, String secretKey) {
         return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token)
@@ -63,9 +46,9 @@ public class JwtService {
         return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token)
                 .getBody().getExpiration().before(new Date());
     }
-    
+
     // 토큰 생성
-    public String createAccessToken (String key) {
+    public String createAccessToken(String key) {
         Claims claims = Jwts.claims();
         return Jwts.builder()
                 .setClaims(claims)
@@ -74,7 +57,8 @@ public class JwtService {
                 .signWith(SignatureAlgorithm.HS256, key)
                 .compact();
     }
-    public String createRefreshToken (String key) {
+
+    public String createRefreshToken(String key) {
         Claims claims = Jwts.claims();
         return Jwts.builder()
                 .setClaims(claims)
@@ -112,6 +96,7 @@ public class JwtService {
 
         return token;
     }
+
     public void sendAccessAndRefreshToken(HttpServletResponse response, String accessToken, String refreshToken) {
         response.setStatus(HttpServletResponse.SC_OK);
         setAccessTokenHeader(response, accessToken);

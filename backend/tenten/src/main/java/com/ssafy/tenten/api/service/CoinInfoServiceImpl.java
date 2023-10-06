@@ -11,7 +11,6 @@ import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,7 +25,7 @@ import static com.ssafy.tenten.exception.ErrorCode.COININFO_NOT_FOUND;
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
-public class CoinInfoServiceImpl implements CoinInfoService{
+public class CoinInfoServiceImpl implements CoinInfoService {
     private final CoinInfoRepository coinInfoRepository;
     LocalDate currentDate = LocalDate.now();
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
@@ -46,7 +45,7 @@ public class CoinInfoServiceImpl implements CoinInfoService{
         }
 
         CoinInfoDto snpDto = getSnP();
-        if(snpDto != null) {
+        if (snpDto != null) {
             CoinInfo coinInfo = new CoinInfo();
             coinInfo.setCoinName(CoinType.valueOf(snpDto.getCoinName()));
             coinInfo.setCoinPrice(snpDto.getCoinPrice());
@@ -63,12 +62,12 @@ public class CoinInfoServiceImpl implements CoinInfoService{
         try {
             Document document = conn.get();
             return getKospi(document);
-        }catch (IOException ignored){
+        } catch (IOException ignored) {
         }
         return null;
     }
 
-    public CoinInfoDto getKospi(Document document){
+    public CoinInfoDto getKospi(Document document) {
         Elements kospiInfo = document.select("div.quotient em");
         CoinInfoDto kospi = new CoinInfoDto();
         kospi.setCoinName("Coin1");
@@ -84,16 +83,16 @@ public class CoinInfoServiceImpl implements CoinInfoService{
         try {
             Document document = conn.get();
             return getSnP(document);
-        }catch (IOException ignored){
+        } catch (IOException ignored) {
         }
         return null;
     }
 
-    public CoinInfoDto getSnP(Document document){
+    public CoinInfoDto getSnP(Document document) {
         Elements snpInfo = document.select("div.today p em span");
         StringBuilder stringPrice = new StringBuilder();
-        for(int i = 0; i < 8; i++){
-            if(!snpInfo.get(i).text().equals(","))
+        for (int i = 0; i < 8; i++) {
+            if (!snpInfo.get(i).text().equals(","))
                 stringPrice.append(snpInfo.get(i).text());
         }
         CoinInfoDto snp = new CoinInfoDto();
@@ -108,7 +107,7 @@ public class CoinInfoServiceImpl implements CoinInfoService{
     public List<CoinInfoResponse> getCoinInfo() {
         List<CoinInfo> coinInfos = coinInfoRepository.findAll();
 
-        if(coinInfos.size() == 0){
+        if (coinInfos.size() == 0) {
             throw new CustomException(COININFO_NOT_FOUND);
         }
 
@@ -126,7 +125,7 @@ public class CoinInfoServiceImpl implements CoinInfoService{
     public List<CoinInfoResponse> getCoinInfoByCoinName(CoinType coinName) {
         List<CoinInfo> coinInfos = coinInfoRepository.findByCoinName(coinName);
 
-        if(coinInfos.size() == 0){
+        if (coinInfos.size() == 0) {
             throw new CustomException(COININFO_NOT_FOUND);
         }
 

@@ -5,7 +5,6 @@ import com.ssafy.tenten.api.repository.UserRepository;
 import com.ssafy.tenten.domain.Follow;
 import com.ssafy.tenten.domain.User;
 import com.ssafy.tenten.vo.Response.RecommendUserResponse;
-import com.ssafy.tenten.vo.Response.UserResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -81,11 +80,7 @@ public class FollowServiceImpl implements FollowService {
         // 친구
         User to = userRepository.findById(toUserId).orElseThrow(() -> new EntityNotFoundException("User not found with id: " + toUserId));
 
-        // 추가된 친구면 false 리턴
-//        if (followRepository.existsBySenderIdAndReceiverId(fromUserId, toUserId)) {
-//            return false;
-//        }
-        if(!userRepository.exists(fromUserId,toUserId)){
+        if (!userRepository.exists(fromUserId, toUserId)) {
             Follow follow = new Follow(from, to);
             followRepository.save(follow);
             return true;

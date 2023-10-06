@@ -6,12 +6,9 @@ import com.ssafy.tenten.exception.SuccessResponseEntity;
 import com.ssafy.tenten.vo.Response.NewsReadResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.modelmapper.ModelMapper;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
 import java.util.Optional;
 
 @RestController
@@ -19,8 +16,8 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Slf4j
 public class NewsReadController {
+
     private final NewsReadService newsReadService;
-    private final ModelMapper mapper;
 
     @GetMapping("/news/read")
     public ResponseEntity<?> getReadRecordByUserAndNews(

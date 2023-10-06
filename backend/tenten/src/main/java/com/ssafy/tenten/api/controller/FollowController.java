@@ -1,15 +1,10 @@
 package com.ssafy.tenten.api.controller;
 
-import com.ssafy.tenten.api.repository.FollowRepository;
-import com.ssafy.tenten.api.repository.UserRepository;
 import com.ssafy.tenten.api.service.FollowService;
-import com.ssafy.tenten.api.service.UserService;
 import com.ssafy.tenten.exception.SuccessResponseEntity;
 import com.ssafy.tenten.vo.Response.RecommendUserResponse;
-import com.ssafy.tenten.vo.Response.UserResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

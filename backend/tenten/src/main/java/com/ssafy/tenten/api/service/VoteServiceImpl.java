@@ -17,7 +17,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import static com.ssafy.tenten.exception.ErrorCode.USER_NOT_ENOUGH;
 import static com.ssafy.tenten.exception.ErrorCode.USER_NOT_FOUND;
@@ -122,7 +121,7 @@ public class VoteServiceImpl implements VoteService {
 
     @Override
     public Slice<MessageResponse> getMessage(Long userId, PageRequest pageRequest) {
-        Slice<MessageResponse> messages = voteHistrotyRepository.getMessage(userId,pageRequest);
+        Slice<MessageResponse> messages = voteHistrotyRepository.getMessage(userId, pageRequest);
 
         return messages;
     }

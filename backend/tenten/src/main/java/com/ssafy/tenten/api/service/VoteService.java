@@ -1,6 +1,5 @@
 package com.ssafy.tenten.api.service;
 
-import com.ssafy.tenten.domain.VoteHistory;
 import com.ssafy.tenten.dto.VoteDto;
 import com.ssafy.tenten.vo.Response.MessageResponse;
 import com.ssafy.tenten.vo.Response.VoteResponse;

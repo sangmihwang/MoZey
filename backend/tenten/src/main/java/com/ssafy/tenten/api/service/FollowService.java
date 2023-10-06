@@ -1,14 +1,11 @@
 package com.ssafy.tenten.api.service;
 
-import com.ssafy.tenten.domain.User;
 import com.ssafy.tenten.vo.Response.RecommendUserResponse;
-import com.ssafy.tenten.vo.Response.UserResponse;
 
 import java.util.List;
 
 public interface FollowService {
     // 1.4 친구 조건부 조회
-//    List<UserResponse> searchFriendsByName(int page, String name, Long fromUserId);
     List<RecommendUserResponse> searchFriendsByName(String name, Long fromUserId);
 
     // 1.5 친구 전체 목록 조회

@@ -9,5 +9,4 @@ public interface QuizService {
     List<QuizResponse> getQuizzesByDate(LocalDateTime date);
     void createQuiz(QuizDto quizDto);
 
-//    List<QuizDto> getAllQuizzes();
 }

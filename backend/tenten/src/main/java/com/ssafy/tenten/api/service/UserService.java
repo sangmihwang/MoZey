@@ -7,8 +7,6 @@ import com.ssafy.tenten.vo.Response.RecommendUserResponse;
 import com.ssafy.tenten.vo.Response.UserHintResponse;
 import com.ssafy.tenten.vo.Response.UserHintSelectedDataResponse;
 import com.ssafy.tenten.vo.Response.UserResponse;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.util.List;
@@ -18,9 +16,6 @@ public interface UserService {
 
     // 1.1 회원가입 및 로그인?
     void join(UserJoinRequest dto);
-
-    // 회원 유무
-//    void validateDuplicateUser(User user);
 
     User update(Long userId, UserUpdateRequest userUpdateRequest);
 

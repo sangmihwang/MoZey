@@ -28,9 +28,6 @@ public class VoteController {
     @GetMapping("/votes/questions")
     public ResponseEntity<?> getQuestions() {
         List<VoteResponse> voteResponses = voteService.suffleQuestion();
-
-
-
         return SuccessResponseEntity.toResponseEntity("투표 질문 생성 완료", voteResponses);
     }
 
@@ -42,7 +39,6 @@ public class VoteController {
     public ResponseEntity<?> postVote(@RequestBody VoteRequest voteRequest) {
         mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
         VoteDto voteDto = mapper.map(voteRequest, VoteDto.class);
-//        fcmNotificationService.sendNotificationByToken(requestDto);
 
         return SuccessResponseEntity.toResponseEntity("투표 결과 등록 완료", voteService.createVote(voteDto));
     }
