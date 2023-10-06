@@ -12,33 +12,8 @@ const TobTab = () => {
   const [subtitle, setSubtitle] = useState("");
   const [showsub, setShowsub] = useState(true);
   const [showTobTab, setShowTobTab] = useState(true);
-  const userInfo = useStore((state) => state.User);
-
-  const [userPoint, setUserPoint] = useState(0);
-  const [userCoin1, setUserCoin1] = useState(0);
-  const [userCoin2, setUserCoin2] = useState(0);
-
-  const updateUserInfoFromLocalStorage = () => {
-    const storedUserInfo = localStorage.getItem('userInfo');
-    if (storedUserInfo) {
-      const parsedUserInfo = JSON.parse(storedUserInfo);
-      if (parsedUserInfo.state && parsedUserInfo.state.User) {
-        setUserPoint(parsedUserInfo.state.User.point || 0);
-        setUserCoin1(parsedUserInfo.state.User.coin1 || 0);
-        setUserCoin2(parsedUserInfo.state.User.coin2 || 0);
-      }
-    }
-  };
-
-  useEffect(() => {
-    updateUserInfoFromLocalStorage();
-
-    window.addEventListener('storage', updateUserInfoFromLocalStorage);
-
-    return () => {
-      window.removeEventListener('storage', updateUserInfoFromLocalStorage);
-    };
-  }, []);
+  // const userInfo = useStore((state) => state.User);
+  const { point, coin1, coin2 } = useStore((state) => state.User);
 
   useEffect(() => {
     switch (location.pathname) {
@@ -122,11 +97,11 @@ const TobTab = () => {
         {showsub && (
           <S.CoinAmount>
             <S.StyledBiSolidCoinStack/>
-            {userInfo.point}
+            {point}
             <S.StyledTbStar/>
-            {userInfo.coin1}
+            {coin1}
             <S.StyledTbDiamond/>
-            {userInfo.coin2}
+            {coin2}
           </S.CoinAmount>
         )}
       </S.TopSection>
