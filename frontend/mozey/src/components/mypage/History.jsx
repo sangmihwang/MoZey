@@ -25,7 +25,7 @@ const History = () => {
           .then((data) => {
             // console.log("히스토리", data);
             if (data.data.message === "사용자 코인 내역 조회완료") {
-              setHistory(data.data.data);
+              setHistory(data.data.data.reverse());
             } else if (data.status === 404) {
             }
           });
@@ -42,7 +42,7 @@ const History = () => {
       <S.Container>
         {history.length === 0 && <h4>히스토리 내역이 없습니다</h4>}
         <ul>
-          {history.reverse().slice(0, visibleItems).map((item, index) => {
+          {history.slice(0, visibleItems).map((item, index) => {
             if (item.coinName === "Point") {
               if (item.transactionType === "EARN") {
                 return (
