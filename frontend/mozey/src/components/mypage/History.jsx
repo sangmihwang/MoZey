@@ -42,7 +42,7 @@ const History = () => {
       <S.Container>
         {history.length === 0 && <h4>히스토리 내역이 없습니다</h4>}
         <ul>
-          {history.slice(0, visibleItems).map((item, index) => {
+          {history.reverse().slice(0, visibleItems).map((item, index) => {
             if (item.coinName === "Point") {
               if (item.transactionType === "EARN") {
                 return (
