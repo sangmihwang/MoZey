@@ -65,6 +65,10 @@ const MessageFindoutSub = ({ dataforMessageInfo, onSelectInfo }) => {
       
       if(response.status === 200) {
         onSelectInfo(selectedType, selectedValue);
+        const updatedUserInfo = response.data;
+        const currentLocalStorageData = JSON.parse(localStorage.getItem('userInfo'));
+        currentLocalStorageData.state.User.point = updatedUserInfo.point;
+        localStorage.setItem('userInfo', JSON.stringify(currentLocalStorageData));
       } else {
         console.log('200이 반환되지않음')
       }
