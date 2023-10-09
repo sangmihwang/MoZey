@@ -83,6 +83,12 @@ public class User {
     private String providerId;
     private String kakaoToken;
     private String refreshToken; // 리프레시 토큰
+<<<<<<< HEAD
+    //    public void updateRefreshToken(String updateRefreshToken) {
+//        this.refreshToken = updateRefreshToken;
+//    }
+=======
+>>>>>>> 823957afe5a9e5225ba8de4306c2b792e9a855ed
     private String firebaseToken;
 
     public void subscribe() {
@@ -95,6 +101,8 @@ public class User {
         this.subYn = 0;
     }
 
+<<<<<<< HEAD
+=======
     @OneToMany(mappedBy = "senderId", cascade = CascadeType.ALL)
     private final List<Follow> senderList = new ArrayList<>();
 
@@ -102,6 +110,7 @@ public class User {
     @OneToMany(mappedBy = "receiverId", cascade = CascadeType.ALL)
     private final List<Follow> receiverList = new ArrayList<>();
 
+>>>>>>> 823957afe5a9e5225ba8de4306c2b792e9a855ed
     @Builder
     public User(String email, String name, String term, String campus, String group) {
         this.email = email;
@@ -109,6 +118,8 @@ public class User {
         this.term = term;
         this.campus = campus;
         this.group = group;
+<<<<<<< HEAD
+=======
     }
 
     public void join(UserJoinRequest dto) {
@@ -154,5 +165,6 @@ public class User {
             }
         }
 
+>>>>>>> 823957afe5a9e5225ba8de4306c2b792e9a855ed
     }
 }
