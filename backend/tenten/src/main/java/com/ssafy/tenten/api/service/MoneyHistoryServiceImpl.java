@@ -4,7 +4,6 @@ import com.ssafy.tenten.api.repository.MoneyHistoryRepository;
 import com.ssafy.tenten.api.repository.UserRepository;
 import com.ssafy.tenten.constant.CoinTransactionType;
 import com.ssafy.tenten.constant.CoinType;
-import com.ssafy.tenten.domain.CoinInfo;
 import com.ssafy.tenten.domain.MoneyHistory;
 import com.ssafy.tenten.domain.User;
 import com.ssafy.tenten.dto.MoneyHistoryDto;
@@ -20,7 +19,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class MoneyHistoryServiceImpl implements MoneyHistoryService{
+public class MoneyHistoryServiceImpl implements MoneyHistoryService {
     private final MoneyHistoryRepository moneyHistoryRepository;
     private final UserRepository userRepository;
 
@@ -28,7 +27,7 @@ public class MoneyHistoryServiceImpl implements MoneyHistoryService{
     public List<MoneyHistoryResponse> getMoneyHistory(Long userId) {
         List<MoneyHistory> histories = moneyHistoryRepository.findByUserId(userId);
 
-        if(histories.size() == 0){
+        if (histories.size() == 0) {
             throw new CustomException(ErrorCode.MONEYHISTORY_NOT_FOUND);
         }
 
@@ -36,7 +35,6 @@ public class MoneyHistoryServiceImpl implements MoneyHistoryService{
                 .map(a -> MoneyHistoryResponse.builder()
                         .coinName(String.valueOf(a.getCoinName()))
                         .coinChangeAmount(a.getCoinChangeAmount())
-                        .coinChangeDate(a.getCoinChangeDate())
                         .transactionType(String.valueOf(a.getTransactionType()))
                         .build())
                 .collect(Collectors.toList());
@@ -46,7 +44,7 @@ public class MoneyHistoryServiceImpl implements MoneyHistoryService{
 
     @Override
     @Transactional
-    public void createMoneyHistory(MoneyHistoryDto moneyHistoryDto){
+    public void createMoneyHistory(MoneyHistoryDto moneyHistoryDto) {
         User userId = userRepository.findById(moneyHistoryDto.getUserId()).orElseThrow(
                 () -> new CustomException(ErrorCode.USER_NOT_FOUND)
         );

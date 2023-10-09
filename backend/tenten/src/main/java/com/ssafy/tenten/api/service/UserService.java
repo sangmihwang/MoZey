@@ -4,18 +4,18 @@ import com.ssafy.tenten.domain.User;
 import com.ssafy.tenten.vo.Request.UserJoinRequest;
 import com.ssafy.tenten.vo.Request.UserUpdateRequest;
 import com.ssafy.tenten.vo.Response.RecommendUserResponse;
+import com.ssafy.tenten.vo.Response.UserHintResponse;
+import com.ssafy.tenten.vo.Response.UserHintSelectedDataResponse;
 import com.ssafy.tenten.vo.Response.UserResponse;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.util.List;
 
 public interface UserService {
+    void updateFirebase(String firebaseToken, Long userId);
+
     // 1.1 회원가입 및 로그인?
     void join(UserJoinRequest dto);
-
-    // 회원 유무
-//    void validateDuplicateUser(User user);
 
     User update(Long userId, UserUpdateRequest userUpdateRequest);
 
@@ -34,8 +34,23 @@ public interface UserService {
     void subscribe(Long userId);
 
     // 1.8.1 구독 확인
-    Long checkSub(Long userId);
+    Instant checkSub(Long userId);
 
     // 1.9 구독 취소
     void unsubscribe(Long userId);
+
+    UserHintResponse extract(Long userId);
+
+    UserHintResponse extract(Long userId, int location);
+
+    // 원하는 데이터 추출
+    UserHintSelectedDataResponse extractBySelectedData(Long userId, String data);
+
+    // 사용자 전체 목록 조회
+    List<UserResponse> searchAllUsers();
+
+    // 사용자 조건부 조회
+    List<UserResponse> searchAllUsersByName(String name);
+
+    void updateMoney(Long userId, String coinType, Long amount, String type);
 }

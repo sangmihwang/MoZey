@@ -5,7 +5,7 @@ import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Entity
 @Getter
@@ -27,7 +27,11 @@ public class News {
     private String company;
 
     @Column
-    private LocalDateTime date;
+    private LocalDate date;
+
+    @Column
+    private String imageUrl;
+
 
     @Builder
     News(NewsDto newsDto){
@@ -36,5 +40,7 @@ public class News {
         this.content = newsDto.getContent();
         this.company = newsDto.getCompany();
         this.date = newsDto.getDate();
+        this.imageUrl = newsDto.getImageUrl();
+
     }
 }

@@ -4,7 +4,7 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Data
 @RequiredArgsConstructor
@@ -13,5 +13,6 @@ public class NewsDto implements Serializable {
     private String title;
     private String content;
     private String company;
-    private LocalDateTime date;
+    private LocalDate date;
+    private String imageUrl;
 }

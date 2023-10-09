@@ -1,7 +1,6 @@
 package com.ssafy.tenten.config.jwt;
 
 import com.ssafy.tenten.api.service.UserService;
-import com.ssafy.tenten.util.TokenUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
@@ -9,7 +8,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
-import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
@@ -28,7 +26,9 @@ public class JwtFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+
         final String authorization = request.getHeader(HttpHeaders.AUTHORIZATION);
+
         // 제대로 된 token 인지?
         if (authorization == null || !authorization.startsWith("Bearer ")) {
             filterChain.doFilter(request, response);
@@ -39,13 +39,13 @@ public class JwtFilter extends OncePerRequestFilter {
         String token = authorization.split(" ")[1];
 
         // isExpired?
-        if (TokenUtil.isExpired(token, secretKey)) {
+        if (JwtService.isExpired(token, secretKey)) {
             filterChain.doFilter(request, response);
             return;
         }
 
         // Token에서 userId 꺼내기
-        String userId = TokenUtil.getUserId(token, secretKey);
+        String userId = JwtService.getUserId(token, secretKey);
 
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(userId, null, List.of(new SimpleGrantedAuthority("USER")));

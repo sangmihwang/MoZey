@@ -4,7 +4,6 @@ import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.FirebaseMessagingException;
 import com.google.firebase.messaging.Message;
 import com.google.firebase.messaging.Notification;
-import com.ssafy.tenten.api.repository.UserRepository;
 import com.ssafy.tenten.dto.FCMNotificationRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,53 +13,21 @@ import org.springframework.stereotype.Service;
 public class FCMNotificationService {
 
     private final FirebaseMessaging firebaseMessaging;
-    private final UserRepository usersRepository;
+
 
     public String sendNotificationByToken(FCMNotificationRequestDto requestDto) throws FirebaseMessagingException {
 
-
         Notification notification = Notification.builder()
-                .setTitle("임병국")
-                .setBody("dsadadasdas")
-                // .setImage(requestDto.getImage())
+                .setTitle(requestDto.getTitle())
+                .setBody(requestDto.getBody())
                 .build();
 
         firebaseMessaging.send(Message.builder()
-                        .setToken("cM_PuBkS20UfFPuzLibvD9:APA91bHjxTaqZZYNwMuOZ4IreuCunniRbjje7E2CQJ4wZ5UGFevOsAQdy91s_j7LMQzKMxlmRVZ9ElqWMysdCzPKeFQj657Psdaa39fJ94ldU_HqPEKWhWY3kul3Y1Ef3k2zHV3xdFID")
-                        .setNotification(notification)
-                        .build());
+                .setToken(requestDto.getTargetUserId())
+                .setNotification(notification)
+                .build());
 
-        return " zzz";
-
-//        if (user.isPresent()) {
-//            if (user.get().getFirebaseToken() != null) {
-//                Notification notification = Notification.builder()
-//                        .setTitle(requestDto.getTitle())
-//                        .setBody(requestDto.getBody())
-//                        // .setImage(requestDto.getImage())
-//                        .build();
-//
-//                Message message = Message.builder()
-//                        .setToken(user.get().getFirebaseToken())
-//                        .setNotification(notification)
-//                        // .putAllData(requestDto.getData())
-//                        .build();
-//
-//                try {
-//                    firebaseMessaging.send(message);
-//                    return "알림을 성공적으로 전송했습니다. targetUserId=" + requestDto.getTargetUserId();
-//                } catch (FirebaseMessagingException e) {
-//                    e.printStackTrace();
-//                    return "알림 보내기를 실패하였습니다. targetUserId=" + requestDto.getTargetUserId();
-//                }
-//            } else {
-//                return "서버에 저장된 해당 유저의 FirebaseToken이 존재하지 않습니다. targetUserId=" + requestDto.getTargetUserId();
-//            }
-//
-//        } else {
-//            return "해당 유저가 존재하지 않습니다. targetUserId=" + requestDto.getTargetUserId();
-//        }
-//
+        return " 알림갔습니다!";
 
     }
 }
